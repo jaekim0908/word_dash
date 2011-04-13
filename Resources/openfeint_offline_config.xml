@@ -1,0 +1,20 @@
+<resources>
+<game_profile_page_info>
+  <has_chat_rooms>false</has_chat_rooms>
+  <has_challenges>false</has_challenges>
+  <suggestions_topic_id>658383</suggestions_topic_id>
+  <has_achievements>false</has_achievements>
+  <has_leaderboards>false</has_leaderboards>
+  <has_featured_application>false</has_featured_application>
+  <has_ipurchase>false</has_ipurchase>
+  <short_name>Battleship</short_name>
+  <name>Battleship</name>
+  <id>243493</id>
+  <timestamp>2011-02-17 06:00:22</timestamp>
+  <is_owned_by_local_player>true</is_owned_by_local_player>
+</game_profile_page_info>
+<offline>
+<timestamp>2011-02-17 06:00:22</timestamp>
+</offline>
+
+</resources>
