@@ -195,8 +195,9 @@
 
 -(void) dealloc {
 	// doing some clean-up for multiplayer game.
-	[self closeMultiPlayerGame];
-	NSLog(@"MainManuLayer dealloc called");
+	//CLOSE MP GAME
+	//[self closeMultiPlayerGame];
+	CCLOG(@"MainManuLayer dealloc called");
 	[super dealloc];
 }
 

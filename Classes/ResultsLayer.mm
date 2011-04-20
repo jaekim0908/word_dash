@@ -9,6 +9,8 @@
 #import "ResultsLayer.h"
 #import "OFMultiplayerGame.h"
 #import "OFMultiplayerService.h"
+#import "OpenFeint.h"
+#import "GameManager.h"
 
 @implementation ResultsLayer
 
@@ -107,9 +109,8 @@ static BOOL rematchRequested = NO;
 		rematchButton.position = ccp(450, 280);
 		[self addChild:rematchButton];
 		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-		CCLOG(@"game id in result layer init = %i", game.gameId);
-		//[OFMultiplayerService startViewingGames];
-		[self schedule:@selector(updateTimer:) interval:1.0f];
+		[game closeGame];
+		[OFMultiplayerService startViewingGames];
 	}
 	return self;
 }
@@ -123,24 +124,32 @@ static BOOL rematchRequested = NO;
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
-		CCLOG(@"Rematch button pressed");
 		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-		CCLOG(@"game id in result layer touchbegin = %i", game.gameId);
-		[game requestRematch];
+		CCLOG(@"--------------------------------------------");
+		CCLOG(@"Rematch button pressed");
+		CCLOG(@"Sleeping for 5 seconds");
+		[NSThread sleepForTimeInterval:5];
+		NSString *opponentId = nil;
+		NSString *localUserId = [[OpenFeint localUser] userId];
+		if ( [localUserId isEqualToString:[GameManager sharedGameManager].challengerId] ) {
+			CCLOG(@"Local user is a pervious challenger");
+			opponentId = [GameManager sharedGameManager].challengeeId;
+		} else {
+			CCLOG(@"Local user is a pervious challengee");
+			opponentId = [GameManager sharedGameManager].challengerId;
+		}
+		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::LOBBY_OPTION_CONFIG,
+								 [NSNumber numberWithUnsignedInt:5*60], OFMultiplayer::LOBBY_OPTION_TURN_TIME,
+								 [NSArray arrayWithObject:opponentId], OFMultiplayer::LOBBY_OPTION_CHALLENGE_OF_IDS,
+								 nil];
+		CCLOG(@"Creating Game");
+		CCLOG(@"--------------------------------------------");
+		[game createGame:@"HundredSeconds" withOptions:options];
+		[GameManager sharedGameManager].isChallenger = YES;
+		[OFUser getUser:opponentId];
 	}
-	
 	return YES;
 }
-
-- (void) updateTimer:(ccTime) dt {
-	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	if ([game hasRequestedRematch]) {
-		CCLOG(@"Rematch has been requested");
-	} else {
-		CCLOG(@"Rematch has not been requested");
-	}
-}
-
 
 -(void) dealloc {
 	CCLOG(@"ResultLayer dealloc called");

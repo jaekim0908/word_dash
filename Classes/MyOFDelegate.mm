@@ -29,6 +29,7 @@ static BOOL readyToStart = NO;
 static BOOL challengeAcceptSelected = NO;
 static BOOL playerIsChallenger = NO;
 static BOOL inGame = NO;
+static BOOL firstTime = YES;
 
 @synthesize localPlayerName;
 @synthesize challengerName;
@@ -80,19 +81,17 @@ static BOOL inGame = NO;
 
 - (void)networkDidUpdateLobby {
 	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	CCLOG(@"network update lobby");
-	/*
-	CCLOG(@"game id = %i", game.gameId);
-	CCLOG(@"game state = %i", game.state);
-	CCLOG(@"game challenge = %i", game.acceptChallenge);
-	CCLOG(@"get number of challenges = %i", [OFMultiplayerService getNumberOfChallenges]);
-	CCLOG(@"client slot state = %i", game.clientGameSlotState);
-	*/
-	CCLOG(@"number of players = %i", [[game playerOFUserIds] count]);
-	CCLOG(@"player 0 user id = %@", [[game playerOFUserIds] objectAtIndex:0]);
-	CCLOG(@"player 1 user id = %@", [[game playerOFUserIds] objectAtIndex:1]);
-	CCLOG(@"challenger user id = %@", [game challengerOFUserId]);
-
+	CCLOG(@"--------------------------------------------");
+	CCLOG(@"Network Did Update Lobby");
+	CCLOG(@"GameManager Challenger Id = %@", [GameManager sharedGameManager].challengerId);
+	CCLOG(@"GameManager Challengee Id = %@", [GameManager sharedGameManager].challengeeId);
+	CCLOG(@"Game State (Unknown, Waiting to Start, Playing, Finished) = %i", [game state]);
+	CCLOG(@"Slot Close State (Available, Closed, Rematch) = %i", [game slotCloseState]);
+	CCLOG(@"Client Game Slot State (None, Creating Game ...) = %i", [game clientGameSlotState]);
+	CCLOG(@"OF Challenger Id = %@", [game challengerOFUserId]);
+	CCLOG(@"Player = %i", [game player]);
+	CCLOG(@"--------------------------------------------");
+	
 	if (readyToStart) {
 		CCLOG(@"READY TO START");
 		if ([game hasBeenChallenged]) {
@@ -113,6 +112,7 @@ static BOOL inGame = NO;
 			CCLOG(@"Entering game");
 			[OFMultiplayerService stopViewingGames];
 			[OFMultiplayerService enterGame:game];
+			[GameManager sharedGameManager].isChallenger = NO;
 			CCLOG(@"Starting game scene");
 			[[GameManager sharedGameManager] runSceneWithId:kMutiPlayerScene];
 			readyToStart = NO;
@@ -130,7 +130,11 @@ static BOOL inGame = NO;
 		}
 	} else {
 		CCLOG(@"NOT READY TO START");
-		[self closeMultiPlayerGame];
+		//CLOSE MP GAME
+		if (firstTime) {
+			[self closeMultiPlayerGame];
+			firstTime = NO;
+		}
 		readyToStart = YES;
 	}
 }
@@ -308,6 +312,7 @@ static BOOL inGame = NO;
 	[game createGame:@"HundredSeconds" withOptions:options];
 	[OFUser getUser:[selectedUser userId]];
 	playerIsChallenger = YES;
+	[GameManager sharedGameManager].isChallenger = YES;
 	MainMenuLayer *mmLayer = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
 	[mmLayer disableMainMenu];
 }
@@ -321,7 +326,7 @@ static BOOL inGame = NO;
 
 #pragma mark user_handling
 -(void) didGetUser:(OFUser *)user {
-	if (playerIsChallenger) {
+	if ([GameManager sharedGameManager].isChallenger) {
 		CCLOG(@"THIS PLAYER IS A CHALLENGER SO GETTING A CHALLENGEE NAME, NAME = %@", [user name]);
 		self.challengeeName = [user name];
 		ChallengeRequestDialog *challengeRequest = [[[ChallengeRequestDialog alloc] initWithActivityInd:YES 

@@ -18,5 +18,3 @@ typedef enum {
 	kHelloWorldScene,
 	kMaxScene
 } SceneTypes;
-
-#define DEBUG_FLAG 1

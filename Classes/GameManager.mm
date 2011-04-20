@@ -24,6 +24,9 @@ static GameManager* _sharedGameManager = nil;
 @synthesize isSoundsOn;
 @synthesize _fileContents;
 @synthesize myOFDelegate = _myOFDelegate;
+@synthesize challengerId = _challengerId;
+@synthesize challengeeId = _challengeeId;
+@synthesize isChallenger = _isChallenger;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -56,6 +59,7 @@ static GameManager* _sharedGameManager = nil;
 		// read everything from text
 		_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
 		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
+		_sharedGameManager.isChallenger = NO;
 		NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
 								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], 
 								  OpenFeintSettingDashboardOrientation, 
@@ -71,6 +75,7 @@ static GameManager* _sharedGameManager = nil;
 		
 		// Multi-Game Initialization
 		[OFMultiplayerService setDelegate:_sharedGameManager.myOFDelegate];
+		[OFMultiplayerService setSlotArraySize:10];
 	}
 	return self;
 }
@@ -107,8 +112,8 @@ static GameManager* _sharedGameManager = nil;
 	}
 	
 	if ([[CCDirector sharedDirector] runningScene] == nil) {
-		NSLog(@"No running scene");
-		NSLog(@"sceneToRun = %@", sceneToRun);
+		CCLOG(@"No running scene");
+		CCLOG(@"sceneToRun = %@", sceneToRun);
 		[[CCDirector sharedDirector] runWithScene:sceneToRun];
 	} else {
 		[[CCDirector sharedDirector] replaceScene:sceneToRun];
@@ -119,8 +124,8 @@ static GameManager* _sharedGameManager = nil;
 	id sceneToRun = [LoadingScene sceneWithTargetScene:sceneId];
 	
 	if ([[CCDirector sharedDirector] runningScene] == nil) {
-		NSLog(@"No running scene");
-		NSLog(@"sceneToRun = %@", sceneToRun);
+		CCLOG(@"No running scene");
+		CCLOG(@"sceneToRun = %@", sceneToRun);
 		[[CCDirector sharedDirector] runWithScene:sceneToRun];
 	} else {
 		[[CCDirector sharedDirector] replaceScene:sceneToRun];

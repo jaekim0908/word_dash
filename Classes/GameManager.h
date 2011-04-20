@@ -14,11 +14,17 @@
 	BOOL isSoundsOn;
 	NSString *_fileContents;
 	MyOFDelegate *_myOFDelegate;
+	NSString *_challengerId;
+	NSString *_challengeeId;
+	BOOL _isChallenger;
 }
 
 @property (readwrite) BOOL isSoundsOn;
 @property (nonatomic, retain) NSString *_fileContents;
 @property (nonatomic, retain) MyOFDelegate *myOFDelegate;
+@property (nonatomic, retain) NSString *challengerId;
+@property (nonatomic, retain) NSString *challengeeId;
+@property (readwrite) BOOL isChallenger;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;

@@ -55,6 +55,9 @@
 		CCLOG(@"****************PLAYER 0 ID = %@", [[game playerOFUserIds] objectAtIndex:0]);
 		CCLOG(@"****************CHALLENGER ID = %@", [game challengerOFUserId]);
 		
+		[GameManager sharedGameManager].challengerId = [[game playerOFUserIds] objectAtIndex:0];
+		[GameManager sharedGameManager].challengeeId = [[game playerOFUserIds] objectAtIndex:1];
+		
 		if ([[[OpenFeint localUser] resourceId] isEqualToString:[[game playerOFUserIds] objectAtIndex:0]]) {
 			CCLOG(@"****************THIS PLAYER IS A CHALLENGER");
 			isThisPlayerChallenger = YES;
@@ -861,9 +864,18 @@
 
 - (void) updateTimer:(ccTime) dt {
 	
-	CCLOG(@"updateTimer called");
 	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	CCLOG(@"game id in updateTimer = %i", game.gameId);
+	CCLOG(@"--------------------------------------------");
+	CCLOG(@"UpdateTimer in MP called");
+	CCLOG(@"Game Id = %i", game.gameId);
+	CCLOG(@"GameManager Challenger Id = %@", [GameManager sharedGameManager].challengerId);
+	CCLOG(@"GameManager Challengee Id = %@", [GameManager sharedGameManager].challengeeId);
+	CCLOG(@"Game State (Unknown, Waiting to Start, Playing, Finished) = %i", [game state]);
+	CCLOG(@"Slot Close State (Available, Closed, Rematch) = %i", [game slotCloseState]);
+	CCLOG(@"Client Game Slot State (None, Creating Game ...) = %i", [game clientGameSlotState]);
+	CCLOG(@"OF Challenger Id = %@", [game challengerOFUserId]);
+	CCLOG(@"Player = %i", [game player]);
+	CCLOG(@"--------------------------------------------");
 	
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -893,6 +905,7 @@
 	
 	if (p1+p2 <= 0) {
 		gameOver = YES;
+		[OFMultiplayerService leaveGame];
 	}
 	
 	if (p1 <= 0) {
@@ -943,7 +956,7 @@
 		CCLOG(@"game over check point #3");
 		//gameSummary.visible = YES;
 		CCLOG(@"game over check point #4");
-		//[OFMultiplayerService finishGameWithPlayerRanks:[NSArray arrayWithObjects:winner, loser, nil]];
+		[OFMultiplayerService finishGameWithPlayerRanks:[NSArray arrayWithObjects:winner, loser, nil]];
 		CCLOG(@"game over check point #5");
 		ResultsLayer *rl = [[[ResultsLayer alloc] initWithPlayerOneScore:[player1Score string] 
 													  WithPlayerTwoScore:[player2Score string] 
