@@ -28,6 +28,7 @@
 static BOOL readyToStart = NO;
 static BOOL challengeAcceptSelected = NO;
 static BOOL playerIsChallenger = NO;
+static BOOL inGame = NO;
 
 @synthesize localPlayerName;
 @synthesize challengerName;
@@ -109,8 +110,10 @@ static BOOL playerIsChallenger = NO;
 				CCLOG(@"CRD IS NOT NULL && GAME STARTING");
 				[crd okButtonPressed:self];
 			}
+			CCLOG(@"Entering game");
 			[OFMultiplayerService stopViewingGames];
 			[OFMultiplayerService enterGame:game];
+			CCLOG(@"Starting game scene");
 			[[GameManager sharedGameManager] runSceneWithId:kMutiPlayerScene];
 			readyToStart = NO;
 			if (challengeAcceptSelected) {
@@ -241,7 +244,7 @@ static BOOL playerIsChallenger = NO;
 	ChallengeRequestDialog *crd = (ChallengeRequestDialog *) [[[CCDirector sharedDirector] runningScene] getChildByTag:100];
 	if (crd) {
 		CCLOG(@"CRD IS NOT NULL");
-		[crd okButtonPressed:self];
+		[crd noCancelButtonPressed:self];
 	}
 }
 
@@ -307,9 +310,6 @@ static BOOL playerIsChallenger = NO;
 	playerIsChallenger = YES;
 	MainMenuLayer *mmLayer = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
 	[mmLayer disableMainMenu];
-	ChallengeRequestDialog *challengeRequest = [[[ChallengeRequestDialog alloc] initWithActivityInd:YES target:self selector:@selector(cancelChallenge)] 
-									  autorelease];
-	[[[CCDirector sharedDirector] runningScene] addChild:challengeRequest z:10 tag:100];
 }
 
 -(void) cancelChallenge {
@@ -322,10 +322,15 @@ static BOOL playerIsChallenger = NO;
 #pragma mark user_handling
 -(void) didGetUser:(OFUser *)user {
 	if (playerIsChallenger) {
-		CCLOG(@"THIS PLAYER IS A CHALLENGER SO GETTING A CHALLENGEE NAME");
+		CCLOG(@"THIS PLAYER IS A CHALLENGER SO GETTING A CHALLENGEE NAME, NAME = %@", [user name]);
 		self.challengeeName = [user name];
+		ChallengeRequestDialog *challengeRequest = [[[ChallengeRequestDialog alloc] initWithActivityInd:YES 
+																								 target:self 
+																							   selector:@selector(cancelChallenge)] 
+													autorelease];
+		[[[CCDirector sharedDirector] runningScene] addChild:challengeRequest z:10 tag:100];
 	} else {
-		CCLOG(@"THIS PLAYER IS A CHALLENGEE SO GETTING A CHALLENGER NAME");
+		CCLOG(@"THIS PLAYER IS A CHALLENGEE SO GETTING A CHALLENGER NAME, NAME = %@", [user name]);
 		self.challengerName = [user name];
 		[self showActionSheet];
 	}
@@ -333,8 +338,26 @@ static BOOL playerIsChallenger = NO;
 
 -(void) didFailGetUser {
 	CCLOG(@"fail to get user name");
-	[self showActionSheet];
+	if (playerIsChallenger) {
+		ChallengeRequestDialog *challengeRequest = [[[ChallengeRequestDialog alloc] initWithActivityInd:YES 
+																								 target:self 
+																							   selector:@selector(cancelChallenge)] 
+													autorelease];
+		[[[CCDirector sharedDirector] runningScene] addChild:challengeRequest z:10 tag:100];
+	} else {
+		[self showActionSheet];
+	}
 }
+
+#pragma mark rematch_handling
+- (void) rematchAccepted:(OFMultiplayerGame*)game {
+	CCLOG(@"REMATCH ACCEPTED");
+}
+
+- (void) rematchRejected:(OFMultiplayerGame*)game {
+	CCLOG(@"REMATCH REJECTED");
+}
+
 
 #pragma mark dealloc
 - (void)dealloc {

@@ -15,6 +15,7 @@
 @interface MainMenuLayer : CCLayer {
 	CCMenu *mainMenu;
 	CCLabelTTF *challengeCancelledLabel;
+	CCLabelTTF *challengeRejectedLabel;
 }
 
 -(void) closeMultiPlayerGame;

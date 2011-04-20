@@ -1029,6 +1029,7 @@
 		6EDEA304132F35340053EE0A /* MyOFDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDEA303132F35340053EE0A /* MyOFDelegate.mm */; };
 		6EDEA366132F3D330053EE0A /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */; };
 		6EDEFFD013372DF6005A1D65 /* Multiplayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDEFFCE13372DF6005A1D65 /* Multiplayer.mm */; };
+		6EDFC338135D3E24007B9BA2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EDFC337135D3E24007B9BA2 /* Default.png */; };
 		6EE0509113443BBF00BC5397 /* ResultsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0509013443BBF00BC5397 /* ResultsLayer.mm */; };
 		6EEA81A7134183F800A7858E /* DialogLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA81A6134183F800A7858E /* DialogLayer.mm */; };
 		6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */; };
@@ -2776,6 +2777,7 @@
 		6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		6EDEFFCE13372DF6005A1D65 /* Multiplayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Multiplayer.mm; sourceTree = "<group>"; };
 		6EDEFFCF13372DF6005A1D65 /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
+		6EDFC337135D3E24007B9BA2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6EE0508F13443BBF00BC5397 /* ResultsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsLayer.h; sourceTree = "<group>"; };
 		6EE0509013443BBF00BC5397 /* ResultsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResultsLayer.mm; sourceTree = "<group>"; };
 		6EEA81A5134183F800A7858E /* DialogLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogLayer.h; sourceTree = "<group>"; };
@@ -3296,6 +3298,7 @@
 				50F414ED1069373D002A0D5E /* fps_images.png */,
 				50F414EE1069373D002A0D5E /* Icon.png */,
 				50F414EF1069373D002A0D5E /* Info.plist */,
+				6EDFC337135D3E24007B9BA2 /* Default.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -7803,6 +7806,7 @@
 				6EFA53961331EF800072F312 /* words.txt in Resources */,
 				6EBB5D86134ADB990002A854 /* crab.txt in Resources */,
 				6EBB5DC6134AE3760002A854 /* crab2.txt in Resources */,
+				6EDFC338135D3E24007B9BA2 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

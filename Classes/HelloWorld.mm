@@ -191,6 +191,7 @@ static inline int cell(int r, int c) {
 			}
 			[wordMatrix addObject:columns];
 		}
+		
 		NSLog(@"wordMatrix = %@", wordMatrix);
 
 		wordDefinition = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"Verdana" fontSize:14.0f] retain];
@@ -243,6 +244,10 @@ static inline int cell(int r, int c) {
 		gameSummary.position = ccp(windowSize.width/2, windowSize.height/2);
 		gameSummary.visible = NO;
 		[self addChild:gameSummary z:30];
+		
+		CCSprite *backGround = [CCSprite spriteWithSpriteFrameName:@"footprints-beach.png"];
+		backGround.position = ccp(windowSize.width/2, windowSize.height/2);
+		[batchNode addChild:backGround z:-10];
 	}
 	return self;
 }
@@ -613,7 +618,8 @@ static inline int cell(int r, int c) {
 				label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%c", [letters characterAtIndex:i]] fontName:@"Verdana" fontSize:50.0f];
 				label.position = ccp(125 + c * 60, 30 + r * 60);
 				label.visible = NO;
-				label.color = ccc3(159, 182, 205);
+				//label.color = ccc3(159, 182, 205);
+				label.color = ccc3(245, 245, 245);
 				cell = [[Cell alloc] init];
 				cell.letter = label;
 				cell.center = label.position;

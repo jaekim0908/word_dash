@@ -28,6 +28,7 @@
 @synthesize thisGame;
 @synthesize isThisPlayerChallenger;
 
+
 + (id) scene
 {
 	// 'scene' is an autorelease object.
@@ -212,6 +213,10 @@
 		gameSummary.position = ccp(windowSize.width/2, windowSize.height/2);
 		gameSummary.visible = NO;
 		[self addChild:gameSummary z:30];
+		
+		CCSprite *backGround = [CCSprite spriteWithSpriteFrameName:@"footprints-beach.png"];
+		backGround.position = ccp(windowSize.width/2, windowSize.height/2);
+		[batchNode addChild:backGround z:-10];
 	}
 	return self;
 }
@@ -579,8 +584,8 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"100"];
-	[player2Timer setString:@"100"];
+	[player1Timer setString:@"15"];
+	[player2Timer setString:@"15"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];
@@ -857,6 +862,8 @@
 - (void) updateTimer:(ccTime) dt {
 	
 	CCLOG(@"updateTimer called");
+	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+	CCLOG(@"game id in updateTimer = %i", game.gameId);
 	
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -936,7 +943,7 @@
 		CCLOG(@"game over check point #3");
 		//gameSummary.visible = YES;
 		CCLOG(@"game over check point #4");
-		[OFMultiplayerService finishGameWithPlayerRanks:[NSArray arrayWithObjects:winner, loser, nil]];
+		//[OFMultiplayerService finishGameWithPlayerRanks:[NSArray arrayWithObjects:winner, loser, nil]];
 		CCLOG(@"game over check point #5");
 		ResultsLayer *rl = [[[ResultsLayer alloc] initWithPlayerOneScore:[player1Score string] 
 													  WithPlayerTwoScore:[player2Score string] 

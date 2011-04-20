@@ -6,7 +6,10 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import "GameManager.h"
 #import "ChallengeRequestDialog.h"
+#import "cocos2d.h"
+#import "MainMenuLayer.h"
 
 
 @implementation ChallengeRequestDialog
@@ -25,7 +28,18 @@
 		
 		CGSize screenSize = [CCDirector sharedDirector].winSize;
 		
-		CCLabelTTF *line1Label = [CCLabelTTF labelWithString:@"Waiting for opponent's response" fontName:@"Verdana" fontSize:12];
+		NSString *opptName = [[[GameManager sharedGameManager] myOFDelegate] challengeeName];
+		NSString *waitingMsg;
+		
+		CCLOG(@"oppt name = %@", opptName);
+		
+		
+		if (opptName) {
+			waitingMsg = [NSString stringWithFormat:@"Waiting for %@'s response",opptName]; 
+		} else {
+			waitingMsg = [NSString stringWithFormat:@"Waiting for opponent's response"];
+		}
+		CCLabelTTF *line1Label = [CCLabelTTF labelWithString:waitingMsg fontName:@"Verdana" fontSize:12];
 		line1Label.color = ccc3(255, 255, 255);
 		line1Label.position = ccp(screenSize.width/2, screenSize.height/2 + 100);
 		[self addChild:line1Label];
@@ -56,10 +70,19 @@
 
 -(void) okButtonPressed:(id) sender
 {	
-	NSLog(@"ok button pressed");
+	CCLOG(@"ok button pressed");
 	[spinner stopAnimating];
 	[callback invoke];
 	[self removeFromParentAndCleanup:YES];
+}
+
+-(void) noCancelButtonPressed:(id) sender {
+	CCLOG(@"No cancel button pressed");
+	[spinner stopAnimating];
+	[callback invoke];
+	[self removeFromParentAndCleanup:YES];
+	MainMenuLayer *mml = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
+	[mml showRejectChallengeMsg];
 }
 
 -(void) dealloc

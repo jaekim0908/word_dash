@@ -44,6 +44,12 @@
 		challengeCancelledLabel.color = ccc3(255, 255, 255);
 		challengeCancelledLabel.visible = NO;
 		[self addChild:challengeCancelledLabel z:10];
+		
+		challengeRejectedLabel = [CCLabelTTF labelWithString:@"Opponent has rejected the game" fontName:@"Verdana" fontSize:14];
+		challengeRejectedLabel.position = ccp(screenSize.width/2, screenSize.height/2);
+		challengeRejectedLabel.color = ccc3(255, 255, 255);
+		challengeRejectedLabel.visible = NO;
+		[self addChild:challengeRejectedLabel z:10];
 	}
 	
 	return self;
@@ -154,23 +160,6 @@
 	return YES;
 }
 
--(void) showCancelChallengeMsgWithChallengerName:(NSString *) chlName {
-	CCLOG(@"Show CancelChallengeMsgWithChallengerName called");
-	CCLOG(@"chlName = %@", [[[GameManager sharedGameManager] myOFDelegate] challengerName]);
-	NSString *str = nil;
-	if (chlName) {
-		CCLOG(@"chlName = %@", chlName);
-		str = [NSString stringWithFormat:@"Sorry, %@ has cancelled the game request", chlName];
-	} else {
-		CCLOG(@"chlName is nil");
-		str = [NSString stringWithFormat:@"Sorry, challenger has cancelled the game request"];
-	}
-	[challengeCancelledLabel setString:str];
-	challengeCancelledLabel.visible = YES;
-	CCSequence *actSeq = [CCSequence actions:[CCFadeIn actionWithDuration:0.1f], [CCFadeOut actionWithDuration:2], nil];
-	[challengeCancelledLabel runAction:actSeq];
-}
-
 -(void) showCancelChallengeMsg {
 	CCLOG(@"Show CancelChallengeMsg called");
 	NSString *chlName = [[[GameManager sharedGameManager] myOFDelegate] challengerName];
@@ -186,6 +175,22 @@
 	challengeCancelledLabel.visible = YES;
 	CCSequence *actSeq = [CCSequence actions:[CCFadeIn actionWithDuration:0.1f], [CCFadeOut actionWithDuration:2], nil];
 	[challengeCancelledLabel runAction:actSeq];
+}
+
+-(void) showRejectChallengeMsg {
+	CCLOG(@"Show RejectChallengeMsg called");
+	NSString *str = nil;
+	if ([[[GameManager sharedGameManager] myOFDelegate] challengeeName]) {
+		CCLOG(@"challengeeName in showRejectChallengeMsg = %@", [[[GameManager sharedGameManager] myOFDelegate] challengeeName]);
+		str = [NSString stringWithFormat:@"Sorry, %@ has rejected the challenge", [[[GameManager sharedGameManager] myOFDelegate] challengeeName]];
+	} else {
+		CCLOG(@"challengeeName is nil");
+		str = [NSString stringWithFormat:@"Sorry, opponent has cancelled the challenge"];
+	}
+	[challengeRejectedLabel setString:str];
+	challengeRejectedLabel.visible = YES;
+	CCSequence *actSeq = [CCSequence actions:[CCFadeIn actionWithDuration:0.1f], [CCFadeOut actionWithDuration:2], nil];
+	[challengeRejectedLabel runAction:actSeq];
 }
 
 -(void) dealloc {

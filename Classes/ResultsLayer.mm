@@ -7,11 +7,16 @@
 //
 
 #import "ResultsLayer.h"
+#import "OFMultiplayerGame.h"
+#import "OFMultiplayerService.h"
 
 @implementation ResultsLayer
 
 @synthesize player1Score;
 @synthesize player2Score;
+@synthesize rematchButton;
+
+static BOOL rematchRequested = NO;
 
 -(id) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words 
 {
@@ -97,9 +102,14 @@
 		midDisplay.position = ccp(240, 30);
 		midDisplay.color = ccc3(255, 255, 255);
 		[self addChild:midDisplay z:40];
-				
-		//NEXT: copy over mid display and list words for each player
 		
+		rematchButton = [CCSprite spriteWithFile:@"blue_button.png"];
+		rematchButton.position = ccp(450, 280);
+		[self addChild:rematchButton];
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+		CCLOG(@"game id in result layer init = %i", game.gameId);
+		//[OFMultiplayerService startViewingGames];
+		[self schedule:@selector(updateTimer:) interval:1.0f];
 	}
 	return self;
 }
@@ -112,14 +122,31 @@
 	
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 	
+	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
+		CCLOG(@"Rematch button pressed");
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+		CCLOG(@"game id in result layer touchbegin = %i", game.gameId);
+		[game requestRematch];
+	}
 	
 	return YES;
 }
+
+- (void) updateTimer:(ccTime) dt {
+	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+	if ([game hasRequestedRematch]) {
+		CCLOG(@"Rematch has been requested");
+	} else {
+		CCLOG(@"Rematch has not been requested");
+	}
+}
+
 
 -(void) dealloc {
 	CCLOG(@"ResultLayer dealloc called");
 	[player1Score release];
 	[player2Score release];
+	[rematchButton release];
 	[super dealloc];
 }
 
