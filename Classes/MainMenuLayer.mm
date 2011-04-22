@@ -37,6 +37,7 @@
 	if ((self = [super init])) {
 		self.isTouchEnabled = YES;
 		[self displayMainMenu];
+		[[GameManager sharedGameManager] closeGame];
 		[OFMultiplayerService startViewingGames];
 		challengeCancelledLabel = [CCLabelTTF labelWithString:@"Challenger has cancelled the game" fontName:@"Verdana" fontSize:14];
 		CGSize screenSize = [CCDirector sharedDirector].winSize;
@@ -116,7 +117,7 @@
 
 -(void) displayMultiPlayer {
 	CCLOG(@"display multi-player");
-	[self closeMultiPlayerGame];
+	[[GameManager sharedGameManager] closeGame];
 	if ([OpenFeint isOnline]) { 
 		[OFFriendPickerController launchPickerWithDelegate:[[GameManager sharedGameManager] myOFDelegate] 
 												promptText:@"Choose your victim" 
@@ -143,11 +144,6 @@
 -(void) enableMainMenu {
 	NSLog(@"enableMainMenu is called");
 	mainMenu.isTouchEnabled = YES;
-}
-
-- (void) closeMultiPlayerGame {
-	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	[game closeGame];
 }
 
 - (void) registerWithTouchDispatcher {

@@ -57,6 +57,7 @@
 		
 		[GameManager sharedGameManager].challengerId = [[game playerOFUserIds] objectAtIndex:0];
 		[GameManager sharedGameManager].challengeeId = [[game playerOFUserIds] objectAtIndex:1];
+		[GameManager sharedGameManager].gameFinished = NO;
 		
 		if ([[[OpenFeint localUser] resourceId] isEqualToString:[[game playerOFUserIds] objectAtIndex:0]]) {
 			CCLOG(@"****************THIS PLAYER IS A CHALLENGER");
@@ -91,8 +92,6 @@
 		*/
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
-		//[self createDictionary];
-		CCLOG(@"dictionary size = %@", [dictionary objectForKey:@"orange"]);
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"WordToo.plist"];
 		batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"WordToo.png"]];
 		[self addChild:batchNode];
@@ -164,9 +163,7 @@
 				[columns addObject:[NSString stringWithString:@""]];
 			}
 			[wordMatrix addObject:columns];
-		}
-		CCLOG(@"wordMatrix = %@", wordMatrix);
-		
+		}		
 		wordDefinition = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"Verdana" fontSize:14.0f] retain];
 		wordDefinition.color = ccc3(255,0,0);
 		wordDefinition.position = ccp(80, 50);

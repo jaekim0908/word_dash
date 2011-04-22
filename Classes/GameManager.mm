@@ -27,6 +27,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize challengerId = _challengerId;
 @synthesize challengeeId = _challengeeId;
 @synthesize isChallenger = _isChallenger;
+@synthesize gameFinished = _gameFinished;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -60,11 +61,12 @@ static GameManager* _sharedGameManager = nil;
 		_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
 		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
 		_sharedGameManager.isChallenger = NO;
+		_sharedGameManager.gameFinished = YES;
 		NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], 
-								  OpenFeintSettingDashboardOrientation, 
-								  [NSNumber numberWithBool:YES], 
-								  OpenFeintSettingDisableUserGeneratedContent, nil];
+								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], OpenFeintSettingDashboardOrientation, 
+								  [NSNumber numberWithBool:YES], OpenFeintSettingDisableUserGeneratedContent,
+								  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
+								  nil];
 		OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
 		[OpenFeint initializeWithProductKey:@"7hiF4dldDFHvfROrEgGDA"
 								  andSecret:@"u3f6UaneEezk59d44hyH67wawNxnVVph0u16ASpm0s4"
@@ -138,6 +140,23 @@ static GameManager* _sharedGameManager = nil;
 	}
 	
 	return nil;
+}
+
+-(void) closeGame {
+	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+	[game closeGame];
+	_sharedGameManager.gameFinished = YES;
+}
+
+-(void) sendChallengeToUserId:(NSString *) userId {
+	OFMultiplayerGame* game = [OFMultiplayerService getSlot:0];
+	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::LOBBY_OPTION_CONFIG,
+							 [NSNumber numberWithUnsignedInt:5*60], OFMultiplayer::LOBBY_OPTION_TURN_TIME,
+							 [NSArray arrayWithObject:userId], OFMultiplayer::LOBBY_OPTION_CHALLENGE_OF_IDS,
+							 nil];
+	[game createGame:@"HundredSeconds" withOptions:options];
+	_sharedGameManager.isChallenger = YES;
+	[OFUser getUser:userId];	
 }
 
 @end

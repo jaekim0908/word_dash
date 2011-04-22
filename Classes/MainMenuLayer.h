@@ -18,7 +18,6 @@
 	CCLabelTTF *challengeRejectedLabel;
 }
 
--(void) closeMultiPlayerGame;
 -(void) showCancelChallengeMsg;
 -(void) enableMainMenu;
 -(void) disableMainMenu;

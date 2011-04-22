@@ -44,6 +44,5 @@
 -(void) gameDidAdvanceTurnToPlayerNumber:(unsigned int)playerNumber;
 -(void) showActionSheet;
 -(void)pickerFinishedWithSelectedUser:(OFUser*)selectedUser;
--(void) closeMultiPlayerGame;
 
 @end

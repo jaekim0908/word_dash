@@ -89,10 +89,9 @@ static BOOL firstTime = YES;
 	CCLOG(@"Slot Close State (Available, Closed, Rematch) = %i", [game slotCloseState]);
 	CCLOG(@"Client Game Slot State (None, Creating Game ...) = %i", [game clientGameSlotState]);
 	CCLOG(@"OF Challenger Id = %@", [game challengerOFUserId]);
-	CCLOG(@"Player = %i", [game player]);
 	CCLOG(@"--------------------------------------------");
 	
-	if (readyToStart) {
+	if (!firstTime) {
 		CCLOG(@"READY TO START");
 		if ([game hasBeenChallenged]) {
 			playerIsChallenger = NO;
@@ -100,10 +99,12 @@ static BOOL firstTime = YES;
 			[OFUser getUser:[[game playerOFUserIds] objectAtIndex:0]];
 			//[NSThread sleepForTimeInterval:5];
 			[OFMultiplayerService stopViewingGames];
-		}
-		
-		if ([game isStarted]) {
+		} else if ([game isStarted]) {
 			CCLOG(@"game has started");
+			if (![GameManager sharedGameManager].gameFinished) {
+				CCLOG(@"Game not finished");
+				return;
+			}
 			ChallengeRequestDialog *crd = (ChallengeRequestDialog *) [[[CCDirector sharedDirector] runningScene] getChildByTag:100];
 			if (crd) {
 				CCLOG(@"CRD IS NOT NULL && GAME STARTING");
@@ -115,7 +116,6 @@ static BOOL firstTime = YES;
 			[GameManager sharedGameManager].isChallenger = NO;
 			CCLOG(@"Starting game scene");
 			[[GameManager sharedGameManager] runSceneWithId:kMutiPlayerScene];
-			readyToStart = NO;
 			if (challengeAcceptSelected) {
 				CCLOG(@"Reset Challenge Accepted to NO");
 				challengeAcceptSelected = NO;
@@ -129,13 +129,9 @@ static BOOL firstTime = YES;
 			}
 		}
 	} else {
-		CCLOG(@"NOT READY TO START");
-		//CLOSE MP GAME
-		if (firstTime) {
-			[self closeMultiPlayerGame];
-			firstTime = NO;
-		}
-		readyToStart = YES;
+		CCLOG(@"First Time, Closing any existing games");
+		[[GameManager sharedGameManager] closeGame];
+		firstTime = NO;
 	}
 }
 
@@ -296,30 +292,16 @@ static BOOL firstTime = YES;
 	[popupQuery release];
 }
 
-#pragma mark game management
-- (void) closeMultiPlayerGame {
-	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	[game closeGame];
-}
-
 #pragma mark friend picker
 - (void)pickerFinishedWithSelectedUser:(OFUser*)selectedUser {
-	OFMultiplayerGame* game = [OFMultiplayerService getSlot:0];
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::LOBBY_OPTION_CONFIG,
-							 [NSNumber numberWithUnsignedInt:5*60], OFMultiplayer::LOBBY_OPTION_TURN_TIME,
-							 [NSArray arrayWithObject:[selectedUser resourceId]], OFMultiplayer::LOBBY_OPTION_CHALLENGE_OF_IDS,
-							 nil];
-	[game createGame:@"HundredSeconds" withOptions:options];
-	[OFUser getUser:[selectedUser userId]];
-	playerIsChallenger = YES;
-	[GameManager sharedGameManager].isChallenger = YES;
+	[[GameManager sharedGameManager] sendChallengeToUserId:[selectedUser userId]];
 	MainMenuLayer *mmLayer = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
 	[mmLayer disableMainMenu];
 }
 
 -(void) cancelChallenge {
 	CCLOG(@"CANCEL CHALLENGE CALLED");
-	[self closeMultiPlayerGame];
+	[[GameManager sharedGameManager] closeGame];
 	MainMenuLayer *mmLayer = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
 	[mmLayer enableMainMenu];
 }
@@ -370,6 +352,7 @@ static BOOL firstTime = YES;
 	[challengeeName release];
 	[challengerName release];
     [super dealloc];
+	CCLOG(@"MyOFDelegate Dealloc End");
 }
 
 @end

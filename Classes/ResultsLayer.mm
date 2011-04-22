@@ -108,8 +108,7 @@ static BOOL rematchRequested = NO;
 		rematchButton = [CCSprite spriteWithFile:@"blue_button.png"];
 		rematchButton.position = ccp(450, 280);
 		[self addChild:rematchButton];
-		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-		[game closeGame];
+		[[GameManager sharedGameManager] closeGame];
 		[OFMultiplayerService startViewingGames];
 	}
 	return self;
@@ -124,11 +123,9 @@ static BOOL rematchRequested = NO;
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
-		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+		[[GameManager sharedGameManager] closeGame];
 		CCLOG(@"--------------------------------------------");
 		CCLOG(@"Rematch button pressed");
-		CCLOG(@"Sleeping for 5 seconds");
-		[NSThread sleepForTimeInterval:5];
 		NSString *opponentId = nil;
 		NSString *localUserId = [[OpenFeint localUser] userId];
 		if ( [localUserId isEqualToString:[GameManager sharedGameManager].challengerId] ) {
@@ -144,6 +141,7 @@ static BOOL rematchRequested = NO;
 								 nil];
 		CCLOG(@"Creating Game");
 		CCLOG(@"--------------------------------------------");
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
 		[game createGame:@"HundredSeconds" withOptions:options];
 		[GameManager sharedGameManager].isChallenger = YES;
 		[OFUser getUser:opponentId];
@@ -152,11 +150,16 @@ static BOOL rematchRequested = NO;
 }
 
 -(void) dealloc {
-	CCLOG(@"ResultLayer dealloc called");
+	CCLOG(@"ResultLayer dealloc start");
 	[player1Score release];
+	CCLOG(@"player1score released");
 	[player2Score release];
+	CCLOG(@"player2score released");
 	[rematchButton release];
-	[super dealloc];
+	CCLOG(@"rematchButton released");
+	//DEBUG WHY IT CRASHES WHEN DEALLOC WAS CALLED
+	//[super dealloc];
+	CCLOG(@"ResultLayer dealloc end");
 }
 
 @end

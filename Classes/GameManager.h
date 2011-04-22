@@ -17,6 +17,7 @@
 	NSString *_challengerId;
 	NSString *_challengeeId;
 	BOOL _isChallenger;
+	BOOL _gameFinished;
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -25,10 +26,13 @@
 @property (nonatomic, retain) NSString *challengerId;
 @property (nonatomic, retain) NSString *challengeeId;
 @property (readwrite) BOOL isChallenger;
+@property (readwrite) BOOL gameFinished;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;
 -(void) runLoadingSceneWithTargetId:(SceneTypes) screenId;
 -(NSString *) getFileContents;
+-(void) closeGame;
+-(void) sendChallengeToUserId:(NSString *) userId;
 
 @end
