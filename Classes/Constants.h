@@ -18,3 +18,10 @@ typedef enum {
 	kHelloWorldScene,
 	kMaxScene
 } SceneTypes;
+
+typedef enum {
+	kInvalidStatus = 0,
+	kGameNone,
+	kGameStarted,
+	kGameFinished
+} GameStatus;

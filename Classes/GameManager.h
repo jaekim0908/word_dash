@@ -19,6 +19,7 @@
 	BOOL _isChallenger;
 	BOOL _gameFinished;
 	BOOL _gameStartedFromPushNotification;
+	GameStatus _gameStatus;
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -29,6 +30,7 @@
 @property (readwrite) BOOL isChallenger;
 @property (readwrite) BOOL gameFinished;
 @property (readwrite) BOOL gameStartedFromPushNotification;
+@property (readwrite) GameStatus gameStatus;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;

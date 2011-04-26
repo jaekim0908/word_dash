@@ -130,7 +130,9 @@ static BOOL firstTime = YES;
 		}
 	} else {
 		CCLOG(@"First Time, Closing any existing games");
-		[[GameManager sharedGameManager] closeGame];
+		if (![GameManager sharedGameManager].gameStartedFromPushNotification) {
+			[[GameManager sharedGameManager] closeGame];
+		}
 		firstTime = NO;
 	}
 }

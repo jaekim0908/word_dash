@@ -23,6 +23,7 @@ static BOOL rematchRequested = NO;
 -(id) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words 
 {
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
+		[GameManager sharedGameManager].gameStatus = kGameFinished;
 		NSLog(@"Inside results layer.");
 		self.isTouchEnabled = YES;
 		

@@ -29,6 +29,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize isChallenger = _isChallenger;
 @synthesize gameFinished = _gameFinished;
 @synthesize gameStartedFromPushNotification = _gameStartedFromPushNotification;
+@synthesize gameStatus = _gameStatus;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -146,10 +147,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void) closeGame {
 	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	if (!(_sharedGameManager.gameStartedFromPushNotification && [game hasBeenChallenged])) {
-		[game closeGame];
-		_sharedGameManager.gameStartedFromPushNotification = NO;
-	}
+	[game closeGame];
 	_sharedGameManager.gameFinished = YES;
 }
 

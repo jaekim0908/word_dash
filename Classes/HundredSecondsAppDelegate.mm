@@ -208,6 +208,14 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	CCLOG(@"applicationWillResignActive called");
+	for(int i = 0; i < (int) [OFMultiplayerService getSlotCount]; i++) {
+		CCLOG(@"closingGame %i - (applicationDidEnterBackground)", i);
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:i];
+		[game closeGame];
+	}
+	if ([GameManager sharedGameManager].gameStatus == kGameStarted) {
+		[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
+	}
 	[[CCDirector sharedDirector] pause];
 	// OpenFeint
 	[OpenFeint applicationWillResignActive];
@@ -231,11 +239,6 @@
 -(void) applicationDidEnterBackground:(UIApplication*)application {
 	CCLOG(@"applicationDidEnterBackground called");
 	[[CCDirector sharedDirector] stopAnimation];
-	for(int i = 0; i < (int) [OFMultiplayerService getSlotCount]; i++) {
-		CCLOG(@"closingGame %i - (applicationDidEnterBackground)", i);
-		OFMultiplayerGame *game = [OFMultiplayerService getSlot:i];
-		[game closeGame];
-	}
 	CCLOG(@"applicationDidEnterBackground end");
 }
 

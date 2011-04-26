@@ -58,6 +58,7 @@
 		[GameManager sharedGameManager].challengerId = [[game playerOFUserIds] objectAtIndex:0];
 		[GameManager sharedGameManager].challengeeId = [[game playerOFUserIds] objectAtIndex:1];
 		[GameManager sharedGameManager].gameFinished = NO;
+		[GameManager sharedGameManager].gameStatus = kGameStarted;
 		
 		if ([[[OpenFeint localUser] resourceId] isEqualToString:[[game playerOFUserIds] objectAtIndex:0]]) {
 			CCLOG(@"****************THIS PLAYER IS A CHALLENGER");

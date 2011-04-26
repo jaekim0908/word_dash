@@ -37,6 +37,7 @@
 	if ((self = [super init])) {
 		self.isTouchEnabled = YES;
 		[self displayMainMenu];
+		[GameManager sharedGameManager].gameStatus = kGameNone;
 		[[GameManager sharedGameManager] closeGame];
 		[OFMultiplayerService startViewingGames];
 		challengeCancelledLabel = [CCLabelTTF labelWithString:@"Challenger has cancelled the game" fontName:@"Verdana" fontSize:14];
