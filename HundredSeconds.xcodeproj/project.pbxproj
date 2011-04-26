@@ -1255,7 +1255,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D6058910D05DD3D006BFB54 /* HundredSeconds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HundredSeconds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* speedword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedword.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3B9A2B0EF2145700286867 /* HundredSecondsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HundredSecondsAppDelegate.mm; sourceTree = "<group>"; };
 		1F3B9A2C0EF2145700286867 /* HundredSecondsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HundredSecondsAppDelegate.h; path = Classes/HundredSecondsAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A820EF2151B00286867 /* HundredSeconds_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HundredSeconds_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -3073,7 +3073,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* HundredSeconds.app */,
+				1D6058910D05DD3D006BFB54 /* speedword.app */,
 				506EE05E10304ED200A389B3 /* libcocos2d libraries.a */,
 			);
 			name = Products;
@@ -7245,7 +7245,7 @@
 			);
 			name = HundredSeconds;
 			productName = HundredSeconds;
-			productReference = 1D6058910D05DD3D006BFB54 /* HundredSeconds.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* speedword.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506EE05D10304ED200A389B3 /* cocos2d libraries */ = {
@@ -7270,6 +7270,10 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = NO;
+				ORGANIZATIONNAME = experiencesquad;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HundredSeconds" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -8442,7 +8446,7 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = HundredSeconds;
+				PRODUCT_NAME = speedword;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -8464,7 +8468,7 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = HundredSeconds;
+				PRODUCT_NAME = speedword;
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;
@@ -8501,7 +8505,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
@@ -8517,6 +8521,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -8527,7 +8532,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -8538,6 +8543,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

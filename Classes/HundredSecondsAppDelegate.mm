@@ -15,6 +15,8 @@
 #import "OpenFeint.h"
 #import "OFDelegate.h"
 #import "Dictionary.h"
+#import "OFMultiplayerService.h"
+#import "OFMultiplayerGame.h"
 
 @implementation HundredSecondsAppDelegate
 
@@ -29,7 +31,7 @@
 	//
 #if GAME_AUTOROTATION == kGameAutorotationUIViewController
 
-//	CC_ENABLE_DEFAULT_GL_STATES();
+//	CC_ENABLE_DEFAUL                                                         T_GL_STATES();
 //	CCDirector *director = [CCDirector sharedDirector];
 //	CGSize size = [director winSize];
 //	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
@@ -205,23 +207,36 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+	CCLOG(@"applicationWillResignActive called");
 	[[CCDirector sharedDirector] pause];
 	// OpenFeint
 	[OpenFeint applicationWillResignActive];
+	CCLOG(@"applicationWillResignActive end");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	CCLOG(@"applicationDidBecomeActive called");
 	[[CCDirector sharedDirector] resume];
 	// OpenFeint
 	[OpenFeint applicationDidBecomeActive];
+	CCLOG(@"applicationDidBecomeActive end");
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+	CCLOG(@"applicationDidReceiveMemoryWarning called");
 	[[CCDirector sharedDirector] purgeCachedData];
+	CCLOG(@"applicationDidReceiveMemoryWarning end");
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application {
+	CCLOG(@"applicationDidEnterBackground called");
 	[[CCDirector sharedDirector] stopAnimation];
+	for(int i = 0; i < (int) [OFMultiplayerService getSlotCount]; i++) {
+		CCLOG(@"closingGame %i - (applicationDidEnterBackground)", i);
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:i];
+		[game closeGame];
+	}
+	CCLOG(@"applicationDidEnterBackground end");
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application {
@@ -229,6 +244,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+	CCLOG(@"applicationWillTerminate called");
 	CCDirector *director = [CCDirector sharedDirector];
 	
 	[[director openGLView] removeFromSuperview];
@@ -241,6 +257,12 @@
 	
 	// OpenFeint
 	[[NSUserDefaults standardUserDefaults] synchronize];
+	for(int i = 0; i < (int) [OFMultiplayerService getSlotCount]; i++) {
+		CCLOG(@"closingGame %i - (applicationWillTerminate)", i);
+		OFMultiplayerGame *game = [OFMultiplayerService getSlot:i];
+		[game closeGame];
+	}
+	CCLOG(@"applicationWillTerminate end");
 }
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
@@ -261,6 +283,24 @@
 	CCLOG(@"didReceiveRemoteNotification");
 	[OpenFeint applicationDidReceiveRemoteNotification:userInfo];
 }
+
+-(void) handlePushRequestGame:(OFMultiplayerGame*)game options:(NSDictionary*) options {
+	CCLOG(@"HandlePushRequestGame");
+}
+
+-(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
+{
+    OFLog(@"This is where we would launch game for slot %d", game.gameSlot);
+    [self handlePushRequestGame:game options:options];
+}
+
+
+-(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
+{
+    OFLog(@"Testing push notification response for slot %d", game.gameSlot);
+    [self handlePushRequestGame:game options:options];
+}
+
 
 - (void)dealloc {
 	[[CCDirector sharedDirector] release];

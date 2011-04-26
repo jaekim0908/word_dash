@@ -228,6 +228,7 @@ static BOOL firstTime = YES;
 -(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
 {
     OFLog(@"This is where we would launch game for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
+	[GameManager sharedGameManager].gameStartedFromPushNotification = YES;
     [self handlePushRequestGame:game options:options];
 }
 
@@ -235,7 +236,8 @@ static BOOL firstTime = YES;
 -(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
 {
     OFLog(@"Testing push notification response for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [self handlePushRequestGame:game options:options];
+    [GameManager sharedGameManager].gameStartedFromPushNotification = YES;
+	[self handlePushRequestGame:game options:options];
 }
 
 - (void) gameSlotDidBecomeEmpty:(OFMultiplayerGame *)game {
@@ -335,16 +337,6 @@ static BOOL firstTime = YES;
 		[self showActionSheet];
 	}
 }
-
-#pragma mark rematch_handling
-- (void) rematchAccepted:(OFMultiplayerGame*)game {
-	CCLOG(@"REMATCH ACCEPTED");
-}
-
-- (void) rematchRejected:(OFMultiplayerGame*)game {
-	CCLOG(@"REMATCH REJECTED");
-}
-
 
 #pragma mark dealloc
 - (void)dealloc {

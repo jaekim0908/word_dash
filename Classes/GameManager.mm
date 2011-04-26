@@ -28,6 +28,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize challengeeId = _challengeeId;
 @synthesize isChallenger = _isChallenger;
 @synthesize gameFinished = _gameFinished;
+@synthesize gameStartedFromPushNotification = _gameStartedFromPushNotification;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -62,6 +63,7 @@ static GameManager* _sharedGameManager = nil;
 		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;
+		_sharedGameManager.gameStartedFromPushNotification = NO;
 		NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
 								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], OpenFeintSettingDashboardOrientation, 
 								  [NSNumber numberWithBool:YES], OpenFeintSettingDisableUserGeneratedContent,
@@ -144,7 +146,10 @@ static GameManager* _sharedGameManager = nil;
 
 -(void) closeGame {
 	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	[game closeGame];
+	if (!(_sharedGameManager.gameStartedFromPushNotification && [game hasBeenChallenged])) {
+		[game closeGame];
+		_sharedGameManager.gameStartedFromPushNotification = NO;
+	}
 	_sharedGameManager.gameFinished = YES;
 }
 

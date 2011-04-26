@@ -157,7 +157,7 @@ static BOOL rematchRequested = NO;
 	CCLOG(@"player2score released");
 	[rematchButton release];
 	CCLOG(@"rematchButton released");
-	//DEBUG WHY IT CRASHES WHEN DEALLOC WAS CALLED
+	//DEBUG WHY IT CRASHEs WHEN DEALLOC WAS CALLED
 	//[super dealloc];
 	CCLOG(@"ResultLayer dealloc end");
 }

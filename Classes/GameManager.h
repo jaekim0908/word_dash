@@ -18,6 +18,7 @@
 	NSString *_challengeeId;
 	BOOL _isChallenger;
 	BOOL _gameFinished;
+	BOOL _gameStartedFromPushNotification;
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) NSString *challengeeId;
 @property (readwrite) BOOL isChallenger;
 @property (readwrite) BOOL gameFinished;
+@property (readwrite) BOOL gameStartedFromPushNotification;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;
