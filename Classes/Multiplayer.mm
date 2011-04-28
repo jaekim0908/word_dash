@@ -585,8 +585,8 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"15"];
-	[player2Timer setString:@"15"];
+	[player1Timer setString:@"100"];
+	[player2Timer setString:@"100"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];
@@ -872,7 +872,7 @@
 	CCLOG(@"Slot Close State (Available, Closed, Rematch) = %i", [game slotCloseState]);
 	CCLOG(@"Client Game Slot State (None, Creating Game ...) = %i", [game clientGameSlotState]);
 	CCLOG(@"OF Challenger Id = %@", [game challengerOFUserId]);
-	CCLOG(@"Player = %i", [game player]);
+	CCLOG(@"Player Count = %i", [game playerCount]);
 	CCLOG(@"--------------------------------------------");
 	
 	int p1 = [[player1Timer string] intValue];

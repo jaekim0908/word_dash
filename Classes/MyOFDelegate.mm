@@ -76,7 +76,7 @@ static BOOL firstTime = YES;
 }
 
 -(void) playerLeftGame:(unsigned int)playerNumber {
-	NSLog(@"player %i left the game", playerNumber);
+	CCLOG(@"player %i left the game", playerNumber);
 }
 
 - (void)networkDidUpdateLobby {
@@ -89,6 +89,7 @@ static BOOL firstTime = YES;
 	CCLOG(@"Slot Close State (Available, Closed, Rematch) = %i", [game slotCloseState]);
 	CCLOG(@"Client Game Slot State (None, Creating Game ...) = %i", [game clientGameSlotState]);
 	CCLOG(@"OF Challenger Id = %@", [game challengerOFUserId]);
+	CCLOG(@"Player Count = %i", [game playerCount]);
 	CCLOG(@"--------------------------------------------");
 	
 	if (!firstTime) {
