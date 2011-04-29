@@ -42,6 +42,11 @@ OPENFEINT_DECLARE_AS_SERVICE(OFAchievementService);
 + (OFRequestHandle*) updateAchievement:(NSString*)achievementId andPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification;
 + (OFRequestHandle*) updateAchievement:(NSString*)achievementId andPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification onSuccess:(const OFDelegate&)onSuccess onFailure:(const OFDelegate&)onFailure;
 
+//MCH -- added to add the percent complete
++ (OFRequestHandle*) updateAchievement:(NSString*)achievementId addPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification;
++ (OFRequestHandle*) updateAchievement:(NSString*)achievementId addPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification onSuccess:(const OFDelegate&)onSuccess onFailure:(const OFDelegate&)onFailure;
+
+
 + (void) queueUpdateAchievement:(NSString*)achievementId andPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification;
 + (OFRequestHandle*) submitQueuedUpadteAchievements:(const OFDelegate&)onSuccess onFailure:(const OFDelegate&)onFailure;
 

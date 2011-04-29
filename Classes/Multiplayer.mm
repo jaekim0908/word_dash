@@ -13,12 +13,19 @@
 #import "OFHighScoreService.h"
 #import "OFMultiplayerService.h"
 #import "OFMultiplayerService+Advanced.h"
+#import "OFAchievement.h"
+#import "OFAchievementService.h"
 #import "OpenFeint+Dashboard.h"
 #import "OpenFeint+UserOptions.h"
 #import "OFMultiplayerMove.h"
 #import "Dictionary.h"
 #import "GameManager.h"
 #import "ResultsLayer.h"
+#import "PauseLayer.h"
+
+//MCH - ACHIEVEMENTS
+#pragma once 
+#define EIGHT_LETTER_WORD @"936592"
 
 // HelloWorld implementation
 @implementation Multiplayer
@@ -27,7 +34,7 @@
 @synthesize cols;
 @synthesize thisGame;
 @synthesize isThisPlayerChallenger;
-
+@synthesize numPauseRequests;
 
 + (id) scene
 {
@@ -186,6 +193,11 @@
 		greySolveButton2.position = ccp(50, 40);
 		//[self addChild:greySolveButton2];
 		greySolveButton2.visible = NO;
+        
+        //MCH
+		pauseButton = [CCSprite spriteWithFile:@"player_pause.png"];
+		pauseButton.position = ccp(50, 300);
+		[self addChild:pauseButton];
 		
 		userSelection = [[NSMutableArray alloc] init];
 		
@@ -431,6 +443,19 @@
 	}
 }
 
+// MCH -- PAUSE
+- (void) pauseGame
+{
+    [self unschedule:@selector(updateTimer:)];
+    CCLayerColor *pauseLayer = [PauseLayer node];
+    [[[CCDirector sharedDirector] runningScene] addChild:pauseLayer z:2 tag:2];
+    
+}
+- (void) sendPauseRequest
+{
+    [self sendMove:@"PAUSE_GAME" rowNum:0 colNum:0 value:@"" endTurn:NO];    
+}
+
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
 		
 	if (gameOver || !enableTouch) {
@@ -439,6 +464,27 @@
 	
 	BOOL myTurn = [OFMultiplayerService isItMyTurn];
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    
+    //MCH PAUSE
+	if(CGRectContainsPoint(pauseButton.boundingBox, touchLocation)){
+		NSLog(@"PAUSE BUTTON PRESSED.");
+        if(myTurn && (numPauseRequests == 0)){
+            numPauseRequests++;
+            [self sendPauseRequest];
+            [self pauseGame];
+        }
+        else if (!myTurn){
+            [midDisplaySmall setString:@"Pause during your turn only."];
+            [midDisplaySmall runAction:[CCFadeOut actionWithDuration:1]];
+            
+        }
+        else if (numPauseRequests > 0){
+            [midDisplaySmall setString:@"Each player has one pause per game."];
+            [midDisplaySmall runAction:[CCFadeOut actionWithDuration:1]];
+        }
+        
+    }
+
 	
 	if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
 		int p1 = [[player1Score string] intValue];
@@ -834,6 +880,13 @@
 			}
 			int starCount = [self countStarPointandRemoveStars];
 			int newPoint = pow(2, [s length]);
+            
+            if([s length] == 5){
+                CCLOG(@"ACHIEVEMENT: Sending achievement progress");
+                //[[OFAchievement achievement:EIGHT_LETTER_WORD] updateProgressionComplete:20.0f andShowNotification:YES]; 
+                [OFAchievementService updateAchievement:EIGHT_LETTER_WORD addPercentComplete:10.0f andShowNotification:YES];
+                
+            }
 		
 			if ([OFMultiplayerService isItMyTurn]) {
 				[self addScore:newPoint toPlayer:1 anchorCell: [userSelection objectAtIndex:0]];

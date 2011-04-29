@@ -22,6 +22,7 @@
 #import "GameManager.h"
 #import "ChallengeRequestDialog.h"
 #import "MainMenuLayer.h"
+#import "PauseLayer.h"
 
 @implementation MyOFDelegate
 
@@ -156,6 +157,10 @@ static BOOL firstTime = YES;
 	NSString *val;
 	
 	Multiplayer *mp = (Multiplayer*) [[[CCDirector sharedDirector] runningScene] getChildByTag:0];
+    
+    //MCH
+    PauseLayer *pauseLayer = (PauseLayer*) [[[CCDirector sharedDirector] runningScene] getChildByTag:2];
+
 	
 	if ([command isEqualToString:@"TILE_FLIP"]) {
 		row = [[tokens objectAtIndex:1] intValue];
@@ -208,6 +213,25 @@ static BOOL firstTime = YES;
 		val = [tokens objectAtIndex:3];
 		[mp setTimer:val];
 	}
+    
+    //MCH -- supporting pause messages
+    if ([command isEqualToString:@"TIMER_COUNTDOWN_TIMEOUT"]) {
+		val = [tokens objectAtIndex:3];
+		[pauseLayer processTimeoutCountdownRequest:val];
+    }
+    
+    if ([command isEqualToString:@"PAUSE_GAME"]) {
+		[mp pauseGame];
+	}
+    
+    if ([command isEqualToString:@"RESUME_GAME"]) {
+		[pauseLayer remoteResumeRequest];
+	}
+    
+    if ([command isEqualToString:@"RESTART_GAME"]) {
+		[pauseLayer restartGame];
+	}
+
 	
 	return YES;
 }

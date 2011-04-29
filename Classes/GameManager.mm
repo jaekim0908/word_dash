@@ -71,11 +71,18 @@ static GameManager* _sharedGameManager = nil;
 								  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
 								  nil];
 		OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
+        /***************** JAE's GAME ID *************
 		[OpenFeint initializeWithProductKey:@"7hiF4dldDFHvfROrEgGDA"
 								  andSecret:@"u3f6UaneEezk59d44hyH67wawNxnVVph0u16ASpm0s4"
 							 andDisplayName:@"Battleship"
 								andSettings:settings    // see OpenFeintSettings.h
-							   andDelegates:delegates]; // see OFDelegatesContainer.h    
+							   andDelegates:delegates]; // see OFDelegatesContainer.h 
+        ****************************/
+        [OpenFeint initializeWithProductKey:@"KDSjH8AaN4DtiE9zklUw"
+								  andSecret:@"KxhwylmFzbSs1ocrBHtuDSsOXDnTIahsMdiw19lv8"
+							 andDisplayName:@"100 Seconds"
+								andSettings:settings    // see OpenFeintSettings.h
+							   andDelegates:delegates]; // see OFDelegatesContainer.h
 		[OFUser setDelegate:_sharedGameManager.myOFDelegate];
 		
 		// Multi-Game Initialization

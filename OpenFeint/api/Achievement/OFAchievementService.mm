@@ -202,6 +202,64 @@ OPENFEINT_DEFINE_SERVICE(OFAchievementService);
 	return [OFAchievementService updateAchievement:achievementId andPercentComplete:percentComplete andShowNotification:showUpdateNotification onSuccess:OFDelegate() onFailure:OFDelegate()];
 }
 
+//MCH -- modified to add percent complete to current percentage complete
++ (OFRequestHandle*) updateAchievement:(NSString*)achievementId addPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification
+{
+	return [OFAchievementService updateAchievement:achievementId addPercentComplete:percentComplete andShowNotification:showUpdateNotification onSuccess:OFDelegate() onFailure:OFDelegate()];
+}
+
+//MCH -- modified to add percent complete to current percentage complete
++ (OFRequestHandle*) updateAchievement:(NSString*)achievementId addPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification onSuccess:(const OFDelegate&)onSuccess onFailure:(const OFDelegate&)onFailure
+{
+	OFRequestHandle* handle = nil;
+	
+	percentComplete = MIN(percentComplete, 100.0);
+	percentComplete = MAX(percentComplete, 0.0);
+	
+	if([OpenFeint hasUserApprovedFeint])
+	{
+		double currentPercentComplete = [self getPercentComplete:achievementId forUser:[OpenFeint lastLoggedInUserId]];
+        double totalPercentComplete = percentComplete + currentPercentComplete;
+        
+		//Don't allow percent complete to go down.
+		if(totalPercentComplete > 100.0)
+		{
+			//invalid update.
+			onFailure.invoke();
+			return nil;
+		}
+		
+		NSString* lastLoggedInUser = [OpenFeint lastLoggedInUserId];
+		if ([lastLoggedInUser longLongValue] > 0)
+		{
+			[OFAchievementService localUpdateAchievement:achievementId forUser:lastLoggedInUser andPercentComplete:totalPercentComplete];
+			
+			OFGameCenterAchievement* gcAchievement = [[OFGameCenterAchievement new] autorelease];
+			gcAchievement.achievementIds = [NSArray arrayWithObject:achievementId];
+			gcAchievement.percentsComplete = [NSArray arrayWithObject:[NSNumber numberWithFloat:totalPercentComplete]];
+			gcAchievement.batch = NO;
+			gcAchievement.sync = NO;
+			handle = [gcAchievement submitOnSuccess:onSuccess onFailure:onFailure];
+            
+			if(showUpdateNotification)
+			{
+				OFAchievement* achievement = [OFAchievementService getAchievementLocalWithUnlockInfo:achievementId];
+				[[OFNotification sharedInstance] showAchievementNotice:achievement andPercentComplete:totalPercentComplete];
+			}
+		}
+	}
+	else if([OpenFeint isLoggedIntoGameCenter])
+	{
+		NSArray* submitAchievementIds = [[[NSArray alloc] initWithObjects:achievementId, nil] autorelease];
+		NSArray* submitPercents = [[[NSArray alloc] initWithObjects:[NSNumber numberWithDouble:percentComplete], nil] autorelease];
+		OFSubmitAchievementToGameCenterOnly* submitObject = [[[OFSubmitAchievementToGameCenterOnly alloc] init] autorelease];																
+		[submitObject submitToGameCenterOnlyWithIds:submitAchievementIds andPercentCompletes:submitPercents onSuccess:onSuccess onFailure:onFailure];
+	}
+    
+	return handle;
+}
+
+
 + (OFRequestHandle*) updateAchievement:(NSString*)achievementId andPercentComplete:(double)percentComplete andShowNotification:(BOOL)showUpdateNotification onSuccess:(const OFDelegate&)onSuccess onFailure:(const OFDelegate&)onFailure
 {
 	OFRequestHandle* handle = nil;

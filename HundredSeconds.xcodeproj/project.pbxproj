@@ -69,7 +69,6 @@
 		6EBB5DC6134AE3760002A854 /* crab2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EBB5DC5134AE3760002A854 /* crab2.txt */; };
 		6ECE2D9C13330B6400C996AF /* LoadingScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6ECE2D9B13330B6400C996AF /* LoadingScene.mm */; };
 		6ECE2ECD1333322400C996AF /* Dictionary.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6ECE2ECC1333322400C996AF /* Dictionary.mm */; };
-		6EDE9E74132F2A8B0053EE0A /* OFAchievementService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE97D7132F2A820053EE0A /* OFAchievementService.mm */; };
 		6EDE9E75132F2A8B0053EE0A /* OFUnlockedAchievementNotificationData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE97D9132F2A820053EE0A /* OFUnlockedAchievementNotificationData.mm */; };
 		6EDE9E76132F2A8B0053EE0A /* OFAnnouncementService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE97DC132F2A820053EE0A /* OFAnnouncementService.mm */; };
 		6EDE9E77132F2A8B0053EE0A /* OFApplicationDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDE97DF132F2A820053EE0A /* OFApplicationDescription.mm */; };
@@ -1062,6 +1061,11 @@
 		6EFA53951331EF800072F312 /* WordToo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53921331EF800072F312 /* WordToo.png */; };
 		6EFA53961331EF800072F312 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53931331EF800072F312 /* words.txt */; };
 		D4E870361369419700E25FD1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E870351369419700E25FD1 /* Default.png */; };
+		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
+		D4E87045136950EB00E25FD1 /* player_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87042136950EB00E25FD1 /* player_pause.png */; };
+		D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87043136950EB00E25FD1 /* BluePlayButton.png */; };
+		D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87044136950EB00E25FD1 /* button_blue_repeat.png */; };
+		D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E870491369531800E25FD1 /* OFAchievementService.mm */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -1323,8 +1327,6 @@
 		6ECE2D9B13330B6400C996AF /* LoadingScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadingScene.mm; sourceTree = "<group>"; };
 		6ECE2ECB1333322400C996AF /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dictionary.h; sourceTree = "<group>"; };
 		6ECE2ECC1333322400C996AF /* Dictionary.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Dictionary.mm; sourceTree = "<group>"; };
-		6EDE97D6132F2A820053EE0A /* OFAchievementService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFAchievementService.h; sourceTree = "<group>"; };
-		6EDE97D7132F2A820053EE0A /* OFAchievementService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OFAchievementService.mm; sourceTree = "<group>"; };
 		6EDE97D8132F2A820053EE0A /* OFUnlockedAchievementNotificationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFUnlockedAchievementNotificationData.h; sourceTree = "<group>"; };
 		6EDE97D9132F2A820053EE0A /* OFUnlockedAchievementNotificationData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OFUnlockedAchievementNotificationData.mm; sourceTree = "<group>"; };
 		6EDE97DB132F2A820053EE0A /* OFAnnouncementService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFAnnouncementService.h; sourceTree = "<group>"; };
@@ -2841,6 +2843,13 @@
 		6EFA53921331EF800072F312 /* WordToo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordToo.png; sourceTree = "<group>"; };
 		6EFA53931331EF800072F312 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		D4E870351369419700E25FD1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
+		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
+		D4E87042136950EB00E25FD1 /* player_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_pause.png; sourceTree = "<group>"; };
+		D4E87043136950EB00E25FD1 /* BluePlayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BluePlayButton.png; sourceTree = "<group>"; };
+		D4E87044136950EB00E25FD1 /* button_blue_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_blue_repeat.png; sourceTree = "<group>"; };
+		D4E870481369531800E25FD1 /* OFAchievementService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFAchievementService.h; sourceTree = "<group>"; };
+		D4E870491369531800E25FD1 /* OFAchievementService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OFAchievementService.mm; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -3165,6 +3174,8 @@
 				6EFA53181331DFB30072F312 /* PlayAndPassLayer.mm */,
 				6EFA531A1331DFE60072F312 /* PlayAndPassScene.h */,
 				6EFA531B1331DFE60072F312 /* PlayAndPassScene.mm */,
+				D4E8703F13694D4400E25FD1 /* PauseLayer.h */,
+				D4E8704013694D4400E25FD1 /* PauseLayer.mm */,
 				6ECE2D9A13330B6400C996AF /* LoadingScene.h */,
 				6ECE2D9B13330B6400C996AF /* LoadingScene.mm */,
 				6ECE2ECB1333322400C996AF /* Dictionary.h */,
@@ -3285,6 +3296,9 @@
 				6EBB5DC5134AE3760002A854 /* crab2.txt */,
 				6EBB5D85134ADB990002A854 /* crab.txt */,
 				6EFA53911331EF800072F312 /* WordToo.plist */,
+				D4E87042136950EB00E25FD1 /* player_pause.png */,
+				D4E87043136950EB00E25FD1 /* BluePlayButton.png */,
+				D4E87044136950EB00E25FD1 /* button_blue_repeat.png */,
 				6EFA53921331EF800072F312 /* WordToo.png */,
 				6EFA53931331EF800072F312 /* words.txt */,
 				6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */,
@@ -3357,8 +3371,8 @@
 		6EDE97D5132F2A820053EE0A /* Achievement */ = {
 			isa = PBXGroup;
 			children = (
-				6EDE97D6132F2A820053EE0A /* OFAchievementService.h */,
-				6EDE97D7132F2A820053EE0A /* OFAchievementService.mm */,
+				D4E870481369531800E25FD1 /* OFAchievementService.h */,
+				D4E870491369531800E25FD1 /* OFAchievementService.mm */,
 				6EDE97D8132F2A820053EE0A /* OFUnlockedAchievementNotificationData.h */,
 				6EDE97D9132F2A820053EE0A /* OFUnlockedAchievementNotificationData.mm */,
 			);
@@ -7811,6 +7825,9 @@
 				6EBB5D86134ADB990002A854 /* crab.txt in Resources */,
 				6EBB5DC6134AE3760002A854 /* crab2.txt in Resources */,
 				D4E870361369419700E25FD1 /* Default.png in Resources */,
+				D4E87045136950EB00E25FD1 /* player_pause.png in Resources */,
+				D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */,
+				D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7827,7 +7844,6 @@
 				6E047FBC1329F85500D15B1B /* GameManager.mm in Sources */,
 				6E048009132A018700D15B1B /* MainMenuScene.mm in Sources */,
 				6E04800C132A01A900D15B1B /* MainMenuLayer.mm in Sources */,
-				6EDE9E74132F2A8B0053EE0A /* OFAchievementService.mm in Sources */,
 				6EDE9E75132F2A8B0053EE0A /* OFUnlockedAchievementNotificationData.mm in Sources */,
 				6EDE9E76132F2A8B0053EE0A /* OFAnnouncementService.mm in Sources */,
 				6EDE9E77132F2A8B0053EE0A /* OFApplicationDescription.mm in Sources */,
@@ -8309,6 +8325,8 @@
 				6EEA81A7134183F800A7858E /* DialogLayer.mm in Sources */,
 				6EE0509113443BBF00BC5397 /* ResultsLayer.mm in Sources */,
 				6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */,
+				D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */,
+				D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

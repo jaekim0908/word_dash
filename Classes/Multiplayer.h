@@ -25,6 +25,7 @@
 	int width;
 	int height;
 	int y_offset;
+    int numPauseRequests;//MCH
 	
 	CCLabelTTF *player1Timer;
 	CCLabelTTF *player2Timer;
@@ -33,6 +34,7 @@
 	CCLabelTTF *player2Answer;
 	CCLabelTTF *gameTimer;
 	CCLabelTTF *midDisplay;
+    CCLabelTTF *midDisplaySmall;//MCH
 	CCLabelTTF *currentAnswer;
 	int playerTurn;
 	BOOL gameOver;
@@ -66,10 +68,12 @@
 	CCSprite *gameSummary;
 	OFMultiplayerGame *thisGame;
 	BOOL isThisPlayerChallenger;
+    CCSprite *pauseButton;//MCH
 }
 
 @property int cols;
 @property int rows;
+@property (nonatomic, assign) int numPauseRequests;
 @property (nonatomic, retain) OFMultiplayerGame *thisGame;
 @property BOOL isThisPlayerChallenger;
 
@@ -99,5 +103,7 @@
 - (void) setSPRow:(int) r Col:(int) c;
 - (void) setTimer:(NSString *) t;
 - (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId;
+- (void) pauseGame;//MCH
+- (void) sendPauseRequest;
 
 @end
