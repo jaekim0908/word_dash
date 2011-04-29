@@ -95,6 +95,7 @@ static inline int cell(int r, int c) {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
+        [GameManager sharedGameManager].gameStatus = kGameStarted;
 		self.isTouchEnabled = YES;
 		
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];

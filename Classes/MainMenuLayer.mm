@@ -36,9 +36,9 @@
 	NSLog(@"MainMenuLayer init called");
 	if ((self = [super init])) {
 		self.isTouchEnabled = YES;
+        [[GameManager sharedGameManager] closeGame];
 		[self displayMainMenu];
 		[GameManager sharedGameManager].gameStatus = kGameNone;
-		[[GameManager sharedGameManager] closeGame];
 		[OFMultiplayerService startViewingGames];
 		challengeCancelledLabel = [CCLabelTTF labelWithString:@"Challenger has cancelled the game" fontName:@"Verdana" fontSize:14];
 		CGSize screenSize = [CCDirector sharedDirector].winSize;
@@ -67,6 +67,12 @@
 											  target:self
 											  selector:@selector(displayPlayAndPass)];
 	
+    
+    CCLabelTTF *playAndPass = [CCLabelTTF labelWithString:@"Play And Pass" fontName:@"Verdana" fontSize:12];
+    playAndPass.color = ccc3(10, 10, 10);
+    playAndPass.position = ccp(410, 285);
+    [self addChild:playAndPass z:20];
+
 	CCMenuItemImage *multiPlayerGameButton = [CCMenuItemImage
 											  itemFromNormalImage:@"blue_button.png" 
 											  selectedImage:@"blue_button.png"
@@ -74,6 +80,11 @@
 											  target:self
 											  selector:@selector(displayMultiPlayer)];
 	
+    CCLabelTTF *multiPlayer = [CCLabelTTF labelWithString:@"Multiplayer" fontName:@"Verdana" fontSize:12];
+    multiPlayer.color = ccc3(10, 10, 10);
+    multiPlayer.position = ccp(410, 205);
+    [self addChild:multiPlayer z:20];
+    
 	CCMenuItemImage *howToPlayButton =		 [CCMenuItemImage
 											  itemFromNormalImage:@"blue_button.png" 
 											  selectedImage:@"blue_button.png"
@@ -81,12 +92,22 @@
 											  target:self
 											  selector:@selector(displaySceneSelection)];
 	
+    CCLabelTTF *howToPlay = [CCLabelTTF labelWithString:@"How To Play" fontName:@"Verdana" fontSize:12];
+    howToPlay.color = ccc3(10, 10, 10);
+    howToPlay.position = ccp(410, 125);
+    [self addChild:howToPlay z:20];
+
 	CCMenuItemImage *rankingButton =		[CCMenuItemImage 
 												itemFromNormalImage:@"blue_button.png"
 												selectedImage:@"blue_button.png"
 												disabledImage:nil
 												target:self
 												selector:@selector(displayRanking)];
+    
+    CCLabelTTF *rankings = [CCLabelTTF labelWithString:@"Rankings" fontName:@"Verdana" fontSize:12];
+    rankings.color = ccc3(10, 10, 10);
+    rankings.position = ccp(410, 45);
+    [self addChild:rankings z:20];
 	
 	mainMenu = [CCMenu menuWithItems:playAndPassGameButton, multiPlayerGameButton, howToPlayButton, rankingButton, nil];
 	[mainMenu alignItemsVerticallyWithPadding:5.0f];
