@@ -584,6 +584,7 @@ static int noActivityCounter = 0;
 	Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 
     cell.letter.visible = YES;
+    //cell.letterSelected2.visible = YES;
     CCLOG(@"cell visible = %i", cell.letter.visible);
     
 	if ([cell.value isEqualToString:@"A"] || 
@@ -882,6 +883,7 @@ static int noActivityCounter = 0;
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            [currentAnswer setColor:ccc3(0, 255, 0)];
 			[foundWords setObject:s forKey:s];
 			if ([OFMultiplayerService isItMyTurn]) {
 				CCLOG(@"word added to player 1 words list");
@@ -908,6 +910,7 @@ static int noActivityCounter = 0;
 				[self addMoreTime:(starCount * 10) toPlayer:2];
 			}
 		} else {
+            [currentAnswer setColor:ccc3(255, 0, 0)];
 			[midDisplay setString:@"Try again"];
 		}
 	}
@@ -922,6 +925,7 @@ static int noActivityCounter = 0;
 		s = [s stringByAppendingString:c.value];
 	}
 
+    [currentAnswer setColor:ccc3(255, 255, 255)];
 	[currentAnswer setString:s];
 }
 
@@ -1043,7 +1047,7 @@ static int noActivityCounter = 0;
             CCLOG(@"P2 Timer = %i", p2);
             CCLOG(@"No Activity Counter = %i", noActivityCounter);
             
-            if (prevPlayer2Timer - p2 == 0) {
+            if (!play2Done && prevPlayer2Timer - p2 == 0) {
                 noActivityCounter++;
             } else {
                 prevPlayer2Timer = p2;
