@@ -22,6 +22,7 @@
 #import "GameManager.h"
 #import "ResultsLayer.h"
 #import "PauseLayer.h"
+#import "SimpleAudioEngine.h"
 
 //MCH - ACHIEVEMENTS
 #pragma once 
@@ -35,6 +36,9 @@
 @synthesize thisGame;
 @synthesize isThisPlayerChallenger;
 @synthesize numPauseRequests;
+@synthesize soundEngine;
+@synthesize initOpponentOutOfTime;
+
 
 + (id) scene
 {
@@ -85,6 +89,8 @@
 		countNoTileFlips = 1;
 		currentStarPoints = 8;
 		gameCountdown = NO;
+        initOpponentOutOfTime = NO;
+        
 		
 		self.isTouchEnabled = YES;
 		
@@ -163,6 +169,22 @@
 		currentAnswer.position = ccp(windowSize.width/2, 260);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
+        
+        //MCH -- to display message when opponent has no time left
+		statusMessage = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:14] retain];
+		statusMessage.color = ccc3(0, 0, 255);
+		statusMessage.position = ccp(windowSize.width/2, 280);
+		statusMessage.anchorPoint = ccp(0.5f, 0.5f);
+        statusMessage.visible = NO;
+		[self addChild:statusMessage];
+        
+        
+        //MCH
+		outOfTimeMsg = [CCSprite spriteWithFile:@"out_of_time_msg.png"];
+		outOfTimeMsg.position = ccp(windowSize.width/2, 280);
+        outOfTimeMsg.visible = NO;
+		[self addChild:outOfTimeMsg];
+
 		
 		wordMatrix = [[NSMutableArray alloc] init];
 		for(int r = 0; r < rows; r++) {
@@ -230,6 +252,11 @@
 		CCSprite *backGround = [CCSprite spriteWithSpriteFrameName:@"footprints-beach.png"];
 		backGround.position = ccp(windowSize.width/2, windowSize.height/2);
 		[batchNode addChild:backGround z:-10];
+        
+        //Get the sound engine instance, if something went wrong this will be nil
+		soundEngine = [SimpleAudioEngine sharedEngine];
+        //[soundEngine playBackgroundMusic:@"ocean_waves2.mp3" loop:YES];
+        //[soundEngine playBackgroundMusic:@"reggae_beats.wav" loop:YES];
 	}
 	return self;
 }
@@ -462,6 +489,8 @@
 		return TRUE;
 	}
 	
+    
+    
 	BOOL myTurn = [OFMultiplayerService isItMyTurn];
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
@@ -529,6 +558,8 @@
 					[self sendMove:@"SELECT_TILE" rowNum:r colNum:c value:@"" endTurn:NO];
 				} else {
 					if (myTurn && playerTurn == 1 && !player1TileFipped) {
+                        //[soundEngine playEffect:@"Writing_with_Pencil.mp3"];
+                        //[soundEngine playEffect:@"click3_beep.wav"];
 						[self sendMove:@"TILE_FLIP" rowNum:r colNum:c value:@"" endTurn:NO];
 						cell.letter.visible = YES;
 						player1TileFipped = YES;
@@ -631,7 +662,7 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"60"];
+	[player1Timer setString:@"60"];//MCH
 	[player2Timer setString:@"60"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
@@ -913,6 +944,7 @@
 	[currentAnswer setString:s];
 }
 
+    
 - (void) updateTimer:(ccTime) dt {
 	
 	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
@@ -931,10 +963,30 @@
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
 	
+    CCLOG(@"TIME LEFT: p1=%d, p2=%d",p1,p2);
 	BOOL play1Done = NO;
 	BOOL play2Done = NO;
 	
-	if (gameCountdown) {
+    //MCH -- DISPLAY MESSAGE IF PLAYER 2 HAS RUN OUT OF TIME BUT YOU STILL HAVE TIME LEFT
+    if ((p1 > 0) && (p2 == 0) && !initOpponentOutOfTime)
+    {
+        initOpponentOutOfTime = YES;
+        //DISPLAY LABEL HERE
+        CCLOG(@"PLAYER 2 HAS RUN OUT OF TIME!!!!!");
+        [statusMessage setString:@"Keep going! Opponent has run out of time."];
+        
+        id blinkAction = [CCBlink actionWithDuration:3.0f blinks:1];
+        
+        id foreverBlinkAction = [CCRepeatForever actionWithAction:blinkAction];
+        //[statusMessage runAction:foreverBlinkAction];
+        [statusMessage runAction:foreverBlinkAction];
+        
+        
+    }
+    CCLOG(@"statusMessage LABEL X POSITION: %f",statusMessage.position.x );
+          
+    
+    if (gameCountdown) {
 		CCLOG(@"gameCountdown start");
 		NSString *status = [gameCountDownLabel string];
 		gameCountDownLabel.visible = YES;
@@ -1060,6 +1112,7 @@
 	
 	// don't forget to call "super dealloc"
 	[userSelection release];
+    [SimpleAudioEngine release];
 	[super dealloc];
 }
 

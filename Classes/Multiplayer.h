@@ -13,6 +13,7 @@
 #import "OpenFeint.h"
 #import "OFMultiplayerGame.h"
 #import "OFMultiplayer.h"
+#import "SimpleAudioEngine.h"
 
 @class Cell;
 
@@ -36,8 +37,10 @@
 	CCLabelTTF *midDisplay;
     CCLabelTTF *midDisplaySmall;//MCH
 	CCLabelTTF *currentAnswer;
+    CCLabelTTF *statusMessage;//MCH
 	int playerTurn;
 	BOOL gameOver;
+    BOOL initOpponentOutOfTime;
 	NSMutableArray* allWords;
 	NSMutableDictionary *dictionary;
 	NSMutableArray* wordMatrix;
@@ -50,6 +53,7 @@
 	CCSprite *goButton2;
 	CCSprite *stopButton1;
 	CCSprite *stopButton2;
+    CCSprite *outOfTimeMsg;
 	NSMutableArray *userSelection;
 	BOOL player1TileFipped;
 	BOOL player2TileFipped;
@@ -69,13 +73,17 @@
 	OFMultiplayerGame *thisGame;
 	BOOL isThisPlayerChallenger;
     CCSprite *pauseButton;//MCH
+    SimpleAudioEngine *soundEngine;
 }
 
 @property int cols;
 @property int rows;
 @property (nonatomic, assign) int numPauseRequests;
 @property (nonatomic, retain) OFMultiplayerGame *thisGame;
+@property (nonatomic, retain) SimpleAudioEngine *soundEngine;
 @property BOOL isThisPlayerChallenger;
+@property BOOL initOpponentOutOfTime;
+
 
 // returns a Scene that contains the HelloWorld as the only child
 + (id) scene;

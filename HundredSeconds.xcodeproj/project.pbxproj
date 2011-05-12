@@ -1060,12 +1060,20 @@
 		6EFA53941331EF800072F312 /* WordToo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53911331EF800072F312 /* WordToo.plist */; };
 		6EFA53951331EF800072F312 /* WordToo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53921331EF800072F312 /* WordToo.png */; };
 		6EFA53961331EF800072F312 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53931331EF800072F312 /* words.txt */; };
+		D47279DD1378ED10005E6C61 /* reggae_beats.wav in Resources */ = {isa = PBXBuildFile; fileRef = D47279DC1378ED10005E6C61 /* reggae_beats.wav */; };
+		D47279E01378EF37005E6C61 /* ocean_waves.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */; };
+		D47279E21378F2A9005E6C61 /* ocean_waves2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */; };
+		D47279E4137A64A7005E6C61 /* out_of_time_msg.png in Resources */ = {isa = PBXBuildFile; fileRef = D47279E3137A64A6005E6C61 /* out_of_time_msg.png */; };
 		D4E870361369419700E25FD1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E870351369419700E25FD1 /* Default.png */; };
 		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
 		D4E87045136950EB00E25FD1 /* player_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87042136950EB00E25FD1 /* player_pause.png */; };
 		D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87043136950EB00E25FD1 /* BluePlayButton.png */; };
 		D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87044136950EB00E25FD1 /* button_blue_repeat.png */; };
 		D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E870491369531800E25FD1 /* OFAchievementService.mm */; };
+		D4E870661371083C00E25FD1 /* click3_beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = D4E870651371083C00E25FD1 /* click3_beep.wav */; };
+		D4E87068137116B500E25FD1 /* wet_sand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E87067137116B500E25FD1 /* wet_sand.mp3 */; };
+		D4E8706C13711EBB00E25FD1 /* steps_sand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */; };
+		D4E8706E1371220C00E25FD1 /* Writing_with_Pencil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -2842,6 +2850,10 @@
 		6EFA53911331EF800072F312 /* WordToo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WordToo.plist; sourceTree = "<group>"; };
 		6EFA53921331EF800072F312 /* WordToo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordToo.png; sourceTree = "<group>"; };
 		6EFA53931331EF800072F312 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		D47279DC1378ED10005E6C61 /* reggae_beats.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reggae_beats.wav; sourceTree = "<group>"; };
+		D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean_waves.mp3; sourceTree = "<group>"; };
+		D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean_waves2.mp3; sourceTree = "<group>"; };
+		D47279E3137A64A6005E6C61 /* out_of_time_msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = out_of_time_msg.png; sourceTree = "<group>"; };
 		D4E870351369419700E25FD1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
@@ -2850,6 +2862,10 @@
 		D4E87044136950EB00E25FD1 /* button_blue_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_blue_repeat.png; sourceTree = "<group>"; };
 		D4E870481369531800E25FD1 /* OFAchievementService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFAchievementService.h; sourceTree = "<group>"; };
 		D4E870491369531800E25FD1 /* OFAchievementService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OFAchievementService.mm; sourceTree = "<group>"; };
+		D4E870651371083C00E25FD1 /* click3_beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click3_beep.wav; sourceTree = "<group>"; };
+		D4E87067137116B500E25FD1 /* wet_sand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wet_sand.mp3; sourceTree = "<group>"; };
+		D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = steps_sand.mp3; sourceTree = "<group>"; };
+		D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Writing_with_Pencil.mp3; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -3296,7 +3312,15 @@
 				6EBB5DC5134AE3760002A854 /* crab2.txt */,
 				6EBB5D85134ADB990002A854 /* crab.txt */,
 				6EFA53911331EF800072F312 /* WordToo.plist */,
+				D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */,
+				D4E870651371083C00E25FD1 /* click3_beep.wav */,
+				D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */,
+				D4E87067137116B500E25FD1 /* wet_sand.mp3 */,
+				D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */,
+				D47279DC1378ED10005E6C61 /* reggae_beats.wav */,
+				D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */,
 				D4E87042136950EB00E25FD1 /* player_pause.png */,
+				D47279E3137A64A6005E6C61 /* out_of_time_msg.png */,
 				D4E87043136950EB00E25FD1 /* BluePlayButton.png */,
 				D4E87044136950EB00E25FD1 /* button_blue_repeat.png */,
 				6EFA53921331EF800072F312 /* WordToo.png */,
@@ -7828,6 +7852,14 @@
 				D4E87045136950EB00E25FD1 /* player_pause.png in Resources */,
 				D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */,
 				D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */,
+				D4E870661371083C00E25FD1 /* click3_beep.wav in Resources */,
+				D4E87068137116B500E25FD1 /* wet_sand.mp3 in Resources */,
+				D4E8706C13711EBB00E25FD1 /* steps_sand.mp3 in Resources */,
+				D4E8706E1371220C00E25FD1 /* Writing_with_Pencil.mp3 in Resources */,
+				D47279DD1378ED10005E6C61 /* reggae_beats.wav in Resources */,
+				D47279E01378EF37005E6C61 /* ocean_waves.mp3 in Resources */,
+				D47279E21378F2A9005E6C61 /* ocean_waves2.mp3 in Resources */,
+				D47279E4137A64A7005E6C61 /* out_of_time_msg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

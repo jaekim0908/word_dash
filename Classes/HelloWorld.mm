@@ -249,6 +249,9 @@ static inline int cell(int r, int c) {
 		CCSprite *backGround = [CCSprite spriteWithSpriteFrameName:@"footprints-beach.png"];
 		backGround.position = ccp(windowSize.width/2, windowSize.height/2);
 		[batchNode addChild:backGround z:-10];
+        
+        
+
 	}
 	return self;
 }
