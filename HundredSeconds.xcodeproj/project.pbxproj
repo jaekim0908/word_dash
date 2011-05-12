@@ -1026,7 +1026,6 @@
 		6EDEA2F3132F347A0053EE0A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDEA2F2132F347A0053EE0A /* GameKit.framework */; };
 		6EDEA2FF132F34B90053EE0A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDEA2FE132F34B90053EE0A /* AddressBookUI.framework */; };
 		6EDEA304132F35340053EE0A /* MyOFDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDEA303132F35340053EE0A /* MyOFDelegate.mm */; };
-		6EDEA366132F3D330053EE0A /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */; };
 		6EDEFFD013372DF6005A1D65 /* Multiplayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EDEFFCE13372DF6005A1D65 /* Multiplayer.mm */; };
 		6EE0509113443BBF00BC5397 /* ResultsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0509013443BBF00BC5397 /* ResultsLayer.mm */; };
 		6EEA81A7134183F800A7858E /* DialogLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA81A6134183F800A7858E /* DialogLayer.mm */; };
@@ -1060,20 +1059,13 @@
 		6EFA53941331EF800072F312 /* WordToo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53911331EF800072F312 /* WordToo.plist */; };
 		6EFA53951331EF800072F312 /* WordToo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53921331EF800072F312 /* WordToo.png */; };
 		6EFA53961331EF800072F312 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53931331EF800072F312 /* words.txt */; };
-		D47279DD1378ED10005E6C61 /* reggae_beats.wav in Resources */ = {isa = PBXBuildFile; fileRef = D47279DC1378ED10005E6C61 /* reggae_beats.wav */; };
-		D47279E01378EF37005E6C61 /* ocean_waves.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */; };
-		D47279E21378F2A9005E6C61 /* ocean_waves2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */; };
-		D47279E4137A64A7005E6C61 /* out_of_time_msg.png in Resources */ = {isa = PBXBuildFile; fileRef = D47279E3137A64A6005E6C61 /* out_of_time_msg.png */; };
+		8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */; };
 		D4E870361369419700E25FD1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E870351369419700E25FD1 /* Default.png */; };
 		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
 		D4E87045136950EB00E25FD1 /* player_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87042136950EB00E25FD1 /* player_pause.png */; };
 		D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87043136950EB00E25FD1 /* BluePlayButton.png */; };
 		D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87044136950EB00E25FD1 /* button_blue_repeat.png */; };
 		D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E870491369531800E25FD1 /* OFAchievementService.mm */; };
-		D4E870661371083C00E25FD1 /* click3_beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = D4E870651371083C00E25FD1 /* click3_beep.wav */; };
-		D4E87068137116B500E25FD1 /* wet_sand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E87067137116B500E25FD1 /* wet_sand.mp3 */; };
-		D4E8706C13711EBB00E25FD1 /* steps_sand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */; };
-		D4E8706E1371220C00E25FD1 /* Writing_with_Pencil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */; };
 		DC6640030F83B3EA000B3E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
 		DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
@@ -1267,7 +1259,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D6058910D05DD3D006BFB54 /* speedword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedword.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* beachgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beachgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3B9A2B0EF2145700286867 /* HundredSecondsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HundredSecondsAppDelegate.mm; sourceTree = "<group>"; };
 		1F3B9A2C0EF2145700286867 /* HundredSecondsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HundredSecondsAppDelegate.h; path = Classes/HundredSecondsAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A820EF2151B00286867 /* HundredSeconds_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HundredSeconds_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -2784,7 +2776,6 @@
 		6EDEA2FE132F34B90053EE0A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		6EDEA302132F35340053EE0A /* MyOFDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOFDelegate.h; sourceTree = "<group>"; };
 		6EDEA303132F35340053EE0A /* MyOFDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyOFDelegate.mm; sourceTree = "<group>"; };
-		6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		6EDEFFCE13372DF6005A1D65 /* Multiplayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Multiplayer.mm; sourceTree = "<group>"; };
 		6EDEFFCF13372DF6005A1D65 /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
 		6EE0508F13443BBF00BC5397 /* ResultsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsLayer.h; sourceTree = "<group>"; };
@@ -2850,10 +2841,7 @@
 		6EFA53911331EF800072F312 /* WordToo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WordToo.plist; sourceTree = "<group>"; };
 		6EFA53921331EF800072F312 /* WordToo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordToo.png; sourceTree = "<group>"; };
 		6EFA53931331EF800072F312 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
-		D47279DC1378ED10005E6C61 /* reggae_beats.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reggae_beats.wav; sourceTree = "<group>"; };
-		D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean_waves.mp3; sourceTree = "<group>"; };
-		D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ocean_waves2.mp3; sourceTree = "<group>"; };
-		D47279E3137A64A6005E6C61 /* out_of_time_msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = out_of_time_msg.png; sourceTree = "<group>"; };
+		8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		D4E870351369419700E25FD1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
@@ -2862,10 +2850,6 @@
 		D4E87044136950EB00E25FD1 /* button_blue_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_blue_repeat.png; sourceTree = "<group>"; };
 		D4E870481369531800E25FD1 /* OFAchievementService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFAchievementService.h; sourceTree = "<group>"; };
 		D4E870491369531800E25FD1 /* OFAchievementService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OFAchievementService.mm; sourceTree = "<group>"; };
-		D4E870651371083C00E25FD1 /* click3_beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click3_beep.wav; sourceTree = "<group>"; };
-		D4E87067137116B500E25FD1 /* wet_sand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wet_sand.mp3; sourceTree = "<group>"; };
-		D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = steps_sand.mp3; sourceTree = "<group>"; };
-		D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Writing_with_Pencil.mp3; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DC6640040F83B3EA000B3E49 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -3098,7 +3082,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* speedword.app */,
+				1D6058910D05DD3D006BFB54 /* beachgame.app */,
 				506EE05E10304ED200A389B3 /* libcocos2d libraries.a */,
 			);
 			name = Products;
@@ -3309,23 +3293,15 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */,
 				6EBB5DC5134AE3760002A854 /* crab2.txt */,
 				6EBB5D85134ADB990002A854 /* crab.txt */,
 				6EFA53911331EF800072F312 /* WordToo.plist */,
-				D47279DF1378EF37005E6C61 /* ocean_waves.mp3 */,
-				D4E870651371083C00E25FD1 /* click3_beep.wav */,
-				D4E8706D1371220C00E25FD1 /* Writing_with_Pencil.mp3 */,
-				D4E87067137116B500E25FD1 /* wet_sand.mp3 */,
-				D4E8706B13711EBB00E25FD1 /* steps_sand.mp3 */,
-				D47279DC1378ED10005E6C61 /* reggae_beats.wav */,
-				D47279E11378F2A9005E6C61 /* ocean_waves2.mp3 */,
 				D4E87042136950EB00E25FD1 /* player_pause.png */,
-				D47279E3137A64A6005E6C61 /* out_of_time_msg.png */,
 				D4E87043136950EB00E25FD1 /* BluePlayButton.png */,
 				D4E87044136950EB00E25FD1 /* button_blue_repeat.png */,
 				6EFA53921331EF800072F312 /* WordToo.png */,
 				6EFA53931331EF800072F312 /* words.txt */,
-				6EDEA365132F3D330053EE0A /* openfeint_offline_config.xml */,
 				6E04800E132A09A500D15B1B /* blue_button.png */,
 				E02BB762126CC1E0006E46A2 /* iTunesArtwork */,
 				E02BB4FE126CA50F006E46A2 /* Icon@2x.png */,
@@ -7283,7 +7259,7 @@
 			);
 			name = HundredSeconds;
 			productName = HundredSeconds;
-			productReference = 1D6058910D05DD3D006BFB54 /* speedword.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* beachgame.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506EE05D10304ED200A389B3 /* cocos2d libraries */ = {
@@ -7842,7 +7818,6 @@
 				6EDEA171132F2A8B0053EE0A /* OFDashboardTabNowPlayingPortrait.png in Resources */,
 				6EDEA172132F2A8B0053EE0A /* OFDashboardTabNowPlayingPortraitDisabled.png in Resources */,
 				6EDEA173132F2A8B0053EE0A /* OFDashboardTabNowPlayingPortraitHit.png in Resources */,
-				6EDEA366132F3D330053EE0A /* openfeint_offline_config.xml in Resources */,
 				6EFA53941331EF800072F312 /* WordToo.plist in Resources */,
 				6EFA53951331EF800072F312 /* WordToo.png in Resources */,
 				6EFA53961331EF800072F312 /* words.txt in Resources */,
@@ -7852,14 +7827,7 @@
 				D4E87045136950EB00E25FD1 /* player_pause.png in Resources */,
 				D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */,
 				D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */,
-				D4E870661371083C00E25FD1 /* click3_beep.wav in Resources */,
-				D4E87068137116B500E25FD1 /* wet_sand.mp3 in Resources */,
-				D4E8706C13711EBB00E25FD1 /* steps_sand.mp3 in Resources */,
-				D4E8706E1371220C00E25FD1 /* Writing_with_Pencil.mp3 in Resources */,
-				D47279DD1378ED10005E6C61 /* reggae_beats.wav in Resources */,
-				D47279E01378EF37005E6C61 /* ocean_waves.mp3 in Resources */,
-				D47279E21378F2A9005E6C61 /* ocean_waves2.mp3 in Resources */,
-				D47279E4137A64A7005E6C61 /* out_of_time_msg.png in Resources */,
+				8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8481,7 +8449,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8497,8 +8466,10 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = speedword;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PRODUCT_NAME = beachgame;
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
@@ -8507,7 +8478,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -8521,8 +8493,10 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = speedword;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PRODUCT_NAME = beachgame;
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Release;
@@ -8559,6 +8533,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8575,7 +8550,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -8586,6 +8562,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
@@ -8597,7 +8574,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -8613,7 +8591,7 @@
 				1D6058950D05DD3E006BFB54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		506EE06410304F0100A389B3 /* Build configuration list for PBXNativeTarget "cocos2d libraries" */ = {
 			isa = XCConfigurationList;
@@ -8622,7 +8600,7 @@
 				506EE06010304ED500A389B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "HundredSeconds" */ = {
 			isa = XCConfigurationList;
@@ -8631,7 +8609,7 @@
 				C01FCF5008A954540054247B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

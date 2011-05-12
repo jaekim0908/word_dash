@@ -1,20 +1,37 @@
 <resources>
 <game_profile_page_info>
   <has_chat_rooms>false</has_chat_rooms>
-  <has_challenges>false</has_challenges>
-  <suggestions_topic_id>658383</suggestions_topic_id>
-  <has_achievements>false</has_achievements>
+  <has_challenges>true</has_challenges>
+  <suggestions_topic_id>658363</suggestions_topic_id>
+  <has_achievements>true</has_achievements>
   <has_leaderboards>false</has_leaderboards>
   <has_featured_application>false</has_featured_application>
   <has_ipurchase>false</has_ipurchase>
-  <short_name>Battleship</short_name>
-  <name>Battleship</name>
-  <id>243493</id>
-  <timestamp>2011-02-17 06:00:22</timestamp>
+  <short_name>100 Seconds</short_name>
+  <name>100 Seconds</name>
+  <id>243483</id>
+  <timestamp>2011-05-04 06:01:03</timestamp>
   <is_owned_by_local_player>true</is_owned_by_local_player>
 </game_profile_page_info>
 <offline>
-<timestamp>2011-02-17 06:00:22</timestamp>
+<timestamp>2011-05-04 06:01:03</timestamp>
+<achievements>
+<achievement>
+<id>936592</id>
+<title>10 five-letter-words</title>
+<description>Achieving 10 five-letter-words</description>
+<gamerscore>15</gamerscore>
+<icon_url></icon_url>
+<is_secret>false</is_secret>
+<is_unlocked>false</is_unlocked>
+<percent_complete></percent_complete>
+<unlocked_date></unlocked_date>
+<position>1</position>
+<start_version>0000.00.00</start_version>
+<end_version>9999.99.99</end_version>
+<timestamp>2011-05-04 06:01:03</timestamp>
+</achievement>
+</achievements>
 </offline>
 
 </resources>

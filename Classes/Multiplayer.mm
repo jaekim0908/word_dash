@@ -24,6 +24,9 @@
 #import "PauseLayer.h"
 #import "SimpleAudioEngine.h"
 
+static int prevPlayer2Timer = 0;
+static int noActivityCounter = 0;
+
 //MCH - ACHIEVEMENTS
 #pragma once 
 #define EIGHT_LETTER_WORD @"936592"
@@ -59,7 +62,9 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		
+        
+
+        
 		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
 		self.isThisPlayerChallenger = NO;
 		CCLOG(@"****************LOCAL USER ID = %@", [[OpenFeint localUser] resourceId]);
@@ -91,6 +96,9 @@
 		gameCountdown = NO;
         initOpponentOutOfTime = NO;
         
+        
+        prevPlayer2Timer = 60;
+        noActivityCounter = 0;
 		
 		self.isTouchEnabled = YES;
 		
@@ -603,8 +611,13 @@
 }
 
 - (void) tileFlipRow:(int) r Col:(int) c {
+    CCLOG(@"tileFlip called");
 	Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-	cell.letter.visible = YES;
+
+    cell.letter.visible = YES;
+    //cell.letterSelected2.visible = YES;
+    CCLOG(@"cell visible = %i", cell.letter.visible);
+    
 	if ([cell.value isEqualToString:@"A"] || 
 		[cell.value isEqualToString:@"E"] || 
 		[cell.value isEqualToString:@"I"] || 
@@ -901,6 +914,7 @@
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            [currentAnswer setColor:ccc3(0, 255, 0)];
 			[foundWords setObject:s forKey:s];
 			if ([OFMultiplayerService isItMyTurn]) {
 				CCLOG(@"word added to player 1 words list");
@@ -927,6 +941,7 @@
 				[self addMoreTime:(starCount * 10) toPlayer:2];
 			}
 		} else {
+            [currentAnswer setColor:ccc3(255, 0, 0)];
 			[midDisplay setString:@"Try again"];
 		}
 	}
@@ -941,6 +956,7 @@
 		s = [s stringByAppendingString:c.value];
 	}
 
+    [currentAnswer setColor:ccc3(255, 255, 255)];
 	[currentAnswer setString:s];
 }
 
@@ -1078,8 +1094,48 @@
 			} else {
 				[self sendMove:@"NO_TIME_LEFT" rowNum:0 colNum:0 value:@"" endTurn:YES];
 			}
-		} 
-	}	
+		} else { // checking player 2's timer value we know the game is still continuing
+            CCLOG(@"Previous Player2Timer = %i", prevPlayer2Timer);
+            CCLOG(@"P2 Timer = %i", p2);
+            CCLOG(@"No Activity Counter = %i", noActivityCounter);
+            
+            if (!play2Done && prevPlayer2Timer - p2 == 0) {
+                noActivityCounter++;
+            } else {
+                prevPlayer2Timer = p2;
+                noActivityCounter = 0;
+            }
+        }
+	}
+	
+    if (noActivityCounter > 5) {
+        CCLOG(@"NO ACTIVITY DETECTED");
+        noActivityCounter = 0;
+        [self showNoActivityAlert];
+    }
+}
+
+-(void) showNoActivityAlert {
+    [self unscheduleAllSelectors];
+    UIAlertView* dialog = [[UIAlertView alloc] init];
+    [dialog setDelegate:self];
+    [dialog setTitle:@"No Activity"];
+    [dialog setMessage:@"Do you want to end this game and start over?"];
+    [dialog addButtonWithTitle:@"Yes"];
+    [dialog addButtonWithTitle:@"No"];
+    [dialog show];
+    [dialog release];
+}
+
+- (void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex == 0) {
+        CCLOG(@"Yes, I want to end this game");
+        [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
+    } else {
+        CCLOG(@"No, not yet");
+        [self schedule:@selector(updateTimer:) interval:1.0f];
+    }
 }
 
 /*
