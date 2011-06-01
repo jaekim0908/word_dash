@@ -16,6 +16,7 @@
 #import "GameManager.h"
 #import "HelloWorld.h"
 #import "Dictionary.h"
+#import "Definition.h"
 #import "OFMultiplayerService.h"
 #import "OFMultiplayerGame.h"
 #import "Multiplayer.h"
@@ -120,6 +121,7 @@
 	[mainMenu runAction:moveEffect];
 	[self addChild:mainMenu z:0 tag:1];
 	[[Dictionary sharedDictionary] loadDictionary];
+    [[Definition sharedDefinition] loadDefinition];
 }
 
 -(void) displaySceneSelection {

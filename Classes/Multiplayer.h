@@ -53,7 +53,6 @@
 	CCSprite *goButton2;
 	CCSprite *stopButton1;
 	CCSprite *stopButton2;
-    CCSprite *outOfTimeMsg;
 	NSMutableArray *userSelection;
 	BOOL player1TileFipped;
 	BOOL player2TileFipped;

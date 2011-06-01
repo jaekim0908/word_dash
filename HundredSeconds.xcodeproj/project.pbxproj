@@ -1060,6 +1060,11 @@
 		6EFA53951331EF800072F312 /* WordToo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53921331EF800072F312 /* WordToo.png */; };
 		6EFA53961331EF800072F312 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53931331EF800072F312 /* words.txt */; };
 		8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */; };
+		D45AF3CC1383847F00438B40 /* success.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3CB1383847F00438B40 /* success.mp3 */; };
+		D45AF3CE1383874D00438B40 /* dull_bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3CD1383874D00438B40 /* dull_bell.mp3 */; };
+		D45AF3E31384EC5200438B40 /* crab_plus_words_unique.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */; };
+		D45AF3E91386353B00438B40 /* Definition.mm in Sources */ = {isa = PBXBuildFile; fileRef = D45AF3E81386353B00438B40 /* Definition.mm */; };
+		D45AF3ED13864F1800438B40 /* definition.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3EC13864F1800438B40 /* definition.txt */; };
 		D4E870361369419700E25FD1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E870351369419700E25FD1 /* Default.png */; };
 		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
 		D4E87045136950EB00E25FD1 /* player_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87042136950EB00E25FD1 /* player_pause.png */; };
@@ -1259,7 +1264,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D6058910D05DD3D006BFB54 /* beachgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beachgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* speedword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedword.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3B9A2B0EF2145700286867 /* HundredSecondsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HundredSecondsAppDelegate.mm; sourceTree = "<group>"; };
 		1F3B9A2C0EF2145700286867 /* HundredSecondsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HundredSecondsAppDelegate.h; path = Classes/HundredSecondsAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A820EF2151B00286867 /* HundredSeconds_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HundredSeconds_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -2842,6 +2847,12 @@
 		6EFA53921331EF800072F312 /* WordToo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordToo.png; sourceTree = "<group>"; };
 		6EFA53931331EF800072F312 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
+		D45AF3CB1383847F00438B40 /* success.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = success.mp3; sourceTree = "<group>"; };
+		D45AF3CD1383874D00438B40 /* dull_bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dull_bell.mp3; sourceTree = "<group>"; };
+		D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = crab_plus_words_unique.txt; sourceTree = "<group>"; };
+		D45AF3E71386353B00438B40 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
+		D45AF3E81386353B00438B40 /* Definition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Definition.mm; sourceTree = "<group>"; };
+		D45AF3EC13864F1800438B40 /* definition.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = definition.txt; sourceTree = "<group>"; };
 		D4E870351369419700E25FD1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
@@ -3082,7 +3093,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* beachgame.app */,
+				1D6058910D05DD3D006BFB54 /* speedword.app */,
 				506EE05E10304ED200A389B3 /* libcocos2d libraries.a */,
 			);
 			name = Products;
@@ -3180,6 +3191,8 @@
 				6ECE2D9B13330B6400C996AF /* LoadingScene.mm */,
 				6ECE2ECB1333322400C996AF /* Dictionary.h */,
 				6ECE2ECC1333322400C996AF /* Dictionary.mm */,
+				D45AF3E71386353B00438B40 /* Definition.h */,
+				D45AF3E81386353B00438B40 /* Definition.mm */,
 				6EEA81A5134183F800A7858E /* DialogLayer.h */,
 				6EEA81A6134183F800A7858E /* DialogLayer.mm */,
 				6EF14659134D760C007152E0 /* ChallengeRequestDialog.h */,
@@ -3294,14 +3307,18 @@
 			isa = PBXGroup;
 			children = (
 				8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */,
+				D45AF3CD1383874D00438B40 /* dull_bell.mp3 */,
+				D45AF3CB1383847F00438B40 /* success.mp3 */,
 				6EBB5DC5134AE3760002A854 /* crab2.txt */,
 				6EBB5D85134ADB990002A854 /* crab.txt */,
+				D45AF3EC13864F1800438B40 /* definition.txt */,
 				6EFA53911331EF800072F312 /* WordToo.plist */,
 				D4E87042136950EB00E25FD1 /* player_pause.png */,
 				D4E87043136950EB00E25FD1 /* BluePlayButton.png */,
 				D4E87044136950EB00E25FD1 /* button_blue_repeat.png */,
 				6EFA53921331EF800072F312 /* WordToo.png */,
 				6EFA53931331EF800072F312 /* words.txt */,
+				D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */,
 				6E04800E132A09A500D15B1B /* blue_button.png */,
 				E02BB762126CC1E0006E46A2 /* iTunesArtwork */,
 				E02BB4FE126CA50F006E46A2 /* Icon@2x.png */,
@@ -7259,7 +7276,7 @@
 			);
 			name = HundredSeconds;
 			productName = HundredSeconds;
-			productReference = 1D6058910D05DD3D006BFB54 /* beachgame.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* speedword.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506EE05D10304ED200A389B3 /* cocos2d libraries */ = {
@@ -7828,6 +7845,10 @@
 				D4E87046136950EB00E25FD1 /* BluePlayButton.png in Resources */,
 				D4E87047136950EB00E25FD1 /* button_blue_repeat.png in Resources */,
 				8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */,
+				D45AF3CC1383847F00438B40 /* success.mp3 in Resources */,
+				D45AF3CE1383874D00438B40 /* dull_bell.mp3 in Resources */,
+				D45AF3E31384EC5200438B40 /* crab_plus_words_unique.txt in Resources */,
+				D45AF3ED13864F1800438B40 /* definition.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8327,6 +8348,7 @@
 				6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */,
 				D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */,
 				D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */,
+				D45AF3E91386353B00438B40 /* Definition.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8449,8 +8471,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8466,9 +8488,9 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				PRODUCT_NAME = speedword;
+				PROVISIONING_PROFILE = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8478,8 +8500,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -8493,9 +8515,9 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				PRODUCT_NAME = speedword;
+				PROVISIONING_PROFILE = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};

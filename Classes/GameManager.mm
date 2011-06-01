@@ -60,7 +60,8 @@ static GameManager* _sharedGameManager = nil;
 		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab" ofType:@"txt"];
 		NSError *error;
 		// read everything from text
-		_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
+        // MCH -- no need to open the crab file since it is being opened by the Dictionary singleton
+		//_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
 		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;

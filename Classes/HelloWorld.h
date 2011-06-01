@@ -12,6 +12,7 @@
 #import <iAd/iAd.h>
 #import "OpenFeint.h"
 #import "OFMultiplayerDelegate.h"
+#import "SimpleAudioEngine.h"
 
 @class Cell;
 
@@ -19,6 +20,7 @@
 @interface HelloWorld : CCLayer <ADBannerViewDelegate,  OpenFeintDelegate, OFMultiplayerDelegate>
 {
 	ADBannerView *adView;
+     SimpleAudioEngine *soundEngine;
 }
 
 // returns a Scene that contains the HelloWorld as the only child

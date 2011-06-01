@@ -186,13 +186,6 @@ static int noActivityCounter = 0;
         statusMessage.visible = NO;
 		[self addChild:statusMessage];
         
-        
-        //MCH
-		outOfTimeMsg = [CCSprite spriteWithFile:@"out_of_time_msg.png"];
-		outOfTimeMsg.position = ccp(windowSize.width/2, 280);
-        outOfTimeMsg.visible = NO;
-		[self addChild:outOfTimeMsg];
-
 		
 		wordMatrix = [[NSMutableArray alloc] init];
 		for(int r = 0; r < rows; r++) {
@@ -911,12 +904,17 @@ static int noActivityCounter = 0;
 	CCLOG(@"user selection = %@", s);
 	
 	if ([foundWords objectForKey:s]) {
+        // MCH -- play invalid word sound
+        [soundEngine playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            
             [currentAnswer setColor:ccc3(0, 255, 0)];
 			[foundWords setObject:s forKey:s];
 			if ([OFMultiplayerService isItMyTurn]) {
+                // MCH -- play success sound
+                [soundEngine playEffect:@"success.mp3"];
 				CCLOG(@"word added to player 1 words list");
 				[player1Words addObject:s];
 			} else {
@@ -942,6 +940,8 @@ static int noActivityCounter = 0;
 			}
 		} else {
             [currentAnswer setColor:ccc3(255, 0, 0)];
+            // MCH -- play invalid word sound
+            [soundEngine playEffect:@"dull_bell.mp3"];
 			[midDisplay setString:@"Try again"];
 		}
 	}

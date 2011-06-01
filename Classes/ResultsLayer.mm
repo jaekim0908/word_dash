@@ -11,16 +11,21 @@
 #import "OFMultiplayerService.h"
 #import "OpenFeint.h"
 #import "GameManager.h"
+#import "Definition.h"
 
 @implementation ResultsLayer
 
 @synthesize player1Score;
 @synthesize player2Score;
 @synthesize rematchButton;
+@synthesize definition;
 
 -(id) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words 
 {
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
+        
+        definition = [[Definition sharedDefinition] dict];
+        
 		[GameManager sharedGameManager].gameStatus = kGameFinished;
 		NSLog(@"Inside results layer.");
 		self.isTouchEnabled = YES;
@@ -74,8 +79,18 @@
 		y = 180;
 		for (NSString *s in p2Words) {
 			
-			NSLog(@"Player 1 WORDS: %@",s );
-			CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:s
+			NSLog(@"Player 2 WORDS: %@",s );
+            NSLog(@"Player 2 DEFINITIONS: %@",[definition objectForKey:s]);
+            NSMutableString *wordPlusDefn = [NSMutableString stringWithCapacity:1];
+            [wordPlusDefn appendString:s];
+            [wordPlusDefn appendString:@":"];
+            if ([definition objectForKey:s] != NULL) {
+                [wordPlusDefn appendString:[definition objectForKey:s]];
+            }
+            
+            NSLog(@"Player 2 DEFINITIONS: %@",wordPlusDefn );
+            
+			CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:wordPlusDefn
 														fontName:@"Verdana" 
 														fontSize:12] retain];
 			wordLabel.color = ccc3(255,255,255);

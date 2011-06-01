@@ -41,7 +41,7 @@ static Dictionary* _sharedDictionary = nil;
 	if ((self = [super init])) {
 		// Dictionary Initialized
 		NSLog(@"Dictionary Singleton,, init");
-		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"words" ofType:@"txt"];
+		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab_plus_words_unique" ofType:@"txt"];
 		NSError *error;
 		// read everything from text
 		NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];

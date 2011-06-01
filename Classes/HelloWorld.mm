@@ -19,6 +19,9 @@
 #import "OFMultiplayerGame.h"
 #import "GameManager.h"
 #import "Dictionary.h"
+#import "Definition.h"
+#import "ResultsLayer.h"
+#import "SimpleAudioEngine.h"
 
 // HelloWorld implementation
 @implementation HelloWorld
@@ -43,6 +46,7 @@ int playerTurn = 1;
 BOOL gameOver = NO;
 NSMutableArray* allWords;
 NSMutableDictionary *dictionary;
+NSMutableDictionary *definition;//MCH
 NSMutableArray* wordMatrix;
 CCSpriteBatchNode *batchNode;
 CCSprite *solveButton1;
@@ -112,6 +116,11 @@ static inline int cell(int r, int c) {
 		//[self createDictionary];
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
+        
+        //MCH -- setting up definition
+        definition = [[Definition sharedDefinition] dict];
+        CCLOG(@"LOOKUP!!!!!!!!!!!!!!!!!!!!!!!!! able=%@",[definition objectForKey:@"able"]);
+        
 		NSLog(@"dictionary size = %@", [dictionary objectForKey:@"orange"]);
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"WordToo.plist"];
 		batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"WordToo.png"]];
@@ -249,6 +258,8 @@ static inline int cell(int r, int c) {
 		CCSprite *backGround = [CCSprite spriteWithSpriteFrameName:@"footprints-beach.png"];
 		backGround.position = ccp(windowSize.width/2, windowSize.height/2);
 		[batchNode addChild:backGround z:-10];
+        
+        soundEngine = [SimpleAudioEngine sharedEngine];
         
         
 
@@ -762,15 +773,32 @@ static inline int cell(int r, int c) {
 	NSLog(@"user selection = %@", s);
 	
 	if ([foundWords objectForKey:s]) {
+        // MCH -- play invalid word sound
+        [soundEngine playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
 			[foundWords setObject:s forKey:s];
+            
+            // MCH -- play success sound
+            [soundEngine playEffect:@"success.mp3"];
+
+            //MCH -- add to each player's word's array for results scene
+            if (playerTurn == 1) {
+                [player1Words addObject:s];
+            }
+            else
+            {
+                [player2Words addObject:s];
+            }
+            
 			//[midDisplay setString:@"Correct"];
 			int starCount = [self countStarPointandRemoveStars];
 			int newPoint = pow(2, [s length]) + starCount * 10;
 			[self addScore:newPoint toPlayer:playerTurn anchorCell: [userSelection objectAtIndex:0]];
 		} else {
+            // MCH -- play invalid word sound
+            [soundEngine playEffect:@"dull_bell.mp3"];
 			[midDisplay setString:@"Try again"];
 		}
 	}
@@ -848,6 +876,16 @@ static inline int cell(int r, int c) {
 		}
 		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];
 		gameSummary.visible = YES;
+        
+        
+        //MCH - display results layer 
+        ResultsLayer *rl = [[[ResultsLayer alloc] initWithPlayerOneScore:[player1Score string] 
+													  WithPlayerTwoScore:[player2Score string] 
+													  WithPlayerOneWords:player1Words 
+													  WithPlayerTwoWords:player2Words] 
+							autorelease];
+        [[[CCDirector sharedDirector] runningScene] addChild:rl 
+                                                           z:3];
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {
