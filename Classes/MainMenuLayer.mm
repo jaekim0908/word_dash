@@ -36,6 +36,7 @@
 	NSLog(@"MainMenuLayer init called");
 	if ((self = [super init])) {
 		self.isTouchEnabled = YES;
+        [GameManager sharedGameManager].isChallenger = NO;
         [[GameManager sharedGameManager] closeGame];
 		[self displayMainMenu];
 		[GameManager sharedGameManager].gameStatus = kGameNone;
