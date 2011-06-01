@@ -1193,13 +1193,17 @@ static int noActivityCounter = 0;
 	 adView.center = CGPointMake(adView.frame.size.width/2, adView.frame.size.height/2);
 	 adView.hidden = YES;
 	 */
+    CCLOG(@"onEnter in Multiplayer called");
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
 - (void) onExit {
+    CCLOG(@"onExit in Multiplayer called");
 	adView.delegate = nil;
 	[adView removeFromSuperview];
 	[adView release];
 	adView = nil;
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 	[super onExit];
 }
 

@@ -252,19 +252,14 @@ static BOOL firstTime = YES;
     
 }
 
--(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
+-(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options {
     OFLog(@"This is where we would launch game for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
 	[GameManager sharedGameManager].gameStartedFromPushNotification = YES;
     [self handlePushRequestGame:game options:options];
 }
 
 
--(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"Testing push notification response for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [GameManager sharedGameManager].gameStartedFromPushNotification = YES;
-	[self handlePushRequestGame:game options:options];
+-(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options {
 }
 
 - (void) gameSlotDidBecomeEmpty:(OFMultiplayerGame *)game {
@@ -331,6 +326,7 @@ static BOOL firstTime = YES;
 -(void) cancelChallenge {
 	CCLOG(@"CANCEL CHALLENGE CALLED");
 	[[GameManager sharedGameManager] closeGame];
+    [GameManager sharedGameManager].isChallenger = NO;
 	MainMenuLayer *mmLayer = (MainMenuLayer *) [[[CCDirector sharedDirector] runningScene] getChildByTag:1];
 	[mmLayer enableMainMenu];
 }
