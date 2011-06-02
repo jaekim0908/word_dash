@@ -21,6 +21,7 @@
 @property (nonatomic, retain) CCSprite *rematchButton;
 @property (nonatomic, retain) NSMutableDictionary *definition;
 
+
 -(id) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words;
 
 @end
