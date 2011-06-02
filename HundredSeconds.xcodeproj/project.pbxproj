@@ -1063,6 +1063,8 @@
 		D45AF3E31384EC5200438B40 /* crab_plus_words_unique.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */; };
 		D45AF3E91386353B00438B40 /* Definition.mm in Sources */ = {isa = PBXBuildFile; fileRef = D45AF3E81386353B00438B40 /* Definition.mm */; };
 		D45AF3ED13864F1800438B40 /* definition.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3EC13864F1800438B40 /* definition.txt */; };
+		D45AF4281397323D00438B40 /* dull_bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D45AF4271397323C00438B40 /* dull_bell.mp3 */; };
+		D45AF42A1397324500438B40 /* success.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D45AF4291397324500438B40 /* success.mp3 */; };
 		D4E870361369419700E25FD1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E870351369419700E25FD1 /* Default.png */; };
 		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
 		D4E87045136950EB00E25FD1 /* player_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D4E87042136950EB00E25FD1 /* player_pause.png */; };
@@ -2849,6 +2851,8 @@
 		D45AF3E71386353B00438B40 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
 		D45AF3E81386353B00438B40 /* Definition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Definition.mm; sourceTree = "<group>"; };
 		D45AF3EC13864F1800438B40 /* definition.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = definition.txt; sourceTree = "<group>"; };
+		D45AF4271397323C00438B40 /* dull_bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dull_bell.mp3; sourceTree = "<group>"; };
+		D45AF4291397324500438B40 /* success.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = success.mp3; sourceTree = "<group>"; };
 		D4E870351369419700E25FD1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
@@ -3305,6 +3309,8 @@
 				8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */,
 				6EBB5DC5134AE3760002A854 /* crab2.txt */,
 				6EBB5D85134ADB990002A854 /* crab.txt */,
+				D45AF4271397323C00438B40 /* dull_bell.mp3 */,
+				D45AF4291397324500438B40 /* success.mp3 */,
 				D45AF3EC13864F1800438B40 /* definition.txt */,
 				6EFA53911331EF800072F312 /* WordToo.plist */,
 				D4E87042136950EB00E25FD1 /* player_pause.png */,
@@ -7841,6 +7847,8 @@
 				8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */,
 				D45AF3E31384EC5200438B40 /* crab_plus_words_unique.txt in Resources */,
 				D45AF3ED13864F1800438B40 /* definition.txt in Resources */,
+				D45AF4281397323D00438B40 /* dull_bell.mp3 in Resources */,
+				D45AF42A1397324500438B40 /* success.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
