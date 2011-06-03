@@ -112,5 +112,6 @@
 - (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId;
 - (void) pauseGame;//MCH
 - (void) sendPauseRequest;
+- (void) setGameStartCountdownTimer:(NSString *) t;
 
 @end
