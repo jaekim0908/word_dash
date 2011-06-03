@@ -117,6 +117,8 @@ static int noActivityCounter = 0;
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"WordToo.plist"];
 		batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"WordToo.png"]];
 		[self addChild:batchNode];
+        
+        CCLOG(@"############ Getting Here ############");
 		
 		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
 		player1Score.color = ccc3(0,0,255);
