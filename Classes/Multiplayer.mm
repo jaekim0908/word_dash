@@ -662,7 +662,7 @@ static int noActivityCounter = 0;
 
 //MCH -- sync up game start countdown timers
 - (void) setGameStartCountdownTimer:(NSString *) t {
-	
+	gameCountDownLabel.visible = YES;
     [gameCountDownLabel setString:t];
 }
 
@@ -1013,7 +1013,7 @@ static int noActivityCounter = 0;
     if (gameCountdown) {
 		CCLOG(@"gameCountdown start");
 		NSString *status = [gameCountDownLabel string];
-		gameCountDownLabel.visible = YES;
+		//gameCountDownLabel.visible = YES;
 		if ([status isEqualToString:@"Go!"]) {
 			gameCountdown = NO;
 			gameCountDownLabel.visible = NO;
@@ -1022,12 +1022,20 @@ static int noActivityCounter = 0;
             
                 
                 int x = [status intValue];
-                if (x > 1) {
-                    //if ([OFMultiplayerService isItMyTurn]) {
+                //if (x > 1 && (![status isEqualToString:@"4"]) ) {
+                if (x == 4) {
+                    if ([OFMultiplayerService isItMyTurn] ) {
+                        gameCountDownLabel.visible = YES;
                         [gameCountDownLabel setString:[NSString stringWithFormat:@"%i", --x]];
-                    //    [self sendMove:@"GAMESTART_COUNTDOWN" rowNum:0 colNum:0 value:[NSString stringWithFormat:@"%i", x] endTurn:NO];
-                    //}
-                } else {
+                        [self sendMove:@"GAMESTART_COUNTDOWN" rowNum:0 colNum:0 value:[NSString stringWithFormat:@"%i", x] endTurn:NO];
+                    }
+                                       
+                } 
+                else if ((x == 3) || (x == 2)){
+                    gameCountDownLabel.visible = YES;
+                    [gameCountDownLabel setString:[NSString stringWithFormat:@"%i", --x]];
+                }
+                else {
                     [gameCountDownLabel	setString:@"Go!"];
                 }
                 
