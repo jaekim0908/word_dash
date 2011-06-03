@@ -658,6 +658,12 @@ static int noActivityCounter = 0;
 	[player2Timer setString:t];
 }
 
+//MCH -- sync up game start countdown timers
+- (void) setGameStartCountdownTimer:(NSString *) t {
+	
+    [gameCountDownLabel setString:t];
+}
+
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
 }
 
@@ -668,8 +674,8 @@ static int noActivityCounter = 0;
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"60"];//MCH
-	[player2Timer setString:@"60"];
+	[player1Timer setString:@"100"];
+	[player2Timer setString:@"100"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];
@@ -1010,15 +1016,23 @@ static int noActivityCounter = 0;
 			gameCountdown = NO;
 			gameCountDownLabel.visible = NO;
 			enableTouch = YES;
-		} else {
-			enableTouch = NO;
-			int x = [status intValue];
-			if (x > 1) {
-				[gameCountDownLabel setString:[NSString stringWithFormat:@"%i", --x]];
-			} else {
-				[gameCountDownLabel	setString:@"Go!"];
-			}
-			return;
+		} else { //MCH INITIAL COUNTDOWN EXECUTED
+            
+                
+                int x = [status intValue];
+                if (x > 1) {
+                    //if ([OFMultiplayerService isItMyTurn]) {
+                        [gameCountDownLabel setString:[NSString stringWithFormat:@"%i", --x]];
+                    //    [self sendMove:@"GAMESTART_COUNTDOWN" rowNum:0 colNum:0 value:[NSString stringWithFormat:@"%i", x] endTurn:NO];
+                    //}
+                } else {
+                    [gameCountDownLabel	setString:@"Go!"];
+                }
+                
+                
+            
+            enableTouch = NO;
+            return;
 		}
 	}
 	

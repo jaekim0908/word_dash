@@ -213,7 +213,11 @@ static BOOL firstTime = YES;
 		val = [tokens objectAtIndex:3];
 		[mp setTimer:val];
 	}
-    
+    //MCH -- game start countdown
+	if ([command isEqualToString:@"GAMESTART_COUNTDOWN"]) {
+		val = [tokens objectAtIndex:3];
+		[mp setGameStartCountdownTimer:val];
+	}
     //MCH -- supporting pause messages
     if ([command isEqualToString:@"TIMER_COUNTDOWN_TIMEOUT"]) {
 		val = [tokens objectAtIndex:3];

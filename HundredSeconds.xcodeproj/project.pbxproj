@@ -1264,7 +1264,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D6058910D05DD3D006BFB54 /* speedword.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = speedword.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* beachgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = beachgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3B9A2B0EF2145700286867 /* HundredSecondsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HundredSecondsAppDelegate.mm; sourceTree = "<group>"; };
 		1F3B9A2C0EF2145700286867 /* HundredSecondsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HundredSecondsAppDelegate.h; path = Classes/HundredSecondsAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A820EF2151B00286867 /* HundredSeconds_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HundredSeconds_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -3093,7 +3093,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* speedword.app */,
+				1D6058910D05DD3D006BFB54 /* beachgame.app */,
 				506EE05E10304ED200A389B3 /* libcocos2d libraries.a */,
 			);
 			name = Products;
@@ -7276,7 +7276,7 @@
 			);
 			name = HundredSeconds;
 			productName = HundredSeconds;
-			productReference = 1D6058910D05DD3D006BFB54 /* speedword.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* beachgame.app */;
 			productType = "com.apple.product-type.application";
 		};
 		506EE05D10304ED200A389B3 /* cocos2d libraries */ = {
@@ -8488,9 +8488,9 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = speedword;
-				PROVISIONING_PROFILE = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PRODUCT_NAME = beachgame;
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8515,9 +8515,9 @@
 					"-ObjC",
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = speedword;
-				PROVISIONING_PROFILE = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C09CD015-0F6D-4E9E-8C77-A8E1063E871F";
+				PRODUCT_NAME = beachgame;
+				PROVISIONING_PROFILE = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3734B26F-B8C5-4D97-9C4E-1B2A0F6DF2D9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8555,8 +8555,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
@@ -8584,8 +8584,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
