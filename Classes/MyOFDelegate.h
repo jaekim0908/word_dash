@@ -14,8 +14,10 @@
 #import "OFMultiplayerDelegate.h"
 #import "OFFriendPickerController.h"
 #import "ChallengeRequestDialog.h"
+#import "OFNotificationDelegate.h"
+#import "CCNotifications.h"
 
-@interface MyOFDelegate : NSObject <OpenFeintDelegate, OFUserDelegate, OFMultiplayerDelegate, UIActionSheetDelegate, OFFriendPickerDelegate> {
+@interface MyOFDelegate : NSObject <OpenFeintDelegate, OFUserDelegate, OFMultiplayerDelegate, UIActionSheetDelegate, OFFriendPickerDelegate, OFNotificationDelegate, CCNotificationsDelegate> {
 	NSString *localPlayerName;
 	NSString *challengerName;
 	NSString *challengeeName;
@@ -44,5 +46,7 @@
 -(void) gameDidAdvanceTurnToPlayerNumber:(unsigned int)playerNumber;
 -(void) showActionSheet;
 -(void)pickerFinishedWithSelectedUser:(OFUser*)selectedUser;
+-(BOOL) isOpenFeintNotificationAllowed:(OFNotificationData *)notificationData;
+-(void) handleDisallowedNotification:(OFNotificationData *)notificationData;
 
 @end

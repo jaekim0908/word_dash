@@ -19,6 +19,8 @@
 	BOOL _isChallenger;
 	BOOL _gameFinished;
 	BOOL _gameStartedFromPushNotification;
+    BOOL _noTimeLeft;
+    BOOL _hasFriendsWithThisApp;
 	GameStatus _gameStatus;
 }
 
@@ -30,6 +32,8 @@
 @property (readwrite) BOOL isChallenger;
 @property (readwrite) BOOL gameFinished;
 @property (readwrite) BOOL gameStartedFromPushNotification;
+@property (readwrite) BOOL noTimeLeft;
+@property (readwrite) BOOL hasFriendsWithThisApp;
 @property (readwrite) GameStatus gameStatus;
 
 +(GameManager*) sharedGameManager;

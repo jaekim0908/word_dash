@@ -12,7 +12,7 @@
 @implementation DialogLayer
 -(id) initWithHeader:(NSString *)header andLine1:(NSString *)line1 andLine2:(NSString *)line2 andLine3:(NSString *)line3 target:(id)callbackObj selector:(SEL)selector
 {
-	if((self=[super initWithColor:ccc4(0, 0, 0, 255)])) {
+	if((self=[super initWithColor:ccc4(100, 100, 100, 255)])) {
 		
 		self.isTouchEnabled = YES;
 		NSLog(@"callback object = %@", callbackObj);

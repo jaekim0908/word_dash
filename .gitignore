@@ -1,0 +1,8 @@
+build/*
+*.pbjproj
+*.pbxuser
+*.modelv3
+xcuserdata
+InfoPlist.h
+.DS_Store
+profile

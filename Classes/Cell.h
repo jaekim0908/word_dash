@@ -10,6 +10,7 @@
 
 @interface Cell : NSObject {
 	CCLabelTTF *_letter;
+    CCSprite *_letterSprite;
 	CCSprite *_letterBackground;
 	CCSprite *_letterSelected;
 	CCSprite *_letterSelected2;
@@ -22,6 +23,7 @@
 }
 
 @property (retain) CCLabelTTF *letter;
+@property (retain) CCSprite *letterSprite;
 @property (retain) CCSprite *letterBackground;
 @property (retain) CCSprite *letterSelected;
 @property (retain) CCSprite *letterSelected2;

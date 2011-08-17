@@ -29,7 +29,9 @@ static GameManager* _sharedGameManager = nil;
 @synthesize isChallenger = _isChallenger;
 @synthesize gameFinished = _gameFinished;
 @synthesize gameStartedFromPushNotification = _gameStartedFromPushNotification;
+@synthesize noTimeLeft = _noTimeLeft;
 @synthesize gameStatus = _gameStatus;
+@synthesize hasFriendsWithThisApp = _hasFriendsWithThisApp;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -66,12 +68,16 @@ static GameManager* _sharedGameManager = nil;
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;
 		_sharedGameManager.gameStartedFromPushNotification = NO;
+        _sharedGameManager.hasFriendsWithThisApp = NO;
 		NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
 								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], OpenFeintSettingDashboardOrientation, 
 								  [NSNumber numberWithBool:YES], OpenFeintSettingDisableUserGeneratedContent,
 								  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
 								  nil];
-		OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
+		//OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
+        OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate 
+                                                                          andChallengeDelegate:nil 
+                                                                       andNotificationDelegate:_sharedGameManager.myOFDelegate];
         /***************** JAE's GAME ID *************
 		[OpenFeint initializeWithProductKey:@"7hiF4dldDFHvfROrEgGDA"
 								  andSecret:@"u3f6UaneEezk59d44hyH67wawNxnVVph0u16ASpm0s4"

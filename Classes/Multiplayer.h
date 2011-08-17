@@ -45,8 +45,10 @@
 	NSMutableDictionary *dictionary;
 	NSMutableArray* wordMatrix;
 	CCSpriteBatchNode *batchNode;
+    CCSpriteBatchNode *batchNode2;
 	CCSprite *solveButton1;
 	CCSprite *solveButton2;
+    CCSprite *transparentBoundingBox1;
 	CCSprite *greySolveButton1;
 	CCSprite *greySolveButton2;
 	CCSprite *goButton1;
@@ -102,7 +104,7 @@
 - (void) sendInitMoveRow:(int) r Col:(int) c value:(NSString *) val visible:(BOOL) isVisible starPoint:(BOOL) isThisStar endTurn:(BOOL) turn;
 - (void) sendMove:(NSString *) moveType rowNum:(int) r colNum:(int) c value:(NSString *) val endTurn:(BOOL) turn;
 - (void) setCellRow:(int) r Col:(int) c withValue:(NSString *) val;
-- (void) tileFlipRow:(int) r Col:(int) c;
+- (void) tileFlipRow:(int) r Col:(int) c checkScore:(BOOL) check;
 - (void) selectCellRow:(int)r Col:(int)c;
 - (void) deselectCellRow:(int)r Col:(int)c;
 - (void) scheduleUpdateTimer;

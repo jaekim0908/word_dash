@@ -140,7 +140,6 @@ static BOOL firstTime = YES;
 }
 
 -(void) networkFailureWithReason:(NSUInteger)reason {
-    
 }
 
 //there are two methods of processing moves, either use the delegate or scan for moves in the game's tick
@@ -165,7 +164,13 @@ static BOOL firstTime = YES;
 	if ([command isEqualToString:@"TILE_FLIP"]) {
 		row = [[tokens objectAtIndex:1] intValue];
 		col = [[tokens objectAtIndex:2] intValue];
-		[mp tileFlipRow:row Col:col];
+		[mp tileFlipRow:row Col:col checkScore:YES];
+	}
+    
+    if ([command isEqualToString:@"TILE_FLIP_NO_CHECK_SCORE"]) {
+		row = [[tokens objectAtIndex:1] intValue];
+		col = [[tokens objectAtIndex:2] intValue];
+		[mp tileFlipRow:row Col:col checkScore:NO];
 	}
 	
 	if ([command isEqualToString:@"INIT_MATRIX"]) {
@@ -210,7 +215,7 @@ static BOOL firstTime = YES;
 	}
 	
 	if ([command isEqualToString:@"TIMER_COUNTDOWN"]) {
-		val = [tokens objectAtIndex:3];
+        val = [tokens objectAtIndex:3];
 		[mp setTimer:val];
 	}
     //MCH -- game start countdown
@@ -363,6 +368,35 @@ static BOOL firstTime = YES;
 	} else {
 		[self showActionSheet];
 	}
+}
+
+-(void) didGetFriendsWithThisApplication:(NSArray *)follows OFUser:(OFUser *)user {
+    CCLOG(@"didGetFriendsWithThisApplication called");
+    CCLOG(@"Number of Friends are = %i", [follows count]);
+    CCLOG(@"Friends are = %@", follows);
+    [GameManager sharedGameManager].hasFriendsWithThisApp = YES;
+}
+
+-(void) didFailGetFriendsWithThisApplicationOFUser:(OFUser *)user {
+    CCLOG(@"Fail to Get Friends with This Applications");
+}
+
+#pragma mark OpenFeint Notification Delegate methods
+-(BOOL) isOpenFeintNotificationAllowed:(OFNotificationData *)notificationData {
+    CCLOG(@"Notification Data = %@", notificationData);
+     if ([GameManager sharedGameManager].noTimeLeft) {
+         CCLOG(@"No time left");
+         return NO;
+     }
+    return YES;
+}
+
+-(void) handleDisallowedNotification:(OFNotificationData *)notificationData {
+    /*
+    if (!([notificationData notificationCategory] == kNotificationCategoryForeground && [GameManager sharedGameManager].noTimeLeft)) {
+        [[CCNotifications sharedManager] addNotificationTitle:@"OpenFeint" message:[notificationData notificationText] image:@"Icon-Small.png" tag:1 animate:YES];
+    }
+    */
 }
 
 #pragma mark dealloc

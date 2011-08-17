@@ -30,6 +30,8 @@
 
 #import <unistd.h>
 
+#import "CCNotifications.h"
+
 // cocos2d imports
 #import "CCDirectorIOS.h"
 #import "CCTouchDelegateProtocol.h"
@@ -180,6 +182,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	/* draw the notification node */
 	[notificationNode_ visit];
+    
+    [[CCNotifications sharedManager] visit];
 
 	if( displayFPS_ )
 		[self showFPS];

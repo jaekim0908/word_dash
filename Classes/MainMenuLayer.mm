@@ -22,6 +22,12 @@
 #import "Multiplayer.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
+#import "OFSocialNotificationApi.h"
+#import "CCAlertView.h"
+
+@interface UIAlertView (extended)
+-(void) setNumberOfRows:(int) num;
+@end
 
 @interface MainMenuLayer()
 -(void) displayMainMenu;
@@ -38,6 +44,7 @@
 	if ((self = [super init])) {
 		self.isTouchEnabled = YES;
         [GameManager sharedGameManager].isChallenger = NO;
+        [GameManager sharedGameManager].hasFriendsWithThisApp = NO;
         [[GameManager sharedGameManager] closeGame];
 		[self displayMainMenu];
 		[GameManager sharedGameManager].gameStatus = kGameNone;
@@ -54,6 +61,7 @@
 		challengeRejectedLabel.color = ccc3(255, 255, 255);
 		challengeRejectedLabel.visible = NO;
 		[self addChild:challengeRejectedLabel z:10];
+        [self getFriendsWithThisApp];
 	}
 	
 	return self;
@@ -80,7 +88,7 @@
 											  selectedImage:@"blue_button.png"
 											  disabledImage:nil
 											  target:self
-											  selector:@selector(displayMultiPlayer)];
+											  selector:@selector(showActionSheet)];
 	
     CCLabelTTF *multiPlayer = [CCLabelTTF labelWithString:@"Multiplayer" fontName:@"Verdana" fontSize:12];
     multiPlayer.color = ccc3(10, 10, 10);
@@ -127,6 +135,8 @@
 
 -(void) displaySceneSelection {
 	NSLog(@"display scene selection");
+    [OFSocialNotificationApi setDelegate:self];
+    [OFSocialNotificationApi sendWithPrepopulatedText:@"Let's play this cool game" originalMessage:@"Here is a link to download: http://itunes.apple.com/us/app/evernote/id406056744?mt=12" imageNamed:@"FB_Notification"];
 }
 
 -(void) displayRanking {
@@ -140,13 +150,18 @@
 	[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
 }
 
+
 -(void) displayMultiPlayer {
 	CCLOG(@"display multi-player");
 	[[GameManager sharedGameManager] closeGame];
-	if ([OpenFeint isOnline]) { 
+	if ([OpenFeint isOnline]) {
+        /*
 		[OFFriendPickerController launchPickerWithDelegate:[[GameManager sharedGameManager] myOFDelegate] 
 												promptText:@"Choose your victim" 
-									 mustHaveApplicationId:nil];
+									 mustHaveApplicationId:@"243493"]; //243493
+        */
+        [OFFriendPickerController launchPickerWithDelegate:[[GameManager sharedGameManager] myOFDelegate] 
+                                                promptText:@"Choose your victim"];
 	} else {
 		CCLayer *dialogLayer = [[[DialogLayer alloc] initWithHeader:@"header" 
 														   andLine1:@"line1" 
@@ -213,6 +228,72 @@
 	CCSequence *actSeq = [CCSequence actions:[CCFadeIn actionWithDuration:0.1f], [CCFadeOut actionWithDuration:2], nil];
 	[challengeRejectedLabel runAction:actSeq];
 }
+
+-(void) showAlert {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Multiplayer Menu" 
+                                                        message:@"Choose one of following options" 
+                                                       delegate:self 
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Tell a friend about it", @"Play with a friend", nil];
+    [alertView setNumberOfRows:3];
+    [alertView show];
+    [alertView release];
+}
+
+- (void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex == 0) {
+        [self displaySceneSelection];
+    } else if (buttonIndex == 1) {
+        [self displayMultiPlayer];
+    }
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ([GameManager sharedGameManager].hasFriendsWithThisApp) {
+        if (buttonIndex == 0) {
+            CCLOG(@"Starting multiplayer");
+            [self displayMultiPlayer];
+        } else if (buttonIndex == 1) {
+            [self displaySceneSelection];
+        }
+    } else {
+        if (buttonIndex == 0) {
+            CCLOG(@"No Friends has this application");
+            [self displaySceneSelection];
+        }
+    }
+}
+
+- (void) showActionSheet {
+	NSString *titleText = [NSString stringWithFormat:@"Choose one of following options"];
+	UIActionSheet *popupQuery;
+    
+    CCLOG(@"In ShowAlertSheet");
+    CCLOG(@"hasFriendsWithThisApp = %i", [GameManager sharedGameManager].hasFriendsWithThisApp);
+    if ([GameManager sharedGameManager].hasFriendsWithThisApp) {
+        popupQuery = [[UIActionSheet alloc] initWithTitle:titleText 
+                                                 delegate:self 
+                                        cancelButtonTitle:@"Cancel" 
+                                   destructiveButtonTitle:nil 
+                                        otherButtonTitles:@"Play with a friend", @"Tell a friend about it", nil];
+    } else {
+        popupQuery = [[UIActionSheet alloc] initWithTitle:titleText 
+                                                 delegate:self 
+                                        cancelButtonTitle:@"Cancel" 
+                                   destructiveButtonTitle:nil 
+                                        otherButtonTitles:@"Tell a friend about it", nil];
+    }
+	popupQuery.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	[popupQuery showInView:[CCDirector sharedDirector].openGLView];
+	[popupQuery release];
+}
+
+-(void) getFriendsWithThisApp {
+    OFUser *thisUser = [OpenFeint localUser];
+    [thisUser getFriendsWithThisApplication];
+}
+
 
 -(void) dealloc {
 	// doing some clean-up for multiplayer game.

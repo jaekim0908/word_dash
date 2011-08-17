@@ -11,8 +11,10 @@
 #import "Constants.h"
 #import "GameManager.h"
 #import "MyOFDelegate.h"
+#import "OFSocialNotification.h"
+#import "OFSocialNotificationApi.h"
 
-@interface MainMenuLayer : CCLayer {
+@interface MainMenuLayer : CCLayer <OFSocialNotificationApiDelegate, UIActionSheetDelegate> {
 	CCMenu *mainMenu;
 	CCLabelTTF *challengeCancelledLabel;
 	CCLabelTTF *challengeRejectedLabel;
@@ -21,5 +23,4 @@
 -(void) showCancelChallengeMsg;
 -(void) enableMainMenu;
 -(void) disableMainMenu;
--(void) showCancelChallengeMsgWithChallengerName:(NSString *) chlName;
 @end

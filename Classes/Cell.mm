@@ -12,6 +12,7 @@
 @implementation Cell
 
 @synthesize letter = _letter;
+@synthesize letterSprite = _letterSprite;
 @synthesize letterBackground = _letterBackground;
 @synthesize letterSelected = _letterSelected;
 @synthesize letterSelected2 = _letterSelected2;
