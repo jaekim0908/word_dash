@@ -23,7 +23,6 @@
 #import "ResultsLayer.h"
 #import "SimpleAudioEngine.h"
 
-// HelloWorld implementation
 @implementation HelloWorld
 
 NSMutableArray *letterSlots;
@@ -359,7 +358,6 @@ static inline int cell(int r, int c) {
 		countNoTileFlips = 1;
 	}
 	
-		
 	[self clearLetters];
 	[player1Answer setString:@" "];
 	[player2Answer setString:@" "];
