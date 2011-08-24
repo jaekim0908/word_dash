@@ -62,6 +62,10 @@
 		challengeRejectedLabel.visible = NO;
 		[self addChild:challengeRejectedLabel z:10];
         [self getFriendsWithThisApp];
+        
+        CCSprite *beachImg = [CCSprite spriteWithFile:@"shellsOnWhiteSand.png"];
+        beachImg.position = ccp(screenSize.width/2, screenSize.height/2);
+        [self addChild:beachImg z:-10];
 	}
 	
 	return self;
@@ -71,18 +75,18 @@
 	NSLog(@"display main menu");
 	
 	CCMenuItemImage *playAndPassGameButton = [CCMenuItemImage
-											  itemFromNormalImage:@"blue_button.png" 
-											  selectedImage:@"blue_button.png"
+											  itemFromNormalImage:@"playandpass-hd.png" 
+											  selectedImage:nil
 											  disabledImage:nil
 											  target:self
 											  selector:@selector(displayPlayAndPass)];
 	
-    
+    /*
     CCLabelTTF *playAndPass = [CCLabelTTF labelWithString:@"Play And Pass" fontName:@"Verdana" fontSize:12];
     playAndPass.color = ccc3(10, 10, 10);
     playAndPass.position = ccp(410, 285);
     [self addChild:playAndPass z:20];
-
+     */
 	CCMenuItemImage *multiPlayerGameButton = [CCMenuItemImage
 											  itemFromNormalImage:@"blue_button.png" 
 											  selectedImage:@"blue_button.png"

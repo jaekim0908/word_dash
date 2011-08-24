@@ -1058,6 +1058,8 @@
 		6EFA53941331EF800072F312 /* WordToo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53911331EF800072F312 /* WordToo.plist */; };
 		6EFA53951331EF800072F312 /* WordToo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53921331EF800072F312 /* WordToo.png */; };
 		6EFA53961331EF800072F312 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6EFA53931331EF800072F312 /* words.txt */; };
+		8477E9A01404D79700484187 /* playandpass-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8477E99E1404D79700484187 /* playandpass-hd.png */; };
+		8477E9A11404D79700484187 /* playandpass.png in Resources */ = {isa = PBXBuildFile; fileRef = 8477E99F1404D79700484187 /* playandpass.png */; };
 		8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */; };
 		8498551C13DE5BBF0088BF1E /* aa-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8498551A13DE5BBF0088BF1E /* aa-hd.png */; };
 		8498551D13DE5BBF0088BF1E /* aa.png in Resources */ = {isa = PBXBuildFile; fileRef = 8498551B13DE5BBF0088BF1E /* aa.png */; };
@@ -2873,6 +2875,8 @@
 		6EFA53911331EF800072F312 /* WordToo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WordToo.plist; sourceTree = "<group>"; };
 		6EFA53921331EF800072F312 /* WordToo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WordToo.png; sourceTree = "<group>"; };
 		6EFA53931331EF800072F312 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
+		8477E99E1404D79700484187 /* playandpass-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playandpass-hd.png"; sourceTree = "<group>"; };
+		8477E99F1404D79700484187 /* playandpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playandpass.png; sourceTree = "<group>"; };
 		8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		8498551A13DE5BBF0088BF1E /* aa-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aa-hd.png"; sourceTree = "<group>"; };
 		8498551B13DE5BBF0088BF1E /* aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aa.png; sourceTree = "<group>"; };
@@ -3369,6 +3373,8 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8477E99E1404D79700484187 /* playandpass-hd.png */,
+				8477E99F1404D79700484187 /* playandpass.png */,
 				84DA0E0513EBC66D00AA4E93 /* shellsOnWhiteSand-hd.png */,
 				84DA0E0113EBBABC00AA4E93 /* ImageAssets2-hd.plist */,
 				84DA0E0213EBBABC00AA4E93 /* ImageAssets2-hd.png */,
@@ -7963,6 +7969,8 @@
 				84DA0E0313EBBABC00AA4E93 /* ImageAssets2-hd.plist in Resources */,
 				84DA0E0413EBBABC00AA4E93 /* ImageAssets2-hd.png in Resources */,
 				84DA0E0613EBC66D00AA4E93 /* shellsOnWhiteSand-hd.png in Resources */,
+				8477E9A01404D79700484187 /* playandpass-hd.png in Resources */,
+				8477E9A11404D79700484187 /* playandpass.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

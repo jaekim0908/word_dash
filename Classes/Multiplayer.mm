@@ -371,7 +371,6 @@ static int noActivityCounter = 0;
 	[self clearLetters];
 	[player1Answer setString:@" "];
 	[player2Answer setString:@" "];
-	//[currentAnswer setString:@" "];
 	
 	if ([OFMultiplayerService isItMyTurn]) {
 		CCLOG(@"---------MY TURN IN SWITCH_TO---------");
@@ -540,14 +539,23 @@ static int noActivityCounter = 0;
 	}
     
 	if (myTurn && playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
-		CCLOG(@"SOLVE BUTTON TOUCHED");
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
-			[self switchTo:1 countFlip:NO];
-			[self sendMove:@"SOLVE_COUNTFLIP_NO" rowNum:0 colNum:0 value:@"" endTurn:YES];
+            if ([[player2Timer string] intValue] > 0) {
+                [self switchTo:1 countFlip:NO];
+                [self sendMove:@"SOLVE_COUNTFLIP_NO" rowNum:0 colNum:0 value:@"" endTurn:YES];
+            } else {
+                 player1TileFipped = NO;
+                [self sendMove:@"SOLVE_COUNTFLIP_NO" rowNum:0 colNum:0 value:@"" endTurn:NO];
+            }
 		} else {
-			[self switchTo:1 countFlip:YES];
-			[self sendMove:@"SOLVE_COUNTFLIP_YES" rowNum:0 colNum:0 value:@"" endTurn:YES];
+            if ([[player2Timer string] intValue] > 0) {
+                [self switchTo:1 countFlip:YES];
+                [self sendMove:@"SOLVE_COUNTFLIP_YES" rowNum:0 colNum:0 value:@"" endTurn:YES];
+            } else {
+                player1TileFipped = NO;
+                [self sendMove:@"SOLVE_COUNTFLIP_NO" rowNum:0 colNum:0 value:@"" endTurn:NO];
+            }
 		}
 	}
 	
