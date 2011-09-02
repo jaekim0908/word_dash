@@ -63,30 +63,91 @@
 		[self addChild:challengeRejectedLabel z:10];
         [self getFriendsWithThisApp];
         
-        CCSprite *beachImg = [CCSprite spriteWithFile:@"shellsOnWhiteSand.png"];
-        beachImg.position = ccp(screenSize.width/2, screenSize.height/2);
-        [self addChild:beachImg z:-10];
+        CCSprite *titleImg = [CCSprite spriteWithFile:@"gameTitle.png"];
+        titleImg.position = ccp(screenSize.width/2, screenSize.height/1.1);
+        [self addChild:titleImg z:5];
+        
+        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"redpaper.png"];
+        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteBg.png"];
+        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"blueDenimBg.png"];
+        CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
+        backgroundImg.position = ccp(screenSize.width/2, screenSize.height/2);
+        [self addChild:backgroundImg];
+        
+        CCSprite *playAndPassLabel = [CCSprite spriteWithFile:@"playAndPassLable.png"];
+        playAndPassLabel.position = ccp(screenSize.width/4, screenSize.height/1.4);
+        [self addChild:playAndPassLabel z:7];
+        
+        CCSprite *playButton = [CCSprite spriteWithFile:@"playImg.png"];
+        playButton.position = ccp(screenSize.width/4, screenSize.height/1.7);
+        [self addChild:playButton z:7];
+        
+        playAndPassImg = [CCSprite spriteWithFile:@"purpleSunSet.png"];
+        playAndPassImg.position = ccp(screenSize.width/4, screenSize.height/1.7);
+        [self addChild:playAndPassImg];
+        
+        CCSprite *playWithFriendsLabel = [CCSprite spriteWithFile:@"playWithFriendsLabel.png"];
+        playWithFriendsLabel.position = ccp(screenSize.width/1.5, screenSize.height/1.6);
+        [self addChild:playWithFriendsLabel z:7];
+        
+        CCSprite *playButton2 = [CCSprite spriteWithFile:@"playImg.png"];
+        playButton2.position = ccp(screenSize.width/1.5, screenSize.height/2);
+        [self addChild:playButton2 z:7];
+        
+        playWithFriendsImg = [CCSprite spriteWithFile:@"redSunSet.png"];
+        playWithFriendsImg.position = ccp(screenSize.width/1.5, screenSize.height/2);
+        [self addChild:playWithFriendsImg];
+        
+        howToPlayImg = [CCSprite spriteWithFile:@"howToPlay.png"];
+        howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/5);
+        [self addChild:howToPlayImg];
+        
+        rankingsImg = [CCSprite spriteWithFile:@"rankings.png"];
+        rankingsImg.position = ccp(screenSize.width/1.2, screenSize.height/10);
+        [self addChild:rankingsImg];
+        
+        CCSprite *redStarFish = [CCSprite spriteWithFile:@"RedStarfish.png"];
+        redStarFish.position = ccp(screenSize.width/4, screenSize.height/5);
+        [self addChild:redStarFish];
+        
+        CCSprite *brownShellFish = [CCSprite spriteWithFile:@"BrownShell.png"];
+        brownShellFish.position = ccp(screenSize.width/1.1, screenSize.height/1.4);
+        [self addChild:brownShellFish];
 	}
 	
 	return self;
 }
 
+- (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
+    
+    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    
+    if (CGRectContainsPoint(playWithFriendsImg.boundingBox, touchLocation)) {
+        [self showActionSheet];
+    } else if (CGRectContainsPoint(playAndPassImg.boundingBox, touchLocation)) {
+        [self displayPlayAndPass];
+    }
+    
+    return TRUE;
+}
+
 -(void) displayMainMenu {
 	NSLog(@"display main menu");
 	
+    /*
 	CCMenuItemImage *playAndPassGameButton = [CCMenuItemImage
-											  itemFromNormalImage:@"playandpass-hd.png" 
-											  selectedImage:nil
+											  itemFromNormalImage:@"blue_button.png" 
+											  selectedImage:@"blue_button"
 											  disabledImage:nil
 											  target:self
 											  selector:@selector(displayPlayAndPass)];
 	
-    /*
+    
     CCLabelTTF *playAndPass = [CCLabelTTF labelWithString:@"Play And Pass" fontName:@"Verdana" fontSize:12];
     playAndPass.color = ccc3(10, 10, 10);
     playAndPass.position = ccp(410, 285);
     [self addChild:playAndPass z:20];
-     */
+     
 	CCMenuItemImage *multiPlayerGameButton = [CCMenuItemImage
 											  itemFromNormalImage:@"blue_button.png" 
 											  selectedImage:@"blue_button.png"
@@ -133,6 +194,7 @@
 										  rate:1.0f];
 	[mainMenu runAction:moveEffect];
 	[self addChild:mainMenu z:0 tag:1];
+     */
 	[[Dictionary sharedDictionary] loadDictionary];
     [[Definition sharedDefinition] loadDefinition];
 }
@@ -192,12 +254,6 @@
 
 - (void) registerWithTouchDispatcher {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-}
-
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-	CCLOG(@"ccTouchBegan in MainMenuLayer");
-	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-	return YES;
 }
 
 -(void) showCancelChallengeMsg {

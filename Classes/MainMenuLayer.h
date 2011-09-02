@@ -18,6 +18,10 @@
 	CCMenu *mainMenu;
 	CCLabelTTF *challengeCancelledLabel;
 	CCLabelTTF *challengeRejectedLabel;
+    CCSprite *playWithFriendsImg;
+    CCSprite *playAndPassImg;
+    CCSprite *howToPlayImg;
+    CCSprite *rankingsImg;
 }
 
 -(void) showCancelChallengeMsg;

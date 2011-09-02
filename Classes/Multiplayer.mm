@@ -254,13 +254,13 @@ static int noActivityCounter = 0;
 		[self addChild:gameCountDownLabel z:30];
 
         //CCSprite *beachImg = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
-        CCSprite *beachImg = [CCSprite spriteWithFile:@"shellsOnWhiteSand.png"];
+        CCSprite *beachImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg.position = ccp(windowSize.width/2, windowSize.height/2);
         beachImg.opacity = 0;
         [self addChild:beachImg z:1];
         
         //CCSprite *beachImg2 = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
-        CCSprite *beachImg2 = [CCSprite spriteWithFile:@"shellsOnWhiteSand.png"];
+        CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
         
