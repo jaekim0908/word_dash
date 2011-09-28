@@ -18,10 +18,17 @@
 	CCMenu *mainMenu;
 	CCLabelTTF *challengeCancelledLabel;
 	CCLabelTTF *challengeRejectedLabel;
-    CCSprite *playWithFriendsImg;
-    CCSprite *playAndPassImg;
+    //CCSprite *playWithFriendsImg;
+    //CCSprite *playAndPassImg;
     CCSprite *howToPlayImg;
     CCSprite *rankingsImg;
+    CCSprite *playWithFriendsLabel;
+    CCSprite *playAndPassLabel;
+    CCSprite *rankingsSelected;
+    CCSprite *playAndPassSelected;
+    CCSprite *playWithFriendsSelected;
+    CCSprite *howToPlaySelected;
+    CCSpriteBatchNode *batchNode;
 }
 
 -(void) showCancelChallengeMsg;
