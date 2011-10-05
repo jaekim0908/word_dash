@@ -1076,8 +1076,10 @@
 		8455F4CF14206F220028C7A8 /* playWithFriendsLabel4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8455F4C914206F220028C7A8 /* playWithFriendsLabel4.png */; };
 		8455F4D2142070970028C7A8 /* SmallWhiteSandDollar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8455F4D0142070970028C7A8 /* SmallWhiteSandDollar-hd.png */; };
 		8455F4D3142070970028C7A8 /* SmallWhiteSandDollar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8455F4D1142070970028C7A8 /* SmallWhiteSandDollar.png */; };
+		845BD26A143C43B900E0B575 /* new_dictionary.txt in Resources */ = {isa = PBXBuildFile; fileRef = 845BD269143C43B900E0B575 /* new_dictionary.txt */; };
 		8471C4C0140C983700DB0F92 /* whiteSandBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8471C4BE140C983700DB0F92 /* whiteSandBg.png */; };
 		8471C4C1140C983700DB0F92 /* whiteSandBg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8471C4BF140C983700DB0F92 /* whiteSandBg-hd.png */; };
+		847227B314342B30002EE43D /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 847227B214342B30002EE43D /* Default-Landscape@2x.png */; };
 		8480CDDE13712356000E7EE5 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */; };
 		848BC2BC140CC411007CAF5F /* blueDenimBg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 848BC2BA140CC411007CAF5F /* blueDenimBg-hd.png */; };
 		848BC2BD140CC411007CAF5F /* blueDenimBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 848BC2BB140CC411007CAF5F /* blueDenimBg.png */; };
@@ -2974,8 +2976,10 @@
 		8455F4C914206F220028C7A8 /* playWithFriendsLabel4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playWithFriendsLabel4.png; sourceTree = "<group>"; };
 		8455F4D0142070970028C7A8 /* SmallWhiteSandDollar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SmallWhiteSandDollar-hd.png"; sourceTree = "<group>"; };
 		8455F4D1142070970028C7A8 /* SmallWhiteSandDollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmallWhiteSandDollar.png; sourceTree = "<group>"; };
+		845BD269143C43B900E0B575 /* new_dictionary.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = new_dictionary.txt; sourceTree = "<group>"; };
 		8471C4BE140C983700DB0F92 /* whiteSandBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteSandBg.png; sourceTree = "<group>"; };
 		8471C4BF140C983700DB0F92 /* whiteSandBg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteSandBg-hd.png"; sourceTree = "<group>"; };
+		847227B214342B30002EE43D /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = SOURCE_ROOT; };
 		8480CDDD13712356000E7EE5 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		848BC2BA140CC411007CAF5F /* blueDenimBg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueDenimBg-hd.png"; sourceTree = "<group>"; };
 		848BC2BB140CC411007CAF5F /* blueDenimBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueDenimBg.png; sourceTree = "<group>"; };
@@ -3535,6 +3539,8 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				845BD269143C43B900E0B575 /* new_dictionary.txt */,
+				847227B214342B30002EE43D /* Default-Landscape@2x.png */,
 				848E5D291432DDC400836938 /* mainMenuImageAssets-hd.plist */,
 				848E5D2A1432DDC400836938 /* mainMenuImageAssets-hd.png */,
 				848E5D2B1432DDC400836938 /* mainMenuImageAssets.plist */,
@@ -8295,6 +8301,8 @@
 				848E5D2E1432DDC500836938 /* mainMenuImageAssets-hd.png in Resources */,
 				848E5D2F1432DDC500836938 /* mainMenuImageAssets.plist in Resources */,
 				848E5D301432DDC500836938 /* mainMenuImageAssets.png in Resources */,
+				847227B314342B30002EE43D /* Default-Landscape@2x.png in Resources */,
+				845BD26A143C43B900E0B575 /* new_dictionary.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

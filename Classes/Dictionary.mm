@@ -41,7 +41,9 @@ static Dictionary* _sharedDictionary = nil;
 	if ((self = [super init])) {
 		// Dictionary Initialized
 		NSLog(@"Dictionary Singleton,, init");
-		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab_noplurals_caps" ofType:@"txt"];
+        // JHK - 10/04/11 trying a new dictionary file (plurals removed and potty mouth filtered).
+		//NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab_noplurals_caps" ofType:@"txt"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"new_dictionary" ofType:@"txt"];
 		NSError *error;
 		// read everything from text
 		NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
