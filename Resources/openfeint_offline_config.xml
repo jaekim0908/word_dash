@@ -1,20 +1,20 @@
 <resources>
 <game_profile_page_info>
-  <has_challenges>false</has_challenges>
   <suggestions_topic_id>658383</suggestions_topic_id>
   <has_achievements>true</has_achievements>
   <has_featured_application>true</has_featured_application>
   <has_leaderboards>true</has_leaderboards>
   <has_ipurchase>false</has_ipurchase>
+  <is_owned_by_local_player>true</is_owned_by_local_player>
+  <has_chat_rooms>false</has_chat_rooms>
   <short_name>Battleship</short_name>
   <name>Battleship</name>
-  <is_owned_by_local_player>true</is_owned_by_local_player>
   <id>243493</id>
-  <timestamp>2011-10-12 06:21:36</timestamp>
-  <has_chat_rooms>false</has_chat_rooms>
+  <timestamp>2011-10-12 06:39:48</timestamp>
+  <has_challenges>false</has_challenges>
 </game_profile_page_info>
 <offline>
-<timestamp>2011-10-12 06:21:36</timestamp>
+<timestamp>2011-10-12 06:39:48</timestamp>
 <achievements>
 <achievement>
 <id>941542</id>
@@ -29,7 +29,7 @@
 <position>1</position>
 <start_version>0000.00.00</start_version>
 <end_version>9999.99.99</end_version>
-<timestamp>2011-10-12 06:21:36</timestamp>
+<timestamp>2011-10-12 06:39:48</timestamp>
 </achievement>
 </achievements>
 <leaderboards>
@@ -50,7 +50,7 @@
 <display_text></display_text>
 <custom_data></custom_data>
 <score></score>
-<timestamp>2011-10-12 06:21:36</timestamp>
+<timestamp>2011-10-12 06:39:48</timestamp>
 </leaderboard>
 </leaderboards>
 </offline>
