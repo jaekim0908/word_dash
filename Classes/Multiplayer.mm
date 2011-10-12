@@ -28,8 +28,14 @@ static int prevPlayer2Timer = 0;
 static int noActivityCounter = 0;
 
 //MCH - ACHIEVEMENTS
-#pragma once 
-#define EIGHT_LETTER_WORD @"936592"
+#define FIVE_LETTER_WORDS @"941542"
+#define SIX_LETTER_WORDS @"1292642"
+#define SEVEN_LETTER_WORDS @"1292672"
+#define EIGHT_LETTER_WORDS @"1292682"
+#define NINE_LETTER_WORDS @"1292692"
+#define TEN_LETTER_WORDS @"1292712"
+#define ELEVEN_LETTER_WORDS @"1292722"
+#define WORD_GENIUS @"1292752"
 
 // HelloWorld implementation
 @implementation Multiplayer
@@ -993,17 +999,32 @@ static int noActivityCounter = 0;
 			}
 			int starCount = [self countStarPointandRemoveStars];
 			int newPoint = pow(2, [s length]);
+            int answerLength = [s length];
             
-            if([s length] == 5){
-                CCLOG(@"ACHIEVEMENT: Sending achievement progress");
-                //[[OFAchievement achievement:EIGHT_LETTER_WORD] updateProgressionComplete:20.0f andShowNotification:YES]; 
-                [OFAchievementService updateAchievement:EIGHT_LETTER_WORD addPercentComplete:10.0f andShowNotification:YES];
-                
+            if(answerLength == 5){
+                [OFAchievementService updateAchievement:FIVE_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 6) {
+                [OFAchievementService updateAchievement:SIX_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 7) {
+                [OFAchievementService updateAchievement:SEVEN_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 8) {
+                [OFAchievementService updateAchievement:EIGHT_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 9) {
+                 [OFAchievementService updateAchievement:NINE_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 10) {
+                 [OFAchievementService updateAchievement:TEN_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength == 11) {
+                 [OFAchievementService updateAchievement:ELEVEN_LETTER_WORDS addPercentComplete:100.0f andShowNotification:YES];
+            } else if (answerLength >= 12) {
+                 [OFAchievementService updateAchievement:WORD_GENIUS addPercentComplete:100.0f andShowNotification:YES];
             }
-		
+            
 			if ([OFMultiplayerService isItMyTurn]) {
 				[self addScore:newPoint toPlayer:1 anchorCell: [userSelection objectAtIndex:0]];
 				[self addMoreTime:(starCount * 10) toPlayer:1];
+                if (starCount > 0) {
+                    [[CCNotifications sharedManager] addNotificationTitle:@"Time Extended !!" message:[NSString stringWithFormat:@"Congratulations, %i more seconds added.", starCount * 10] image:@"watchIcon.png" tag:0 animate:YES];
+                }
 			} else {
 				[self addScore:newPoint toPlayer:2 anchorCell: [userSelection objectAtIndex:0]];
 				[self addMoreTime:(starCount * 10) toPlayer:2];

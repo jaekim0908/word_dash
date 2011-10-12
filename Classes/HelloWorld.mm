@@ -138,12 +138,12 @@ static inline int cell(int r, int c) {
 		[self addChild:player2Score];
 
 		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
-		score1Label.color = ccc3(255, 255, 255);
+		score1Label.color = ccc3(0, 0, 0);
 		score1Label.position = ccp(440, 260);
 		[self addChild:score1Label];
 
 		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
-		score2Label.color = ccc3(255, 255, 255);
+		score2Label.color = ccc3(0, 0, 0);
 		score2Label.position = ccp(50, 260);
 		[self addChild:score2Label];
 		
@@ -168,19 +168,19 @@ static inline int cell(int r, int c) {
 		[self addChild:time2Label];
 		
 		player1Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player1Answer.color = ccc3(255,255,255);
+		player1Answer.color = ccc3(0,0,0);
 		player1Answer.position = ccp(460, 260);
 		player1Answer.anchorPoint = ccp(1,0);
 		[self addChild:player1Answer];
 		
 		player2Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player2Answer.color = ccc3(255,255,255);
+		player2Answer.color = ccc3(0,0,0);
 		player2Answer.position = ccp(20, 260);
 		player2Answer.anchorPoint = ccp(0, 0);
 		[self addChild:player2Answer];
 		
 		currentAnswer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:24] retain];
-		currentAnswer.color = ccc3(255, 255, 255);
+		currentAnswer.color = ccc3(0, 0, 0);
 		currentAnswer.position = ccp(windowSize.width/2, 260);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
@@ -246,7 +246,7 @@ static inline int cell(int r, int c) {
 		
 		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];;
 		gameCountDownLabel.position = ccp(240, 160);
-		gameCountDownLabel.color = ccc3(255, 255, 255);
+		gameCountDownLabel.color = ccc3(0, 0, 0);
 		gameCountDownLabel.visible = NO;
 		[self addChild:gameCountDownLabel z:30];        
         

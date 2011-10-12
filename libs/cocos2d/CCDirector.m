@@ -61,6 +61,9 @@
 
 #import "Support/CCProfiling.h"
 
+// custom imports
+#import "CCNotifications.h"
+
 #define kDefaultFPS		60.0	// 60 frames per second
 
 extern NSString * cocos2dVersion(void);
@@ -197,6 +200,10 @@ static CCDirector *_sharedDirector = nil;
 - (void) drawScene
 { 
 	// Override me
+    [runningScene_ visit];
+    [[CCNotifications sharedManager] visit];
+    
+    if (displayFPS_) [self showFPS];
 }
 
 -(void) calculateDeltaTime
