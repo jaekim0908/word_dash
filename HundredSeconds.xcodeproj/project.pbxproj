@@ -1132,7 +1132,7 @@
 		84B8A6D0140F2E7900C33F88 /* rankings.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8A6C6140F2E7900C33F88 /* rankings.png */; };
 		84B8A6D1140F2E7900C33F88 /* RedStarfish-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8A6C7140F2E7900C33F88 /* RedStarfish-hd.png */; };
 		84B8A6D2140F2E7900C33F88 /* RedStarfish.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8A6C8140F2E7900C33F88 /* RedStarfish.png */; };
-		84BC059B14456993003D1020 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 84BC059A14456993003D1020 /* openfeint_offline_config.xml */; };
+		84BC05A614456E85003D1020 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 84BC05A514456E85003D1020 /* openfeint_offline_config.xml */; };
 		84C9C19714205F9000EC09F0 /* playAndPassLable3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9C19514205F9000EC09F0 /* playAndPassLable3-hd.png */; };
 		84C9C19814205F9000EC09F0 /* playAndPassLable3.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9C19614205F9000EC09F0 /* playAndPassLable3.png */; };
 		84C9C1A0142063B300EC09F0 /* howToPlay3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9C19A142063B300EC09F0 /* howToPlay3-hd.png */; };
@@ -3033,7 +3033,7 @@
 		84B8A6C6140F2E7900C33F88 /* rankings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rankings.png; sourceTree = "<group>"; };
 		84B8A6C7140F2E7900C33F88 /* RedStarfish-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RedStarfish-hd.png"; sourceTree = "<group>"; };
 		84B8A6C8140F2E7900C33F88 /* RedStarfish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RedStarfish.png; sourceTree = "<group>"; };
-		84BC059A14456993003D1020 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
+		84BC05A514456E85003D1020 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
 		84C9C19514205F9000EC09F0 /* playAndPassLable3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playAndPassLable3-hd.png"; sourceTree = "<group>"; };
 		84C9C19614205F9000EC09F0 /* playAndPassLable3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playAndPassLable3.png; sourceTree = "<group>"; };
 		84C9C19A142063B300EC09F0 /* howToPlay3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "howToPlay3-hd.png"; sourceTree = "<group>"; };
@@ -3541,7 +3541,7 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				84BC059A14456993003D1020 /* openfeint_offline_config.xml */,
+				84BC05A514456E85003D1020 /* openfeint_offline_config.xml */,
 				84B6FD9814454E2200552112 /* watchIcon.png */,
 				845BD269143C43B900E0B575 /* new_dictionary.txt */,
 				847227B214342B30002EE43D /* Default-Landscape@2x.png */,
@@ -8306,7 +8306,7 @@
 				847227B314342B30002EE43D /* Default-Landscape@2x.png in Resources */,
 				845BD26A143C43B900E0B575 /* new_dictionary.txt in Resources */,
 				84B6FD9914454E2200552112 /* watchIcon.png in Resources */,
-				84BC059B14456993003D1020 /* openfeint_offline_config.xml in Resources */,
+				84BC05A614456E85003D1020 /* openfeint_offline_config.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
