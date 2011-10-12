@@ -1,26 +1,26 @@
 <resources>
 <game_profile_page_info>
-  <has_chat_rooms>false</has_chat_rooms>
-  <has_challenges>true</has_challenges>
-  <suggestions_topic_id>658363</suggestions_topic_id>
+  <has_challenges>false</has_challenges>
+  <suggestions_topic_id>658383</suggestions_topic_id>
   <has_achievements>true</has_achievements>
-  <has_leaderboards>false</has_leaderboards>
-  <has_featured_application>false</has_featured_application>
+  <has_featured_application>true</has_featured_application>
+  <has_leaderboards>true</has_leaderboards>
   <has_ipurchase>false</has_ipurchase>
-  <short_name>100 Seconds</short_name>
-  <name>100 Seconds</name>
-  <id>243483</id>
-  <timestamp>2011-05-04 06:01:03</timestamp>
+  <short_name>Battleship</short_name>
+  <name>Battleship</name>
   <is_owned_by_local_player>true</is_owned_by_local_player>
+  <id>243493</id>
+  <timestamp>2011-10-12 06:21:36</timestamp>
+  <has_chat_rooms>false</has_chat_rooms>
 </game_profile_page_info>
 <offline>
-<timestamp>2011-05-04 06:01:03</timestamp>
+<timestamp>2011-10-12 06:21:36</timestamp>
 <achievements>
 <achievement>
-<id>936592</id>
-<title>10 five-letter-words</title>
-<description>Achieving 10 five-letter-words</description>
-<gamerscore>15</gamerscore>
+<id>941542</id>
+<title>5 Letter Words</title>
+<description>Good job finding 5 letter words</description>
+<gamerscore>5</gamerscore>
 <icon_url></icon_url>
 <is_secret>false</is_secret>
 <is_unlocked>false</is_unlocked>
@@ -29,9 +29,30 @@
 <position>1</position>
 <start_version>0000.00.00</start_version>
 <end_version>9999.99.99</end_version>
-<timestamp>2011-05-04 06:01:03</timestamp>
+<timestamp>2011-10-12 06:21:36</timestamp>
 </achievement>
 </achievements>
+<leaderboards>
+<leaderboard>
+<id>650204</id>
+<name>Rankings</name>
+<active>true</active>
+<visible>true</visible>
+<allow_posting_lower_scores>true</allow_posting_lower_scores>
+<client_application_id>243493</client_application_id>
+<descending_sort_order>true</descending_sort_order>
+<created_at>2011-02-18 03:04:25 UTC</created_at>
+<updated_at>2011-02-18 03:04:25 UTC</updated_at>
+<start_version>0000.00.00</start_version>
+<end_version>9999.99.99</end_version>
+<position>0</position>
+<reached_at></reached_at>
+<display_text></display_text>
+<custom_data></custom_data>
+<score></score>
+<timestamp>2011-10-12 06:21:36</timestamp>
+</leaderboard>
+</leaderboards>
 </offline>
 
 </resources>
