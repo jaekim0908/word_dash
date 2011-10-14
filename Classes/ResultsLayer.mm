@@ -12,7 +12,6 @@
 #import "OpenFeint.h"
 #import "GameManager.h"
 #import "Definition.h"
-#import "CocosOverlayViewController.h"
 
 @implementation ResultsLayer
 
