@@ -191,14 +191,14 @@ static int noActivityCounter = 0;
 		player2Answer.anchorPoint = ccp(0, 0);
 		[self addChild:player2Answer];
 		
-		currentAnswer = [[CCLabelTTF labelWithString:@"Hello" fontName:@"Verdana-Bold" fontSize:24] retain];
-		currentAnswer.color = ccc3(255, 255, 255);
+		currentAnswer = [[CCLabelTTF labelWithString:@" " fontName:@"Verdana" fontSize:24] retain];
+		currentAnswer.color = ccc3(237, 145, 33);
 		currentAnswer.position = ccp(windowSize.width/2, 260);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
         
         //MCH -- to display message when opponent has no time left
-		statusMessage = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:14] retain];
+		statusMessage = [[CCLabelTTF labelWithString:@"" fontName:@"MarkerFelt-Thin" fontSize:14] retain];
 		statusMessage.color = ccc3(0, 0, 255);
 		statusMessage.position = ccp(windowSize.width/2, 280);
 		statusMessage.anchorPoint = ccp(0.5f, 0.5f);
@@ -246,7 +246,7 @@ static int noActivityCounter = 0;
 		
 		midDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
 		midDisplay.position = ccp(240, 160);
-		midDisplay.color = ccc3(255, 255, 255);
+		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		[self createLetterSlots:rows columns:cols firstGame:YES];
 		
@@ -255,7 +255,7 @@ static int noActivityCounter = 0;
 		
 		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];;
 		gameCountDownLabel.position = ccp(240, 160);
-		gameCountDownLabel.color = ccc3(255, 255, 255);
+		gameCountDownLabel.color = ccc3(135, 206, 250);
 		gameCountDownLabel.visible = NO;
 		[self addChild:gameCountDownLabel z:30];
 
@@ -986,7 +986,7 @@ static int noActivityCounter = 0;
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
             
-            [currentAnswer setColor:ccc3(0, 255, 0)];
+            [currentAnswer setColor:ccc3(124, 205, 124)];
 			[foundWords setObject:s forKey:s];
 			if ([OFMultiplayerService isItMyTurn]) {
                 // MCH -- play success sound
@@ -1030,13 +1030,13 @@ static int noActivityCounter = 0;
 				[self addMoreTime:(starCount * 10) toPlayer:2];
 			}
 		} else {
-            [currentAnswer setColor:ccc3(255, 0, 0)];
+            [currentAnswer setColor:ccc3(238, 44, 44)];
             // MCH -- play invalid word sound
             [soundEngine playEffect:@"dull_bell.mp3"];
-			[midDisplay setString:@"Try again"];
+            [midDisplay setString:@"Not a word"];
 		}
 	}
-	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
+	[midDisplay runAction:[CCFadeOut actionWithDuration:1.5]];
 	[userSelection removeAllObjects];
 }
 
@@ -1047,7 +1047,7 @@ static int noActivityCounter = 0;
 		s = [s stringByAppendingString:c.value];
 	}
 
-    [currentAnswer setColor:ccc3(255, 255, 255)];
+    currentAnswer.color = ccc3(237, 145, 33);
 	[currentAnswer setString:s];
 }
 
