@@ -497,8 +497,10 @@ static inline int cell(int r, int c) {
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"100"];
-	[player2Timer setString:@"100"];
+	//MCH[player1Timer setString:@"100"];
+	//MCH[player2Timer setString:@"100"];
+    [player1Timer setString:@"3"];
+	[player2Timer setString:@"3"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];
@@ -828,13 +830,13 @@ static inline int cell(int r, int c) {
         
         
         //MCH - display results layer 
-        ResultsLayer *rl = [[[ResultsLayer alloc] initWithPlayerOneScore:[player1Score string] 
-													  WithPlayerTwoScore:[player2Score string] 
-													  WithPlayerOneWords:player1Words 
-													  WithPlayerTwoWords:player2Words] 
-							autorelease];
-        [[[CCDirector sharedDirector] runningScene] addChild:rl 
-                                                           z:3];
+        [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
+                                                   WithPlayerTwoScore:[player2Score string] 
+                                                   WithPlayerOneWords:player1Words 
+                                                   WithPlayerTwoWords:player2Words
+                                                   ForMultiPlayer:FALSE
+                                                   ]];
+
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {
