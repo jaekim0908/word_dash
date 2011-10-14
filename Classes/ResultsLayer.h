@@ -26,6 +26,7 @@
     int         currentPage;
     int         player1TotalPages;
     int         player2TotalPages;
+    BOOL        flagMultiPlayer;
     CCLabelTTF *pageNumDisplay;
     CCSprite   *surfBackground;
     CCSprite   *surfBackground2;
@@ -62,10 +63,11 @@
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int player1TotalPages;
 @property (nonatomic, assign) int player2TotalPages;
+@property (nonatomic, assign) BOOL flagMultiPlayer;
 
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words;
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words;
+-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag;
++(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag;
 - (void) displayPlayerWords:(int) playerNumber
                   withWords:(NSMutableArray *)pWords 
                      startAt:(int)startIndex 

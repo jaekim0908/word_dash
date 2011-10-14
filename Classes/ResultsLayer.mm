@@ -12,7 +12,7 @@
 #import "OpenFeint.h"
 #import "GameManager.h"
 #import "Definition.h"
-#import "CocosOverlayViewController.h"
+//#import "CocosOverlayViewController.h"
 
 @implementation ResultsLayer
 
@@ -41,6 +41,7 @@
 @synthesize nextPageButtonDisabled;
 @synthesize prevPageButtonDisabled;
 @synthesize woodenSign;
+@synthesize flagMultiPlayer;
 
 
 #define HDR_POS_X_P1 (44.0f/63.0f)
@@ -67,20 +68,24 @@
 #define MAX_WORDS_PER_PAGE  11
 
 
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words {
++(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
     
     // 'layer' is an autorelease object.
 	ResultsLayer	*layer = [ResultsLayer node];
-    [layer initWithPlayerOneScore:p1Score WithPlayerTwoScore:p2Score WithPlayerOneWords:p1Words WithPlayerTwoWords:p2Words]; 
+    [layer initWithPlayerOneScore:p1Score 
+               WithPlayerTwoScore:p2Score 
+               WithPlayerOneWords:p1Words 
+               WithPlayerTwoWords:p2Words
+                ForMultiPlayer:multiPlayerFlag]; 
 	[scene addChild:layer];  
     
 	// return the scene
 	return scene;
 }
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words 
+-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag
 {
     winSize = [[CCDirector sharedDirector] winSize];
     arrayPagesPlayer1 = [[NSMutableArray array] retain];
@@ -88,6 +93,8 @@
     
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
         
+    
+        multiPlayerFlag ? self.flagMultiPlayer = TRUE : self.flagMultiPlayer = FALSE;
         
         //SETUP SPRITE SHEET
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -102,14 +109,8 @@
         [self addChild:batchNode];
         
         //SETUP BACKGROUND
-        if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
-            whiteBackground = [CCSprite spriteWithFile:@"Surfboard03_kparrish_960-640.png"];
-        }
-        else{
-            whiteBackground = [CCSprite spriteWithFile:@"Surfboard03_kparrish_480-320.png"];
-        }
+        whiteBackground = [CCSprite spriteWithFile:@"Surfboard03_kparrish.png"];
         whiteBackground.position = ccp(240,160);
-        //surfBackground.anchorPoint = ccp(0,0);
         [self addChild:whiteBackground];
         
         //MAKE A COPY OF THE WORDS ARRAY FOR PAGING
@@ -540,31 +541,33 @@
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
         
-        [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
-        /*************
-		[[GameManager sharedGameManager] closeGame];
-		CCLOG(@"--------------------------------------------");
-		CCLOG(@"Rematch button pressed");
-		NSString *opponentId = nil;
-		NSString *localUserId = [[OpenFeint localUser] userId];
-		if ( [localUserId isEqualToString:[GameManager sharedGameManager].challengerId] ) {
-			CCLOG(@"Local user is a pervious challenger");
-			opponentId = [GameManager sharedGameManager].challengeeId;
-		} else {
-			CCLOG(@"Local user is a pervious challengee");
-			opponentId = [GameManager sharedGameManager].challengerId;
-		}
-		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::LOBBY_OPTION_CONFIG,
+        if (!self.flagMultiPlayer) {
+            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        }
+        else{
+            [[GameManager sharedGameManager] closeGame];
+            CCLOG(@"--------------------------------------------");
+            CCLOG(@"Rematch button pressed");
+            NSString *opponentId = nil;
+            NSString *localUserId = [[OpenFeint localUser] userId];
+            if ( [localUserId isEqualToString:[GameManager sharedGameManager].challengerId] ) {
+                CCLOG(@"Local user is a pervious challenger");
+                opponentId = [GameManager sharedGameManager].challengeeId;
+            } else {
+                CCLOG(@"Local user is a pervious challengee");
+                opponentId = [GameManager sharedGameManager].challengerId;
+            }
+            NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::   LOBBY_OPTION_CONFIG,
 								 [NSNumber numberWithUnsignedInt:5*60], OFMultiplayer::LOBBY_OPTION_TURN_TIME,
 								 [NSArray arrayWithObject:opponentId], OFMultiplayer::LOBBY_OPTION_CHALLENGE_OF_IDS,
 								 nil];
-		CCLOG(@"Creating Game");
-		CCLOG(@"--------------------------------------------");
-		OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-		[game createGame:@"HundredSeconds" withOptions:options];
-		[GameManager sharedGameManager].isChallenger = YES;
-		[OFUser getUser:opponentId];
-         ****************/
+            CCLOG(@"Creating Game");
+            CCLOG(@"--------------------------------------------");
+            OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
+            [game createGame:@"HundredSeconds" withOptions:options];
+            [GameManager sharedGameManager].isChallenger = YES;
+            [OFUser getUser:opponentId];
+        }
 	}
  
  
