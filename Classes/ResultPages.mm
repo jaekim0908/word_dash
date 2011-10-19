@@ -79,11 +79,11 @@
     //HARDCODE VALUES
     if(playerNum == 1)
     {
-        colIndentFromLeftEdge = 145.0f;
+        colIndentFromLeftEdge = 340.0f;
     }
     else
     {
-        colIndentFromLeftEdge = 340.0f;
+        colIndentFromLeftEdge = 145.0f;
     }
 
     return (colIndentFromLeftEdge);
