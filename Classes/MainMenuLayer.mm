@@ -24,6 +24,7 @@
 #import "ChallengeRequestDialog.h"
 #import "OFSocialNotificationApi.h"
 #import "CCAlertView.h"
+#import "AIDictionary.h"
 
 @interface UIAlertView (extended)
 -(void) setNumberOfRows:(int) num;
@@ -211,7 +212,7 @@
         [self displayPlayAndPass];
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         howToPlaySelected.visible = NO;
-        [self displaySceneSelection];
+        [self displaySinglePlayer];
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         rankingsSelected.visible = NO;
         [self displayRanking];
@@ -220,70 +221,8 @@
 
 -(void) displayMainMenu {
 	NSLog(@"display main menu");
-	
-    /*
-	CCMenuItemImage *playAndPassGameButton = [CCMenuItemImage
-											  itemFromNormalImage:@"blue_button.png" 
-											  selectedImage:@"blue_button"
-											  disabledImage:nil
-											  target:self
-											  selector:@selector(displayPlayAndPass)];
-	
-    
-    CCLabelTTF *playAndPass = [CCLabelTTF labelWithString:@"Play And Pass" fontName:@"Verdana" fontSize:12];
-    playAndPass.color = ccc3(10, 10, 10);
-    playAndPass.position = ccp(410, 285);
-    [self addChild:playAndPass z:20];
-     
-	CCMenuItemImage *multiPlayerGameButton = [CCMenuItemImage
-											  itemFromNormalImage:@"blue_button.png" 
-											  selectedImage:@"blue_button.png"
-											  disabledImage:nil
-											  target:self
-											  selector:@selector(showActionSheet)];
-	
-    CCLabelTTF *multiPlayer = [CCLabelTTF labelWithString:@"Multiplayer" fontName:@"Verdana" fontSize:12];
-    multiPlayer.color = ccc3(10, 10, 10);
-    multiPlayer.position = ccp(410, 205);
-    [self addChild:multiPlayer z:20];
-    
-	CCMenuItemImage *howToPlayButton =		 [CCMenuItemImage
-											  itemFromNormalImage:@"blue_button.png" 
-											  selectedImage:@"blue_button.png"
-											  disabledImage:nil
-											  target:self
-											  selector:@selector(displaySceneSelection)];
-	
-    CCLabelTTF *howToPlay = [CCLabelTTF labelWithString:@"How To Play" fontName:@"Verdana" fontSize:12];
-    howToPlay.color = ccc3(10, 10, 10);
-    howToPlay.position = ccp(410, 125);
-    [self addChild:howToPlay z:20];
-
-	CCMenuItemImage *rankingButton =		[CCMenuItemImage 
-												itemFromNormalImage:@"blue_button.png"
-												selectedImage:@"blue_button.png"
-												disabledImage:nil
-												target:self
-												selector:@selector(displayRanking)];
-    
-    CCLabelTTF *rankings = [CCLabelTTF labelWithString:@"Rankings" fontName:@"Verdana" fontSize:12];
-    rankings.color = ccc3(10, 10, 10);
-    rankings.position = ccp(410, 45);
-    [self addChild:rankings z:20];
-	
-	mainMenu = [CCMenu menuWithItems:playAndPassGameButton, multiPlayerGameButton, howToPlayButton, rankingButton, nil];
-	[mainMenu alignItemsVerticallyWithPadding:5.0f];
-	[mainMenu setPosition:ccp(480, 160)];
-	id moveAction = [CCMoveTo actionWithDuration:1.2f 
-										position:ccp(480 * 0.85f, 160)];
-	
-	id moveEffect = [CCEaseIn actionWithAction:moveAction 
-										  rate:1.0f];
-	[mainMenu runAction:moveEffect];
-	[self addChild:mainMenu z:0 tag:1];
-     */
-	[[Dictionary sharedDictionary] loadDictionary];
-    [[Definition sharedDefinition] loadDefinition];
+    [[Dictionary sharedDictionary] loadDictionary];
+    [[AIDictionary sharedDictionary] loadDictionary];
 }
 
 -(void) displaySceneSelection {
@@ -301,6 +240,11 @@
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");
 	[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
+}
+
+-(void) displaySinglePlayer {
+    CCLOG(@"display single player");
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
 }
 
 

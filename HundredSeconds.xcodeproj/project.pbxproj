@@ -1150,6 +1150,9 @@
 		84D4137213E1274100656B94 /* ImageAssets-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137013E1274000656B94 /* ImageAssets-hd.png */; };
 		84D4137513E29DD900656B94 /* ImageAssets2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137313E29DD400656B94 /* ImageAssets2.plist */; };
 		84D4137613E29DD900656B94 /* ImageAssets2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137413E29DD700656B94 /* ImageAssets2.png */; };
+		84D4B73D144D3FF800D12D7B /* SinglePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B73C144D3FF800D12D7B /* SinglePlayer.mm */; };
+		84D4B741144E960000D12D7B /* AIDictionary.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B740144E960000D12D7B /* AIDictionary.mm */; };
+		84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */; };
 		84D993BF14188706007BF6DA /* rankings2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993BD14188706007BF6DA /* rankings2-hd.png */; };
 		84D993C014188706007BF6DA /* rankings2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993BE14188706007BF6DA /* rankings2.png */; };
 		84D993C4141897B3007BF6DA /* blueSandDollar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993C2141897B3007BF6DA /* blueSandDollar-hd.png */; };
@@ -3058,6 +3061,11 @@
 		84D4137013E1274000656B94 /* ImageAssets-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageAssets-hd.png"; sourceTree = "<group>"; };
 		84D4137313E29DD400656B94 /* ImageAssets2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImageAssets2.plist; sourceTree = "<group>"; };
 		84D4137413E29DD700656B94 /* ImageAssets2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageAssets2.png; sourceTree = "<group>"; };
+		84D4B73B144D3FF800D12D7B /* SinglePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePlayer.h; sourceTree = "<group>"; };
+		84D4B73C144D3FF800D12D7B /* SinglePlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SinglePlayer.mm; sourceTree = "<group>"; };
+		84D4B73F144E95FF00D12D7B /* AIDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIDictionary.h; sourceTree = "<group>"; };
+		84D4B740144E960000D12D7B /* AIDictionary.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AIDictionary.mm; sourceTree = "<group>"; };
+		84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ai-dictionary-level-1.txt"; sourceTree = "<group>"; };
 		84D993BD14188706007BF6DA /* rankings2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rankings2-hd.png"; sourceTree = "<group>"; };
 		84D993BE14188706007BF6DA /* rankings2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rankings2.png; sourceTree = "<group>"; };
 		84D993C2141897B3007BF6DA /* blueSandDollar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueSandDollar-hd.png"; sourceTree = "<group>"; };
@@ -3440,6 +3448,8 @@
 				6ECE2D9A13330B6400C996AF /* LoadingScene.h */,
 				6ECE2D9B13330B6400C996AF /* LoadingScene.mm */,
 				6ECE2ECB1333322400C996AF /* Dictionary.h */,
+				84D4B73F144E95FF00D12D7B /* AIDictionary.h */,
+				84D4B740144E960000D12D7B /* AIDictionary.mm */,
 				6ECE2ECC1333322400C996AF /* Dictionary.mm */,
 				D45AF3E71386353B00438B40 /* Definition.h */,
 				D45AF3E81386353B00438B40 /* Definition.mm */,
@@ -3449,6 +3459,8 @@
 				6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */,
 				84CDD1DC13B2FAA20090E48A /* CCAlertView.h */,
 				84CDD1DD13B2FAA20090E48A /* CCAlertView.mm */,
+				84D4B73B144D3FF800D12D7B /* SinglePlayer.h */,
+				84D4B73C144D3FF800D12D7B /* SinglePlayer.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -3558,6 +3570,7 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */,
 				84BC05A514456E85003D1020 /* openfeint_offline_config.xml */,
 				D47F3E981446B8BA0055EC74 /* Surfboard03_kparrish.png */,
 				D4BF0CC01446AA2400C6BAEF /* Surfboard03_kparrish-hd.png */,
@@ -8336,6 +8349,7 @@
 				D4BF0CC81446AA5200C6BAEF /* result_layer_3g.png in Resources */,
 				D4BF0CC91446AA5200C6BAEF /* result_layer_retina.png in Resources */,
 				D47F3E991446B8BA0055EC74 /* Surfboard03_kparrish.png in Resources */,
+				84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8839,6 +8853,8 @@
 				84CDD1DE13B2FAA20090E48A /* CCAlertView.mm in Sources */,
 				D4BF0CB91446A9A800C6BAEF /* ResultsLayer.mm in Sources */,
 				D4BF0CBC1446A9BC00C6BAEF /* ResultPages.mm in Sources */,
+				84D4B73D144D3FF800D12D7B /* SinglePlayer.mm in Sources */,
+				84D4B741144E960000D12D7B /* AIDictionary.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8961,8 +8977,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8979,8 +8995,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8990,8 +9006,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9006,8 +9022,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9072,8 +9088,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9088,8 +9104,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};

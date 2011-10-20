@@ -14,6 +14,7 @@
 #import "HelloWorld.h"
 #import "LoadingScene.h"
 #import "Multiplayer.h"
+#import "SinglePlayer.h"
 #import "OFMultiplayerService.h"
 #import "OFUser.h"
 
@@ -103,30 +104,34 @@ static GameManager* _sharedGameManager = nil;
 	id sceneToRun = nil;
 	switch (sceneId) {
 		case kMainMenuScene:
-			NSLog(@"Main Menu Scene");
+			CCLOG(@"Main Menu Scene");
 			sceneToRun = [MainMenuScene node];
 			break;
 		case kLoadingScene:
-			NSLog(@"Loading Scene");
+			CCLOG(@"Loading Scene");
 			break;
 		case kIntroScene:
-			NSLog(@"Intro Scene");
+			CCLOG(@"Intro Scene");
 			break;
 		case kMutiPlayerScene:
-			NSLog(@"Multi Player Scene");
+			CCLOG(@"Multi Player Scene");
 			sceneToRun = [Multiplayer scene];
 			break;
 		case kPlayAndPassScene:
-			NSLog(@"Play and Pass Scene");
+			CCLOG(@"Play and Pass Scene");
 			sceneToRun = [PlayAndPassScene node];
 			break;
 		case kHelloWorldScene:
-			NSLog(@"Play and Pass Scene");
+			CCLOG(@"Play and Pass Scene");
 			sceneToRun = [HelloWorld scene];
 			break;
-		
+        case kSinglePlayerScene:
+			CCLOG(@"SinglePlayer Scene");
+			sceneToRun = [SinglePlayer scene];
+			break;
+            
 		default:
-			NSLog(@"Unknown Id, cannot switch scene");
+			CCLOG(@"Unknown Id, cannot switch scene");
 			break;
 	}
 	

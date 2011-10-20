@@ -1,88 +1,48 @@
 //
-//  HelloWorldLayer.m
-//  BattleWord
+//  SinglePlayer.mm
+//  WordDash
 //
 //  Created by Jae Kim on 1/18/11.
 //  Copyright __MyCompanyName__ 2011. All rights reserved.
 //
 
 // Import the interfaces
-#import "HelloWorld.h"
+#import "SinglePlayer.h"
 #import "Cell.h"
 #import "OpenFeint.h"
 #import "OFHighScoreService.h"
-#import "OFMultiplayer.h"
 #import "OFMultiplayerService.h"
 #import "OFMultiplayerService+Advanced.h"
+#import "OFAchievement.h"
+#import "OFAchievementService.h"
 #import "OpenFeint+Dashboard.h"
 #import "OpenFeint+UserOptions.h"
-#import "OFMultiplayerGame.h"
-#import "GameManager.h"
+#import "OFMultiplayerMove.h"
 #import "Dictionary.h"
-#import "Definition.h"
+#import "GameManager.h"
 #import "ResultsLayer.h"
+#import "PauseLayer.h"
 #import "SimpleAudioEngine.h"
+#import "AIDictionary.h"
 
-@implementation HelloWorld
+@implementation SinglePlayer
 
-NSMutableArray *letterSlots;
+@synthesize rows;
+@synthesize cols;
+@synthesize thisGame;
+@synthesize isThisPlayerChallenger;
+@synthesize numPauseRequests;
+@synthesize soundEngine;
+@synthesize initOpponentOutOfTime;
 
-int cols = 5;
-int rows = 4;
-int width = 80;
-int height = 60;
-int y_offset = 30;
 
-CCLabelTTF *player1Timer;
-CCLabelTTF *player2Timer;
-CCLabelTTF *wordDefinition;
-CCLabelTTF *player1Answer;
-CCLabelTTF *player2Answer;
-CCLabelTTF *gameTimer;
-CCLabelTTF *midDisplay;
-CCLabelTTF *currentAnswer;
-int playerTurn = 1;
-BOOL gameOver = NO;
-NSMutableArray* allWords;
-NSMutableDictionary *dictionary;
-NSMutableDictionary *definition;//MCH
-NSMutableArray* wordMatrix;
-CCSpriteBatchNode *batchNode;
-CCSpriteBatchNode *batchNode2;
-CCSprite *solveButton1;
-CCSprite *solveButton2;
-CCSprite *greySolveButton1;
-CCSprite *greySolveButton2;
-CCSprite *transparentBoundingBox1;
-CCSprite *transparentBoundingBox2;
-NSMutableArray *userSelection;
-BOOL player1TileFipped = NO;
-BOOL player2TileFipped = NO;
-NSMutableDictionary *foundWords;
-NSMutableArray *player1Words;
-NSMutableArray *player2Words;
-CCLabelTTF *player1Score;
-CCLabelTTF *player2Score;
-BOOL enableTouch = NO;
-int countNoTileFlips = 1;
-NSMutableArray *specialEffects;
-int currentStarPoints = 8;
-NSMutableArray *starPoints;
-BOOL gameCountdown = NO;
-CCLabelTTF *gameCountDownLabel;
-CCSprite *gameSummary;
-OFMultiplayerGame *myGame;
-
-static inline int cell(int r, int c) {
-	return (r * cols + c);
-}
 +(id) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorld *layer = [HelloWorld node];
+	SinglePlayer *layer = [SinglePlayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -97,20 +57,32 @@ static inline int cell(int r, int c) {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-        [GameManager sharedGameManager].gameStatus = kGameStarted;
 		self.isTouchEnabled = YES;
 		
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];
-
+        
+        cols = 5;
+		rows = 4;
+		width = 80;
+		height = 60;
+		y_offset = 30;
+		playerTurn = 1;
+		gameOver = NO;
+		player1TileFipped = NO;
+		player2TileFipped = NO;
+		enableTouch = NO;
+		countNoTileFlips = 1;
+		currentStarPoints = 8;
+		gameCountdown = YES;
+        initOpponentOutOfTime = NO;
+        
+		self.isTouchEnabled = YES;
+        
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
         
-        //MCH -- setting up definition
-        definition = [[Definition sharedDefinition] dict];
-        CCLOG(@"LOOKUP!!!!!!!!!!!!!!!!!!!!!!!!! able=%@",[definition objectForKey:@"able"]);
-        
-		CCLOG(@"dictionary size = %@", [dictionary objectForKey:@"orange"]);
-        
+        aiAllWords = [[AIDictionary sharedDictionary] allWords];
+                
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets-hd.plist"];
@@ -126,7 +98,7 @@ static inline int cell(int r, int c) {
         
         [self addChild:batchNode];
         [self addChild:batchNode2];
-
+        
 		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
 		player1Score.color = ccc3(0,0,255);
 		player1Score.position = ccp(440, 220);
@@ -136,12 +108,12 @@ static inline int cell(int r, int c) {
 		player2Score.color = ccc3(0,0,255);
 		player2Score.position = ccp(50, 220);
 		[self addChild:player2Score];
-
+        
 		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
 		score1Label.color = ccc3(0, 0, 0);
 		score1Label.position = ccp(440, 260);
 		[self addChild:score1Label];
-
+        
 		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
 		score2Label.color = ccc3(0, 0, 0);
 		score2Label.position = ccp(50, 260);
@@ -151,7 +123,7 @@ static inline int cell(int r, int c) {
 		player1Timer.color = ccc3(255, 0, 0);
 		player1Timer.position = ccp(440, 130);
 		[self addChild:player1Timer];
-
+        
 		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:37] retain];
 		player2Timer.color = ccc3(255, 0, 0);
 		player2Timer.position = ccp(50, 130);
@@ -179,8 +151,8 @@ static inline int cell(int r, int c) {
 		player2Answer.anchorPoint = ccp(0, 0);
 		[self addChild:player2Answer];
 		
-		currentAnswer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:24] retain];
-		currentAnswer.color = ccc3(0, 0, 0);
+		currentAnswer = [[CCLabelTTF labelWithString:@" " fontName:@"Verdana" fontSize:24] retain];
+		currentAnswer.color = ccc3(237, 145, 33);
 		currentAnswer.position = ccp(windowSize.width/2, 260);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
@@ -194,8 +166,8 @@ static inline int cell(int r, int c) {
 			[wordMatrix addObject:columns];
 		}
 		
-		NSLog(@"wordMatrix = %@", wordMatrix);
-
+		CCLOG(@"wordMatrix = %@", wordMatrix);
+        
 		wordDefinition = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"Verdana" fontSize:14.0f] retain];
 		wordDefinition.color = ccc3(255,0,0);
 		wordDefinition.position = ccp(80, 50);
@@ -234,35 +206,36 @@ static inline int cell(int r, int c) {
 		player2Words = [[NSMutableArray array] retain];
 		
 		midDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
-		midDisplay.position = ccp(windowSize.width/2, windowSize.height/2);
-		midDisplay.color = ccc3(255, 255, 255);
+		midDisplay.position = ccp(240, 160);
+		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		
 		[self createLetterSlots:rows columns:cols firstGame:YES];
 		[self schedule:@selector(updateTimer:) interval:1.0f];
+        [self schedule:@selector(runAI:) interval:2.0f];
 		
 		specialEffects = [[NSMutableArray array] retain];
 		starPoints = [[NSMutableArray array] retain];
 		
 		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];;
 		gameCountDownLabel.position = ccp(240, 160);
-		gameCountDownLabel.color = ccc3(0, 0, 0);
+		gameCountDownLabel.color = ccc3(135, 206, 250);
 		gameCountDownLabel.visible = NO;
-		[self addChild:gameCountDownLabel z:30];        
+		[self addChild:gameCountDownLabel z:30];       
         
-        //CCSprite *beachImg = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
         CCSprite *beachImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg.position = ccp(windowSize.width/2, windowSize.height/2);
         beachImg.opacity = 0;
         [self addChild:beachImg z:1];
         
-        //CCSprite *beachImg2 = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
         CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
         
         soundEngine = [SimpleAudioEngine sharedEngine];
-    
+        
+        visibleLetters = [[NSMutableDictionary dictionary] retain];
+        
 	}
 	return self;
 }
@@ -321,7 +294,7 @@ static inline int cell(int r, int c) {
 	if ([starPoints count] > 0) {
 		return;
 	}
-		
+    
 	int n = 0;
 	
 	while (n < currentStarPoints) {
@@ -347,9 +320,9 @@ static inline int cell(int r, int c) {
 		} else {
 			countNoTileFlips = 1;
 		}
-			
+        
 		NSLog(@"CountNoTileFlips = %i", countNoTileFlips);
-
+        
 		if (countNoTileFlips % 5 == 0) {
 			countNoTileFlips = 1;
 			[self openRandomLetters:1];
@@ -361,7 +334,6 @@ static inline int cell(int r, int c) {
 	[self clearLetters];
 	[player1Answer setString:@" "];
 	[player2Answer setString:@" "];
-	[currentAnswer setString:@" "];
 	
 	if (player == 1) {
 		playerTurn = 1;	
@@ -434,8 +406,8 @@ static inline int cell(int r, int c) {
 
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
-
-	if (!gameOver && !enableTouch) {
+    
+	if (gameOver || !enableTouch || playerTurn == 2) {
 		return TRUE;
 	}
 	
@@ -451,7 +423,7 @@ static inline int cell(int r, int c) {
 		gameSummary.visible = NO;
 	}
 	
-
+    
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
@@ -469,7 +441,7 @@ static inline int cell(int r, int c) {
 			[self switchTo:1 countFlip:YES];
 		}
 	}
-		
+    
 	for(int r = 0; r < rows; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
@@ -515,7 +487,7 @@ static inline int cell(int r, int c) {
 			}
 		}
 	}
-		
+    
 	return TRUE;
 }
 
@@ -529,10 +501,8 @@ static inline int cell(int r, int c) {
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	//MCH[player1Timer setString:@"100"];
-	//MCH[player2Timer setString:@"100"];
-    [player1Timer setString:@"3"];
-	[player2Timer setString:@"3"];
+	[player1Timer setString:@"100"];
+	[player2Timer setString:@"100"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];
@@ -555,7 +525,7 @@ static inline int cell(int r, int c) {
 		}
 	}
 }
-		 
+
 - (void) hideBoard {
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
@@ -592,7 +562,7 @@ static inline int cell(int r, int c) {
 	
 	return randomString;
 }
-				 
+
 
 - (void) createLetterSlots:(int) rows columns:(int) cols firstGame:(BOOL) firstGameFlag{
 	
@@ -601,27 +571,27 @@ static inline int cell(int r, int c) {
 	NSString *letters = [self createRandomString];
 	
 	if (letters) {
-		CCLOG(@"letters = %@", letters);
+		CCLOG(@"SINGLE PLAYER MODE:letters = %@", letters);
 	}
 	
 	NSMutableDictionary *usedIdx = [NSMutableDictionary dictionary];
 	
+    CCLOG(@"********SINGLE PLAYER MODE START********");
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			int i = arc4random() % [letters length];
 			NSString *key = [[NSNumber numberWithInt:i] stringValue];
-			CCLOG(@"Key = %@", key);
+			CCLOG(@"SINGLE PLAYER MODE:Key = %@", key);
 			while([usedIdx valueForKey:key]) {
-				CCLOG(@"Already Used Index = %@", key);
+				CCLOG(@"SINGLE PLAYER MODE:Already Used Index = %@", key);
 				i = arc4random() % [letters length];
 				key = [[NSNumber numberWithInt:i] stringValue];
-				CCLOG(@"Key = %@", key);
+				CCLOG(@"SINGLE PLAYER MODE:Key = %@", key);
 			}
 			[usedIdx setObject:@"Y" forKey:key];
-			CCLOG(@"adding character = %@", [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]]);
+			CCLOG(@"SINGLE PLAYER MODE:adding character = %@", [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]]);
 			
 			if (firstGameFlag) {
-                //label = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
                 label = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
 				label.position = ccp(125 + c * 60, 30 + r * 60);
 				label.visible = NO;
@@ -645,7 +615,7 @@ static inline int cell(int r, int c) {
 				[batchNode2 addChild:selectedBackground z:1];
 				cell.letterSelected = selectedBackground;
 				[selectedBackground release];
-
+                
 				CCSprite *selectedBackground2 = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
 				selectedBackground2.position = cell.letterSprite.position;
 				selectedBackground2.visible = NO;
@@ -672,7 +642,6 @@ static inline int cell(int r, int c) {
 			} else {
 				cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 				cell.letterSprite.visible = NO;
-				//cell.letterSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
                 cell.letterSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
 				cell.value = [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]];
 				cell.star.visible = NO;
@@ -680,6 +649,7 @@ static inline int cell(int r, int c) {
 		}
 	}
 	
+    CCLOG(@"********SINGLE PLAYER MODE END********");
 	[self startGame];
 }
 
@@ -688,7 +658,7 @@ static inline int cell(int r, int c) {
 	[player1Answer setString:@" "];
 	[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
-
+    
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
@@ -745,7 +715,7 @@ static inline int cell(int r, int c) {
 	
 	[midDisplay setString:@""];
 	[midDisplay runAction:[CCFadeIn actionWithDuration:0.1f]];
-		
+    
 	NSString *s = [NSString string];
 	for(Cell *c in userSelection) {
 		s = [s stringByAppendingString:c.value];
@@ -760,11 +730,12 @@ static inline int cell(int r, int c) {
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            [currentAnswer setColor:ccc3(124, 205, 124)];
 			[foundWords setObject:s forKey:s];
             
             // MCH -- play success sound
             [soundEngine playEffect:@"success.mp3"];
-
+            
             //MCH -- add to each player's word's array for results scene
             if (playerTurn == 1) {
                 [player1Words addObject:s];
@@ -779,18 +750,17 @@ static inline int cell(int r, int c) {
 			int newPoint = pow(2, [s length]);
 			[self addScore:newPoint toPlayer:playerTurn anchorCell: [userSelection objectAtIndex:0]];
             [self addMoreTime:(starCount * 10) toPlayer:playerTurn];
-            if (starCount > 0) {
+            if (starCount > 0 && playerTurn == 1) {
                 [[CCNotifications sharedManager] addNotificationTitle:@"Time Extended !!" 
                                                               message:[NSString stringWithFormat:@"Congratulations, %i more seconds added.", starCount * 10] 
                                                                 image:@"watchIcon.png" 
                                                                   tag:0 
                                                               animate:YES];
             }
-
 		} else {
-            // MCH -- play invalid word sound
+            [currentAnswer setColor:ccc3(238, 44, 44)];
             [soundEngine playEffect:@"dull_bell.mp3"];
-			[midDisplay setString:@"Try again"];
+			[midDisplay setString:@"Not a word"];
 		}
 	}
 	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
@@ -803,14 +773,149 @@ static inline int cell(int r, int c) {
 	for(Cell *c in userSelection) {
 		s = [s stringByAppendingString:c.value];
 	}
-	/*
-	if (playerTurn == 1) {		
-		[player1Answer setString:s];
-	} else {
-		[player2Answer setString:s];
-	}
-	*/
+    currentAnswer.color = ccc3(237, 145, 33);
 	[currentAnswer setString:s];
+}
+
+-(void) runAI:(ccTime) dt {
+    CCLOG(@"*********RUN AI*********");
+    if (playerTurn == 1) return;
+
+    [self unschedule:@selector(runAI:)];
+    int randomInterval = arc4random() % 5 + 1;
+    id flip = [CCCallFunc actionWithTarget:self selector:@selector(aiFlip)];
+    id delay = [CCDelayTime actionWithDuration:randomInterval];
+    id play = [CCCallFunc actionWithTarget:self selector:@selector(aiFindWords)];
+    id aiDone = [CCCallFunc actionWithTarget:self selector:@selector(aiMoveComplete)];
+    id delay2 = [CCDelayTime actionWithDuration:1];
+    [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, delay2, aiDone, nil]];
+}
+
+-(void) aiFlip {
+    
+    if (playerTurn == 1) return;
+    
+    CCLOG(@"AI FLIP");
+    NSMutableArray *nonVisibleCells = [NSMutableArray array];
+    
+	for(int r = 0; r < rows; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            if (!cell.letterSprite.visible) {
+                [nonVisibleCells addObject:cell];
+            }
+            
+        }
+	}
+    
+    int arraySize = [nonVisibleCells count];
+    if (arraySize > 0) {
+        Cell *cell = [nonVisibleCells objectAtIndex:(arc4random() % arraySize)];
+        cell.letterSprite.visible = YES;
+        player2TileFipped = YES;
+        if ([cell.value isEqualToString:@"A"] || 
+            [cell.value isEqualToString:@"E"] || 
+            [cell.value isEqualToString:@"I"] || 
+            [cell.value isEqualToString:@"O"] || 
+            [cell.value isEqualToString:@"U"]) {
+            [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+        }
+        if ([self isThisStarPoint:cell]) {
+            cell.star.visible = YES;
+        }
+    }
+}
+
+-(void) aiMoveComplete {
+    
+    if (playerTurn == 1) return;
+    
+    CCLOG(@"AI MOVE COMPLETE");
+    if ([userSelection count] > 0) {
+        [self checkAnswer];
+    }
+    [self switchTo:1 countFlip:NO];
+    [self schedule:@selector(runAI:) interval:2.0f];
+}
+
+-(NSString *) getAllVisibleLetters {
+    
+    NSString *s = [NSString string];
+    
+    for(int r = 0; r < rows; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            if (cell.letterSprite.visible) {
+                s = [s stringByAppendingString:cell.value];
+                NSMutableArray *cellList = [visibleLetters objectForKey:cell.value];
+                if (cellList == nil) {
+                    cellList = [NSMutableArray array];
+                    [cellList addObject:cell];
+                    [visibleLetters setObject:cellList forKey:cell.value];
+                } else {
+                    [cellList addObject:cell];
+                    [visibleLetters setObject:cellList forKey:cell.value];
+                }
+            }
+        }
+	}
+    return s;
+}
+
+-(BOOL) aiCheckAnswer:(NSString *) answer {
+    BOOL match = YES;
+    NSString *openedLetters = [self getAllVisibleLetters];
+    int openLetters[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    int idx = 0;
+    
+    for(int i = 0; i < [openedLetters length]; i++) {
+        idx = [openedLetters characterAtIndex:i] - 'A';
+        openLetters[idx] = openLetters[idx] + 1;
+    }
+    
+    for(int i = 0; match && i < [answer length]; i++) {
+        idx = [answer characterAtIndex:i] - 'A';
+        if (openLetters[idx] > 0) {
+            openLetters[idx] = openLetters[idx] - 1;
+        } else {
+            match = NO;
+        }
+    }
+    
+    return match;
+}
+
+-(void) aiFindWords {
+    
+    if (playerTurn == 1) return;
+    
+    BOOL match = NO;
+    NSString *ans;
+    CCLOG(@"AI FIND WORDS");
+    for(int i = 0; !match && i < 50; i++) {
+        int idx = arc4random() % [aiAllWords count];
+        ans = [aiAllWords objectAtIndex:idx];
+        CCLOG(@"AI ANSWERS = %@", ans);
+        match = [self aiCheckAnswer:ans];
+    }
+    
+    if (match) {
+        CCLOG(@"FOUND ANSWER = %@", ans);
+        for(int i = 0; i < [ans length]; i++) {
+            
+            NSMutableArray *cellList = [visibleLetters objectForKey:[NSString stringWithFormat:@"%c", [ans characterAtIndex:i]]];
+            
+            if (cellList == nil) {
+                CCLOG(@"SOMETHING IS WRONG !!. THIS CONDITION SHOULD NOT HAPPEN");
+            } else {
+                CCLOG(@"CELL FOUND. ADDING IT TO THE USER SELECTION");
+                Cell *cell = [cellList objectAtIndex:0];
+                cell.letterSelected.visible = YES;
+                [userSelection addObject:cell];
+                [self updateAnswer];
+            }
+        }
+    }
 }
 
 - (void) updateTimer:(ccTime) dt {
@@ -820,8 +925,10 @@ static inline int cell(int r, int c) {
 	BOOL play1Done = NO;
 	BOOL play2Done = NO;
 	
+    CCLOG(@"SINGLE PLAYER MODE:updateTimer() START");
+    
 	if (gameCountdown) {
-		CCLOG(@"gameCountdown start");
+		CCLOG(@"SINGLE PLAYER MODE:gameCountdown start");
 		NSString *status = [gameCountDownLabel string];
 		gameCountDownLabel.visible = YES;
 		if ([status isEqualToString:@"Go!"]) {
@@ -875,9 +982,9 @@ static inline int cell(int r, int c) {
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                   ForMultiPlayer:FALSE
+                                                       ForMultiPlayer:FALSE
                                                    ]];
-
+        
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {
@@ -911,27 +1018,18 @@ static inline int cell(int r, int c) {
 	[super dealloc];
 }
 
-- (void) createDictionary {
-	dictionary = [[NSMutableDictionary alloc] init];
-	for(NSString *s in allWords) {
-		if (s) {
-			[dictionary setObject:s forKey:s];
-		}
-	}
-}
-
 - (void) onEnter {
 	[super onEnter];
 	/*
-	adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	adView.delegate = self;
-	adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
-	adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
-	[[[CCDirector sharedDirector] openGLView] addSubview:adView];
-	//CGSize windowSize = [[CCDirector sharedDirector] winSize];
-	adView.center = CGPointMake(adView.frame.size.width/2, adView.frame.size.height/2);
-	adView.hidden = YES;
-	*/
+     adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+     adView.delegate = self;
+     adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
+     adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+     [[[CCDirector sharedDirector] openGLView] addSubview:adView];
+     //CGSize windowSize = [[CCDirector sharedDirector] winSize];
+     adView.center = CGPointMake(adView.frame.size.width/2, adView.frame.size.height/2);
+     adView.hidden = YES;
+     */
 }
 
 - (void) onExit {
