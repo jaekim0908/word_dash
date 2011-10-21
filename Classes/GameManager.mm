@@ -181,4 +181,23 @@ static GameManager* _sharedGameManager = nil;
 	[OFUser getUser:userId];	
 }
 
+-(void) saveToUserDefaultsForKey:(NSString*) key Value:(NSString *) val {
+	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+	if (standardUserDefaults) {
+		[standardUserDefaults setObject:val forKey:key];
+		[standardUserDefaults synchronize];
+	}
+}
+
+-(NSString*)retrieveFromUserDefaultsForKey:(NSString *) key {
+	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+	NSString *val = nil;
+	
+	if (standardUserDefaults) 
+		val = [standardUserDefaults objectForKey:key];
+	
+	return val;
+}
+
 @end

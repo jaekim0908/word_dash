@@ -78,6 +78,8 @@
     SimpleAudioEngine *soundEngine;
     NSMutableArray* aiAllWords;
     NSMutableDictionary *visibleLetters;
+    NSString *aiLevel;
+    NSString *progressiveScore;
 }
 
 @property int cols;

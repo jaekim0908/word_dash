@@ -236,6 +236,25 @@
         
         visibleLetters = [[NSMutableDictionary dictionary] retain];
         
+        aiLevel = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"level"];
+        progressiveScore = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"progressive_score"];
+        
+        
+        if (aiLevel == nil) {
+            aiLevel = [NSString stringWithFormat:@"0"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:aiLevel];
+        }
+        
+        if (progressiveScore == nil) {
+            progressiveScore = [NSString stringWithFormat:@"0"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:progressiveScore];
+        }
+                
+        [[CCNotifications sharedManager] addNotificationTitle:@"Current AI Level" 
+                                                      message:[NSString stringWithFormat:@"Level is %@ : Progressive Score is %@", aiLevel, progressiveScore] 
+                                                        image:nil 
+                                                          tag:0 
+                                                      animate:YES];
 	}
 	return self;
 }
@@ -963,12 +982,16 @@
 	}
 	
 	if (gameOver) {
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:[NSString stringWithFormat:@"%i", [aiLevel intValue]+1]];
+        
 		enableTouch = NO;
 		int p1score = [[player1Score string] intValue];
 		int p2score = [[player2Score string] intValue];
 		if (p1score > p2score) {
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]+1]];
 			[midDisplay setString:@"Player 1 Wins"];
 		} else if (p1score < p2score) {
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]-1]];
 			[midDisplay setString:@"Player 2 Wins"];
 		} else {
 			[midDisplay setString:@"Tie Game"];
