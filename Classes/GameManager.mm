@@ -14,6 +14,7 @@
 #import "HelloWorld.h"
 #import "LoadingScene.h"
 #import "Multiplayer.h"
+#import "HowToPlay.h"
 #import "OFMultiplayerService.h"
 #import "OFUser.h"
 
@@ -124,6 +125,11 @@ static GameManager* _sharedGameManager = nil;
 			NSLog(@"Play and Pass Scene");
 			sceneToRun = [HelloWorld scene];
 			break;
+        case kHowToPlayScene:
+			NSLog(@"How To Play Scene");
+			sceneToRun = [HowToPlay scene];
+			break;
+
 		
 		default:
 			NSLog(@"Unknown Id, cannot switch scene");

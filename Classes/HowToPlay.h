@@ -27,6 +27,8 @@
     CCLabelTTF *nav1Label;
     CCLabelTTF *nav2Label;
     CCLabelTTF *nav3Label;
+    CCSprite *nextPageButton;
+    CCSprite *checkMark;
     CCSprite *numOneButton;
     CCSprite *numTwoButton;
     CCSprite *numThreeButton;
@@ -43,6 +45,8 @@
     CCSprite *bottomRightElbow;
     CCSprite *topLeftElbow;
     CCSprite *verticalLine;
+    CCSprite *finger;
+    int      nextPagePressedCount;
     
     
 }
@@ -64,6 +68,8 @@
 @property (nonatomic, retain) CCLabelTTF *nav1Label;
 @property (nonatomic, retain) CCLabelTTF *nav2Label;
 @property (nonatomic, retain) CCLabelTTF *nav3Label;
+@property (nonatomic, retain) CCSprite *nextPageButton;
+@property (nonatomic, retain) CCSprite *checkMark;
 @property (nonatomic, retain) CCSprite *numOneButton;
 @property (nonatomic, retain) CCSprite *numTwoButton;
 @property (nonatomic, retain) CCSprite *numThreeButton;
@@ -80,6 +86,8 @@
 @property (nonatomic, retain) CCSprite *bottomRightElbow;
 @property (nonatomic, retain) CCSprite *topLeftElbow;
 @property (nonatomic, retain) CCSprite *verticalLine;
+@property (nonatomic, retain) CCSprite *finger;
+@property (nonatomic, assign) int       nextPagePressedCount;
 
 +(id) scene;
 - (void) hideMenu1Items;

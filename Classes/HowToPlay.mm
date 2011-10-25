@@ -27,6 +27,8 @@
 @synthesize nav1Label;
 @synthesize nav2Label;
 @synthesize nav3Label;
+@synthesize nextPageButton;
+@synthesize checkMark;
 @synthesize numOneButton;
 @synthesize numTwoButton;
 @synthesize numThreeButton;
@@ -44,7 +46,9 @@
 @synthesize topLeftElbow;
 @synthesize verticalLine;
 @synthesize screenNavigatorButtons;
+@synthesize finger;
 @synthesize batchNode;
+@synthesize nextPagePressedCount;
 
 +(id) scene
 {
@@ -71,8 +75,10 @@
         self.isTouchEnabled = YES;
         CCLOG(@"Inside How To Play init.");
         
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"howToPlay_layer_3g.plist"];
-        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"howToPlay_layer_3g.png"]];    
+        nextPagePressedCount = 0;
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"howToPlay_3g.plist"];
+        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"howToPlay_3g.png"]];    
         
         //howToPlayLiteral = [CCLabelTTF labelWithString:@"How To Play" fontName:@"Verdana-Bold" fontSize:18];
         howToPlayLiteral = [CCLabelTTF labelWithString:@"How To Play" fontName:@"MarkerFelt-Thin" fontSize:36];
@@ -100,15 +106,18 @@
         sandBackground.position = ccp(240, 160);
         [self addChild:sandBackground z:-20];
 
-        iPhoneScreenShot = [CCSprite spriteWithFile:@"iphone-320-201.png"];
+        //iPhoneScreenShot = [CCSprite spriteWithFile:@"iphone-320-201.png"];
+        iPhoneScreenShot = [CCSprite spriteWithSpriteFrameName:@"iphone.png"];
         iPhoneScreenShot.position = ccp(240, 160);
         [self addChild:iPhoneScreenShot];
         
-        gameScreenShot = [CCSprite spriteWithFile:@"game_screen-white-190-127.png"];
+        //gameScreenShot = [CCSprite spriteWithFile:@"game_screen-white-190-127.png"];
+        gameScreenShot = [CCSprite spriteWithSpriteFrameName:@"game_screen-white.png"];
         gameScreenShot.position = ccp(240, 160);
         [self addChild:gameScreenShot];
         
-        topRightElbow = [CCSprite spriteWithFile:@"top-right-elbow-white.png"];
+        //topRightElbow = [CCSprite spriteWithFile:@"top-right-elbow-white.png"];
+        topRightElbow = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white.png"];
         topRightElbow.position = ccp(163, 223);
         [self addChild:topRightElbow];
 /*******
@@ -117,7 +126,8 @@
         [self addChild:verticalLine];
  *******/
         
-        bottomLeftElbow = [CCSprite spriteWithFile:@"bottom-left-elbow-white.png"];
+        //bottomLeftElbow = [CCSprite spriteWithFile:@"bottom-left-elbow-white.png"];
+        bottomLeftElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-left-elbow-white.png"];
         bottomLeftElbow.position = ccp(227, 72);
         [self addChild:bottomLeftElbow];
         
@@ -127,6 +137,11 @@
         howToPlay3Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay3Label];
         
+        
+        finger = [CCSprite spriteWithFile:@"finger-1.png"];
+        finger.position = ccp(240, 125);
+        [self addChild:finger];
+
         howToPlay4Label = [CCLabelTTF labelWithString:@"with 3 or more letters" fontName:@"Verdana" fontSize:12];
 		howToPlay4Label.color = ccc3(255, 255, 255);
 		howToPlay4Label.position = ccp(248, 52);
@@ -135,7 +150,8 @@
         
         
         
-        bottomRightElbow = [CCSprite spriteWithFile:@"bottom-right-elbow-white.png"];
+        //bottomRightElbow = [CCSprite spriteWithFile:@"bottom-right-elbow-white.png"];
+        bottomRightElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-right-elbow-white.png"];
         bottomRightElbow.position = ccp(172, 78);
         [self addChild:bottomRightElbow];
 
@@ -154,34 +170,48 @@
 
         
         //MCH - DELETE SOON!!!!!!!!
+        /****************
         screenNavigatorButtons = [CCSprite spriteWithFile:@"HowToPlayMenu-450-338.png"];
         screenNavigatorButtons.position = ccp(280, 280);
         screenNavigatorButtons.anchorPoint = ccp(0,0);
         screenNavigatorButtons.visible = NO;
         [self addChild:screenNavigatorButtons];
+         ********************/
         
-        mainMenuButton = [CCSprite spriteWithFile:@"main_menu_btn-150-125.png"];
+        nextPageButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
+        nextPageButton.position = ccp(415, 35);
+        //nextPageButton.anchorPoint = ccp(0,0);
+        [self addChild:nextPageButton];
+        
+        checkMark = [CCSprite spriteWithFile:@"checkmark_48-42.png"];
+        checkMark.position = ccp(415, 35);
+        //checkMark.anchorPoint = ccp(0,0);
+        [self addChild:checkMark];
+        
+        /***************
+        mainMenuButton = [CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"];
         mainMenuButton.position = ccp(412, 255);
         mainMenuButton.anchorPoint = ccp(0,0);
         [self addChild:mainMenuButton];
 
         
-        numThreeButton = [CCSprite spriteWithFile:@"blueSandDollar.png"];
+        numThreeButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
         numThreeButton.position = ccp(310, 220);
         numThreeButton.anchorPoint = ccp(0,0);
         [self addChild:numThreeButton];
         
         
-        numTwoButton = [CCSprite spriteWithFile:@"blueSandDollar.png"];
+        numTwoButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
         numTwoButton.position = ccp(250, 220);
         numTwoButton.anchorPoint = ccp(0,0);
         [self addChild:numTwoButton];
 
                 
-        numOneButton = [CCSprite spriteWithFile:@"blueSandDollar.png"];
+        numOneButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
         numOneButton.position = ccp(190, 220);
         numOneButton.anchorPoint = ccp(0,0);
         [self addChild:numOneButton];
+        
         
         nav1Label = [CCLabelTTF labelWithString:@"1" fontName:@"MarkerFelt-Thin" fontSize:36];
 		nav1Label.color = ccc3(255, 255, 255);
@@ -200,7 +230,7 @@
 		nav3Label.position = ccp(375, 265);
         nav3Label.anchorPoint = ccp(0,0);
 		[self addChild:nav3Label z:20];
-
+         ******************/
                 
         
                
@@ -229,12 +259,12 @@
         howToPlay10Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay10Label];
         
-        topRightElbow2 = [CCSprite spriteWithFile:@"top-right-elbow-white-2.png"];
+        topRightElbow2 = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white-2.png"];
         topRightElbow2.position = ccp(163, 228);
         [self addChild:topRightElbow2];
 
                
-        topLeftElbow = [CCSprite spriteWithFile:@"top-left-elbow-white.png"];
+        topLeftElbow = [CCSprite spriteWithSpriteFrameName:@"top-left-elbow-white.png"];
         topLeftElbow.position = ccp(355, 105);
         [self addChild:topLeftElbow];
         
@@ -262,13 +292,8 @@
     howToPlay2Label.visible = NO;
     topRightElbow.visible = NO;
     
-    howToPlay3Label.visible = NO;
-    howToPlay4Label.visible = NO;
-    bottomLeftElbow.visible = NO;
     
-    howToPlay5Label.visible = NO;
-    howToPlay6Label.visible = NO;
-    bottomRightElbow.visible = NO;
+   
     
 
     
@@ -280,14 +305,8 @@
     howToPlay2Label.visible = YES;
     topRightElbow.visible = YES;
     
-    howToPlay3Label.visible = YES;
-    howToPlay4Label.visible = YES;
-    bottomLeftElbow.visible = YES;
-    
-    howToPlay5Label.visible = YES;
-    howToPlay6Label.visible = YES;
-    bottomRightElbow.visible = YES;
-    
+     
+        
     iPhoneScreenShot.position = ccp(240,160);
     gameScreenShot.position = ccp(240,160);
     
@@ -305,6 +324,15 @@
     howToPlay12Label.visible = NO;
     topLeftElbow.visible = NO;
     
+    howToPlay5Label.visible = NO;
+    howToPlay6Label.visible = NO;
+    bottomRightElbow.visible = NO;
+    
+    howToPlay3Label.visible = NO;
+    howToPlay4Label.visible = NO;
+    bottomLeftElbow.visible = NO;
+
+    
 }
 
 - (void) showMenu2Items
@@ -318,6 +346,15 @@
     howToPlay11Label.visible = YES;
     howToPlay12Label.visible = YES;
     topLeftElbow.visible = YES;
+    
+    howToPlay5Label.visible = YES;
+    howToPlay6Label.visible = YES;
+    bottomRightElbow.visible = YES;
+    
+    howToPlay3Label.visible = YES;
+    howToPlay4Label.visible = YES;
+    bottomLeftElbow.visible = YES;
+
     
     gameScreenShot.position = ccp(275,150);
     iPhoneScreenShot.position = ccp(275,150);
@@ -333,67 +370,32 @@
 
     CCLOG(@"Inside ccTouchBegan ...");
     
-    CCLOG(@"screenNavigator width:%f",screenNavigatorButtons.contentSize.width);
-    CCLOG(@"screenNavigator height:%f",screenNavigatorButtons.contentSize.height);
-    
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
     CCLOG(@"touchLocation x:%f",touchLocation.x);
     
     
-    if(CGRectContainsPoint(CGRectMake(screenNavigatorButtons.position.x + 23, 
-                                      screenNavigatorButtons.position.y, 
-                                      (screenNavigatorButtons.contentSize.width - 23) / 4, 
-                                      screenNavigatorButtons.contentSize.height),
+    if(CGRectContainsPoint(CGRectMake(nextPageButton.position.x - (nextPageButton.contentSize.width/2), 
+                                      nextPageButton.position.y - (nextPageButton.contentSize.height/2), 
+                                      nextPageButton.contentSize.width, 
+                                      nextPageButton.contentSize.height),
                            touchLocation)){
-        CCLOG(@"1 was pressed.");
-        [self hideMenu2Items];
-        [self showMenu1Items];
+        CCLOG(@"Next Page button was pressed.");
+        switch (nextPagePressedCount) {
+            case 0:
+                [self hideMenu1Items];
+                [self showMenu2Items];
+                nextPagePressedCount++;
+                break;
+                
+            default:
+                [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
+                break;
+        }
         
-    }
-    else if(CGRectContainsPoint(CGRectMake(screenNavigatorButtons.position.x + 23 + 
-                                                ((screenNavigatorButtons.contentSize.width - 23) / 4), 
-                                           screenNavigatorButtons.position.y, 
-                                           (screenNavigatorButtons.contentSize.width - 23) / 4, 
-                                           screenNavigatorButtons.contentSize.height),
-                                touchLocation)){
-        CCLOG(@"2 was pressed.");
-        
-        [self hideMenu1Items];
-        [self showMenu2Items];
-        
-        
-    }
-    else if(CGRectContainsPoint(CGRectMake(screenNavigatorButtons.position.x + 23 + 
-                                                (2 * ((screenNavigatorButtons.contentSize.width - 23) / 4)), 
-                                           screenNavigatorButtons.position.y, 
-                                           (screenNavigatorButtons.contentSize.width - 23) / 4, 
-                                           screenNavigatorButtons.contentSize.height),
-                                touchLocation)){
-        CCLOG(@"3 was pressed.");
-        mainMenuScreenShot.visible = NO;
-        gameScreenShot.visible = YES;
-        [howToPlay1Label setString:@"Let's play! Select at least 3 letters to make words."];
-        howToPlay1Label.position = ccp(80, 230);
         
         
     }
-    else if(CGRectContainsPoint(CGRectMake(screenNavigatorButtons.position.x + 23 + 
-                                           (3 * ((screenNavigatorButtons.contentSize.width - 23) / 4)), 
-                                           screenNavigatorButtons.position.y, 
-                                           (screenNavigatorButtons.contentSize.width - 23) / 4, 
-                                           screenNavigatorButtons.contentSize.height),
-                                touchLocation)){
-        CCLOG(@"Main menu was pressed.");
-        mainMenuScreenShot.visible = NO;
-        gameScreenShot.visible = YES;
-        [howToPlay1Label setString:@"Let's play! Select at least 3 letters to make words."];
-        howToPlay1Label.position = ccp(80, 230);
-        
-        /* for now, have 3 go back to the main menu screen */
-        [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
-    }
-
 
     
     
