@@ -17,6 +17,7 @@ typedef enum {
 	kPlayAndPassScene,
 	kHelloWorldScene,
     kHowToPlayScene,
+    kSinglePlayerScene,
 	kMaxScene
 } SceneTypes;
 

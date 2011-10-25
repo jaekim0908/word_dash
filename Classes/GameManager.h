@@ -42,5 +42,6 @@
 -(NSString *) getFileContents;
 -(void) closeGame;
 -(void) sendChallengeToUserId:(NSString *) userId;
-
+-(void) saveToUserDefaultsForKey:(NSString*) key Value:(NSString *) val;
+-(NSString*)retrieveFromUserDefaultsForKey:(NSString *) key;
 @end

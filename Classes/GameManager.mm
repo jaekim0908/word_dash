@@ -15,6 +15,7 @@
 #import "LoadingScene.h"
 #import "Multiplayer.h"
 #import "HowToPlay.h"
+#import "SinglePlayer.h"
 #import "OFMultiplayerService.h"
 #import "OFUser.h"
 
@@ -104,25 +105,25 @@ static GameManager* _sharedGameManager = nil;
 	id sceneToRun = nil;
 	switch (sceneId) {
 		case kMainMenuScene:
-			NSLog(@"Main Menu Scene");
+			CCLOG(@"Main Menu Scene");
 			sceneToRun = [MainMenuScene node];
 			break;
 		case kLoadingScene:
-			NSLog(@"Loading Scene");
+			CCLOG(@"Loading Scene");
 			break;
 		case kIntroScene:
-			NSLog(@"Intro Scene");
+			CCLOG(@"Intro Scene");
 			break;
 		case kMutiPlayerScene:
-			NSLog(@"Multi Player Scene");
+			CCLOG(@"Multi Player Scene");
 			sceneToRun = [Multiplayer scene];
 			break;
 		case kPlayAndPassScene:
-			NSLog(@"Play and Pass Scene");
+			CCLOG(@"Play and Pass Scene");
 			sceneToRun = [PlayAndPassScene node];
 			break;
 		case kHelloWorldScene:
-			NSLog(@"Play and Pass Scene");
+			CCLOG(@"Play and Pass Scene");
 			sceneToRun = [HelloWorld scene];
 			break;
         case kHowToPlayScene:
@@ -131,8 +132,13 @@ static GameManager* _sharedGameManager = nil;
 			break;
 
 		
+        case kSinglePlayerScene:
+			CCLOG(@"SinglePlayer Scene");
+			sceneToRun = [SinglePlayer scene];
+			break;
+            
 		default:
-			NSLog(@"Unknown Id, cannot switch scene");
+			CCLOG(@"Unknown Id, cannot switch scene");
 			break;
 	}
 	
@@ -180,6 +186,25 @@ static GameManager* _sharedGameManager = nil;
 	[game createGame:@"HundredSeconds" withOptions:options];
 	_sharedGameManager.isChallenger = YES;
 	[OFUser getUser:userId];	
+}
+
+-(void) saveToUserDefaultsForKey:(NSString*) key Value:(NSString *) val {
+	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+	if (standardUserDefaults) {
+		[standardUserDefaults setObject:val forKey:key];
+		[standardUserDefaults synchronize];
+	}
+}
+
+-(NSString*)retrieveFromUserDefaultsForKey:(NSString *) key {
+	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+	NSString *val = nil;
+	
+	if (standardUserDefaults) 
+		val = [standardUserDefaults objectForKey:key];
+	
+	return val;
 }
 
 @end
