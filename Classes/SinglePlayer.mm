@@ -99,61 +99,61 @@
         [self addChild:batchNode];
         [self addChild:batchNode2];
         
-		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
+		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player1Score.color = ccc3(0,0,255);
-		player1Score.position = ccp(440, 220);
+		player1Score.position = ccp(440, 190);
 		[self addChild:player1Score];
 		
-		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
+		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player2Score.color = ccc3(0,0,255);
-		player2Score.position = ccp(50, 220);
+		player2Score.position = ccp(50, 190);
 		[self addChild:player2Score];
         
-		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
+		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Verdana" fontSize:14];
 		score1Label.color = ccc3(0, 0, 0);
-		score1Label.position = ccp(440, 260);
+		score1Label.position = ccp(440, 220);
 		[self addChild:score1Label];
         
-		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
+		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Verdana" fontSize:14];
 		score2Label.color = ccc3(0, 0, 0);
-		score2Label.position = ccp(50, 260);
+		score2Label.position = ccp(50, 220);
 		[self addChild:score2Label];
 		
-		player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:37] retain];
+		player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player1Timer.color = ccc3(255, 0, 0);
-		player1Timer.position = ccp(440, 130);
+		player1Timer.position = ccp(440, 250);
 		[self addChild:player1Timer];
         
-		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:37] retain];
+		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player2Timer.color = ccc3(255, 0, 0);
-		player2Timer.position = ccp(50, 130);
+		player2Timer.position = ccp(50, 250);
 		[self addChild:player2Timer];
 		
-		CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time:" fontName:@"Verdana" fontSize:18];
-		time1Label.color = ccc3(255, 255, 255);
-		time1Label.position = ccp(440, 170);
+		CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Verdana" fontSize:14];
+		time1Label.color = ccc3(0, 0, 0);
+		time1Label.position = ccp(440, 280);
 		[self addChild:time1Label];
 		
-		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time:" fontName:@"Verdana" fontSize:18];
-		time2Label.color = ccc3(255, 255, 255);
-		time2Label.position = ccp(50, 170);
+		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Verdana" fontSize:14];
+		time2Label.color = ccc3(0, 0, 0);
+		time2Label.position = ccp(50, 280);
 		[self addChild:time2Label];
 		
-		player1Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player1Answer.color = ccc3(0,0,0);
-		player1Answer.position = ccp(460, 260);
-		player1Answer.anchorPoint = ccp(1,0);
-		[self addChild:player1Answer];
+		//player1Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
+		//player1Answer.color = ccc3(0,0,0);
+		//player1Answer.position = ccp(460, 260);
+		//player1Answer.anchorPoint = ccp(1,0);
+		//[self addChild:player1Answer];
 		
-		player2Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player2Answer.color = ccc3(0,0,0);
-		player2Answer.position = ccp(20, 260);
-		player2Answer.anchorPoint = ccp(0, 0);
-		[self addChild:player2Answer];
+		//player2Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
+		//player2Answer.color = ccc3(0,0,0);
+		//player2Answer.position = ccp(20, 260);
+		//player2Answer.anchorPoint = ccp(0, 0);
+		//[self addChild:player2Answer];
 		
 		currentAnswer = [[CCLabelTTF labelWithString:@" " fontName:@"Verdana" fontSize:24] retain];
 		currentAnswer.color = ccc3(237, 145, 33);
-		currentAnswer.position = ccp(windowSize.width/2, 260);
+		currentAnswer.position = ccp(windowSize.width/2, 290);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
 		
@@ -167,34 +167,31 @@
 		}
 		
 		CCLOG(@"wordMatrix = %@", wordMatrix);
-        
-		wordDefinition = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"Verdana" fontSize:14.0f] retain];
-		wordDefinition.color = ccc3(255,0,0);
-		wordDefinition.position = ccp(80, 50);
-		[self addChild:wordDefinition];
 		
 		solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
-		solveButton1.position = ccp(440, 40);
+		solveButton1.position = ccp(440, 70);
 		[self addChild:solveButton1];
         
         transparentBoundingBox1 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
-		transparentBoundingBox1.position = ccp(440, 40);
+		transparentBoundingBox1.position = ccp(440, 70);
 		[self addChild:transparentBoundingBox1];
 		
         solveButton2 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
-		solveButton2.position = ccp(50, 40);
+		solveButton2.position = ccp(50, 70);
+        solveButton2.visible = NO;
 		[self addChild:solveButton2];
         
 		transparentBoundingBox2 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
-		transparentBoundingBox2.position = ccp(50, 40);
+		transparentBoundingBox2.position = ccp(50, 70);
+        transparentBoundingBox2.visible = NO;
 		[self addChild:transparentBoundingBox2];
 		
 		greySolveButton1 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
-		greySolveButton1.position = ccp(440, 40);
+		greySolveButton1.position = ccp(440, 70);
 		[self addChild:greySolveButton1];
 		
 		greySolveButton2 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
-		greySolveButton2.position = ccp(50, 40);
+		greySolveButton2.position = ccp(50, 70);
 		[self addChild:greySolveButton2];
 		greySolveButton2.visible = NO;
 		
@@ -249,7 +246,7 @@
             progressiveScore = [NSString stringWithFormat:@"0"];
             [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:progressiveScore];
         }
-                
+        
         [[CCNotifications sharedManager] addNotificationTitle:@"Current AI Level" 
                                                       message:[NSString stringWithFormat:@"Level is %@ : Progressive Score is %@", aiLevel, progressiveScore] 
                                                         image:nil 
@@ -351,14 +348,14 @@
 	}
 	
 	[self clearLetters];
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
+	//[player1Answer setString:@" "];
+	//[player2Answer setString:@" "];
 	
 	if (player == 1) {
 		playerTurn = 1;	
 		player1TileFipped = NO;
 		greySolveButton1.visible = NO;
-		greySolveButton2.visible = YES;
+		greySolveButton2.visible = NO;
 	} else {
 		playerTurn = 2;
 		player2TileFipped = NO;
@@ -436,10 +433,9 @@
 	if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
 		int p1 = [[player1Score string] intValue];
 		int p2 = [[player2Score string] intValue];
-		int highScore = (p1 > p2)? p1 : p2;
+		//int highScore = (p1 > p2)? p1 : p2;
 		
-		[self startGame];
-		gameSummary.visible = NO;
+		//[self startGame];
 	}
 	
     
@@ -466,14 +462,25 @@
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 			BOOL cellSelected = cell.letterSelected.visible;
 			if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
+                
 				if (cell.letterSprite.visible && cellSelected) {
 					cell.letterSelected.visible = NO;
 					[userSelection removeObject:cell];
 					[self updateAnswer];
 				} else if (cell.letterSprite.visible && !cellSelected) {
-					cell.letterSelected.visible = YES;
-					[userSelection addObject:cell];
-					[self updateAnswer];
+                    if ([self allLettersOpened] && touch.tapCount > 2) {
+                        CCLOG(@"Triple-Tap detected !!");
+                        char ch = (arc4random() % 26) + 'a';
+                        Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
+                        cell.letterSprite.visible = NO;
+                        newCell.letterSprite.visible = YES;
+                        [[wordMatrix objectAtIndex:r] removeObject:cell];
+                        [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
+                    } else {
+                        cell.letterSelected.visible = YES;
+                        [userSelection addObject:cell];
+                        [self updateAnswer];
+                    }
 				} else {
 					if (playerTurn == 1 && !player1TileFipped) {
 						cell.letterSprite.visible = YES;
@@ -513,6 +520,19 @@
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
 }
 
+- (BOOL) allLettersOpened {
+    
+    for(int r = 0; r < rows; r++) {
+		for(int c = 0; c < cols; c++) {
+            Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            if (!cell.letterSprite.visible) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
 - (void) startGame {
 	
 	gameOver = NO;
@@ -524,8 +544,8 @@
 	[player2Timer setString:@"100"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
+	//[player1Answer setString:@" "];
+	//[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
 	[midDisplay runAction:[CCFadeOut actionWithDuration:0.1f]];
 	[midDisplay setString:@""];
@@ -611,54 +631,11 @@
 			CCLOG(@"SINGLE PLAYER MODE:adding character = %@", [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]]);
 			
 			if (firstGameFlag) {
-                label = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
-				label.position = ccp(125 + c * 60, 30 + r * 60);
-				label.visible = NO;
-				cell = [[Cell alloc] init];
-				cell.letterSprite = label;
-				cell.center = label.position;
-				cell.value = [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]];
-				cell.owner = 0;
-				[batchNode2 addChild:cell.letterSprite z:10];
-				[label release];
-				
-				CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"Sqaure.png"];
-				background.position = cell.letterSprite.position;
-				[batchNode2 addChild:background z:-1];
-				cell.letterBackground = background;
-				[background release];
-				
-				CCSprite *selectedBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				selectedBackground.position = cell.letterSprite.position;
-				selectedBackground.visible = NO;
-				[batchNode2 addChild:selectedBackground z:1];
-				cell.letterSelected = selectedBackground;
-				[selectedBackground release];
                 
-				CCSprite *selectedBackground2 = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				selectedBackground2.position = cell.letterSprite.position;
-				selectedBackground2.visible = NO;
-				[batchNode2 addChild:selectedBackground2 z:-1];
-				cell.letterSelected2 = selectedBackground2;
-				[selectedBackground2 release];
-				
-				CCSprite *redBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				redBackground.position = cell.letterSprite.position;
-				redBackground.visible = NO;
-				[batchNode2 addChild:redBackground z:-1];
-				cell.redBackground = redBackground;
-				[redBackground release];
-				
-				CCSprite *star = [CCSprite spriteWithSpriteFrameName:@"RedStarfishSmall.png"];
-				star.position = ccp(cell.letterSprite   .position.x + 20, cell.letterSprite.position.y - 20);
-				star.visible = NO;
-				[batchNode addChild:star z:10];
-				cell.star = star;
-				[star release];
-				
-				[[wordMatrix objectAtIndex:r] insertObject:cell atIndex:c];
-				[cell release];
-			} else {
+                cell = [self cellWithCharacter:[[letters lowercaseString] characterAtIndex:i] atRow:r atCol:c];
+                [[wordMatrix objectAtIndex:r] insertObject:cell atIndex:c];
+			
+            } else {
 				cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 				cell.letterSprite.visible = NO;
                 cell.letterSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
@@ -672,10 +649,40 @@
 	[self startGame];
 }
 
+- (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c {
+    Cell *cell = [[[Cell alloc] init] autorelease];
+    cell.letterSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", ch]];
+    cell.letterSprite.position = ccp(125 + c * 60, 60 + r * 60);
+    cell.letterSprite.visible = NO;
+    cell.center = cell.letterSprite.position;
+    cell.owner = 0;
+    cell.value = [[NSString stringWithFormat:@"%c", ch] uppercaseString];
+    [batchNode2 addChild:cell.letterSprite z:10];
+    
+    CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"Sqaure.png"];
+    background.position = cell.letterSprite.position;
+    [batchNode2 addChild:background z:-1];
+    cell.letterBackground = background;
+    
+    CCSprite *selectedBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
+    selectedBackground.position = cell.letterSprite.position;
+    selectedBackground.visible = NO;
+    [batchNode2 addChild:selectedBackground z:1];
+    cell.letterSelected = selectedBackground;
+    
+    CCSprite *star = [CCSprite spriteWithSpriteFrameName:@"RedStarfishSmall.png"];
+    star.position = ccp(cell.letterSprite.position.x + 20, cell.letterSprite.position.y - 20);
+    star.visible = NO;
+    [batchNode addChild:star z:10];
+    cell.star = star;
+    
+    return cell;
+}
+
 - (void) clearAllSelectedLetters {
 	
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
+	//[player1Answer setString:@" "];
+	//[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
     
 	for(int r = 0; r < rows ; r++) {
@@ -861,6 +868,8 @@
     
     NSString *s = [NSString string];
     
+    [visibleLetters removeAllObjects];
+    
     for(int r = 0; r < rows; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
@@ -911,7 +920,7 @@
     BOOL match = NO;
     NSString *ans;
     CCLOG(@"AI FIND WORDS");
-    for(int i = 0; !match && i < 50; i++) {
+    for(int i = 0; !match && i < 10; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
         CCLOG(@"AI ANSWERS = %@", ans);
@@ -996,9 +1005,7 @@
 		} else {
 			[midDisplay setString:@"Tie Game"];
 		}
-		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];
-		gameSummary.visible = YES;
-        
+		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];        
         
         //MCH - display results layer 
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
@@ -1043,16 +1050,16 @@
 
 - (void) onEnter {
 	[super onEnter];
-	/*
+	
      adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
      adView.delegate = self;
      adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
      adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
      [[[CCDirector sharedDirector] openGLView] addSubview:adView];
-     //CGSize windowSize = [[CCDirector sharedDirector] winSize];
-     adView.center = CGPointMake(adView.frame.size.width/2, adView.frame.size.height/2);
+     CGSize windowSize = [[CCDirector sharedDirector] winSize];
+     adView.center = CGPointMake(adView.frame.size.width/2, windowSize.height - adView.frame.size.height/2);
      adView.hidden = YES;
-     */
+     
 }
 
 - (void) onExit {
@@ -1068,6 +1075,7 @@
 }
 
 - (void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    CCLOG(@"**********I-AD FAILED**********");
 	adView.hidden = YES;
 }
 

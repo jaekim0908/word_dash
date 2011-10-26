@@ -1161,13 +1161,14 @@
 		84DA0E0413EBBABC00AA4E93 /* ImageAssets2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA0E0213EBBABC00AA4E93 /* ImageAssets2-hd.png */; };
 		84DA0E0613EBC66D00AA4E93 /* shellsOnWhiteSand-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA0E0513EBC66D00AA4E93 /* shellsOnWhiteSand-hd.png */; };
 		84DA315C13A1C2CA0089EB21 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DA315B13A1C2CA0089EB21 /* Entitlements.plist */; };
+		84DE14FC1457BD1000ABFEFB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DE14FB1457BD1000ABFEFB /* iAd.framework */; };
 		84EAC76513D7CBCC0085A645 /* ImageAssets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC75F13D7CBCC0085A645 /* ImageAssets.plist */; };
 		84EAC76613D7CBCC0085A645 /* ImageAssets.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC76013D7CBCC0085A645 /* ImageAssets.png */; };
 		84EAC76713D7CBCC0085A645 /* WaterBackGround-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC76113D7CBCC0085A645 /* WaterBackGround-hd.png */; };
 		84EAC76813D7CBCC0085A645 /* WaterBackGround.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC76213D7CBCC0085A645 /* WaterBackGround.png */; };
 		84EAC76D13D7CEC20085A645 /* SandBackGround-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC76B13D7CEC20085A645 /* SandBackGround-hd.png */; };
 		84EAC76E13D7CEC20085A645 /* SandBackGround.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EAC76C13D7CEC20085A645 /* SandBackGround.png */; };
-		84EB1A9013B06CC100658BB9 /* CCNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EB1A8F13B06CC100658BB9 /* CCNotifications.m */; };
+		84EB1A9013B06CC100658BB9 /* CCNotifications.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84EB1A8F13B06CC100658BB9 /* CCNotifications.mm */; };
 		84F6CC051410A3D1007B1FCE /* redSunSet-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F6CC031410A3D1007B1FCE /* redSunSet-hd.png */; };
 		84F6CC061410A3D1007B1FCE /* redSunSet.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F6CC041410A3D1007B1FCE /* redSunSet.png */; };
 		84F6CC0A1410A3EA007B1FCE /* playWithFriendsLabel-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F6CC081410A3EA007B1FCE /* playWithFriendsLabel-hd.png */; };
@@ -3074,6 +3075,7 @@
 		84DA0E0213EBBABC00AA4E93 /* ImageAssets2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageAssets2-hd.png"; sourceTree = "<group>"; };
 		84DA0E0513EBC66D00AA4E93 /* shellsOnWhiteSand-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shellsOnWhiteSand-hd.png"; sourceTree = "<group>"; };
 		84DA315B13A1C2CA0089EB21 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		84DE14FB1457BD1000ABFEFB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		84EAC75F13D7CBCC0085A645 /* ImageAssets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImageAssets.plist; sourceTree = "<group>"; };
 		84EAC76013D7CBCC0085A645 /* ImageAssets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageAssets.png; sourceTree = "<group>"; };
 		84EAC76113D7CBCC0085A645 /* WaterBackGround-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaterBackGround-hd.png"; sourceTree = "<group>"; };
@@ -3081,7 +3083,7 @@
 		84EAC76B13D7CEC20085A645 /* SandBackGround-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SandBackGround-hd.png"; sourceTree = "<group>"; };
 		84EAC76C13D7CEC20085A645 /* SandBackGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SandBackGround.png; sourceTree = "<group>"; };
 		84EB1A8E13B06CC100658BB9 /* CCNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNotifications.h; sourceTree = "<group>"; };
-		84EB1A8F13B06CC100658BB9 /* CCNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNotifications.m; sourceTree = "<group>"; };
+		84EB1A8F13B06CC100658BB9 /* CCNotifications.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCNotifications.mm; sourceTree = "<group>"; };
 		84F6CC031410A3D1007B1FCE /* redSunSet-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redSunSet-hd.png"; sourceTree = "<group>"; };
 		84F6CC041410A3D1007B1FCE /* redSunSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redSunSet.png; sourceTree = "<group>"; };
 		84F6CC081410A3EA007B1FCE /* playWithFriendsLabel-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playWithFriendsLabel-hd.png"; sourceTree = "<group>"; };
@@ -3303,6 +3305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84DE14FC1457BD1000ABFEFB /* iAd.framework in Frameworks */,
 				DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */,
 				DCCBF1B90F6022AE0040855A /* Foundation.framework in Frameworks */,
 				DCCBF1BB0F6022AE0040855A /* OpenGLES.framework in Frameworks */,
@@ -3382,6 +3385,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84DE14FB1457BD1000ABFEFB /* iAd.framework */,
 				DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */,
 				DCCBF1B80F6022AE0040855A /* Foundation.framework */,
 				DCCBF1BA0F6022AE0040855A /* OpenGLES.framework */,
@@ -3410,7 +3414,7 @@
 			isa = PBXGroup;
 			children = (
 				84EB1A8E13B06CC100658BB9 /* CCNotifications.h */,
-				84EB1A8F13B06CC100658BB9 /* CCNotifications.m */,
+				84EB1A8F13B06CC100658BB9 /* CCNotifications.mm */,
 				D4BF0CBD1446A9C600C6BAEF /* ResultPages.h */,
 				D4BF0CBB1446A9BC00C6BAEF /* ResultPages.mm */,
 				D4BF0CBA1446A9B300C6BAEF /* ResultsLayer.h */,
@@ -8849,7 +8853,7 @@
 				D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */,
 				D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */,
 				D45AF3E91386353B00438B40 /* Definition.mm in Sources */,
-				84EB1A9013B06CC100658BB9 /* CCNotifications.m in Sources */,
+				84EB1A9013B06CC100658BB9 /* CCNotifications.mm in Sources */,
 				84CDD1DE13B2FAA20090E48A /* CCAlertView.mm in Sources */,
 				D4BF0CB91446A9A800C6BAEF /* ResultsLayer.mm in Sources */,
 				D4BF0CBC1446A9BC00C6BAEF /* ResultPages.mm in Sources */,
@@ -8995,8 +8999,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9022,8 +9026,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9076,8 +9080,8 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9104,8 +9108,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9150,8 +9154,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9175,8 +9179,8 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
