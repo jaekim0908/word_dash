@@ -8872,7 +8872,6 @@
 				6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */,
 				D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */,
 				D4E8704A1369531800E25FD1 /* OFAchievementService.mm in Sources */,
-				D45AF3E91386353B00438B40 /* Definition.mm in Sources */,
 				84EB1A9013B06CC100658BB9 /* CCNotifications.mm in Sources */,
 				84CDD1DE13B2FAA20090E48A /* CCAlertView.mm in Sources */,
 				D4BF0CB91446A9A800C6BAEF /* ResultsLayer.mm in Sources */,
@@ -9002,8 +9001,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -9031,8 +9030,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9113,8 +9112,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
