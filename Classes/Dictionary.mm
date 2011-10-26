@@ -13,6 +13,7 @@
 
 @synthesize allWords = _allWords;
 @synthesize dict = _dictionary;
+@synthesize dictionaryLoaded = _dictionaryLoaded;
 
 static Dictionary* _sharedDictionary = nil;
 
@@ -39,6 +40,8 @@ static Dictionary* _sharedDictionary = nil;
 -(id) init {
 	self = [super init];
 	if ((self = [super init])) {
+        
+        _dictionaryLoaded = NO;
 		// Dictionary Initialized
 		NSLog(@"Dictionary Singleton,, init");
         // JHK - 10/04/11 trying a new dictionary file (plurals removed and potty mouth filtered).
@@ -54,12 +57,13 @@ static Dictionary* _sharedDictionary = nil;
 }
 
 -(void) loadDictionary {
-	if(_sharedDictionary) {
+	if(_sharedDictionary && !_dictionaryLoaded) {
 		for(NSString *s in [_sharedDictionary allWords]) {
 			if (s && [s length] > 0) {
 				[[_sharedDictionary dict] setObject:s forKey:s];
 			}
 		}
+        _dictionaryLoaded=YES;
 		NSLog(@"Load Dictionary Done");
 	}
 }

@@ -103,9 +103,7 @@ static inline int cell(int r, int c) {
 
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
-        
-		CCLOG(@"dictionary size = %@", [dictionary objectForKey:@"orange"]);
-        
+                
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets-hd.plist"];

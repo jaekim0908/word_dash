@@ -13,10 +13,12 @@
 
 	NSMutableArray *_allWords;
 	NSMutableDictionary *_dictionary;
+    BOOL            _dictionaryLoaded;
 }
 
 @property (nonatomic, retain) NSMutableArray *allWords;
 @property (nonatomic, retain) NSMutableDictionary *dict;
+@property (nonatomic, assign) BOOL dictionaryLoaded;
 
 +(Dictionary*) sharedDictionary;
 -(void) loadDictionary;

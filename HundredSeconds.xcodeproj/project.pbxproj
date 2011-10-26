@@ -1177,10 +1177,18 @@
 		84FC0D12140C9FAC00730B34 /* playandpass.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FC0D10140C9FAC00730B34 /* playandpass.png */; };
 		84FC0D15140CB42C00730B34 /* whiteBg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FC0D13140CB42C00730B34 /* whiteBg-hd.png */; };
 		84FC0D16140CB42C00730B34 /* whiteBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FC0D14140CB42C00730B34 /* whiteBg.png */; };
+		D401015D1456B18900F43B0C /* SinglePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D401015C1456B18900F43B0C /* SinglePlayer.mm */; };
+		D40101621456B1CE00F43B0C /* AIDictionary.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40101611456B1CE00F43B0C /* AIDictionary.mm */; };
+		D40101641457B9D500F43B0C /* game_screen_select_letters_190-127.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101631457B9D500F43B0C /* game_screen_select_letters_190-127.png */; };
+		D40101661457C5F700F43B0C /* game_screen_submit_words_190-127.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101651457C5F700F43B0C /* game_screen_submit_words_190-127.png */; };
+		D40101681457CB5600F43B0C /* finger-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101671457CB5600F43B0C /* finger-2.png */; };
+		D40101731457ED3200F43B0C /* black-background-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101711457ED3200F43B0C /* black-background-hd.png */; };
+		D40101741457ED3200F43B0C /* black-background.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101721457ED3200F43B0C /* black-background.png */; };
+		D40101791457EE8400F43B0C /* howToPlay_3g.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101751457EE8400F43B0C /* howToPlay_3g.png */; };
+		D401017A1457EE8400F43B0C /* howToPlay_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = D40101761457EE8400F43B0C /* howToPlay_retina.png */; };
+		D401017B1457EE8400F43B0C /* howToPlay_3g.plist in Resources */ = {isa = PBXBuildFile; fileRef = D40101771457EE8400F43B0C /* howToPlay_3g.plist */; };
+		D401017C1457EE8400F43B0C /* howToPlay_retina.plist in Resources */ = {isa = PBXBuildFile; fileRef = D40101781457EE8400F43B0C /* howToPlay_retina.plist */; };
 		D40BDB18144FE2C600CA0932 /* HowToPlay.mm in Sources */ = {isa = PBXBuildFile; fileRef = D40BDB17144FE2C600CA0932 /* HowToPlay.mm */; };
-		D419BE91145380C900D71F3F /* howToPlay_3g.png in Resources */ = {isa = PBXBuildFile; fileRef = D419BE90145380C900D71F3F /* howToPlay_3g.png */; };
-		D419BE93145380D200D71F3F /* howToPlay_3g.plist in Resources */ = {isa = PBXBuildFile; fileRef = D419BE92145380D200D71F3F /* howToPlay_3g.plist */; };
-		D419BE951453848F00D71F3F /* black-background-2_502-323.png in Resources */ = {isa = PBXBuildFile; fileRef = D419BE941453848F00D71F3F /* black-background-2_502-323.png */; };
 		D45AF3E31384EC5200438B40 /* crab_plus_words_unique.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */; };
 		D45AF3ED13864F1800438B40 /* definition.txt in Resources */ = {isa = PBXBuildFile; fileRef = D45AF3EC13864F1800438B40 /* definition.txt */; };
 		D45AF4281397323D00438B40 /* dull_bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D45AF4271397323C00438B40 /* dull_bell.mp3 */; };
@@ -3097,11 +3105,21 @@
 		84FC0D10140C9FAC00730B34 /* playandpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playandpass.png; sourceTree = "<group>"; };
 		84FC0D13140CB42C00730B34 /* whiteBg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBg-hd.png"; sourceTree = "<group>"; };
 		84FC0D14140CB42C00730B34 /* whiteBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBg.png; sourceTree = "<group>"; };
+		D401015C1456B18900F43B0C /* SinglePlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SinglePlayer.mm; sourceTree = "<group>"; };
+		D401015F1456B19600F43B0C /* SinglePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePlayer.h; sourceTree = "<group>"; };
+		D40101601456B1C300F43B0C /* AIDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIDictionary.h; sourceTree = "<group>"; };
+		D40101611456B1CE00F43B0C /* AIDictionary.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AIDictionary.mm; sourceTree = "<group>"; };
+		D40101631457B9D500F43B0C /* game_screen_select_letters_190-127.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_screen_select_letters_190-127.png"; sourceTree = "<group>"; };
+		D40101651457C5F700F43B0C /* game_screen_submit_words_190-127.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game_screen_submit_words_190-127.png"; sourceTree = "<group>"; };
+		D40101671457CB5600F43B0C /* finger-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finger-2.png"; sourceTree = "<group>"; };
+		D40101711457ED3200F43B0C /* black-background-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black-background-hd.png"; sourceTree = "<group>"; };
+		D40101721457ED3200F43B0C /* black-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black-background.png"; sourceTree = "<group>"; };
+		D40101751457EE8400F43B0C /* howToPlay_3g.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = howToPlay_3g.png; sourceTree = "<group>"; };
+		D40101761457EE8400F43B0C /* howToPlay_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = howToPlay_retina.png; sourceTree = "<group>"; };
+		D40101771457EE8400F43B0C /* howToPlay_3g.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = howToPlay_3g.plist; sourceTree = "<group>"; };
+		D40101781457EE8400F43B0C /* howToPlay_retina.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = howToPlay_retina.plist; sourceTree = "<group>"; };
 		D40BDB15144FE2BA00CA0932 /* HowToPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlay.h; sourceTree = "<group>"; };
 		D40BDB17144FE2C600CA0932 /* HowToPlay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HowToPlay.mm; sourceTree = "<group>"; };
-		D419BE90145380C900D71F3F /* howToPlay_3g.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = howToPlay_3g.png; sourceTree = "<group>"; };
-		D419BE92145380D200D71F3F /* howToPlay_3g.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = howToPlay_3g.plist; sourceTree = "<group>"; };
-		D419BE941453848F00D71F3F /* black-background-2_502-323.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black-background-2_502-323.png"; sourceTree = "<group>"; };
 		D45AF3E21384EC5200438B40 /* crab_plus_words_unique.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = crab_plus_words_unique.txt; sourceTree = "<group>"; };
 		D45AF3EC13864F1800438B40 /* definition.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = definition.txt; sourceTree = "<group>"; };
 		D45AF4271397323C00438B40 /* dull_bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dull_bell.mp3; sourceTree = "<group>"; };
@@ -3423,6 +3441,10 @@
 		2D500B1D0D5A766B00DBA0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D40101601456B1C300F43B0C /* AIDictionary.h */,
+				D40101611456B1CE00F43B0C /* AIDictionary.mm */,
+				D401015C1456B18900F43B0C /* SinglePlayer.mm */,
+				D401015F1456B19600F43B0C /* SinglePlayer.h */,
 				84EB1A8E13B06CC100658BB9 /* CCNotifications.h */,
 				84EB1A8F13B06CC100658BB9 /* CCNotifications.mm */,
 				D4BF0CBD1446A9C600C6BAEF /* ResultPages.h */,
@@ -3464,8 +3486,6 @@
 				6ECE2D9A13330B6400C996AF /* LoadingScene.h */,
 				6ECE2D9B13330B6400C996AF /* LoadingScene.mm */,
 				6ECE2ECB1333322400C996AF /* Dictionary.h */,
-				84D4B73F144E95FF00D12D7B /* AIDictionary.h */,
-				84D4B740144E960000D12D7B /* AIDictionary.mm */,
 				6ECE2ECC1333322400C996AF /* Dictionary.mm */,
 				6EEA81A5134183F800A7858E /* DialogLayer.h */,
 				6EEA81A6134183F800A7858E /* DialogLayer.mm */,
@@ -3473,8 +3493,6 @@
 				6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */,
 				84CDD1DC13B2FAA20090E48A /* CCAlertView.h */,
 				84CDD1DD13B2FAA20090E48A /* CCAlertView.mm */,
-				84D4B73B144D3FF800D12D7B /* SinglePlayer.h */,
-				84D4B73C144D3FF800D12D7B /* SinglePlayer.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -3586,11 +3604,17 @@
 			children = (
 				84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */,
 				84BC05A514456E85003D1020 /* openfeint_offline_config.xml */,
+				D40101751457EE8400F43B0C /* howToPlay_3g.png */,
+				D40101761457EE8400F43B0C /* howToPlay_retina.png */,
+				D40101771457EE8400F43B0C /* howToPlay_3g.plist */,
+				D40101781457EE8400F43B0C /* howToPlay_retina.plist */,
+				D40101711457ED3200F43B0C /* black-background-hd.png */,
+				D40101721457ED3200F43B0C /* black-background.png */,
+				D40101631457B9D500F43B0C /* game_screen_select_letters_190-127.png */,
+				D40101651457C5F700F43B0C /* game_screen_submit_words_190-127.png */,
 				D4AB474614567AC1001CC8F7 /* finger-1.png */,
+				D40101671457CB5600F43B0C /* finger-2.png */,
 				D4AB474C1456914D001CC8F7 /* checkmark_48-42.png */,
-				D419BE90145380C900D71F3F /* howToPlay_3g.png */,
-				D419BE92145380D200D71F3F /* howToPlay_3g.plist */,
-				D419BE941453848F00D71F3F /* black-background-2_502-323.png */,
 				D47F3E981446B8BA0055EC74 /* Surfboard03_kparrish.png */,
 				D4BF0CC01446AA2400C6BAEF /* Surfboard03_kparrish-hd.png */,
 				D4BF0CC21446AA4500C6BAEF /* result_layer_3g.plist */,
@@ -8368,11 +8392,17 @@
 				D4BF0CC81446AA5200C6BAEF /* result_layer_3g.png in Resources */,
 				D4BF0CC91446AA5200C6BAEF /* result_layer_retina.png in Resources */,
 				D47F3E991446B8BA0055EC74 /* Surfboard03_kparrish.png in Resources */,
-				D419BE91145380C900D71F3F /* howToPlay_3g.png in Resources */,
-				D419BE93145380D200D71F3F /* howToPlay_3g.plist in Resources */,
-				D419BE951453848F00D71F3F /* black-background-2_502-323.png in Resources */,
 				D4AB474714567AC1001CC8F7 /* finger-1.png in Resources */,
 				D4AB474D1456914D001CC8F7 /* checkmark_48-42.png in Resources */,
+				D40101641457B9D500F43B0C /* game_screen_select_letters_190-127.png in Resources */,
+				D40101661457C5F700F43B0C /* game_screen_submit_words_190-127.png in Resources */,
+				D40101681457CB5600F43B0C /* finger-2.png in Resources */,
+				D40101731457ED3200F43B0C /* black-background-hd.png in Resources */,
+				D40101741457ED3200F43B0C /* black-background.png in Resources */,
+				D40101791457EE8400F43B0C /* howToPlay_3g.png in Resources */,
+				D401017A1457EE8400F43B0C /* howToPlay_retina.png in Resources */,
+				D401017B1457EE8400F43B0C /* howToPlay_3g.plist in Resources */,
+				D401017C1457EE8400F43B0C /* howToPlay_retina.plist in Resources */,
 				84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9019,8 +9049,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9046,8 +9076,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9100,8 +9130,8 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9128,8 +9158,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = beachgame;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CCA88B98-B64D-4B48-BB47-A2EBBB788732";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -9174,8 +9204,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9199,8 +9229,8 @@
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5AEB986-F829-455A-BCC1-CDF65981CE6B";
+				PROVISIONING_PROFILE = "891758D9-0CA8-4853-9928-7C183104EBEF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "891758D9-0CA8-4853-9928-7C183104EBEF";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

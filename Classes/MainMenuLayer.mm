@@ -222,7 +222,7 @@
 -(void) displayMainMenu {
 	NSLog(@"display main menu");
     [[Dictionary sharedDictionary] loadDictionary];
-    [[AIDictionary sharedDictionary] loadDictionary];
+   // [[AIDictionary sharedDictionary] loadDictionary];
 }
 
 -(void) displayHowToPlay {
