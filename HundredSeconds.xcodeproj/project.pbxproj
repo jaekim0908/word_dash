@@ -8368,13 +8368,11 @@
 				D4BF0CC81446AA5200C6BAEF /* result_layer_3g.png in Resources */,
 				D4BF0CC91446AA5200C6BAEF /* result_layer_retina.png in Resources */,
 				D47F3E991446B8BA0055EC74 /* Surfboard03_kparrish.png in Resources */,
-<<<<<<< HEAD
 				D419BE91145380C900D71F3F /* howToPlay_3g.png in Resources */,
 				D419BE93145380D200D71F3F /* howToPlay_3g.plist in Resources */,
 				D419BE951453848F00D71F3F /* black-background-2_502-323.png in Resources */,
 				D4AB474714567AC1001CC8F7 /* finger-1.png in Resources */,
 				D4AB474D1456914D001CC8F7 /* checkmark_48-42.png in Resources */,
-=======
 				84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8879,9 +8877,7 @@
 				84CDD1DE13B2FAA20090E48A /* CCAlertView.mm in Sources */,
 				D4BF0CB91446A9A800C6BAEF /* ResultsLayer.mm in Sources */,
 				D4BF0CBC1446A9BC00C6BAEF /* ResultPages.mm in Sources */,
-<<<<<<< HEAD
 				D40BDB18144FE2C600CA0932 /* HowToPlay.mm in Sources */,
-=======
 				84D4B73D144D3FF800D12D7B /* SinglePlayer.mm in Sources */,
 				84D4B741144E960000D12D7B /* AIDictionary.mm in Sources */,
 			);

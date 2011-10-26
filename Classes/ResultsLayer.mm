@@ -11,7 +11,6 @@
 #import "OFMultiplayerService.h"
 #import "OpenFeint.h"
 #import "GameManager.h"
-#import "Definition.h"
 
 @implementation ResultsLayer
 

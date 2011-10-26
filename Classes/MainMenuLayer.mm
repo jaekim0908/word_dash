@@ -23,6 +23,7 @@
 #import "ChallengeRequestDialog.h"
 #import "OFSocialNotificationApi.h"
 #import "CCAlertView.h"
+#import "AIDictionary.h"
 
 @interface UIAlertView (extended)
 -(void) setNumberOfRows:(int) num;
@@ -238,7 +239,8 @@
 -(void) displayRanking {
 	NSLog(@"display ranking");
 	//[OpenFeint launchDashboardWithHighscorePage:@"650204"];
-	[OpenFeint launchDashboard];
+	//[OpenFeint launchDashboard];
+    [self displaySinglePlayer];
 }
 
 -(void) displayPlayAndPass {
