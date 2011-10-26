@@ -34,4 +34,5 @@
 -(void) showCancelChallengeMsg;
 -(void) enableMainMenu;
 -(void) disableMainMenu;
+-(void) displayHowToPlay;
 @end

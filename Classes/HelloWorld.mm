@@ -529,10 +529,10 @@ static inline int cell(int r, int c) {
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	//MCH[player1Timer setString:@"100"];
-	//MCH[player2Timer setString:@"100"];
-    [player1Timer setString:@"30"];
-	[player2Timer setString:@"30"];
+	[player1Timer setString:@"100"];
+	[player2Timer setString:@"100"];
+    //[player1Timer setString:@"30"];
+	//[player2Timer setString:@"30"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[player1Answer setString:@" "];

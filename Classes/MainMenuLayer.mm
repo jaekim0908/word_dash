@@ -16,7 +16,6 @@
 #import "GameManager.h"
 #import "HelloWorld.h"
 #import "Dictionary.h"
-#import "Definition.h"
 #import "OFMultiplayerService.h"
 #import "OFMultiplayerGame.h"
 #import "Multiplayer.h"
@@ -24,7 +23,6 @@
 #import "ChallengeRequestDialog.h"
 #import "OFSocialNotificationApi.h"
 #import "CCAlertView.h"
-#import "AIDictionary.h"
 
 @interface UIAlertView (extended)
 -(void) setNumberOfRows:(int) num;
@@ -47,7 +45,7 @@
         [GameManager sharedGameManager].isChallenger = NO;
         [GameManager sharedGameManager].hasFriendsWithThisApp = NO;
         [[GameManager sharedGameManager] closeGame];
-		[self displayMainMenu];
+		[self displayMainMenu];// Load Dictionary
 		[GameManager sharedGameManager].gameStatus = kGameNone;
 		[OFMultiplayerService startViewingGames];
 		challengeCancelledLabel = [CCLabelTTF labelWithString:@"Challenger has cancelled the game" fontName:@"Verdana" fontSize:14];
@@ -212,7 +210,8 @@
         [self displayPlayAndPass];
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         howToPlaySelected.visible = NO;
-        [self displaySinglePlayer];
+        //[self displaySceneSelection];
+        [self displayHowToPlay];
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         rankingsSelected.visible = NO;
         [self displayRanking];
@@ -223,6 +222,11 @@
 	NSLog(@"display main menu");
     [[Dictionary sharedDictionary] loadDictionary];
     [[AIDictionary sharedDictionary] loadDictionary];
+}
+
+-(void) displayHowToPlay {
+	NSLog(@"display how to play");
+    [[GameManager sharedGameManager] runSceneWithId:kHowToPlayScene];
 }
 
 -(void) displaySceneSelection {
