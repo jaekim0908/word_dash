@@ -120,5 +120,6 @@
 - (void) pauseGame;//MCH
 - (void) sendPauseRequest;
 - (void) setGameStartCountdownTimer:(NSString *) t;
+- (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c;
 
 @end

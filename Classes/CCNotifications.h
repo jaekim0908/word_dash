@@ -69,6 +69,7 @@ enum {
 @property(nonatomic, retain) CCActionInterval *animationIn;
 @property(nonatomic, retain) CCActionInterval *animationOut;
 @property(nonatomic, readwrite, assign) char state;
+@property(nonatomic, readwrite, assign) char position;
 
 + (CCNotifications *) sharedManager;
 + (void) purgeSharedManager;

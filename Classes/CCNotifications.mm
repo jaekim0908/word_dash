@@ -171,6 +171,7 @@
 @synthesize animationOut = animationOut_;
 @synthesize state = state_;
 @synthesize delegate = delegate_;
+@synthesize position = position_;
 
 static CCNotifications *sharedManager;
 
