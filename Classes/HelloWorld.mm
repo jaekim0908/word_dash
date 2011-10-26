@@ -19,7 +19,7 @@
 #import "OFMultiplayerGame.h"
 #import "GameManager.h"
 #import "Dictionary.h"
-#import "Definition.h"
+//#import "Definition.h"
 #import "ResultsLayer.h"
 #import "SimpleAudioEngine.h"
 
@@ -104,13 +104,7 @@ static inline int cell(int r, int c) {
 
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
-        
-        //MCH -- setting up definition
-        definition = [[Definition sharedDefinition] dict];
-        CCLOG(@"LOOKUP!!!!!!!!!!!!!!!!!!!!!!!!! able=%@",[definition objectForKey:@"able"]);
-        
-		CCLOG(@"dictionary size = %@", [dictionary objectForKey:@"orange"]);
-        
+                
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets-hd.plist"];

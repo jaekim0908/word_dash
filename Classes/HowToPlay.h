@@ -36,7 +36,9 @@
     CCSprite *screenNavigatorButtons;
     CCSprite *mainMenuScreenShot;
     CCSprite *iPhoneScreenShot;
-    CCSprite *gameScreenShot;
+    CCSprite *gameScreenShotFlip;
+    CCSprite *gameScreenShotSelect;
+    CCSprite *gameScreenShotSubmit;
     CCSprite *sandBackground;
     CCSprite *topRightElbow;
     CCSprite *topRightElbow2;
@@ -46,6 +48,7 @@
     CCSprite *topLeftElbow;
     CCSprite *verticalLine;
     CCSprite *finger;
+    CCSprite *finger2;
     int      nextPagePressedCount;
     
     
@@ -77,7 +80,9 @@
 @property (nonatomic, retain) CCSprite *screenNavigatorButtons;
 @property (nonatomic, retain) CCSprite *mainMenuScreenShot;
 @property (nonatomic, retain) CCSprite *iPhoneScreenShot;
-@property (nonatomic, retain) CCSprite *gameScreenShot;
+@property (nonatomic, retain) CCSprite *gameScreenShotFlip;
+@property (nonatomic, retain) CCSprite *gameScreenShotSelect;
+@property (nonatomic, retain) CCSprite *gameScreenShotSubmit;
 @property (nonatomic, retain) CCSprite *sandBackground;
 @property (nonatomic, retain) CCSprite *topRightElbow;
 @property (nonatomic, retain) CCSprite *topRightElbow2;
@@ -87,6 +92,7 @@
 @property (nonatomic, retain) CCSprite *topLeftElbow;
 @property (nonatomic, retain) CCSprite *verticalLine;
 @property (nonatomic, retain) CCSprite *finger;
+@property (nonatomic, retain) CCSprite *finger2;
 @property (nonatomic, assign) int       nextPagePressedCount;
 
 +(id) scene;
@@ -94,4 +100,6 @@
 - (void) showMenu1Items;
 - (void) hideMenu2Items;
 - (void) showMenu2Items;
+- (void) hideMenu3Items;
+- (void) showMenu3Items;
 @end

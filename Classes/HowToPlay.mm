@@ -34,7 +34,9 @@
 @synthesize numThreeButton;
 @synthesize mainMenuButton;
 @synthesize mainMenuScreenShot;
-@synthesize gameScreenShot;
+@synthesize gameScreenShotFlip;
+@synthesize gameScreenShotSelect;
+@synthesize gameScreenShotSubmit;
 @synthesize sandBackground;
 @synthesize howToPlayLiteral;
 @synthesize iPhoneScreenShot;
@@ -47,8 +49,11 @@
 @synthesize verticalLine;
 @synthesize screenNavigatorButtons;
 @synthesize finger;
+@synthesize finger2;
 @synthesize batchNode;
 @synthesize nextPagePressedCount;
+
+#define FLIP_LITERAL "Flip 1 Letter Per Turn"
 
 +(id) scene
 {
@@ -77,16 +82,26 @@
         
         nextPagePressedCount = 0;
         
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"howToPlay_3g.plist"];
-        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"howToPlay_3g.png"]];    
+        //SETUP SPRITE SHEET
+        if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
+            [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"howToPlay_retina.plist"];
+            batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"howToPlay_retina.png"]];           
+        }
+        else{
+            [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"howToPlay_3g.plist"];
+            batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"howToPlay_3g.png"]];    
+        }
+
         
         //howToPlayLiteral = [CCLabelTTF labelWithString:@"How To Play" fontName:@"Verdana-Bold" fontSize:18];
-        howToPlayLiteral = [CCLabelTTF labelWithString:@"How To Play" fontName:@"MarkerFelt-Thin" fontSize:36];
+        howToPlayLiteral = [CCLabelTTF labelWithString:@"Flip 1 Letter Per Turn" fontName:@"MarkerFelt-Thin" fontSize:24];
 		howToPlayLiteral.color = ccc3(240, 240, 240);
 		howToPlayLiteral.position = ccp(10, 270);
         howToPlayLiteral.anchorPoint = ccp(0,0);
 		[self addChild:howToPlayLiteral];
         
+        
+        //LABEL 1 and LABEL 2 NOT USED FOR NOW
         howToPlay1Label = [CCLabelTTF labelWithString:@"Reveal 1 letter" fontName:@"Verdana" fontSize:12];
 		howToPlay1Label.color = ccc3(255, 255, 255);
 		howToPlay1Label.position = ccp(16, 250);
@@ -99,37 +114,40 @@
         howToPlay2Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay2Label];
 
-        
-        //sandBackground = [CCSprite spriteWithFile:@"Sand-480-320.png"];
-        //sandBackground = [CCSprite spriteWithFile:@"blacksand_hawaii_480-360.jpg"];
-        sandBackground = [CCSprite spriteWithFile:@"black-background-2_502-323.png"];
+
+        sandBackground = [CCSprite spriteWithFile:@"black-background.png"];
         sandBackground.position = ccp(240, 160);
         [self addChild:sandBackground z:-20];
 
-        //iPhoneScreenShot = [CCSprite spriteWithFile:@"iphone-320-201.png"];
         iPhoneScreenShot = [CCSprite spriteWithSpriteFrameName:@"iphone.png"];
         iPhoneScreenShot.position = ccp(240, 160);
         [self addChild:iPhoneScreenShot];
         
-        //gameScreenShot = [CCSprite spriteWithFile:@"game_screen-white-190-127.png"];
-        gameScreenShot = [CCSprite spriteWithSpriteFrameName:@"game_screen-white.png"];
-        gameScreenShot.position = ccp(240, 160);
-        [self addChild:gameScreenShot];
         
+        //GAME SCREENS
+        gameScreenShotFlip = [CCSprite spriteWithSpriteFrameName:@"game_screen_flip.png"];
+        gameScreenShotFlip.position = ccp(240, 160);
+        [self addChild:gameScreenShotFlip];
+
+        gameScreenShotSelect = [CCSprite spriteWithSpriteFrameName:@"game_screen_select_letters.png"];
+        gameScreenShotSelect.position = ccp(240, 160);
+        [self addChild:gameScreenShotSelect];
+        
+        gameScreenShotSubmit = [CCSprite spriteWithSpriteFrameName:@"game_screen_submit_words.png"];
+        gameScreenShotSubmit.position = ccp(240, 160);
+        [self addChild:gameScreenShotSubmit];
+
+        //DELETE SOON
         //topRightElbow = [CCSprite spriteWithFile:@"top-right-elbow-white.png"];
-        topRightElbow = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white.png"];
-        topRightElbow.position = ccp(163, 223);
-        [self addChild:topRightElbow];
-/*******
-        verticalLine = [CCSprite spriteWithFile:@"vertical-line.png"];
-        verticalLine.position = ccp(227, 75);
-        [self addChild:verticalLine];
- *******/
-        
+        //topRightElbow = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white.png"];
+        //topRightElbow.position = ccp(163, 223);
+        //[self addChild:topRightElbow];
+
+        //DELETE SOON
         //bottomLeftElbow = [CCSprite spriteWithFile:@"bottom-left-elbow-white.png"];
-        bottomLeftElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-left-elbow-white.png"];
-        bottomLeftElbow.position = ccp(227, 72);
-        [self addChild:bottomLeftElbow];
+        //bottomLeftElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-left-elbow-white.png"];
+        //bottomLeftElbow.position = ccp(227, 72);
+        //[self addChild:bottomLeftElbow];
         
         howToPlay3Label = [CCLabelTTF labelWithString:@"Score by creating words " fontName:@"Verdana" fontSize:12];
 		howToPlay3Label.color = ccc3(255, 255, 255);
@@ -138,9 +156,14 @@
 		[self addChild:howToPlay3Label];
         
         
-        finger = [CCSprite spriteWithFile:@"finger-1.png"];
-        finger.position = ccp(240, 125);
+        finger = [CCSprite spriteWithSpriteFrameName:@"finger-1.png"];
+        finger.position = ccp(230, 125);
+        finger.visible=YES;
         [self addChild:finger];
+        
+        finger2 = [CCSprite spriteWithSpriteFrameName:@"finger-2.png"];
+        finger2.position = ccp(230, 125);
+        [self addChild:finger2];
 
         howToPlay4Label = [CCLabelTTF labelWithString:@"with 3 or more letters" fontName:@"Verdana" fontSize:12];
 		howToPlay4Label.color = ccc3(255, 255, 255);
@@ -149,11 +172,11 @@
 		[self addChild:howToPlay4Label];
         
         
-        
+        //DELETE SOON
         //bottomRightElbow = [CCSprite spriteWithFile:@"bottom-right-elbow-white.png"];
-        bottomRightElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-right-elbow-white.png"];
-        bottomRightElbow.position = ccp(172, 78);
-        [self addChild:bottomRightElbow];
+        //bottomRightElbow = [CCSprite spriteWithSpriteFrameName:@"bottom-right-elbow-white.png"];
+        //bottomRightElbow.position = ccp(172, 78);
+        //[self addChild:bottomRightElbow];
 
         
         howToPlay5Label = [CCLabelTTF labelWithString:@"End turn and" fontName:@"Verdana" fontSize:12];
@@ -169,104 +192,53 @@
 		[self addChild:howToPlay6Label];
 
         
-        //MCH - DELETE SOON!!!!!!!!
-        /****************
-        screenNavigatorButtons = [CCSprite spriteWithFile:@"HowToPlayMenu-450-338.png"];
-        screenNavigatorButtons.position = ccp(280, 280);
-        screenNavigatorButtons.anchorPoint = ccp(0,0);
-        screenNavigatorButtons.visible = NO;
-        [self addChild:screenNavigatorButtons];
-         ********************/
-        
         nextPageButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
         nextPageButton.position = ccp(415, 35);
         //nextPageButton.anchorPoint = ccp(0,0);
         [self addChild:nextPageButton];
         
-        checkMark = [CCSprite spriteWithFile:@"checkmark_48-42.png"];
+        checkMark = [CCSprite spriteWithSpriteFrameName:@"checkmark.png"];
         checkMark.position = ccp(415, 35);
         //checkMark.anchorPoint = ccp(0,0);
         [self addChild:checkMark];
         
-        /***************
-        mainMenuButton = [CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"];
-        mainMenuButton.position = ccp(412, 255);
-        mainMenuButton.anchorPoint = ccp(0,0);
-        [self addChild:mainMenuButton];
-
-        
-        numThreeButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
-        numThreeButton.position = ccp(310, 220);
-        numThreeButton.anchorPoint = ccp(0,0);
-        [self addChild:numThreeButton];
-        
-        
-        numTwoButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
-        numTwoButton.position = ccp(250, 220);
-        numTwoButton.anchorPoint = ccp(0,0);
-        [self addChild:numTwoButton];
-
-                
-        numOneButton = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
-        numOneButton.position = ccp(190, 220);
-        numOneButton.anchorPoint = ccp(0,0);
-        [self addChild:numOneButton];
-        
-        
-        nav1Label = [CCLabelTTF labelWithString:@"1" fontName:@"MarkerFelt-Thin" fontSize:36];
-		nav1Label.color = ccc3(255, 255, 255);
-		nav1Label.position = ccp(255, 265);
-        nav1Label.anchorPoint = ccp(0,0);
-		[self addChild:nav1Label z:20];
-        
-        nav2Label = [CCLabelTTF labelWithString:@"2" fontName:@"MarkerFelt-Thin" fontSize:36];
-		nav2Label.color = ccc3(255, 255, 255);
-		nav2Label.position = ccp(315, 265);
-        nav2Label.anchorPoint = ccp(0,0);
-		[self addChild:nav2Label z:20];
-        
-        nav3Label = [CCLabelTTF labelWithString:@"3" fontName:@"MarkerFelt-Thin" fontSize:36];
-		nav3Label.color = ccc3(255, 255, 255);
-		nav3Label.position = ccp(375, 265);
-        nav3Label.anchorPoint = ccp(0,0);
-		[self addChild:nav3Label z:20];
-         ******************/
-                
         
                
-        /*******Menu Item 2*************/
+        /******* Scoring *************/
         howToPlay7Label = [CCLabelTTF labelWithString:@"3 letter words:  8 pts" fontName:@"Verdana" fontSize:11];
 		howToPlay7Label.color = ccc3(255, 255, 255);
-		howToPlay7Label.position = ccp(5, 249);
+		howToPlay7Label.position = ccp(5, 59);
         howToPlay7Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay7Label];
         
         howToPlay8Label = [CCLabelTTF labelWithString:@"4 letter words: 16 pts" fontName:@"Verdana" fontSize:11];
 		howToPlay8Label.color = ccc3(255, 255, 255);
-		howToPlay8Label.position = ccp(5, 236);
+		howToPlay8Label.position = ccp(5, 46);
         howToPlay8Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay8Label];
         
         howToPlay9Label = [CCLabelTTF labelWithString:@"5 letter words: 32 pts" fontName:@"Verdana" fontSize:11];
 		howToPlay9Label.color = ccc3(255, 255, 255);
-		howToPlay9Label.position = ccp(5, 223);
+		howToPlay9Label.position = ccp(5, 33);
         howToPlay9Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay9Label];
         
         howToPlay10Label = [CCLabelTTF labelWithString:@"and so on ..." fontName:@"Verdana" fontSize:11];
 		howToPlay10Label.color = ccc3(255, 255, 255);
-		howToPlay10Label.position = ccp(5, 210);
+		howToPlay10Label.position = ccp(5, 20);
         howToPlay10Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay10Label];
         
-        topRightElbow2 = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white-2.png"];
-        topRightElbow2.position = ccp(163, 228);
-        [self addChild:topRightElbow2];
+        
+        //NOT USED -- FOR NOW
+        //topRightElbow2 = [CCSprite spriteWithSpriteFrameName:@"top-right-elbow-white-2.png"];
+        //topRightElbow2.position = ccp(163, 228);
+        //[self addChild:topRightElbow2];
 
                
-        topLeftElbow = [CCSprite spriteWithSpriteFrameName:@"top-left-elbow-white.png"];
-        topLeftElbow.position = ccp(355, 105);
-        [self addChild:topLeftElbow];
+        //topLeftElbow = [CCSprite spriteWithSpriteFrameName:@"top-left-elbow-white.png"];
+        //topLeftElbow.position = ccp(355, 105);
+        //[self addChild:topLeftElbow];
         
         howToPlay11Label = [CCLabelTTF labelWithString:@"Each player has 100 seconds" fontName:@"Verdana" fontSize:11];
 		howToPlay11Label.color = ccc3(255, 255, 255);
@@ -281,6 +253,31 @@
 		[self addChild:howToPlay12Label];
          
         [self hideMenu2Items];
+        [self hideMenu3Items];
+        [self showMenu1Items];
+        
+        /* TEMP MCH */
+        howToPlay1Label.visible = NO;
+        howToPlay2Label.visible = NO;
+        //topRightElbow.visible = NO;
+        
+        howToPlay7Label.visible = NO;
+        howToPlay8Label.visible = NO;
+        howToPlay9Label.visible = NO;
+        howToPlay10Label.visible = NO;
+        //topRightElbow2.visible = NO;
+        
+        howToPlay11Label.visible = NO;
+        howToPlay12Label.visible = NO;
+        //topLeftElbow.visible = NO;
+        
+        howToPlay5Label.visible = NO;
+        howToPlay6Label.visible = NO;
+        //bottomRightElbow.visible = NO;
+        
+        howToPlay3Label.visible = NO;
+        howToPlay4Label.visible = NO;
+        //bottomLeftElbow.visible = NO;
   
     }
     return self;
@@ -288,78 +285,74 @@
 
 - (void) hideMenu1Items
 {
-    howToPlay1Label.visible = NO;
-    howToPlay2Label.visible = NO;
-    topRightElbow.visible = NO;
-    
-    
-   
-    
-
+    gameScreenShotFlip.visible=NO;
+    finger.visible=NO;
     
 }
 
+
 - (void) showMenu1Items
 {
-    howToPlay1Label.visible = YES;
-    howToPlay2Label.visible = YES;
-    topRightElbow.visible = YES;
-    
-     
-        
+    gameScreenShotFlip.visible=YES;
+    finger.visible=YES;
+    finger.position = ccp(230, 125);    
     iPhoneScreenShot.position = ccp(240,160);
-    gameScreenShot.position = ccp(240,160);
+    gameScreenShotFlip.position = ccp(240,160);
+    
+    [howToPlayLiteral setString:@"Flip 1 Letter Per Turn"];
     
 }
 
 - (void) hideMenu2Items
 {
-    howToPlay7Label.visible = NO;
-    howToPlay8Label.visible = NO;
-    howToPlay9Label.visible = NO;
-    howToPlay10Label.visible = NO;
-    topRightElbow2.visible = NO;
-    
-    howToPlay11Label.visible = NO;
-    howToPlay12Label.visible = NO;
-    topLeftElbow.visible = NO;
-    
-    howToPlay5Label.visible = NO;
-    howToPlay6Label.visible = NO;
-    bottomRightElbow.visible = NO;
-    
-    howToPlay3Label.visible = NO;
-    howToPlay4Label.visible = NO;
-    bottomLeftElbow.visible = NO;
-
+    gameScreenShotSelect.visible=NO;
+    finger.visible=NO;
     
 }
 
 - (void) showMenu2Items
 {
+    gameScreenShotSelect.visible=YES;
+    finger.visible=YES;
+    finger.position = ccp(310, 125);
+    
+    iPhoneScreenShot.position = ccp(240,160);
+    gameScreenShotSelect.position = ccp(240,160); 
+    
+    [howToPlayLiteral setString:@"Select Letters To Create Words"];
+        
+}
+
+- (void) hideMenu3Items
+{
+    gameScreenShotSubmit.visible=NO;
+    finger2.visible=NO;
+    
+    howToPlay7Label.visible = NO;
+    howToPlay8Label.visible = NO;
+    howToPlay9Label.visible = NO;
+    howToPlay10Label.visible = NO;
+
+}
+
+- (void) showMenu3Items
+{
+    finger2.visible=YES;
+    gameScreenShotSubmit.visible=YES;
+    finger2.position = ccp(300, 75);
+    
+    iPhoneScreenShot.position = ccp(240,160);
+    gameScreenShotSelect.position = ccp(240,160); 
+    
+    [howToPlayLiteral setString:@"Submit Words To Score and End Turn"];
+
     howToPlay7Label.visible = YES;
     howToPlay8Label.visible = YES;
     howToPlay9Label.visible = YES;
     howToPlay10Label.visible = YES;
-    topRightElbow2.visible = YES;
     
-    howToPlay11Label.visible = YES;
-    howToPlay12Label.visible = YES;
-    topLeftElbow.visible = YES;
-    
-    howToPlay5Label.visible = YES;
-    howToPlay6Label.visible = YES;
-    bottomRightElbow.visible = YES;
-    
-    howToPlay3Label.visible = YES;
-    howToPlay4Label.visible = YES;
-    bottomLeftElbow.visible = YES;
-
-    
-    gameScreenShot.position = ccp(275,150);
-    iPhoneScreenShot.position = ccp(275,150);
-        
 }
+
 
 - (void) registerWithTouchDispatcher {
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
@@ -384,10 +377,16 @@
         switch (nextPagePressedCount) {
             case 0:
                 [self hideMenu1Items];
+                [self hideMenu3Items];
                 [self showMenu2Items];
                 nextPagePressedCount++;
                 break;
-                
+            case 1:
+                [self hideMenu1Items];
+                [self hideMenu2Items];
+                [self showMenu3Items];
+                nextPagePressedCount++;
+                break;
             default:
                 [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
                 break;
