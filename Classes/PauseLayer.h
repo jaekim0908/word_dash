@@ -21,7 +21,7 @@
 @property (nonatomic, retain) CCSprite *restartButton;
 @property (nonatomic, retain) CCLabelTTF *midDisplay;
 
-
++(id) scene;
 -(void) checkMyTurnThenResume:(ccTime) dt;
 -(void) processTimeoutCountdownRequest:(NSString *)timeRemaining;
 -(void) timeoutCountdown:(ccTime) dt;

@@ -63,10 +63,8 @@ static GameManager* _sharedGameManager = nil;
 		isSoundsOn = YES;
 		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab" ofType:@"txt"];
 		NSError *error;
-		// read everything from text
-        // MCH -- no need to open the crab file since it is being opened by the Dictionary singleton
-		//_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
-		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
+		
+        _sharedGameManager.myOFDelegate = [MyOFDelegate new];
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;
 		_sharedGameManager.gameStartedFromPushNotification = NO;
@@ -76,18 +74,12 @@ static GameManager* _sharedGameManager = nil;
 								  [NSNumber numberWithBool:YES], OpenFeintSettingDisableUserGeneratedContent,
 								  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
 								  nil];
-		//OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
+        
         OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate 
                                                                           andChallengeDelegate:nil 
                                                                        andNotificationDelegate:_sharedGameManager.myOFDelegate];
-        /***************** JAE's GAME ID *************
-		[OpenFeint initializeWithProductKey:@"7hiF4dldDFHvfROrEgGDA"
-								  andSecret:@"u3f6UaneEezk59d44hyH67wawNxnVVph0u16ASpm0s4"
-							 andDisplayName:@"Battleship"
-								andSettings:settings    // see OpenFeintSettings.h
-							   andDelegates:delegates]; // see OFDelegatesContainer.h 
-        ****************************/
-        [OpenFeint initializeWithProductKey:@"KDSjH8AaN4DtiE9zklUw"
+        
+          [OpenFeint initializeWithProductKey:@"KDSjH8AaN4DtiE9zklUw"
 								  andSecret:@"KxhwylmFzbSs1ocrBHtuDSsOXDnTIahsMdiw19lv8"
 							 andDisplayName:@"100 Seconds"
 								andSettings:settings    // see OpenFeintSettings.h

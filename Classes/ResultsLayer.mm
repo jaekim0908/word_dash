@@ -12,6 +12,7 @@
 #import "OpenFeint.h"
 #import "GameManager.h"
 
+
 @implementation ResultsLayer
 
 @synthesize batchNode;
@@ -39,7 +40,7 @@
 @synthesize nextPageButtonDisabled;
 @synthesize prevPageButtonDisabled;
 @synthesize woodenSign;
-@synthesize flagMultiPlayer;
+@synthesize mbrGameMode;
 
 
 #define HDR_POS_X_P1 (44.0f/63.0f)
@@ -66,7 +67,7 @@
 #define MAX_WORDS_PER_PAGE  11
 
 
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag {
++(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(GameMode)gameMode {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
     
@@ -76,14 +77,14 @@
                WithPlayerTwoScore:p2Score 
                WithPlayerOneWords:p1Words 
                WithPlayerTwoWords:p2Words
-                ForMultiPlayer:multiPlayerFlag]; 
+                ForMultiPlayer:gameMode]; 
 	[scene addChild:layer];  
     
 	// return the scene
 	return scene;
 }
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag
+-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(GameMode)gameMode
 {
     winSize = [[CCDirector sharedDirector] winSize];
     arrayPagesPlayer1 = [[NSMutableArray array] retain];
@@ -92,7 +93,8 @@
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
         
     
-        multiPlayerFlag ? self.flagMultiPlayer = TRUE : self.flagMultiPlayer = FALSE;
+       
+        self.mbrGameMode = gameMode;
         
         //SETUP SPRITE SHEET
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -198,7 +200,6 @@
 		
         
         //WORDS
-        //[self displayPlayerWords:2 withWords:p2Words startAt:0 xPosColumn1of1At:WORDS_POS_X_P2 xPosColumn1of2At:WORDS_POS_X_P2_COL1OF2 xPosColumn2of2At:WORDS_POS_X_P2_COL2OF2];
        	//ALLOCATE A RESULTS PAGE
         [arrayPagesPlayer2 addObject:[ [ [ResultPages alloc] init:winSize]  autorelease]];
         ResultPages *pResultPagePlayer2 = [arrayPagesPlayer2 objectAtIndex:0];
@@ -219,7 +220,6 @@
 	
         
         //SETUP WOODEN SIGN
-        //woodenSign = [CCSprite spriteWithFile:@"blank-wooden-sign-3b.png"];
         woodenSign = [CCSprite spriteWithSpriteFrameName:@"blank-wooden-sign.png"];
         woodenSign.position = ccp(240,50);
         [self addChild:woodenSign];
@@ -241,7 +241,6 @@
 													 fontSize:22] 
 								  retain];
 		midDisplay.position = ccp(240, 60);
-		//blue midDisplay.color = ccc3(0, 0, 255);
         midDisplay.color = ccc3(255, 255, 0);
 		[self addChild:midDisplay z:30];
 		
@@ -539,7 +538,10 @@
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
         
-        if (!self.flagMultiPlayer) {
+        if (self.mbrGameMode == kSinglePlayer) {
+            [[GameManager sharedGameManager] runSceneWithId:kSinglePlayerScene];
+        }
+        else if (self.mbrGameMode == kPlayAndPass){
             [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
         }
         else{

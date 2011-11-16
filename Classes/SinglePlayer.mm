@@ -24,6 +24,7 @@
 #import "PauseLayer.h"
 #import "SimpleAudioEngine.h"
 #import "AIDictionary.h"
+#import "Constants.h"
 
 @implementation SinglePlayer
 
@@ -920,7 +921,7 @@
     BOOL match = NO;
     NSString *ans;
     CCLOG(@"AI FIND WORDS");
-    for(int i = 0; !match && i < 10; i++) {
+    for(int i = 0; !match && i < 30; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
         CCLOG(@"AI ANSWERS = %@", ans);
@@ -1012,7 +1013,7 @@
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                       ForMultiPlayer:FALSE
+                                                       ForMultiPlayer:kSinglePlayer
                                                    ]];
         
 	} else {
@@ -1050,7 +1051,7 @@
 
 - (void) onEnter {
 	[super onEnter];
-	
+	/****** TEMP MCH
      adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
      adView.delegate = self;
      adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
@@ -1059,6 +1060,7 @@
      CGSize windowSize = [[CCDirector sharedDirector] winSize];
      adView.center = CGPointMake(adView.frame.size.width/2, windowSize.height - adView.frame.size.height/2);
      adView.hidden = YES;
+     *****************/
      
 }
 

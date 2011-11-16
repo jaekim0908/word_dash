@@ -27,3 +27,9 @@ typedef enum {
 	kGameStarted,
 	kGameFinished
 } GameStatus;
+
+typedef enum {
+	kSinglePlayer = 0,
+	kPlayAndPass,
+	kMultiPlayer
+} GameMode;

@@ -15,13 +15,20 @@
 #import "SimpleAudioEngine.h"
 
 @class Cell;
+@class PauseMenu;
+
+
 
 // HelloWorld Layer
 @interface HelloWorld : CCLayer <ADBannerViewDelegate,  OpenFeintDelegate, OFMultiplayerDelegate>
 {
 	ADBannerView *adView;
-     SimpleAudioEngine *soundEngine;
+    SimpleAudioEngine *soundEngine;
+    PauseMenu *pauseMenuPlayAndPass;
+    BOOL      pauseState;
 }
+
+@property (nonatomic, retain) PauseMenu *pauseMenuPlayAndPass;
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
@@ -38,5 +45,7 @@
 - (BOOL) isThisStarPoint:(Cell *) cell;
 - (void) setStarPoints;
 - (int) countStarPointandRemoveStars;
+-(BOOL) stopTimer;
+-(BOOL) startTimer;
 
 @end

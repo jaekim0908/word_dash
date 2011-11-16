@@ -24,6 +24,7 @@
 #import "OFSocialNotificationApi.h"
 #import "CCAlertView.h"
 #import "AIDictionary.h"
+#import "HowToPlay.h"
 
 @interface UIAlertView (extended)
 -(void) setNumberOfRows:(int) num;
@@ -206,9 +207,26 @@
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         [self showActionSheet];
-    } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
+    } 
+    else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playAndPassSelected.visible = NO;
-        [self displayPlayAndPass];
+        
+        //DETERMINE IF FIRST TIME PLAYING
+        NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+        
+        if(!firstTimePlayFlag)
+        {
+            CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+            
+            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+            [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+        }
+        else{
+            [self displayPlayAndPass];
+        }       
+        
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         howToPlaySelected.visible = NO;
         //[self displaySceneSelection];
@@ -227,7 +245,8 @@
 
 -(void) displayHowToPlay {
 	NSLog(@"display how to play");
-    [[GameManager sharedGameManager] runSceneWithId:kHowToPlayScene];
+    //[[GameManager sharedGameManager] runSceneWithId:kHowToPlayScene];
+    [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
 }
 
 -(void) displaySceneSelection {

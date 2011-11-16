@@ -21,10 +21,20 @@
 #import "Dictionary.h"
 #import "ResultsLayer.h"
 #import "SimpleAudioEngine.h"
+#import "HowToPlay.h"
+#import "GameManager.h"
+#import "PauseLayer.h"
+#import "Constants.h"
+#import "PauseMenu.h"
+
+
 
 @implementation HelloWorld
 
+@synthesize pauseMenuPlayAndPass;
+
 NSMutableArray *letterSlots;
+
 
 int cols = 5;
 int rows = 4;
@@ -96,6 +106,11 @@ static inline int cell(int r, int c) {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
+        
+
+        //FLAG USED TO SUPPORT PAUSE MENU
+        pauseState = FALSE;
+        
         [GameManager sharedGameManager].gameStatus = kGameStarted;
 		self.isTouchEnabled = YES;
 		
@@ -103,7 +118,8 @@ static inline int cell(int r, int c) {
 
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
-                
+          
+        
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets-hd.plist"];
@@ -120,6 +136,9 @@ static inline int cell(int r, int c) {
         [self addChild:batchNode];
         [self addChild:batchNode2];
 
+      
+        
+        
 		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
 		player1Score.color = ccc3(0,0,255);
 		player1Score.position = ccp(440, 220);
@@ -196,27 +215,27 @@ static inline int cell(int r, int c) {
 		
 		solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
 		solveButton1.position = ccp(440, 40);
-		[self addChild:solveButton1];
+		[batchNode addChild:solveButton1];
         
         transparentBoundingBox1 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
 		transparentBoundingBox1.position = ccp(440, 40);
-		[self addChild:transparentBoundingBox1];
+		[batchNode addChild:transparentBoundingBox1];
 		
         solveButton2 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
 		solveButton2.position = ccp(50, 40);
-		[self addChild:solveButton2];
+		[batchNode addChild:solveButton2];
         
 		transparentBoundingBox2 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
 		transparentBoundingBox2.position = ccp(50, 40);
-		[self addChild:transparentBoundingBox2];
+		[batchNode addChild:transparentBoundingBox2];
 		
 		greySolveButton1 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
 		greySolveButton1.position = ccp(440, 40);
-		[self addChild:greySolveButton1];
+		[batchNode addChild:greySolveButton1];
 		
 		greySolveButton2 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
 		greySolveButton2.position = ccp(50, 40);
-		[self addChild:greySolveButton2];
+		[batchNode addChild:greySolveButton2];
 		greySolveButton2.visible = NO;
 		
 		userSelection = [[NSMutableArray alloc] init];
@@ -233,6 +252,8 @@ static inline int cell(int r, int c) {
 		
 		[self createLetterSlots:rows columns:cols firstGame:YES];
 		[self schedule:@selector(updateTimer:) interval:1.0f];
+        
+        
 		
 		specialEffects = [[NSMutableArray array] retain];
 		starPoints = [[NSMutableArray array] retain];
@@ -253,6 +274,10 @@ static inline int cell(int r, int c) {
         CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
+        
+        //ALLOCATE PAUSE MENU
+        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
+        [pauseMenuPlayAndPass addToMyScene:self];
         
         soundEngine = [SimpleAudioEngine sharedEngine];
     
@@ -425,6 +450,19 @@ static inline int cell(int r, int c) {
 	[timerLabel runAction:[CCSpawn actions:[CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
 }
 
+-(BOOL) stopTimer
+{
+    [self unschedule:@selector(updateTimer:)];
+    
+    return TRUE;
+}
+
+-(BOOL) startTimer
+{
+    [self schedule:@selector(updateTimer:) interval:1.0f];
+    
+    return TRUE;
+}
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
 
@@ -435,79 +473,92 @@ static inline int cell(int r, int c) {
 	
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 	
-	if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
-		int p1 = [[player1Score string] intValue];
-		int p2 = [[player2Score string] intValue];
-		int highScore = (p1 > p2)? p1 : p2;
+    //MCH - DISPLAY THE PAUSE MENU
+    if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
+        pauseState = TRUE;
+        [pauseMenuPlayAndPass showPauseMenu:self];
+    }
+    
+    // FUNCTIONS ON THE PAUSE MENU                     
+    if (pauseState) {
+        CCLOG(@"In a pause state.");
+        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kHelloWorldScene];        
+    }
+    else {
+        if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
+            int p1 = [[player1Score string] intValue];
+            int p2 = [[player2Score string] intValue];
+            int highScore = (p1 > p2)? p1 : p2;
+            
+            [self startGame];
+            gameSummary.visible = NO;
+        }
+        
+        
+        if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
+            if ([userSelection count] > 0) {
+                [self checkAnswer];
+                [self switchTo:2 countFlip:NO];
+            } else {
+                [self switchTo:2 countFlip:YES];
+            }
+        }
+        
+        if (playerTurn == 2 && CGRectContainsPoint(transparentBoundingBox2.boundingBox, touchLocation)) {
+            if ([userSelection count] > 0) {
+                [self checkAnswer];
+                [self switchTo:1 countFlip:NO];
+            } else {
+                [self switchTo:1 countFlip:YES];
+            }
+        }
 		
-		[self startGame];
-		gameSummary.visible = NO;
-	}
-	
-
-	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
-		if ([userSelection count] > 0) {
-			[self checkAnswer];
-			[self switchTo:2 countFlip:NO];
-		} else {
-			[self switchTo:2 countFlip:YES];
-		}
-	}
-	
-	if (playerTurn == 2 && CGRectContainsPoint(transparentBoundingBox2.boundingBox, touchLocation)) {
-		if ([userSelection count] > 0) {
-			[self checkAnswer];
-			[self switchTo:1 countFlip:NO];
-		} else {
-			[self switchTo:1 countFlip:YES];
-		}
-	}
-		
-	for(int r = 0; r < rows; r++) {
-		for(int c = 0; c < cols; c++) {
-			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-			BOOL cellSelected = cell.letterSelected.visible;
-			if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
-				if (cell.letterSprite.visible && cellSelected) {
-					cell.letterSelected.visible = NO;
-					[userSelection removeObject:cell];
-					[self updateAnswer];
-				} else if (cell.letterSprite.visible && !cellSelected) {
-					cell.letterSelected.visible = YES;
-					[userSelection addObject:cell];
-					[self updateAnswer];
-				} else {
-					if (playerTurn == 1 && !player1TileFipped) {
-						cell.letterSprite.visible = YES;
-						player1TileFipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
-							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
-						}
-						if ([self isThisStarPoint:cell]) {
-							cell.star.visible = YES;
-						}
-					} else if (playerTurn == 2 && !player2TileFipped) {
-						cell.letterSprite.visible = YES;
-						player2TileFipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
-							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
-						}
-						if ([self isThisStarPoint:cell]) {
-							cell.star.visible = YES;
-						}
-					}
-				}
-			}
-		}
-	}
+        for(int r = 0; r < rows; r++) {
+            for(int c = 0; c < cols; c++) {
+                Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+                BOOL cellSelected = cell.letterSelected.visible;
+                if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
+                    if (cell.letterSprite.visible && cellSelected) {
+                        cell.letterSelected.visible = NO;
+                        [userSelection removeObject:cell];
+                        [self updateAnswer];
+                    } else if (cell.letterSprite.visible && !cellSelected) {
+                        cell.letterSelected.visible = YES;
+                        [userSelection addObject:cell];
+                        [self updateAnswer];
+                    } else {
+                        if (playerTurn == 1 && !player1TileFipped) {
+                            cell.letterSprite.visible = YES;
+                            player1TileFipped = YES;
+                            if ([cell.value isEqualToString:@"A"] || 
+                                [cell.value isEqualToString:@"E"] || 
+                                [cell.value isEqualToString:@"I"] || 
+                                [cell.value isEqualToString:@"O"] || 
+                                [cell.value isEqualToString:@"U"]) {
+                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                            }
+                            if ([self isThisStarPoint:cell]) {
+                                cell.star.visible = YES;
+                            }
+                        } else if (playerTurn == 2 && !player2TileFipped) {
+                            cell.letterSprite.visible = YES;
+                            player2TileFipped = YES;
+                            if ([cell.value isEqualToString:@"A"] || 
+                                [cell.value isEqualToString:@"E"] || 
+                                [cell.value isEqualToString:@"I"] || 
+                                [cell.value isEqualToString:@"O"] || 
+                                [cell.value isEqualToString:@"U"]) {
+                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                            }
+                            if ([self isThisStarPoint:cell]) {
+                                cell.star.visible = YES;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//MATCH IF NOT PAUSE STATE
 		
 	return TRUE;
 }
@@ -812,6 +863,7 @@ static inline int cell(int r, int c) {
 	
 	BOOL play1Done = NO;
 	BOOL play2Done = NO;
+        
 	
 	if (gameCountdown) {
 		CCLOG(@"gameCountdown start");
@@ -868,7 +920,7 @@ static inline int cell(int r, int c) {
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                   ForMultiPlayer:FALSE
+                                                   ForMultiPlayer:kPlayAndPass
                                                    ]];
 
 	} else {
@@ -901,6 +953,7 @@ static inline int cell(int r, int c) {
 	
 	// don't forget to call "super dealloc"
 	[userSelection release];
+    [pauseMenuPlayAndPass release];
 	[super dealloc];
 }
 

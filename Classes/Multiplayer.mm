@@ -23,6 +23,7 @@
 #import "ResultsLayer.h"
 #import "PauseLayer.h"
 #import "SimpleAudioEngine.h"
+#import "Constants.h"
 
 static int prevPlayer2Timer = 0;
 static int noActivityCounter = 0;
@@ -1175,21 +1176,12 @@ static int noActivityCounter = 0;
 		CCLOG(@"game over check point #4");
 		[OFMultiplayerService finishGameWithPlayerRanks:[NSArray arrayWithObjects:winner, loser, nil]];
 		CCLOG(@"game over check point #5");
-        /*********
-		ResultsLayer *rl = [[[ResultsLayer alloc] initWithPlayerOneScore:[player1Score string] 
-													  WithPlayerTwoScore:[player2Score string] 
-													  WithPlayerOneWords:player1Words 
-													  WithPlayerTwoWords:player2Words] 
-							autorelease];
-		 [[[CCDirector sharedDirector] runningScene] addChild:rl 
-															z:3];
-        *********/
-        
+          
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                   ForMultiPlayer:TRUE
+                                                   ForMultiPlayer:kMultiPlayer
                                                    ]];
 
 		//[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];

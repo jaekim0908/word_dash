@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "ResultPages.h"
+#import "Constants.h"
 
 @interface ResultsLayer : CCLayerColor {
 	CCSpriteBatchNode *batchNode;
@@ -26,7 +27,7 @@
     int         currentPage;
     int         player1TotalPages;
     int         player2TotalPages;
-    BOOL        flagMultiPlayer;
+    GameMode    mbrGameMode;
     CCLabelTTF *pageNumDisplay;
     CCSprite   *surfBackground;
     CCSprite   *surfBackground2;
@@ -63,11 +64,11 @@
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int player1TotalPages;
 @property (nonatomic, assign) int player2TotalPages;
-@property (nonatomic, assign) BOOL flagMultiPlayer;
+@property (nonatomic, assign) GameMode mbrGameMode;
 
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag;
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag;
+-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(GameMode)gameMode;
++(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(GameMode)gameMode;
 - (void) displayPlayerWords:(int) playerNumber
                   withWords:(NSMutableArray *)pWords 
                      startAt:(int)startIndex 
