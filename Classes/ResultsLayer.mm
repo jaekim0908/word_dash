@@ -7,9 +7,6 @@
 //
 
 #import "ResultsLayer.h"
-#import "OFMultiplayerGame.h"
-#import "OFMultiplayerService.h"
-#import "OpenFeint.h"
 #import "GameManager.h"
 
 @implementation ResultsLayer
@@ -302,8 +299,8 @@
 		mainMenuButton.position = ccp(50, 40);
 		[self addChild:mainMenuButton];
         
-		[[GameManager sharedGameManager] closeGame];
-		[OFMultiplayerService startViewingGames];
+		//[[GameManager sharedGameManager] closeGame];
+		//[OFMultiplayerService startViewingGames];
 	}
 	//return self;
     return TRUE;
@@ -543,6 +540,7 @@
             [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
         }
         else{
+            /*
             [[GameManager sharedGameManager] closeGame];
             CCLOG(@"--------------------------------------------");
             CCLOG(@"Rematch button pressed");
@@ -565,6 +563,7 @@
             [game createGame:@"HundredSeconds" withOptions:options];
             [GameManager sharedGameManager].isChallenger = YES;
             [OFUser getUser:opponentId];
+             */
         }
 	}
  

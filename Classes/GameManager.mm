@@ -13,11 +13,11 @@
 #import "PlayAndPassScene.h"
 #import "HelloWorld.h"
 #import "LoadingScene.h"
-#import "Multiplayer.h"
 #import "HowToPlay.h"
 #import "SinglePlayer.h"
-#import "OFMultiplayerService.h"
-#import "OFUser.h"
+#import "SinglePlayGameHistory.h"
+#import "Parse/Parse.h"
+#import "ScoreSummary.h"
 
 @implementation GameManager
 
@@ -25,7 +25,7 @@ static GameManager* _sharedGameManager = nil;
 
 @synthesize isSoundsOn;
 @synthesize _fileContents;
-@synthesize myOFDelegate = _myOFDelegate;
+//@synthesize myOFDelegate = _myOFDelegate;
 @synthesize challengerId = _challengerId;
 @synthesize challengeeId = _challengeeId;
 @synthesize isChallenger = _isChallenger;
@@ -34,6 +34,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize noTimeLeft = _noTimeLeft;
 @synthesize gameStatus = _gameStatus;
 @synthesize hasFriendsWithThisApp = _hasFriendsWithThisApp;
+@synthesize gameUUID = _gameUUID;
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -66,38 +67,25 @@ static GameManager* _sharedGameManager = nil;
 		// read everything from text
         // MCH -- no need to open the crab file since it is being opened by the Dictionary singleton
 		//_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
-		_sharedGameManager.myOFDelegate = [MyOFDelegate new];
+		//_sharedGameManager.myOFDelegate = [MyOFDelegate new];
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;
 		_sharedGameManager.gameStartedFromPushNotification = NO;
         _sharedGameManager.hasFriendsWithThisApp = NO;
-		NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-								  [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], OpenFeintSettingDashboardOrientation, 
-								  [NSNumber numberWithBool:YES], OpenFeintSettingDisableUserGeneratedContent,
-								  [NSNumber numberWithBool:YES], OpenFeintSettingEnablePushNotifications,
-								  nil];
-		//OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate];
-        OFDelegatesContainer* delegates = [OFDelegatesContainer containerWithOpenFeintDelegate:_sharedGameManager.myOFDelegate 
-                                                                          andChallengeDelegate:nil 
-                                                                       andNotificationDelegate:_sharedGameManager.myOFDelegate];
-        /***************** JAE's GAME ID *************
-		[OpenFeint initializeWithProductKey:@"7hiF4dldDFHvfROrEgGDA"
-								  andSecret:@"u3f6UaneEezk59d44hyH67wawNxnVVph0u16ASpm0s4"
-							 andDisplayName:@"Battleship"
-								andSettings:settings    // see OpenFeintSettings.h
-							   andDelegates:delegates]; // see OFDelegatesContainer.h 
-        ****************************/
-        [OpenFeint initializeWithProductKey:@"KDSjH8AaN4DtiE9zklUw"
-								  andSecret:@"KxhwylmFzbSs1ocrBHtuDSsOXDnTIahsMdiw19lv8"
-							 andDisplayName:@"100 Seconds"
-								andSettings:settings    // see OpenFeintSettings.h
-							   andDelegates:delegates]; // see OFDelegatesContainer.h
-		[OFUser setDelegate:_sharedGameManager.myOFDelegate];
-		
-		// Multi-Game Initialization
-		[OFMultiplayerService setDelegate:_sharedGameManager.myOFDelegate];
-		[OFMultiplayerService setSlotArraySize:10];
-	}
+        
+        // Application ID: VNnw2o5S2qF4YpZa7nLMcXl9uINh5kuMRnZfvHP6
+        // Client Key: aXBUJWuPRRrK8d2pvyDqhfFp1dgArAAlLzZcovkE
+        [Parse setApplicationId:@"VNnw2o5S2qF4YpZa7nLMcXl9uINh5kuMRnZfvHP6" clientKey:@"aXBUJWuPRRrK8d2pvyDqhfFp1dgArAAlLzZcovkE"];
+        _sharedGameManager.gameUUID = [self retrieveFromUserDefaultsForKey:@"gameUUID"];
+        if (!_sharedGameManager.gameUUID) {
+            CFUUIDRef theUUID = CFUUIDCreate(NULL);
+            CFStringRef stringRef = CFUUIDCreateString(NULL, theUUID);
+            CFRelease(theUUID);
+            _sharedGameManager.gameUUID = [NSString stringWithString:(NSString *)stringRef];
+            CFRelease(stringRef);
+            [self saveToUserDefaultsForKey:@"gameUUID" Value: _sharedGameManager.gameUUID];
+        }
+    }
 	return self;
 }
 
@@ -116,7 +104,7 @@ static GameManager* _sharedGameManager = nil;
 			break;
 		case kMutiPlayerScene:
 			CCLOG(@"Multi Player Scene");
-			sceneToRun = [Multiplayer scene];
+			//sceneToRun = [Multiplayer scene];
 			break;
 		case kPlayAndPassScene:
 			CCLOG(@"Play and Pass Scene");
@@ -130,12 +118,20 @@ static GameManager* _sharedGameManager = nil;
 			NSLog(@"How To Play Scene");
 			sceneToRun = [HowToPlay scene];
 			break;
-
-		
         case kSinglePlayerScene:
 			CCLOG(@"SinglePlayer Scene");
 			sceneToRun = [SinglePlayer scene];
 			break;
+            
+        case kSinglePlayHistoryScene:
+            CCLOG(@"SinglePlayGameHistory Scene");
+            sceneToRun = [SinglePlayGameHistory scene];
+            break;
+            
+        case kScoreSummaryScene:
+            CCLOG(@"ScoreSummary Scene");
+            sceneToRun = [ScoreSummary scene];
+            break;    
             
 		default:
 			CCLOG(@"Unknown Id, cannot switch scene");
@@ -169,23 +165,6 @@ static GameManager* _sharedGameManager = nil;
 	}
 	
 	return nil;
-}
-
--(void) closeGame {
-	OFMultiplayerGame *game = [OFMultiplayerService getSlot:0];
-	[game closeGame];
-	_sharedGameManager.gameFinished = YES;
-}
-
--(void) sendChallengeToUserId:(NSString *) userId {
-	OFMultiplayerGame* game = [OFMultiplayerService getSlot:0];
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:@"CONFIG STUFF", OFMultiplayer::LOBBY_OPTION_CONFIG,
-							 [NSNumber numberWithUnsignedInt:5*60], OFMultiplayer::LOBBY_OPTION_TURN_TIME,
-							 [NSArray arrayWithObject:userId], OFMultiplayer::LOBBY_OPTION_CHALLENGE_OF_IDS,
-							 nil];
-	[game createGame:@"HundredSeconds" withOptions:options];
-	_sharedGameManager.isChallenger = YES;
-	[OFUser getUser:userId];	
 }
 
 -(void) saveToUserDefaultsForKey:(NSString*) key Value:(NSString *) val {

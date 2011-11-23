@@ -12,11 +12,7 @@
 #import "GameConfig.h"
 #import "RootViewController.h"
 #import "GameManager.h"
-#import "OpenFeint.h"
-#import "OFDelegate.h"
 #import "Dictionary.h"
-#import "OFMultiplayerService.h"
-#import "OFMultiplayerGame.h"
 
 @implementation HundredSecondsAppDelegate
 
@@ -199,7 +195,6 @@
 	//[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
 	[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
 	[Dictionary sharedDictionary];	
-    [OpenFeint respondToApplicationLaunchOptions:launchOptions];  //this line allows launching from push notifications
 	CCLOG(@"Application Delegate didFinishLaunchingWithOptions End");
 	CCLOG(@"--------------------------------------------");
     return YES;
@@ -208,27 +203,13 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	CCLOG(@"applicationWillResignActive called");
-	for(int i = 0; i < (int) [OFMultiplayerService getSlotCount]; i++) {
-		CCLOG(@"closingGame %i - (applicationWillResignActive)", i);
-		OFMultiplayerGame *game = [OFMultiplayerService getSlot:i];
-		CCLOG(@"game state[%i] = %i", i, game.state);
-		[game closeGame];
-	}
-	if ([GameManager sharedGameManager].gameStatus == kGameStarted) {
-		[OFMultiplayerService leaveGame];
-		[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
-	}
 	[[CCDirector sharedDirector] pause];
-	// OpenFeint
-	[OpenFeint applicationWillResignActive];
 	CCLOG(@"applicationWillResignActive end");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	CCLOG(@"applicationDidBecomeActive called");
 	[[CCDirector sharedDirector] resume];
-	// OpenFeint
-	[OpenFeint applicationDidBecomeActive];
 	CCLOG(@"applicationDidBecomeActive end");
 }
 
@@ -271,36 +252,15 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 	CCLOG(@"didRegisterForRemoteNotificationsWithDevicetoken");
-	[OpenFeint applicationDidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 	CCLOG(@"didFailToRegisterForRemoteNotificationsWithError");
-	[OpenFeint applicationDidFailToRegisterForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 	CCLOG(@"didReceiveRemoteNotification");
-	[OpenFeint applicationDidReceiveRemoteNotification:userInfo];
 }
-
--(void) handlePushRequestGame:(OFMultiplayerGame*)game options:(NSDictionary*) options {
-	CCLOG(@"HandlePushRequestGame");
-}
-
--(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"This is where we would launch game for slot %d", game.gameSlot);
-    [self handlePushRequestGame:game options:options];
-}
-
-
--(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"Testing push notification response for slot %d", game.gameSlot);
-    [self handlePushRequestGame:game options:options];
-}
-
 
 - (void)dealloc {
 	[[CCDirector sharedDirector] release];

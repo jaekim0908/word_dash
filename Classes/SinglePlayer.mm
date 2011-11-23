@@ -9,31 +9,24 @@
 // Import the interfaces
 #import "SinglePlayer.h"
 #import "Cell.h"
-#import "OpenFeint.h"
-#import "OFHighScoreService.h"
-#import "OFMultiplayerService.h"
-#import "OFMultiplayerService+Advanced.h"
-#import "OFAchievement.h"
-#import "OFAchievementService.h"
-#import "OpenFeint+Dashboard.h"
-#import "OpenFeint+UserOptions.h"
-#import "OFMultiplayerMove.h"
 #import "Dictionary.h"
 #import "GameManager.h"
 #import "ResultsLayer.h"
 #import "PauseLayer.h"
 #import "SimpleAudioEngine.h"
 #import "AIDictionary.h"
+#import "Parse/Parse.h"
+#import "CCNotifications.h"
 
 @implementation SinglePlayer
 
 @synthesize rows;
 @synthesize cols;
-@synthesize thisGame;
 @synthesize isThisPlayerChallenger;
 @synthesize numPauseRequests;
 @synthesize soundEngine;
 @synthesize initOpponentOutOfTime;
+@synthesize player1Name;
 
 
 +(id) scene
@@ -57,8 +50,7 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		self.isTouchEnabled = YES;
-		
+    
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];
         
         cols = 5;
@@ -101,55 +93,43 @@
         
 		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player1Score.color = ccc3(0,0,255);
-		player1Score.position = ccp(440, 190);
+		player1Score.position = ccp(440, 170);
 		[self addChild:player1Score];
 		
 		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player2Score.color = ccc3(0,0,255);
-		player2Score.position = ccp(50, 190);
+		player2Score.position = ccp(50, 170);
 		[self addChild:player2Score];
         
-		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Verdana" fontSize:14];
+		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Zapfino" fontSize:14];
 		score1Label.color = ccc3(0, 0, 0);
-		score1Label.position = ccp(440, 220);
+		score1Label.position = ccp(440, 200);
 		[self addChild:score1Label];
         
-		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Verdana" fontSize:14];
+		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"Zapfino" fontSize:14];
 		score2Label.color = ccc3(0, 0, 0);
-		score2Label.position = ccp(50, 220);
+		score2Label.position = ccp(50, 200);
 		[self addChild:score2Label];
 		
 		player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player1Timer.color = ccc3(255, 0, 0);
-		player1Timer.position = ccp(440, 250);
+		player1Timer.position = ccp(440, 230);
 		[self addChild:player1Timer];
         
 		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:28] retain];
 		player2Timer.color = ccc3(255, 0, 0);
-		player2Timer.position = ccp(50, 250);
+		player2Timer.position = ccp(50, 230);
 		[self addChild:player2Timer];
 		
-		CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Verdana" fontSize:14];
+		CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Zapfino" fontSize:14];
 		time1Label.color = ccc3(0, 0, 0);
-		time1Label.position = ccp(440, 280);
+		time1Label.position = ccp(440, 260);
 		[self addChild:time1Label];
 		
-		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Verdana" fontSize:14];
+		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"Zapfino" fontSize:14];
 		time2Label.color = ccc3(0, 0, 0);
-		time2Label.position = ccp(50, 280);
+		time2Label.position = ccp(50, 260);
 		[self addChild:time2Label];
-		
-		//player1Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		//player1Answer.color = ccc3(0,0,0);
-		//player1Answer.position = ccp(460, 260);
-		//player1Answer.anchorPoint = ccp(1,0);
-		//[self addChild:player1Answer];
-		
-		//player2Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		//player2Answer.color = ccc3(0,0,0);
-		//player2Answer.position = ccp(20, 260);
-		//player2Answer.anchorPoint = ccp(0, 0);
-		//[self addChild:player2Answer];
 		
 		currentAnswer = [[CCLabelTTF labelWithString:@" " fontName:@"Verdana" fontSize:24] retain];
 		currentAnswer.color = ccc3(237, 145, 33);
@@ -170,29 +150,29 @@
 		
 		solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
 		solveButton1.position = ccp(440, 70);
-		[self addChild:solveButton1];
+		[batchNode addChild:solveButton1];
         
         transparentBoundingBox1 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
 		transparentBoundingBox1.position = ccp(440, 70);
-		[self addChild:transparentBoundingBox1];
+		[batchNode addChild:transparentBoundingBox1];
 		
         solveButton2 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
 		solveButton2.position = ccp(50, 70);
         solveButton2.visible = NO;
-		[self addChild:solveButton2];
+		[batchNode addChild:solveButton2];
         
 		transparentBoundingBox2 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
 		transparentBoundingBox2.position = ccp(50, 70);
         transparentBoundingBox2.visible = NO;
-		[self addChild:transparentBoundingBox2];
+		[batchNode addChild:transparentBoundingBox2];
 		
 		greySolveButton1 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
 		greySolveButton1.position = ccp(440, 70);
-		[self addChild:greySolveButton1];
+		[batchNode addChild:greySolveButton1];
 		
 		greySolveButton2 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
 		greySolveButton2.position = ccp(50, 70);
-		[self addChild:greySolveButton2];
+		[batchNode addChild:greySolveButton2];
 		greySolveButton2.visible = NO;
 		
 		userSelection = [[NSMutableArray alloc] init];
@@ -207,11 +187,6 @@
 		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		
-		[self createLetterSlots:rows columns:cols firstGame:YES];
-		[self schedule:@selector(updateTimer:) interval:1.0f];
-        [self schedule:@selector(runAI:) interval:2.0f];
-		
-		specialEffects = [[NSMutableArray array] retain];
 		starPoints = [[NSMutableArray array] retain];
 		
 		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];;
@@ -235,25 +210,103 @@
         
         aiLevel = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"level"];
         progressiveScore = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"progressive_score"];
+        numOfWinsAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_wins_vs_ai"];
+        numOfLossesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_losses_vs_ai"];
+        numOfTiesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_ties_vs_ai"];
+        longestAnswer = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"longest_answer"];
+        player1Name  = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
         
-        
-        if (aiLevel == nil) {
+        if (!aiLevel) {
             aiLevel = [NSString stringWithFormat:@"0"];
             [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:aiLevel];
         }
         
-        if (progressiveScore == nil) {
+        if (!progressiveScore) {
             progressiveScore = [NSString stringWithFormat:@"0"];
             [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:progressiveScore];
         }
         
-        [[CCNotifications sharedManager] addNotificationTitle:@"Current AI Level" 
-                                                      message:[NSString stringWithFormat:@"Level is %@ : Progressive Score is %@", aiLevel, progressiveScore] 
+        if (!numOfWinsAI) {
+            numOfWinsAI = [NSString stringWithFormat:@"0"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_wins_vs_ai" Value:numOfWinsAI];
+        }
+        
+        if (!numOfLossesAI) {
+            numOfLossesAI = [NSString stringWithFormat:@"0"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_losses_vs_ai" Value:numOfLossesAI];
+        }
+        
+        if (!numOfTiesAI) {
+            numOfTiesAI = [NSString stringWithFormat:@"0"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_ties_vs_ai" Value:numOfTiesAI];
+        }
+        
+        if (!longestAnswer) {
+            longestAnswer = @"";
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"longest_answer" Value:longestAnswer];
+        }
+        
+        if (!player1Name) {
+            player1Name = @"";
+        }
+        
+        /*
+        [[CCNotifications sharedManager] addNotificationTitle:@"User Stats" 
+                                                      message:[NSString stringWithFormat:@"Level is %@ : Progressive Score is %@ : win/tie/loss = [%@, %@, %@] : longest answer = %@", 
+                                                               aiLevel, 
+                                                               progressiveScore, 
+                                                               numOfWinsAI, 
+                                                               numOfTiesAI, 
+                                                               numOfLossesAI, 
+                                                               longestAnswer]
                                                         image:nil 
                                                           tag:0 
                                                       animate:YES];
+        */
+        [self getPlayerName];
 	}
 	return self;
+}
+
+- (void) getPlayerName {
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    enterYourName = [[UITextField alloc] initWithFrame:CGRectMake(winSize.height/2, winSize.width/2, 200, 30)];
+    [enterYourName setDelegate:self];
+    if (player1Name && [player1Name length] > 0) {
+        [enterYourName setText:player1Name];
+    } else {
+        [enterYourName setPlaceholder:@"Please enter your name"];
+    }
+    [enterYourName setBorderStyle:UITextBorderStyleRoundedRect];
+    enterYourName.textAlignment = UITextAlignmentCenter;
+    [enterYourName setTextColor:[UIColor blackColor]];
+    [enterYourName setAdjustsFontSizeToFitWidth:YES];
+    [enterYourName setBounds:CGRectMake(0, 0, 200, 30)];
+    enterYourName.backgroundColor = [UIColor whiteColor];
+    enterYourName.transform = CGAffineTransformConcat(enterYourName.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
+    [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterYourName];
+    [enterYourName becomeFirstResponder];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    [enterYourName resignFirstResponder];
+    return YES;
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == enterYourName) {
+        [enterYourName endEditing:YES];
+        [enterYourName removeFromSuperview];
+        if (enterYourName.text && [enterYourName.text length] > 0) {
+            player1Name = [NSString stringWithString:enterYourName.text];
+        }
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:player1Name];
+        CCLOG(@"Player 1 Name = %@", player1Name);
+        [enterYourName release];
+        [self schedule:@selector(updateTimer:) interval:1.0f];
+        [self createLetterSlots:rows columns:cols firstGame:YES];
+        [self schedule:@selector(runAI:) interval:2.0f];
+    }
 }
 
 - (void) registerWithTouchDispatcher {
@@ -337,7 +390,7 @@
 			countNoTileFlips = 1;
 		}
         
-		NSLog(@"CountNoTileFlips = %i", countNoTileFlips);
+		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
         
 		if (countNoTileFlips % 5 == 0) {
 			countNoTileFlips = 1;
@@ -346,21 +399,32 @@
 	} else {
 		countNoTileFlips = 1;
 	}
-	
+    	
 	[self clearLetters];
-	//[player1Answer setString:@" "];
-	//[player2Answer setString:@" "];
-	
-	if (player == 1) {
-		playerTurn = 1;	
-		player1TileFipped = NO;
-		greySolveButton1.visible = NO;
-		greySolveButton2.visible = NO;
-	} else {
-		playerTurn = 2;
-		player2TileFipped = NO;
-		greySolveButton1.visible = YES;
-		greySolveButton2.visible = NO;
+    player1TileFipped = NO;
+    player2TileFipped = NO;
+		
+	if (player == 1 && [[player1Timer string] intValue] > 0) {
+        playerTurn = 1;	
+        greySolveButton1.visible = NO;
+        greySolveButton2.visible = NO;
+        NSString *turnMessage;
+    
+        if (player1Name && [player1Name length] > 0) {
+            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1Name];
+        } else {
+            turnMessage = @"Your Turn";
+        }
+    
+        [[CCNotifications sharedManager] addNotificationTitle:nil
+                                                      message:turnMessage 
+                                                        image:@"watchIcon.png" 
+                                                          tag:0 
+                                                      animate:YES];
+	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
+        playerTurn = 2;
+        greySolveButton1.visible = YES;
+        greySolveButton2.visible = NO;
 	}
 }
 
@@ -386,7 +450,8 @@
 	scoreLabel.color = ccc3(0, 255, 0);
 	scoreLabel.position = ccp(cell.letterSprite.position.x, cell.letterSprite.position.y + 30);
 	[self addChild:scoreLabel z:20];
-	[scoreLabel runAction:[CCSpawn actions:[CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
+    float scaleFactor = 1.0 + (point/8.0 - 1.0) * 0.25;
+	[scoreLabel runAction:[CCSpawn actions:[CCScaleBy actionWithDuration:1 scale:scaleFactor], [CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
 }
 
 - (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId {
@@ -430,33 +495,15 @@
 	
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
 	
-	if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
-		int p1 = [[player1Score string] intValue];
-		int p2 = [[player2Score string] intValue];
-		//int highScore = (p1 > p2)? p1 : p2;
-		
-		//[self startGame];
-	}
-	
-    
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
-			[self switchTo:2 countFlip:NO];
+            [self switchTo:2 countFlip:NO];
 		} else {
-			[self switchTo:2 countFlip:YES];
+            [self switchTo:2 countFlip:YES];
 		}
 	}
-	
-	if (playerTurn == 2 && CGRectContainsPoint(transparentBoundingBox2.boundingBox, touchLocation)) {
-		if ([userSelection count] > 0) {
-			[self checkAnswer];
-			[self switchTo:1 countFlip:NO];
-		} else {
-			[self switchTo:1 countFlip:YES];
-		}
-	}
-    
+	    
 	for(int r = 0; r < rows; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
@@ -544,8 +591,6 @@
 	[player2Timer setString:@"100"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
-	//[player1Answer setString:@" "];
-	//[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
 	[midDisplay runAction:[CCFadeOut actionWithDuration:0.1f]];
 	[midDisplay setString:@""];
@@ -603,9 +648,8 @@
 }
 
 
-- (void) createLetterSlots:(int) rows columns:(int) cols firstGame:(BOOL) firstGameFlag{
+- (void) createLetterSlots:(int) nRows columns:(int) nCols firstGame:(BOOL) firstGameFlag{
 	
-	CCSprite *label;
 	Cell *cell;
 	NSString *letters = [self createRandomString];
 	
@@ -681,8 +725,6 @@
 
 - (void) clearAllSelectedLetters {
 	
-	//[player1Answer setString:@" "];
-	//[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
     
 	for(int r = 0; r < rows ; r++) {
@@ -707,20 +749,6 @@
 	}
 	
 	[userSelection removeAllObjects];
-}
-
-- (void) updateCellOwnerTo:(int) playerId {
-	for (Cell *c in userSelection) {
-		c.owner = playerId;
-		[c.currentOwner setString:[NSString stringWithFormat:@"%i", playerId]];
-		if (playerId == 1) {
-			c.redBackground.visible = YES;
-			c.letterSelected2.visible = NO;
-		} else {
-			c.redBackground.visible = NO;
-			c.letterSelected2.visible = YES;
-		}
-	}
 }
 
 - (int) countStarPointandRemoveStars {
@@ -758,6 +786,11 @@
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
             [currentAnswer setColor:ccc3(124, 205, 124)];
 			[foundWords setObject:s forKey:s];
+            
+            //JHK - check to see if this is the longest word
+            if ([longestAnswer length] < [s length]) {
+                longestAnswer = s;
+            }
             
             // MCH -- play success sound
             [soundEngine playEffect:@"success.mp3"];
@@ -805,7 +838,7 @@
 
 -(void) runAI:(ccTime) dt {
     CCLOG(@"*********RUN AI*********");
-    if (playerTurn == 1) return;
+    if (playerTurn == 1 || [[player2Timer string] intValue] <= 0) return;
 
     [self unschedule:@selector(runAI:)];
     int randomInterval = arc4random() % 5 + 1;
@@ -920,7 +953,15 @@
     BOOL match = NO;
     NSString *ans;
     CCLOG(@"AI FIND WORDS");
-    for(int i = 0; !match && i < 10; i++) {
+    int batchSize = 10;
+    
+    if (progressiveScore != nil) {
+        batchSize += [progressiveScore intValue];
+    }
+    
+    if (batchSize <= 0) batchSize = 5;
+    
+    for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
         CCLOG(@"AI ANSWERS = %@", ans);
@@ -991,30 +1032,58 @@
 	}
 	
 	if (gameOver) {
+        
+        [self unscheduleAllSelectors];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:[NSString stringWithFormat:@"%i", [aiLevel intValue]+1]];
         
 		enableTouch = NO;
 		int p1score = [[player1Score string] intValue];
 		int p2score = [[player2Score string] intValue];
+        
 		if (p1score > p2score) {
-            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]+1]];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]+10]];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_wins_vs_ai" Value:[NSString stringWithFormat:@"%i", [numOfWinsAI intValue]+1]];
 			[midDisplay setString:@"Player 1 Wins"];
 		} else if (p1score < p2score) {
-            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]-1]];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"progressive_score" Value:[NSString stringWithFormat:@"%i", [progressiveScore intValue]-3]];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_losses_vs_ai" Value:[NSString stringWithFormat:@"%i", [numOfLossesAI intValue]+1]];
 			[midDisplay setString:@"Player 2 Wins"];
 		} else {
 			[midDisplay setString:@"Tie Game"];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"num_of_ties_vs_ai" Value:[NSString stringWithFormat:@"%i", [numOfTiesAI intValue]+1]];
 		}
-		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];        
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"longest_answer" Value:longestAnswer];
+		[midDisplay runAction:[CCFadeIn actionWithDuration:1]]; 
         
-        //MCH - display results layer 
+        CCLOG(@"***************Creating SinglePlayGameHistory object***************");
+        PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
+        [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
+        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
+        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        if (self.player1Name && [self.player1Name length] > 0) {
+            [singlePlayGameHistory setObject:self.player1Name forKey:@"player1Name"];
+        } else {
+            [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
+        }
+        [singlePlayGameHistory setObject:@"AI" forKey:@"player2Name"];
+        if (p1score > p2score) {
+            [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
+        } else if (p1score < p2score) {
+            [singlePlayGameHistory setObject:@"Lost" forKey:@"gameResult"];
+        } else {
+            [singlePlayGameHistory setObject:@"Tie" forKey:@"gameResult"];
+        }
+        // TODO: change this to be a background process??
+        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
+        [singlePlayGameHistory saveInBackground];
+        
+        //MCH - display results layer
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
                                                        ForMultiPlayer:FALSE
-                                                   ]];
-        
+                                                   ]];        
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {
@@ -1034,6 +1103,24 @@
 			}
 		}
 	}	
+}
+
+- (int) didPlayer1Win {
+    int p1score = [[player1Score string] intValue];
+    int p2score = [[player2Score string] intValue];
+    
+    return (p1score - p2score);
+}
+
+- (void)saveCallback:(NSNumber *)result error:(NSError *)error {
+    if (!error) {
+        // The gameScore saved successfully.
+        CCLOG(@"***************Transition to ScoreSummaryScene***************");
+    } else {
+        // There was an error saving the gameScore.
+        CCLOG(@"***************SAVE CALLBACK ERROR***************");
+        CCLOG(@"%@", error);
+    }
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -1080,106 +1167,13 @@
 }
 
 - (void) bannerViewActionDidFinish:(ADBannerView *)banner {
-	NSLog(@"bannerViewActionDidFinish called");
+	CCLOG(@"bannerViewActionDidFinish called");
 	[[UIApplication sharedApplication] setStatusBarOrientation:(UIInterfaceOrientation) [[CCDirector sharedDirector] deviceOrientation]];
 }
 
 - (BOOL) bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	NSLog(@"bannerViewActionShouldBegin called");
+	CCLOG(@"bannerViewActionShouldBegin called");
 	return YES;
-}
-
-#pragma mark OpenFeintDelegate
-
-- (void)dashboardWillAppear {
-}
-
-- (void)dashboardDidAppear {
-	[[CCDirector sharedDirector] pause];
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
-- (void)dashboardWillDisappear {
-}
-
-- (void)dashboardDidDisappear {
-	[[CCDirector sharedDirector] resume];
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)userLoggedIn:(NSString*)userId {
-	OFLog(@"New user logged in! Hello %@", [OpenFeint lastLoggedInUserName]);
-	//not a typo: force any existing user to logout so it will reconnect with the new one
-	[OFMultiplayerService internalLogout];
-}
-
-- (BOOL)showCustomOpenFeintApprovalScreen {
-	return NO;
-}
-
-#pragma mark OFMultiplayerDelegate
-
-//these are only required since the sample isn't using OpenGL and has to be manually updated
--(void) gameDidFinish:(OFMultiplayerGame *)game {
-    //[[MPClassRegistry gameController] refreshView];
-}
-
--(void) playerLeftGame:(unsigned int)playerNumber {
-    //[[MPClassRegistry gameController] refreshView];
-}
-
-- (void)networkDidUpdateLobby {
-    if([OFMultiplayerService getNumberOfChallenges]) {
-        OFLog(@"Outstanding challenges %d", [OFMultiplayerService getNumberOfChallenges]);
-		//        for(int i=0; i<[OFMultiplayerService getNumberOfChallenges]; ++i) {
-		//            OFMultiplayerGame *game = [OFMultiplayerService getChallengeAtIndex:i];
-		//            //this functionality does not exist yet
-		//            [game sendChallengeResponseWithAccept:YES];
-		//        }
-    }
-    //[[MPClassRegistry lobbyController] refillList];
-}
-
--(void) networkFailureWithReason:(NSUInteger)reason {
-    
-}
-
-//there are two methods of processing moves, either use the delegate or scan for moves in the game's tick
-//see MPGameController.mm processNetMove to see the two options
--(BOOL)gameMoveReceived:(OFMultiplayerMove *)move {
-#ifdef DELEGATE_MOVE_MODE
-	//[[MPClassRegistry gameController] processNetMove:move];
-    return YES;
-#endif
-    return NO;    
-}
-
-
--(void) handlePushRequestGame:(OFMultiplayerGame*)game options:(NSDictionary*) options {
-    //const NSSet* gameLaunchTypes = [NSSet setWithObjects:@"accept", @"start", @"finish", @"turn", nil];
-    //const NSSet* gameLobbyTypes = [NSSet setWithObjects:@"challenge", nil];
-	/*
-	 if([gameLaunchTypes containsObject:[options objectForKey:@"type"]]) 
-	 [MPClassRegistry showGameControllerWithGame:game];
-	 else if([gameLobbyTypes containsObject:[options objectForKey:@"type"]]) {
-	 
-	 [MPClassRegistry showLobbyForSlot:game.gameSlot];
-	 }
-	 */
-    
-}
-
--(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"This is where we would launch game for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [self handlePushRequestGame:game options:options];
-}
-
-
--(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"Testing push notification response for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [self handlePushRequestGame:game options:options];
 }
 
 @end

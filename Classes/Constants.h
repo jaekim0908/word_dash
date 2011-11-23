@@ -18,6 +18,8 @@ typedef enum {
 	kHelloWorldScene,
     kHowToPlayScene,
     kSinglePlayerScene,
+    kSinglePlayHistoryScene,
+    kScoreSummaryScene,
 	kMaxScene
 } SceneTypes;
 

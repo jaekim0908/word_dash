@@ -10,15 +10,12 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 #import <iAd/iAd.h>
-#import "OpenFeint.h"
-#import "OFMultiplayerGame.h"
-#import "OFMultiplayer.h"
 #import "SimpleAudioEngine.h"
 
 @class Cell;
 
 // HelloWorld Layer
-@interface SinglePlayer : CCLayer <ADBannerViewDelegate>
+@interface SinglePlayer : CCLayer <ADBannerViewDelegate, UITextFieldDelegate>
 {
 	ADBannerView *adView;	
 	int cols;
@@ -66,13 +63,10 @@
 	CCLabelTTF *player2Score;
 	BOOL enableTouch;
 	int countNoTileFlips;
-	NSMutableArray *specialEffects;
 	int currentStarPoints;
 	NSMutableArray *starPoints;
 	BOOL gameCountdown;
 	CCLabelTTF *gameCountDownLabel;
-	CCSprite *gameSummary;
-	OFMultiplayerGame *thisGame;
 	BOOL isThisPlayerChallenger;
     CCSprite *pauseButton;//MCH
     SimpleAudioEngine *soundEngine;
@@ -80,20 +74,26 @@
     NSMutableDictionary *visibleLetters;
     NSString *aiLevel;
     NSString *progressiveScore;
+    NSString *numOfWinsAI;
+    NSString *numOfLossesAI;
+    NSString *numOfTiesAI;
+    NSString *longestAnswer;
+    NSString *player1Name;
+    UITextField *enterYourName;
 }
 
 @property int cols;
 @property int rows;
 @property (nonatomic, assign) int numPauseRequests;
-@property (nonatomic, retain) OFMultiplayerGame *thisGame;
 @property (nonatomic, retain) SimpleAudioEngine *soundEngine;
 @property BOOL isThisPlayerChallenger;
 @property BOOL initOpponentOutOfTime;
+@property (nonatomic, retain) NSString *player1Name;
 
 
 // returns a Scene that contains the HelloWorld as the only child
 + (id) scene;
-- (void) createLetterSlots:(int) rows columns:(int) cols firstGame:(BOOL) firstGameFlag;
+- (void) createLetterSlots:(int) nRows columns:(int) nCols firstGame:(BOOL) firstGameFlag;
 - (void) createDictionary;
 - (void) updateAnswer;
 - (void) checkAnswer;
@@ -121,5 +121,7 @@
 - (void) sendPauseRequest;
 - (void) setGameStartCountdownTimer:(NSString *) t;
 - (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c;
+- (void) getPlayerName;
+- (BOOL) allLettersOpened;
 
 @end

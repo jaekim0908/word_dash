@@ -10,11 +10,8 @@
 #import "cocos2d.h"
 #import "Constants.h"
 #import "GameManager.h"
-#import "MyOFDelegate.h"
-#import "OFSocialNotification.h"
-#import "OFSocialNotificationApi.h"
 
-@interface MainMenuLayer : CCLayer <OFSocialNotificationApiDelegate, UIActionSheetDelegate> {
+@interface MainMenuLayer : CCLayer <UIActionSheetDelegate> {
 	CCMenu *mainMenu;
 	CCLabelTTF *challengeCancelledLabel;
 	CCLabelTTF *challengeRejectedLabel;
@@ -35,4 +32,5 @@
 -(void) enableMainMenu;
 -(void) disableMainMenu;
 -(void) displayHowToPlay;
+-(void) displaySinglePlayer;
 @end

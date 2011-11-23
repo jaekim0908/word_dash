@@ -9,72 +9,20 @@
 // Import the interfaces
 #import "HelloWorld.h"
 #import "Cell.h"
-#import "OpenFeint.h"
-#import "OFHighScoreService.h"
-#import "OFMultiplayer.h"
-#import "OFMultiplayerService.h"
-#import "OFMultiplayerService+Advanced.h"
-#import "OpenFeint+Dashboard.h"
-#import "OpenFeint+UserOptions.h"
-#import "OFMultiplayerGame.h"
 #import "GameManager.h"
 #import "Dictionary.h"
 #import "ResultsLayer.h"
 #import "SimpleAudioEngine.h"
+#import "Parse/Parse.h"
+#import "CCNotifications.h"
+#import "Util.h";
 
 @implementation HelloWorld
 
-NSMutableArray *letterSlots;
+@synthesize rows;
+@synthesize cols;
+@synthesize playButton = _playButton;
 
-int cols = 5;
-int rows = 4;
-int width = 80;
-int height = 60;
-int y_offset = 30;
-
-CCLabelTTF *player1Timer;
-CCLabelTTF *player2Timer;
-CCLabelTTF *wordDefinition;
-CCLabelTTF *player1Answer;
-CCLabelTTF *player2Answer;
-CCLabelTTF *gameTimer;
-CCLabelTTF *midDisplay;
-CCLabelTTF *currentAnswer;
-int playerTurn = 1;
-BOOL gameOver = NO;
-NSMutableArray* allWords;
-NSMutableDictionary *dictionary;
-NSMutableDictionary *definition;//MCH
-NSMutableArray* wordMatrix;
-CCSpriteBatchNode *batchNode;
-CCSpriteBatchNode *batchNode2;
-CCSprite *solveButton1;
-CCSprite *solveButton2;
-CCSprite *greySolveButton1;
-CCSprite *greySolveButton2;
-CCSprite *transparentBoundingBox1;
-CCSprite *transparentBoundingBox2;
-NSMutableArray *userSelection;
-BOOL player1TileFipped = NO;
-BOOL player2TileFipped = NO;
-NSMutableDictionary *foundWords;
-NSMutableArray *player1Words;
-NSMutableArray *player2Words;
-CCLabelTTF *player1Score;
-CCLabelTTF *player2Score;
-BOOL enableTouch = NO;
-int countNoTileFlips = 1;
-NSMutableArray *specialEffects;
-int currentStarPoints = 8;
-NSMutableArray *starPoints;
-BOOL gameCountdown = NO;
-CCLabelTTF *gameCountDownLabel;
-CCSprite *gameSummary;
-OFMultiplayerGame *myGame;
-
-static inline int cell(int r, int c) {
-	return (r * cols + c);
-}
 +(id) scene
 {
 	// 'scene' is an autorelease object.
@@ -96,15 +44,31 @@ static inline int cell(int r, int c) {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-        [GameManager sharedGameManager].gameStatus = kGameStarted;
-		self.isTouchEnabled = YES;
+        
+        cols = 5;
+		rows = 4;
+		width = 80;
+		height = 60;
+		y_offset = 30;
+		playerTurn = 1;
+		gameOver = NO;
+		player1TileFipped = NO;
+		player2TileFipped = NO;
+		enableTouch = NO;
+		countNoTileFlips = 1;
+		currentStarPoints = 8;
+		gameCountdown = YES;
+        initOpponentOutOfTime = NO;
+        playButtonReady = NO;
+        
+        self.isTouchEnabled = YES;
 		
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];
 
 		allWords = [[Dictionary sharedDictionary] allWords];
 		dictionary = [[Dictionary sharedDictionary] dict];
-                
-        // Retina Display Support
+        
+        /*
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets-hd.plist"];
             batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets-hd.png"]];
@@ -116,65 +80,79 @@ static inline int cell(int r, int c) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets2.plist"];
             batchNode2 = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets2.png"]];
         }
+        */
+        
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets.plist"];
+        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets.png"]];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets2.plist"];
+        batchNode2 = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets2.png"]];
         
         [self addChild:batchNode];
         [self addChild:batchNode2];
-
-		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
-		player1Score.color = ccc3(0,0,255);
-		player1Score.position = ccp(440, 220);
-		[self addChild:player1Score];
-		
-		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:37] retain];
-		player2Score.color = ccc3(0,0,255);
-		player2Score.position = ccp(50, 220);
-		[self addChild:player2Score];
-
-		CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
-		score1Label.color = ccc3(0, 0, 0);
-		score1Label.position = ccp(440, 260);
-		[self addChild:score1Label];
-
-		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Verdana" fontSize:18];
-		score2Label.color = ccc3(0, 0, 0);
-		score2Label.position = ccp(50, 260);
-		[self addChild:score2Label];
-		
-		player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:37] retain];
-		player1Timer.color = ccc3(255, 0, 0);
-		player1Timer.position = ccp(440, 130);
+        
+        NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        NSString *p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+        p1Name = [Util trimName:p1Name];
+        p2Name = [Util trimName:p2Name];
+        
+        if (!p1Name) {
+            p1Name = @"Player 1";
+        }
+        
+        if (!p2Name) {
+            p2Name = @"Player 2";
+        }
+        
+        player1Name = [[CCLabelTTF labelWithString:p1Name fontName:@"MarkerFelt-Thin" fontSize:14] retain];
+        player1Name.color = ccc3(0, 0, 0);
+        player1Name.position = ccp(50, 290);
+        [self addChild:player1Name];
+        
+        player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+		player1Timer.color = ccc3(155, 48, 255);
+		player1Timer.position = ccp(50, 70);
 		[self addChild:player1Timer];
-
-		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"DBLCDTempBlack" fontSize:37] retain];
-		player2Timer.color = ccc3(255, 0, 0);
-		player2Timer.position = ccp(50, 130);
+        
+		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+		player2Timer.color = ccc3(155, 48, 255);
+		//player2Timer.position = ccp(440, 230);
+        player2Timer.position = ccp(440, 70);
 		[self addChild:player2Timer];
-		
-		CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time:" fontName:@"Verdana" fontSize:18];
-		time1Label.color = ccc3(255, 255, 255);
-		time1Label.position = ccp(440, 170);
+        
+        CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:14];
+		time1Label.color = ccc3(0, 0, 0);
+		time1Label.position = ccp(50, 260);
 		[self addChild:time1Label];
-		
-		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time:" fontName:@"Verdana" fontSize:18];
-		time2Label.color = ccc3(255, 255, 255);
-		time2Label.position = ccp(50, 170);
+        
+		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:14];
+		time2Label.color = ccc3(0, 0, 0);
+		time2Label.position = ccp(440, 260);
 		[self addChild:time2Label];
-		
-		player1Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player1Answer.color = ccc3(0,0,0);
-		player1Answer.position = ccp(460, 260);
-		player1Answer.anchorPoint = ccp(1,0);
-		[self addChild:player1Answer];
-		
-		player2Answer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana" fontSize:18] retain];
-		player2Answer.color = ccc3(0,0,0);
-		player2Answer.position = ccp(20, 260);
-		player2Answer.anchorPoint = ccp(0, 0);
-		[self addChild:player2Answer];
+        
+        player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
+		player1Score.color = ccc3(0,0,255);
+		player1Score.position = ccp(50, 170);
+		[self addChild:player1Score];
+
+		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
+		player2Score.color = ccc3(0,0,255);
+        
+		player2Score.position = ccp(440, 170);
+		[self addChild:player2Score];
+        
+        CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:14];
+		score1Label.color = ccc3(0, 0, 0);
+		score1Label.position = ccp(50, 200);
+		[self addChild:score1Label];
+        
+		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:14];
+		score2Label.color = ccc3(0, 0, 0);
+		score2Label.position = ccp(440, 200);
+		[self addChild:score2Label];
 		
 		currentAnswer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:24] retain];
 		currentAnswer.color = ccc3(0, 0, 0);
-		currentAnswer.position = ccp(windowSize.width/2, 260);
+		currentAnswer.position = ccp(windowSize.width/2, 290);
 		currentAnswer.anchorPoint = ccp(0.5f, 0.5f);
 		[self addChild:currentAnswer];
 		
@@ -188,37 +166,32 @@ static inline int cell(int r, int c) {
 		}
 		
 		NSLog(@"wordMatrix = %@", wordMatrix);
-
-		wordDefinition = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"Verdana" fontSize:14.0f] retain];
-		wordDefinition.color = ccc3(255,0,0);
-		wordDefinition.position = ccp(80, 50);
-		[self addChild:wordDefinition];
-		
-		solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
-		solveButton1.position = ccp(440, 40);
-		[self addChild:solveButton1];
         
-        transparentBoundingBox1 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
-		transparentBoundingBox1.position = ccp(440, 40);
-		[self addChild:transparentBoundingBox1];
-		
-        solveButton2 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
-		solveButton2.position = ccp(50, 40);
-		[self addChild:solveButton2];
+        solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
+		solveButton1.position = ccp(50, 70);
+		[batchNode addChild:solveButton1];
         
-		transparentBoundingBox2 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
-		transparentBoundingBox2.position = ccp(50, 40);
-		[self addChild:transparentBoundingBox2];
+		transparentBoundingBox1 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
+		transparentBoundingBox1.position = ccp(50, 70);
+		[batchNode addChild:transparentBoundingBox1];
 		
-		greySolveButton1 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
-		greySolveButton1.position = ccp(440, 40);
-		[self addChild:greySolveButton1];
-		
+		solveButton2 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
+		solveButton2.position = ccp(440, 70);
+		[batchNode addChild:solveButton2];
+        
+        transparentBoundingBox2 = [CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"];
+		transparentBoundingBox2.position = ccp(440, 70);
+		[batchNode addChild:transparentBoundingBox2];
+        
+        greySolveButton1 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
+		greySolveButton1.position = ccp(50, 70);
+		[batchNode addChild:greySolveButton1];
+		greySolveButton1.visible = NO;
+				
 		greySolveButton2 = [CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"];
-		greySolveButton2.position = ccp(50, 40);
-		[self addChild:greySolveButton2];
-		greySolveButton2.visible = NO;
-		
+		greySolveButton2.position = ccp(440, 70);
+		[batchNode addChild:greySolveButton2];
+    
 		userSelection = [[NSMutableArray alloc] init];
 		
 		foundWords = [[NSMutableDictionary dictionary] retain];
@@ -228,34 +201,34 @@ static inline int cell(int r, int c) {
 		
 		midDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
 		midDisplay.position = ccp(windowSize.width/2, windowSize.height/2);
-		midDisplay.color = ccc3(255, 255, 255);
+		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		
 		[self createLetterSlots:rows columns:cols firstGame:YES];
-		[self schedule:@selector(updateTimer:) interval:1.0f];
+		//[self schedule:@selector(updateTimer:) interval:1.0f];
 		
-		specialEffects = [[NSMutableArray array] retain];
 		starPoints = [[NSMutableArray array] retain];
 		
-		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];;
+		gameCountDownLabel = [[CCLabelTTF labelWithString:@"4" fontName:@"MarkerFelt-Wide" fontSize:100] retain];
 		gameCountDownLabel.position = ccp(240, 160);
-		gameCountDownLabel.color = ccc3(0, 0, 0);
+		gameCountDownLabel.color = ccc3(135, 206, 250);
 		gameCountDownLabel.visible = NO;
 		[self addChild:gameCountDownLabel z:30];        
         
-        //CCSprite *beachImg = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
         CCSprite *beachImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg.position = ccp(windowSize.width/2, windowSize.height/2);
         beachImg.opacity = 0;
         [self addChild:beachImg z:1];
         
-        //CCSprite *beachImg2 = [CCSprite spriteWithSpriteFrameName:@"shellsOnWhiteSand.png"];
         CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
         
         soundEngine = [SimpleAudioEngine sharedEngine];
-    
+        
+        _playButton = [[CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"] retain];
+        _playButton.position = ccp(windowSize.width/2, windowSize.height/2);
+        [batchNode addChild:_playButton z:30];
 	}
 	return self;
 }
@@ -341,7 +314,7 @@ static inline int cell(int r, int c) {
 			countNoTileFlips = 1;
 		}
 			
-		NSLog(@"CountNoTileFlips = %i", countNoTileFlips);
+		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
 
 		if (countNoTileFlips % 5 == 0) {
 			countNoTileFlips = 1;
@@ -352,20 +325,44 @@ static inline int cell(int r, int c) {
 	}
 	
 	[self clearLetters];
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
-	[currentAnswer setString:@" "];
+    player1TileFipped = NO;
+    player2TileFipped = NO;
+    
+    NSString *turnMessage;
 	
-	if (player == 1) {
-		playerTurn = 1;	
-		player1TileFipped = NO;
-		greySolveButton1.visible = NO;
-		greySolveButton2.visible = YES;
-	} else {
-		playerTurn = 2;
-		player2TileFipped = NO;
-		greySolveButton1.visible = YES;
-		greySolveButton2.visible = NO;
+	if (player == 1 && [[player1Timer string] intValue] > 0) {
+        playerTurn = 1;	
+        greySolveButton1.visible = NO;
+        greySolveButton2.visible = YES;
+        
+        
+        //if (player1Name && [player1Name length] > 0) {
+        //    turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1Name];
+        //} else {
+            turnMessage = @"Player 1's Turn";
+        //}
+        
+        [[CCNotifications sharedManager] addNotificationTitle:nil
+                                                      message:turnMessage 
+                                                        image:@"watchIcon.png" 
+                                                          tag:0 
+                                                      animate:YES];
+	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
+        playerTurn = 2;
+        greySolveButton1.visible = YES;
+        greySolveButton2.visible = NO;
+        
+        //if (player1Name && [player1Name length] > 0) {
+        //    turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1Name];
+        //} else {
+        turnMessage = @"Player 2's Turn";
+        //}
+        
+        [[CCNotifications sharedManager] addNotificationTitle:nil
+                                                      message:turnMessage 
+                                                        image:@"watchIcon.png" 
+                                                          tag:0 
+                                                      animate:YES];
 	}
 }
 
@@ -391,7 +388,8 @@ static inline int cell(int r, int c) {
 	scoreLabel.color = ccc3(0, 255, 0);
 	scoreLabel.position = ccp(cell.letterSprite.position.x, cell.letterSprite.position.y + 30);
 	[self addChild:scoreLabel z:20];
-	[scoreLabel runAction:[CCSpawn actions:[CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
+	float scaleFactor = 1.0 + (point/8.0 - 1.0) * 0.25;
+	[scoreLabel runAction:[CCSpawn actions:[CCScaleBy actionWithDuration:1 scale:scaleFactor], [CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
 }
 
 - (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId {
@@ -427,24 +425,20 @@ static inline int cell(int r, int c) {
 
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
-
+    
+    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    
+    if (playButtonReady && CGRectContainsPoint(_playButton.boundingBox, touchLocation)) {
+        [self fadeOutLetters];
+        _playButton.visible = NO;
+        playButtonReady = NO;
+        [self schedule:@selector(updateTimer:) interval:1.0f];
+    }
+    
 	if (!gameOver && !enableTouch) {
 		return TRUE;
 	}
 	
-	
-	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-	
-	if (gameOver && CGRectContainsPoint(midDisplay.boundingBox, touchLocation)) {
-		int p1 = [[player1Score string] intValue];
-		int p2 = [[player2Score string] intValue];
-		int highScore = (p1 > p2)? p1 : p2;
-		
-		[self startGame];
-		gameSummary.visible = NO;
-	}
-	
-
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
@@ -515,6 +509,19 @@ static inline int cell(int r, int c) {
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
 }
 
+- (BOOL) allLettersOpened {
+    
+    for(int r = 0; r < rows; r++) {
+		for(int c = 0; c < cols; c++) {
+            Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            if (!cell.letterSprite.visible) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
 - (void) startGame {
 	
 	gameOver = NO;
@@ -524,32 +531,40 @@ static inline int cell(int r, int c) {
 	[starPoints removeAllObjects];
 	[player1Timer setString:@"100"];
 	[player2Timer setString:@"100"];
-    //[player1Timer setString:@"30"];
-	//[player2Timer setString:@"30"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
 	[midDisplay runAction:[CCFadeOut actionWithDuration:0.1f]];
 	[midDisplay setString:@""];
 	[self clearAllSelectedLetters];
 	[self switchTo:1 countFlip:NO];
-	
+    [self displayLetters];
+    [self showPlayButton];
+    
+}
+
+- (void) displayLetters {
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 			cell.letterSprite.visible = YES;
+        }
+	}      
+}
+
+- (void) fadeOutLetters {
+	for(int r = 0; r < rows ; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 			if (r != rows - 1 || c != cols - 1) {
 				[cell.letterSprite runAction:[CCSequence actions:[CCFadeOut actionWithDuration:3], nil]];
 			} else {
-				[cell.letterSprite runAction:[CCSequence actions:[CCFadeOut actionWithDuration:3], [CCCallFunc actionWithTarget:self selector:@selector(hideBoard)], nil]];
+				[cell.letterSprite runAction:[CCSequence actions:[CCFadeOut actionWithDuration:3], [CCCallFunc actionWithTarget:self selector:@selector(fadeInLetters)], nil]];
 			}
 		}
-	}
+	}    
 }
-		 
-- (void) hideBoard {
+- (void) fadeInLetters {
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
@@ -560,6 +575,10 @@ static inline int cell(int r, int c) {
 	[self setStarPoints];
 	[self openRandomLetters:2];
 	gameCountdown = YES;
+}
+
+- (void) showPlayButton {
+    playButtonReady = YES;
 }
 
 - (NSString*) createRandomString  {
@@ -587,9 +606,8 @@ static inline int cell(int r, int c) {
 }
 				 
 
-- (void) createLetterSlots:(int) rows columns:(int) cols firstGame:(BOOL) firstGameFlag{
+- (void) createLetterSlots:(int) nRows columns:(int) nCols firstGame:(BOOL) firstGameFlag{
 	
-	CCSprite *label;
 	Cell *cell;
 	NSString *letters = [self createRandomString];
 	
@@ -603,69 +621,24 @@ static inline int cell(int r, int c) {
 		for(int c = 0; c < cols; c++) {
 			int i = arc4random() % [letters length];
 			NSString *key = [[NSNumber numberWithInt:i] stringValue];
-			CCLOG(@"Key = %@", key);
+			CCLOG(@"SINGLE PLAYER MODE:Key = %@", key);
 			while([usedIdx valueForKey:key]) {
-				CCLOG(@"Already Used Index = %@", key);
+				CCLOG(@"SINGLE PLAYER MODE:Already Used Index = %@", key);
 				i = arc4random() % [letters length];
 				key = [[NSNumber numberWithInt:i] stringValue];
-				CCLOG(@"Key = %@", key);
+				CCLOG(@"SINGLE PLAYER MODE:Key = %@", key);
 			}
 			[usedIdx setObject:@"Y" forKey:key];
-			CCLOG(@"adding character = %@", [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]]);
+			CCLOG(@"SINGLE PLAYER MODE:adding character = %@", [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]]);
 			
 			if (firstGameFlag) {
-                //label = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
-                label = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
-				label.position = ccp(125 + c * 60, 30 + r * 60);
-				label.visible = NO;
-				cell = [[Cell alloc] init];
-				cell.letterSprite = label;
-				cell.center = label.position;
-				cell.value = [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]];
-				cell.owner = 0;
-				[batchNode2 addChild:cell.letterSprite z:10];
-				[label release];
-				
-				CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"Sqaure.png"];
-				background.position = cell.letterSprite.position;
-				[batchNode2 addChild:background z:-1];
-				cell.letterBackground = background;
-				[background release];
-				
-				CCSprite *selectedBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				selectedBackground.position = cell.letterSprite.position;
-				selectedBackground.visible = NO;
-				[batchNode2 addChild:selectedBackground z:1];
-				cell.letterSelected = selectedBackground;
-				[selectedBackground release];
-
-				CCSprite *selectedBackground2 = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				selectedBackground2.position = cell.letterSprite.position;
-				selectedBackground2.visible = NO;
-				[batchNode2 addChild:selectedBackground2 z:-1];
-				cell.letterSelected2 = selectedBackground2;
-				[selectedBackground2 release];
-				
-				CCSprite *redBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
-				redBackground.position = cell.letterSprite.position;
-				redBackground.visible = NO;
-				[batchNode2 addChild:redBackground z:-1];
-				cell.redBackground = redBackground;
-				[redBackground release];
-				
-				CCSprite *star = [CCSprite spriteWithSpriteFrameName:@"RedStarfishSmall.png"];
-				star.position = ccp(cell.letterSprite   .position.x + 20, cell.letterSprite.position.y - 20);
-				star.visible = NO;
-				[batchNode addChild:star z:10];
-				cell.star = star;
-				[star release];
-				
-				[[wordMatrix objectAtIndex:r] insertObject:cell atIndex:c];
-				[cell release];
-			} else {
+                
+                cell = [self cellWithCharacter:[[letters lowercaseString] characterAtIndex:i] atRow:r atCol:c];
+                [[wordMatrix objectAtIndex:r] insertObject:cell atIndex:c];
+                
+            } else {
 				cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
 				cell.letterSprite.visible = NO;
-				//cell.letterSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
                 cell.letterSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", [[letters lowercaseString] characterAtIndex:i]]];
 				cell.value = [NSString stringWithFormat:@"%c", [letters characterAtIndex:i]];
 				cell.star.visible = NO;
@@ -673,13 +646,42 @@ static inline int cell(int r, int c) {
 		}
 	}
 	
+    self.playButton.visible = YES;
 	[self startGame];
+}
+
+- (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c {
+    Cell *cell = [[[Cell alloc] init] autorelease];
+    cell.letterSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%c.png", ch]];
+    cell.letterSprite.position = ccp(125 + c * 60, 60 + r * 60);
+    cell.letterSprite.visible = NO;
+    cell.center = cell.letterSprite.position;
+    cell.owner = 0;
+    cell.value = [[NSString stringWithFormat:@"%c", ch] uppercaseString];
+    [batchNode2 addChild:cell.letterSprite z:10];
+    
+    CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"Sqaure.png"];
+    background.position = cell.letterSprite.position;
+    [batchNode2 addChild:background z:-1];
+    cell.letterBackground = background;
+    
+    CCSprite *selectedBackground = [CCSprite spriteWithSpriteFrameName:@"SelectedCell.png"];
+    selectedBackground.position = cell.letterSprite.position;
+    selectedBackground.visible = NO;
+    [batchNode2 addChild:selectedBackground z:1];
+    cell.letterSelected = selectedBackground;
+    
+    CCSprite *star = [CCSprite spriteWithSpriteFrameName:@"RedStarfishSmall.png"];
+    star.position = ccp(cell.letterSprite.position.x + 20, cell.letterSprite.position.y - 20);
+    star.visible = NO;
+    [batchNode addChild:star z:10];
+    cell.star = star;
+    
+    return cell;
 }
 
 - (void) clearAllSelectedLetters {
 	
-	[player1Answer setString:@" "];
-	[player2Answer setString:@" "];
 	[currentAnswer setString:@" "];
 
 	for(int r = 0; r < rows ; r++) {
@@ -704,20 +706,6 @@ static inline int cell(int r, int c) {
 	}
 	
 	[userSelection removeAllObjects];
-}
-
-- (void) updateCellOwnerTo:(int) playerId {
-	for (Cell *c in userSelection) {
-		c.owner = playerId;
-		[c.currentOwner setString:[NSString stringWithFormat:@"%i", playerId]];
-		if (playerId == 1) {
-			c.redBackground.visible = YES;
-			c.letterSelected2.visible = NO;
-		} else {
-			c.redBackground.visible = NO;
-			c.letterSelected2.visible = YES;
-		}
-	}
 }
 
 - (int) countStarPointandRemoveStars {
@@ -753,6 +741,7 @@ static inline int cell(int r, int c) {
 		[midDisplay setString:@"Already Used"];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            [currentAnswer setColor:ccc3(124, 205, 124)];
 			[foundWords setObject:s forKey:s];
             
             // MCH -- play success sound
@@ -779,11 +768,10 @@ static inline int cell(int r, int c) {
                                                                   tag:0 
                                                               animate:YES];
             }
-
 		} else {
-            // MCH -- play invalid word sound
+            [currentAnswer setColor:ccc3(238, 44, 44)];
             [soundEngine playEffect:@"dull_bell.mp3"];
-			[midDisplay setString:@"Try again"];
+			[midDisplay setString:@"Not a word"];
 		}
 	}
 	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
@@ -796,13 +784,7 @@ static inline int cell(int r, int c) {
 	for(Cell *c in userSelection) {
 		s = [s stringByAppendingString:c.value];
 	}
-	/*
-	if (playerTurn == 1) {		
-		[player1Answer setString:s];
-	} else {
-		[player2Answer setString:s];
-	}
-	*/
+    currentAnswer.color = ccc3(237, 145, 33);
 	[currentAnswer setString:s];
 }
 
@@ -860,9 +842,57 @@ static inline int cell(int r, int c) {
 			[midDisplay setString:@"Tie Game"];
 		}
 		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];
-		gameSummary.visible = YES;
         
+        CCLOG(@"***************Creating SinglePlayGameHistory object***************");
+        PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
+        [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
+        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
+        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        /*
+        if (self.player1Name && [self.player1Name length] > 0) {
+            [singlePlayGameHistory setObject:self.player1Name forKey:@"player1Name"];
+        } else {
+            [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
+        }
+        */
+        [singlePlayGameHistory setObject:@"Troy" forKey:@"player1Name"];
+        [singlePlayGameHistory setObject:@"Lijen" forKey:@"player2Name"];
+        if (p1score > p2score) {
+            [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
+        } else if (p1score < p2score) {
+            [singlePlayGameHistory setObject:@"Lost" forKey:@"gameResult"];
+        } else {
+            [singlePlayGameHistory setObject:@"Tie" forKey:@"gameResult"];
+        }
+        // TODO: change this to be a background process??
+        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
+        [singlePlayGameHistory saveInBackground];
         
+         CCLOG(@"***************Creating SinglePlayGameHistory 2 object***************");
+        PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
+        [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        /*
+         if (self.player1Name && [self.player1Name length] > 0) {
+         [singlePlayGameHistory setObject:self.player1Name forKey:@"player1Name"];
+         } else {
+         [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
+         }
+         */
+        [player2ScoreRecord setObject:@"Troy" forKey:@"player2Name"];
+        [player2ScoreRecord setObject:@"Lijen" forKey:@"player1Name"];
+        if (p1score < p2score) {
+            [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
+        } else if (p1score > p2score) {
+            [player2ScoreRecord setObject:@"Lost" forKey:@"gameResult"];
+        } else {
+            [player2ScoreRecord setObject:@"Tie" forKey:@"gameResult"];
+        }
+        // TODO: change this to be a background process??
+        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
+        [player2ScoreRecord saveInBackground];
+    
         //MCH - display results layer 
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
@@ -904,27 +934,17 @@ static inline int cell(int r, int c) {
 	[super dealloc];
 }
 
-- (void) createDictionary {
-	dictionary = [[NSMutableDictionary alloc] init];
-	for(NSString *s in allWords) {
-		if (s) {
-			[dictionary setObject:s forKey:s];
-		}
-	}
-}
-
 - (void) onEnter {
 	[super onEnter];
-	/*
-	adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-	adView.delegate = self;
-	adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
-	adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
-	[[[CCDirector sharedDirector] openGLView] addSubview:adView];
-	//CGSize windowSize = [[CCDirector sharedDirector] winSize];
-	adView.center = CGPointMake(adView.frame.size.width/2, adView.frame.size.height/2);
-	adView.hidden = YES;
-	*/
+	
+    adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    adView.delegate = self;
+    adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
+    adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+    [[[CCDirector sharedDirector] openGLView] addSubview:adView];
+    CGSize windowSize = [[CCDirector sharedDirector] winSize];
+    adView.center = CGPointMake(adView.frame.size.width/2, windowSize.height - adView.frame.size.height/2);
+    adView.hidden = YES;
 }
 
 - (void) onExit {
@@ -944,106 +964,13 @@ static inline int cell(int r, int c) {
 }
 
 - (void) bannerViewActionDidFinish:(ADBannerView *)banner {
-	NSLog(@"bannerViewActionDidFinish called");
+	CCLOG(@"bannerViewActionDidFinish called");
 	[[UIApplication sharedApplication] setStatusBarOrientation:(UIInterfaceOrientation) [[CCDirector sharedDirector] deviceOrientation]];
 }
 
 - (BOOL) bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
-	NSLog(@"bannerViewActionShouldBegin called");
+	CCLOG(@"bannerViewActionShouldBegin called");
 	return YES;
-}
-
-#pragma mark OpenFeintDelegate
-
-- (void)dashboardWillAppear {
-}
-
-- (void)dashboardDidAppear {
-	[[CCDirector sharedDirector] pause];
-	[[CCDirector sharedDirector] stopAnimation];
-}
-
-- (void)dashboardWillDisappear {
-}
-
-- (void)dashboardDidDisappear {
-	[[CCDirector sharedDirector] resume];
-	[[CCDirector sharedDirector] startAnimation];
-}
-
-- (void)userLoggedIn:(NSString*)userId {
-	OFLog(@"New user logged in! Hello %@", [OpenFeint lastLoggedInUserName]);
-	//not a typo: force any existing user to logout so it will reconnect with the new one
-	[OFMultiplayerService internalLogout];
-}
-
-- (BOOL)showCustomOpenFeintApprovalScreen {
-	return NO;
-}
-
-#pragma mark OFMultiplayerDelegate
-
-//these are only required since the sample isn't using OpenGL and has to be manually updated
--(void) gameDidFinish:(OFMultiplayerGame *)game {
-    //[[MPClassRegistry gameController] refreshView];
-}
-
--(void) playerLeftGame:(unsigned int)playerNumber {
-    //[[MPClassRegistry gameController] refreshView];
-}
-
-- (void)networkDidUpdateLobby {
-    if([OFMultiplayerService getNumberOfChallenges]) {
-        OFLog(@"Outstanding challenges %d", [OFMultiplayerService getNumberOfChallenges]);
-		//        for(int i=0; i<[OFMultiplayerService getNumberOfChallenges]; ++i) {
-		//            OFMultiplayerGame *game = [OFMultiplayerService getChallengeAtIndex:i];
-		//            //this functionality does not exist yet
-		//            [game sendChallengeResponseWithAccept:YES];
-		//        }
-    }
-    //[[MPClassRegistry lobbyController] refillList];
-}
-
--(void) networkFailureWithReason:(NSUInteger)reason {
-    
-}
-
-//there are two methods of processing moves, either use the delegate or scan for moves in the game's tick
-//see MPGameController.mm processNetMove to see the two options
--(BOOL)gameMoveReceived:(OFMultiplayerMove *)move {
-#ifdef DELEGATE_MOVE_MODE
-	//[[MPClassRegistry gameController] processNetMove:move];
-    return YES;
-#endif
-    return NO;    
-}
-
-
--(void) handlePushRequestGame:(OFMultiplayerGame*)game options:(NSDictionary*) options {
-    //const NSSet* gameLaunchTypes = [NSSet setWithObjects:@"accept", @"start", @"finish", @"turn", nil];
-    //const NSSet* gameLobbyTypes = [NSSet setWithObjects:@"challenge", nil];
-	/*
-	 if([gameLaunchTypes containsObject:[options objectForKey:@"type"]]) 
-	 [MPClassRegistry showGameControllerWithGame:game];
-	 else if([gameLobbyTypes containsObject:[options objectForKey:@"type"]]) {
-	 
-	 [MPClassRegistry showLobbyForSlot:game.gameSlot];
-	 }
-	 */
-    
-}
-
--(void) gameLaunchedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"This is where we would launch game for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [self handlePushRequestGame:game options:options];
-}
-
-
--(void) gameRequestedFromPushRequest:(OFMultiplayerGame*)game withOptions:(NSDictionary*) options
-{
-    OFLog(@"Testing push notification response for slot %d type %s", game.gameSlot, [options objectForKey:@"type"]);
-    [self handlePushRequestGame:game options:options];
 }
 
 @end

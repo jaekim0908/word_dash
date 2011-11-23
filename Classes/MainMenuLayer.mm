@@ -7,21 +7,12 @@
 //
 
 #import "MainMenuLayer.h"
-#import "OpenFeint+UserOptions.h"
-#import "OFUserService.h"
-#import "OpenFeint.h"
-#import "OFHighScoreService.h"
-#import "OpenFeint+Dashboard.h"
 #import "Constants.h"
 #import "GameManager.h"
 #import "HelloWorld.h"
 #import "Dictionary.h"
-#import "OFMultiplayerService.h"
-#import "OFMultiplayerGame.h"
-#import "Multiplayer.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
-#import "OFSocialNotificationApi.h"
 #import "CCAlertView.h"
 #import "AIDictionary.h"
 
@@ -33,7 +24,7 @@
 -(void) displayMainMenu;
 -(void) displaySceneSelection;
 -(void) displayPlayAndPass;
--(void) displayMultiPlayer;
+//-(void) displayMultiPlayer;
 -(void) displayRanking;
 @end
 
@@ -45,10 +36,8 @@
 		self.isTouchEnabled = YES;
         [GameManager sharedGameManager].isChallenger = NO;
         [GameManager sharedGameManager].hasFriendsWithThisApp = NO;
-        [[GameManager sharedGameManager] closeGame];
 		[self displayMainMenu];// Load Dictionary
 		[GameManager sharedGameManager].gameStatus = kGameNone;
-		[OFMultiplayerService startViewingGames];
 		challengeCancelledLabel = [CCLabelTTF labelWithString:@"Challenger has cancelled the game" fontName:@"Verdana" fontSize:14];
 		CGSize screenSize = [CCDirector sharedDirector].winSize;
 		challengeCancelledLabel.position = ccp(screenSize.width/2, screenSize.height/2);
@@ -61,7 +50,7 @@
 		challengeRejectedLabel.color = ccc3(255, 255, 255);
 		challengeRejectedLabel.visible = NO;
 		[self addChild:challengeRejectedLabel z:10];
-        [self getFriendsWithThisApp];
+        //[self getFriendsWithThisApp];
         
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -73,7 +62,7 @@
         }
 		[self addChild:batchNode z:10];
         
-        CCSprite *titleImg = [CCSprite spriteWithSpriteFrameName:@"gameTitle.png"];
+        CCSprite *titleImg = [CCSprite spriteWithSpriteFrameName:@"wordanista.png"];
         titleImg.position = ccp(screenSize.width/2, screenSize.height/1.1);
         [batchNode addChild:titleImg z:5];
         
@@ -205,7 +194,8 @@
     
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
-        [self showActionSheet];
+        //[self showActionSheet];
+        [self displaySinglePlayer];
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playAndPassSelected.visible = NO;
         [self displayPlayAndPass];
@@ -232,15 +222,10 @@
 
 -(void) displaySceneSelection {
 	NSLog(@"display scene selection");
-    [OFSocialNotificationApi setDelegate:self];
-    [OFSocialNotificationApi sendWithPrepopulatedText:@"Let's play this cool game" originalMessage:@"Here is a link to download: http://itunes.apple.com/us/app/evernote/id406056744?mt=12" imageNamed:@"FB_Notification"];
 }
 
 -(void) displayRanking {
-	NSLog(@"display ranking");
-	//[OpenFeint launchDashboardWithHighscorePage:@"650204"];
-	//[OpenFeint launchDashboard];
-    [self displaySinglePlayer];
+    [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
 }
 
 -(void) displayPlayAndPass {
@@ -253,31 +238,6 @@
     [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
 }
 
-
--(void) displayMultiPlayer {
-	CCLOG(@"display multi-player");
-	[[GameManager sharedGameManager] closeGame];
-	if ([OpenFeint isOnline]) {
-        /*
-		[OFFriendPickerController launchPickerWithDelegate:[[GameManager sharedGameManager] myOFDelegate] 
-												promptText:@"Choose your victim" 
-									 mustHaveApplicationId:@"243493"]; //243493
-        */
-        [OFFriendPickerController launchPickerWithDelegate:[[GameManager sharedGameManager] myOFDelegate] 
-                                                promptText:@"Choose your victim"];
-	} else {
-		CCLayer *dialogLayer = [[[DialogLayer alloc] initWithHeader:@"header" 
-														   andLine1:@"line1" 
-														   andLine2:@"line2" 
-														   andLine3:@"line3" 
-															 target:self 
-														   selector:@selector(enableMainMenu)] 
-								autorelease];
-		dialogLayer.tag = 8;
-		[[[CCDirector sharedDirector] runningScene] addChild:dialogLayer z:10];
-		mainMenu.isTouchEnabled = NO;
-	}
-}
 
 -(void) disableMainMenu {
 	NSLog(@"disableMainMenu is called");
@@ -342,7 +302,7 @@
 	if(buttonIndex == 0) {
         [self displaySceneSelection];
     } else if (buttonIndex == 1) {
-        [self displayMultiPlayer];
+        //[self displayMultiPlayer];
     }
 }
 
@@ -350,7 +310,7 @@
     if ([GameManager sharedGameManager].hasFriendsWithThisApp) {
         if (buttonIndex == 0) {
             CCLOG(@"Starting multiplayer");
-            [self displayMultiPlayer];
+            //[self displayMultiPlayer];
         } else if (buttonIndex == 1) {
             [self displaySceneSelection];
         }
@@ -387,8 +347,10 @@
 }
 
 -(void) getFriendsWithThisApp {
+    /*
     OFUser *thisUser = [OpenFeint localUser];
     [thisUser getFriendsWithThisApplication];
+    */
 }
 
 
