@@ -22,6 +22,10 @@
 @synthesize rows;
 @synthesize cols;
 @synthesize playButton = _playButton;
+@synthesize tapToChangeLeft;
+@synthesize tapToChangeRight;
+@synthesize player1LongName;
+@synthesize player2LongName;
 
 +(id) scene
 {
@@ -87,67 +91,83 @@
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"ImageAssets2.plist"];
         batchNode2 = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets2.png"]];
         
-        [self addChild:batchNode];
+        [self addChild:batchNode z:5];
         [self addChild:batchNode2];
         
-        NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
-        NSString *p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
-        p1Name = [Util trimName:p1Name];
-        p2Name = [Util trimName:p2Name];
+        player1LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        player2LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+        player1LongName = [Util trimName:player1LongName];
+        player2LongName = [Util trimName:player2LongName];
         
-        if (!p1Name) {
-            p1Name = @"Player 1";
+        if (!player1LongName) {
+            player1LongName = @"Player 1";
+        } else {
+            player1LongName = [Util formatName:player1LongName withLimit:8];
         }
         
-        if (!p2Name) {
-            p2Name = @"Player 2";
+        if (!player2LongName) {
+            player2LongName = @"Player 2...";
+        } else {
+            player2LongName = [Util formatName:player2LongName withLimit:8];
         }
         
-        player1Name = [[CCLabelTTF labelWithString:p1Name fontName:@"MarkerFelt-Thin" fontSize:14] retain];
+        tapToChangeLeft = [CCSprite spriteWithFile:@"tap_to_change_left.png"];
+        tapToChangeLeft.position = ccp(130, 295);
+        [self addChild:tapToChangeLeft];
+        
+        tapToChangeRight = [CCSprite spriteWithFile:@"tap_to_change_right.png"];
+        tapToChangeRight.position = ccp(360, 295);
+        [self addChild:tapToChangeRight];
+        
+        player1Name = [[CCLabelTTF labelWithString:player1LongName fontName:@"MarkerFelt-Thin" fontSize:18] retain];
         player1Name.color = ccc3(0, 0, 0);
-        player1Name.position = ccp(50, 290);
+        player1Name.position = ccp(50, 260);
         [self addChild:player1Name];
+        
+        player2Name = [[CCLabelTTF labelWithString:player2LongName fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        player2Name.color = ccc3(0, 0, 0);
+        player2Name.position = ccp(440, 260);
+        [self addChild:player2Name];
         
         player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
 		player1Timer.color = ccc3(155, 48, 255);
-		player1Timer.position = ccp(50, 70);
+		player1Timer.position = ccp(50, 190);
 		[self addChild:player1Timer];
         
 		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
 		player2Timer.color = ccc3(155, 48, 255);
-		//player2Timer.position = ccp(440, 230);
-        player2Timer.position = ccp(440, 70);
+		player2Timer.position = ccp(440, 190);
 		[self addChild:player2Timer];
         
-        CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:14];
+        CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
 		time1Label.color = ccc3(0, 0, 0);
-		time1Label.position = ccp(50, 260);
+		time1Label.position = ccp(50, 220);
 		[self addChild:time1Label];
         
-		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:14];
+		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
 		time2Label.color = ccc3(0, 0, 0);
-		time2Label.position = ccp(440, 260);
+		time2Label.position = ccp(440, 220);
 		[self addChild:time2Label];
         
-        player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
+        player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
 		player1Score.color = ccc3(0,0,255);
-		player1Score.position = ccp(50, 170);
+		player1Score.position = ccp(50, 130);
 		[self addChild:player1Score];
 
-		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
+		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
 		player2Score.color = ccc3(0,0,255);
         
-		player2Score.position = ccp(440, 170);
+		player2Score.position = ccp(440, 130);
 		[self addChild:player2Score];
         
-        CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:14];
+        CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
 		score1Label.color = ccc3(0, 0, 0);
-		score1Label.position = ccp(50, 200);
+		score1Label.position = ccp(50, 160);
 		[self addChild:score1Label];
         
-		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:14];
+		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
 		score2Label.color = ccc3(0, 0, 0);
-		score2Label.position = ccp(440, 200);
+		score2Label.position = ccp(440, 160);
 		[self addChild:score2Label];
 		
 		currentAnswer = [[CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:24] retain];
@@ -226,11 +246,70 @@
         
         soundEngine = [SimpleAudioEngine sharedEngine];
         
-        _playButton = [[CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"] retain];
+        _playButton = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
         _playButton.position = ccp(windowSize.width/2, windowSize.height/2);
         [batchNode addChild:_playButton z:30];
 	}
 	return self;
+}
+
+- (void) getPlayer1Name {
+    player1Name.visible = NO;
+    enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
+    [enterPlayer1Name setDelegate:self];
+    [enterPlayer1Name setBorderStyle:UITextBorderStyleRoundedRect];
+    enterPlayer1Name.textAlignment = UITextAlignmentCenter;
+    [enterPlayer1Name setTextColor:[UIColor blackColor]];
+    [enterPlayer1Name setAdjustsFontSizeToFitWidth:YES];
+    [enterPlayer1Name setBounds:CGRectMake(0, 0, 80, 30)];
+    enterPlayer1Name.backgroundColor = [UIColor whiteColor];
+    enterPlayer1Name.transform = CGAffineTransformConcat(enterPlayer1Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
+    [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer1Name];
+    [enterPlayer1Name becomeFirstResponder];
+}
+
+- (void) getPlayer2Name {
+    player2Name.visible = NO;
+    enterPlayer2Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 425, 80, 30)];
+    [enterPlayer2Name setDelegate:self];
+    [enterPlayer2Name setBorderStyle:UITextBorderStyleRoundedRect];
+    enterPlayer2Name.textAlignment = UITextAlignmentCenter;
+    [enterPlayer2Name setTextColor:[UIColor blackColor]];
+    [enterPlayer2Name setAdjustsFontSizeToFitWidth:YES];
+    [enterPlayer2Name setBounds:CGRectMake(0, 0, 80, 30)];
+    enterPlayer2Name.backgroundColor = [UIColor whiteColor];
+    enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
+    [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer2Name];
+    [enterPlayer2Name becomeFirstResponder];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == enterPlayer1Name) {
+        [enterPlayer1Name endEditing:YES];
+        [enterPlayer1Name removeFromSuperview];
+        if (enterPlayer1Name.text && [enterPlayer1Name.text length] > 0) {
+            [player1Name setString:[NSString stringWithString:[Util formatName:enterPlayer1Name.text withLimit:8]]];
+            player1LongName = enterPlayer1Name.text;
+        }
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:player1LongName];
+        [enterPlayer1Name release];
+        player1Name.visible = YES;
+    } else if (textField == enterPlayer2Name) {
+        [enterPlayer2Name endEditing:YES];
+        [enterPlayer2Name removeFromSuperview];
+        if (enterPlayer2Name.text && [enterPlayer2Name.text length] > 0) {
+            [player2Name setString:[NSString stringWithString:[Util formatName:enterPlayer2Name.text withLimit:8]]];
+            player2LongName = enterPlayer2Name.text;
+        }
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player2_name" Value:player2LongName];
+        [enterPlayer2Name release];
+        player2Name.visible = YES;
+    }
 }
 
 - (void) registerWithTouchDispatcher {
@@ -336,11 +415,11 @@
         greySolveButton2.visible = YES;
         
         
-        //if (player1Name && [player1Name length] > 0) {
-        //    turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1Name];
-        //} else {
+        if (player1LongName && [player1LongName length] > 0) {
+            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
+        } else {
             turnMessage = @"Player 1's Turn";
-        //}
+        }
         
         [[CCNotifications sharedManager] addNotificationTitle:nil
                                                       message:turnMessage 
@@ -352,11 +431,11 @@
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
         
-        //if (player1Name && [player1Name length] > 0) {
-        //    turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1Name];
-        //} else {
-        turnMessage = @"Player 2's Turn";
-        //}
+        if (player2LongName && [player2LongName length] > 0) {
+            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player2LongName];
+        } else {
+            turnMessage = @"Player 2's Turn";
+        }
         
         [[CCNotifications sharedManager] addNotificationTitle:nil
                                                       message:turnMessage 
@@ -432,7 +511,13 @@
         [self fadeOutLetters];
         _playButton.visible = NO;
         playButtonReady = NO;
+        tapToChangeLeft.visible = NO;
+        tapToChangeRight.visible = NO;
         [self schedule:@selector(updateTimer:) interval:1.0f];
+    } else if (playButtonReady && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
+        [self getPlayer1Name];
+    } else if (playButtonReady && CGRectContainsPoint(player2Name.boundingBox, touchLocation)) {
+        [self getPlayer2Name];
     }
     
 	if (!gameOver && !enableTouch) {
@@ -573,7 +658,7 @@
 		}
 	}
 	[self setStarPoints];
-	[self openRandomLetters:2];
+	[self openRandomLetters:3];
 	gameCountdown = YES;
 }
 
@@ -848,15 +933,9 @@
         [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
-        /*
-        if (self.player1Name && [self.player1Name length] > 0) {
-            [singlePlayGameHistory setObject:self.player1Name forKey:@"player1Name"];
-        } else {
-            [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
-        }
-        */
-        [singlePlayGameHistory setObject:@"Troy" forKey:@"player1Name"];
-        [singlePlayGameHistory setObject:@"Lijen" forKey:@"player2Name"];
+
+        [singlePlayGameHistory setObject:player1LongName forKey:@"player1Name"];
+        [singlePlayGameHistory setObject:player2LongName forKey:@"player2Name"];
         if (p1score > p2score) {
             [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
         } else if (p1score < p2score) {
@@ -880,8 +959,8 @@
          [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
          }
          */
-        [player2ScoreRecord setObject:@"Troy" forKey:@"player2Name"];
-        [player2ScoreRecord setObject:@"Lijen" forKey:@"player1Name"];
+        [player2ScoreRecord setObject:player2LongName forKey:@"player2Name"];
+        [player2ScoreRecord setObject:player1LongName forKey:@"player1Name"];
         if (p1score < p2score) {
             [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
         } else if (p1score > p2score) {
@@ -931,6 +1010,8 @@
 	
 	// don't forget to call "super dealloc"
 	[userSelection release];
+    [player1LongName release];
+    [player2LongName release];
 	[super dealloc];
 }
 

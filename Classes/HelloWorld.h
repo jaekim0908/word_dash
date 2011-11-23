@@ -15,7 +15,7 @@
 @class Cell;
 
 // HelloWorld Layer
-@interface HelloWorld : CCLayer <ADBannerViewDelegate>
+@interface HelloWorld : CCLayer <ADBannerViewDelegate, UITextFieldDelegate>
 {
 	ADBannerView *adView;
     SimpleAudioEngine *soundEngine;    
@@ -67,11 +67,21 @@
     CCLabelTTF *gameCountDownLabel;
     CCSprite *_playButton;
     BOOL playButtonReady;
+    CCSprite *tapToChangeLeft;
+    CCSprite *tapToChangeRight;
+    UITextField *enterPlayer1Name;
+    UITextField *enterPlayer2Name;
+    NSString *player1LongName;
+    NSString *player2LongName;
 }
 
 @property int cols;
 @property int rows;
-@property CCSprite *playButton;
+@property (nonatomic, retain) CCSprite *playButton;
+@property (nonatomic, retain) CCSprite *tapToChangeLeft;
+@property (nonatomic, retain) CCSprite *tapToChangeRight;
+@property (nonatomic, retain) NSString *player1LongName;
+@property (nonatomic, retain) NSString *player2LongName;
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
