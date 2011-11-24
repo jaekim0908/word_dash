@@ -89,7 +89,7 @@
 - (void) createDictionary;
 - (void) updateAnswer;
 - (void) checkAnswer;
-- (void) switchTo:(int) player countFlip:(BOOL) flag;
+- (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify;
 - (void) clearAllSelectedLetters;
 - (void) clearLetters;
 - (void) updateCellOwnerTo:(int) playerId;

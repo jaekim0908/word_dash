@@ -15,7 +15,7 @@
 #import "SimpleAudioEngine.h"
 #import "Parse/Parse.h"
 #import "CCNotifications.h"
-#import "Util.h";
+#import "Util.h"
 
 @implementation HelloWorld
 
@@ -253,6 +253,10 @@
 	return self;
 }
 
+- (void) showPlayButton {
+    playButtonReady = YES;
+}
+
 - (void) getPlayer1Name {
     player1Name.visible = NO;
     enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
@@ -382,7 +386,7 @@
 	}
 }
 
-- (void) switchTo:(int) player countFlip:(BOOL) flag {
+- (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
 	
 	if (flag) {
 		if (playerTurn == 1 && !player1TileFipped) {
@@ -408,40 +412,44 @@
     player2TileFipped = NO;
     
     NSString *turnMessage;
-	
-	if (player == 1 && [[player1Timer string] intValue] > 0) {
+        
+    if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = YES;
         
         
-        if (player1LongName && [player1LongName length] > 0) {
-            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
-        } else {
-            turnMessage = @"Player 1's Turn";
+        if (notify) {
+            if (player1LongName && [player1LongName length] > 0) {
+                turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
+            } else {
+                turnMessage = @"Player 1's Turn";
+            }
+            
+            [[CCNotifications sharedManager] addNotificationTitle:nil
+                                                          message:turnMessage 
+                                                            image:@"watchIcon.png" 
+                                                              tag:0 
+                                                          animate:YES];
         }
-        
-        [[CCNotifications sharedManager] addNotificationTitle:nil
-                                                      message:turnMessage 
-                                                        image:@"watchIcon.png" 
-                                                          tag:0 
-                                                      animate:YES];
 	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
         
-        if (player2LongName && [player2LongName length] > 0) {
-            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player2LongName];
-        } else {
-            turnMessage = @"Player 2's Turn";
+        if (notify) {
+            if (player2LongName && [player2LongName length] > 0) {
+                turnMessage = [NSString stringWithFormat:@"%@'s Turn", player2LongName];
+            } else {
+                turnMessage = @"Player 2's Turn";
+            }
+            
+            [[CCNotifications sharedManager] addNotificationTitle:nil
+                                                          message:turnMessage 
+                                                            image:@"watchIcon.png" 
+                                                              tag:0 
+                                                        animate:YES];
         }
-        
-        [[CCNotifications sharedManager] addNotificationTitle:nil
-                                                      message:turnMessage 
-                                                        image:@"watchIcon.png" 
-                                                          tag:0 
-                                                      animate:YES];
 	}
 }
 
@@ -527,18 +535,18 @@
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
-			[self switchTo:2 countFlip:NO];
+			[self switchTo:2 countFlip:NO notification:YES];
 		} else {
-			[self switchTo:2 countFlip:YES];
+			[self switchTo:2 countFlip:YES notification:YES];
 		}
 	}
 	
 	if (playerTurn == 2 && CGRectContainsPoint(transparentBoundingBox2.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
-			[self switchTo:1 countFlip:NO];
+			[self switchTo:1 countFlip:NO notification:YES];
 		} else {
-			[self switchTo:1 countFlip:YES];
+			[self switchTo:1 countFlip:YES notification:YES];
 		}
 	}
 		
@@ -622,7 +630,7 @@
 	[midDisplay runAction:[CCFadeOut actionWithDuration:0.1f]];
 	[midDisplay setString:@""];
 	[self clearAllSelectedLetters];
-	[self switchTo:1 countFlip:NO];
+	[self switchTo:1 countFlip:NO notification:NO];
     [self displayLetters];
     [self showPlayButton];
     
@@ -662,19 +670,33 @@
 	gameCountdown = YES;
 }
 
-- (void) showPlayButton {
-    playButtonReady = YES;
-}
-
 - (NSString*) createRandomString  {
 	int totalLength = 0;
     int nIteration = 0;
 	NSString *randomString = [NSString string];
-	CCLOG(@"1. create randomString");
+    int acceptedCharacterList[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    int newStringCharacterList[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	while(totalLength <= rows * cols) {
+        
+        for(int i = 0; i < 26; i++) {
+            newStringCharacterList[i] = 0;
+        }
+        
 		int index = arc4random() % [allWords count];
-		CCLOG(@"2. createRandomString");
 		NSString *newString = [allWords objectAtIndex:index];
+        CCLOG(@"NEW STRING = %@", newString);
+        for(int i = 0; i < [newString length]; i++) {
+            int idx = [newString characterAtIndex:i] - 'A';
+            newStringCharacterList[idx]++;
+        }
+        
+        totalLength = 0;
+        
+        for(int i = 0; i < 26; i++) {
+            acceptedCharacterList[i] = MAX(acceptedCharacterList[i], newStringCharacterList[i]);
+            totalLength += acceptedCharacterList[i];
+        }
+        /*
         if (nIteration % 2 == 0 && [newString length] <= 5) {
             CCLOG(@"new string = %@", newString);
             randomString = [randomString stringByAppendingString:newString];
@@ -682,10 +704,17 @@
             CCLOG(@"new string = %@", newString);
             randomString = [randomString stringByAppendingString:newString];
         }
-        
-        totalLength = [randomString length];
+        */
         nIteration++;
 	}
+    
+    for(int i = 0; i < 26; i++) {
+        for(int j = 0; j < acceptedCharacterList[i]; j++) {
+            randomString = [randomString stringByAppendingString:[NSString stringWithFormat:@"%c", (i + 'A')]];
+        }
+    }
+    
+    CCLOG(@"FINAL RANDOM STRING = %@", randomString);
 	
 	return randomString;
 }
@@ -948,19 +977,14 @@
         [singlePlayGameHistory saveInBackground];
         
          CCLOG(@"***************Creating SinglePlayGameHistory 2 object***************");
+        // Create a second record with player1 and player2 switched so we can display both records.
         PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
         [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
         [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
         [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
-        /*
-         if (self.player1Name && [self.player1Name length] > 0) {
-         [singlePlayGameHistory setObject:self.player1Name forKey:@"player1Name"];
-         } else {
-         [singlePlayGameHistory setObject:@"-----" forKey:@"player1Name"];
-         }
-         */
-        [player2ScoreRecord setObject:player2LongName forKey:@"player2Name"];
-        [player2ScoreRecord setObject:player1LongName forKey:@"player1Name"];
+        
+        [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
+        [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
         if (p1score < p2score) {
             [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
         } else if (p1score > p2score) {
@@ -987,7 +1011,7 @@
 				[player1Timer setString:[NSString stringWithFormat:@"%i", p1]];
 			} else {
 				playerTurn = 2;
-				[self switchTo:playerTurn countFlip:NO];
+				[self switchTo:playerTurn countFlip:NO notification:YES];
 			}
 		} else {
 			if (!play2Done) {
@@ -995,7 +1019,7 @@
 				[player2Timer setString:[NSString stringWithFormat:@"%i", p2]];
 			} else {
 				playerTurn = 1;
-				[self switchTo:playerTurn countFlip:NO];
+				[self switchTo:playerTurn countFlip:NO notification:YES];
 			}
 		}
 	}	
