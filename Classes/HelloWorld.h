@@ -73,6 +73,8 @@
     UITextField *enterPlayer2Name;
     NSString *player1LongName;
     NSString *player2LongName;
+    BOOL tapToNameRightActive;
+    BOOL tapToNameLeftActive;
 }
 
 @property int cols;

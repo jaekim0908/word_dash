@@ -64,6 +64,8 @@
 		gameCountdown = YES;
         initOpponentOutOfTime = NO;
         playButtonReady = NO;
+        tapToNameLeftActive = NO;
+        tapToNameRightActive = NO;
         
         self.isTouchEnabled = YES;
 		
@@ -185,7 +187,7 @@
 			[wordMatrix addObject:columns];
 		}
 		
-		NSLog(@"wordMatrix = %@", wordMatrix);
+		CCLOG(@"wordMatrix = %@", wordMatrix);
         
         solveButton1 = [CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"];
 		solveButton1.position = ccp(50, 70);
@@ -249,6 +251,27 @@
         _playButton = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
         _playButton.position = ccp(windowSize.width/2, windowSize.height/2);
         [batchNode addChild:_playButton z:30];
+        
+        // Initialize TextFields
+        enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
+        [enterPlayer1Name setDelegate:self];
+        [enterPlayer1Name setBorderStyle:UITextBorderStyleRoundedRect];
+        enterPlayer1Name.textAlignment = UITextAlignmentCenter;
+        [enterPlayer1Name setTextColor:[UIColor blackColor]];
+        [enterPlayer1Name setAdjustsFontSizeToFitWidth:YES];
+        [enterPlayer1Name setBounds:CGRectMake(0, 0, 80, 30)];
+        enterPlayer1Name.backgroundColor = [UIColor whiteColor];
+        enterPlayer1Name.transform = CGAffineTransformConcat(enterPlayer1Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
+        
+        enterPlayer2Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 425, 80, 30)];
+        [enterPlayer2Name setDelegate:self];
+        [enterPlayer2Name setBorderStyle:UITextBorderStyleRoundedRect];
+        enterPlayer2Name.textAlignment = UITextAlignmentCenter;
+        [enterPlayer2Name setTextColor:[UIColor blackColor]];
+        [enterPlayer2Name setAdjustsFontSizeToFitWidth:YES];
+        [enterPlayer2Name setBounds:CGRectMake(0, 0, 80, 30)];
+        enterPlayer2Name.backgroundColor = [UIColor whiteColor];
+        enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
 	}
 	return self;
 }
@@ -258,61 +281,66 @@
 }
 
 - (void) getPlayer1Name {
+    CCLOG(@"getPlayer1Name Started");
+    tapToNameLeftActive = YES;
     player1Name.visible = NO;
-    enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
-    [enterPlayer1Name setDelegate:self];
-    [enterPlayer1Name setBorderStyle:UITextBorderStyleRoundedRect];
-    enterPlayer1Name.textAlignment = UITextAlignmentCenter;
-    [enterPlayer1Name setTextColor:[UIColor blackColor]];
-    [enterPlayer1Name setAdjustsFontSizeToFitWidth:YES];
-    [enterPlayer1Name setBounds:CGRectMake(0, 0, 80, 30)];
-    enterPlayer1Name.backgroundColor = [UIColor whiteColor];
-    enterPlayer1Name.transform = CGAffineTransformConcat(enterPlayer1Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
-    [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer1Name];
-    [enterPlayer1Name becomeFirstResponder];
+    if (enterPlayer1Name) { 
+        [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer1Name];
+        [enterPlayer1Name becomeFirstResponder];
+    }
+    CCLOG(@"getPlayer1Name Ended");
 }
 
 - (void) getPlayer2Name {
+    CCLOG(@"getPlayer2Name Started");
+    tapToNameRightActive = YES;
     player2Name.visible = NO;
-    enterPlayer2Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 425, 80, 30)];
-    [enterPlayer2Name setDelegate:self];
-    [enterPlayer2Name setBorderStyle:UITextBorderStyleRoundedRect];
-    enterPlayer2Name.textAlignment = UITextAlignmentCenter;
-    [enterPlayer2Name setTextColor:[UIColor blackColor]];
-    [enterPlayer2Name setAdjustsFontSizeToFitWidth:YES];
-    [enterPlayer2Name setBounds:CGRectMake(0, 0, 80, 30)];
-    enterPlayer2Name.backgroundColor = [UIColor whiteColor];
-    enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
-    [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer2Name];
-    [enterPlayer2Name becomeFirstResponder];
+    if (enterPlayer2Name) {
+        [[[[CCDirector sharedDirector] openGLView] window] addSubview:enterPlayer2Name];
+        [enterPlayer2Name becomeFirstResponder];
+    }
+    CCLOG(@"getPlayer2Name Ended");
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
+    
+    if (textField == enterPlayer1Name) {
+        CCLOG(@"textFieldShouldReturn 1 Started");
+        [enterPlayer1Name resignFirstResponder];
+        return YES;
+    } else if (textField == enterPlayer2Name) {
+        CCLOG(@"textFieldShouldReturn 2 Started");
+        [enterPlayer2Name resignFirstResponder];
+        return YES;
+    }
+    return NO;
 }
 
 - (void) textFieldDidEndEditing:(UITextField *)textField {
     if (textField == enterPlayer1Name) {
+        CCLOG(@"textFieldDidEndEditing 1 Started");
         [enterPlayer1Name endEditing:YES];
-        [enterPlayer1Name removeFromSuperview];
         if (enterPlayer1Name.text && [enterPlayer1Name.text length] > 0) {
             [player1Name setString:[NSString stringWithString:[Util formatName:enterPlayer1Name.text withLimit:8]]];
             player1LongName = enterPlayer1Name.text;
         }
+        [enterPlayer1Name removeFromSuperview];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:player1LongName];
-        [enterPlayer1Name release];
         player1Name.visible = YES;
+        tapToNameLeftActive = NO;
+        CCLOG(@"textFieldDidEndEditing 1 Ended");
     } else if (textField == enterPlayer2Name) {
+        CCLOG(@"textFieldDidEndEditing 2 Started");
         [enterPlayer2Name endEditing:YES];
-        [enterPlayer2Name removeFromSuperview];
         if (enterPlayer2Name.text && [enterPlayer2Name.text length] > 0) {
             [player2Name setString:[NSString stringWithString:[Util formatName:enterPlayer2Name.text withLimit:8]]];
             player2LongName = enterPlayer2Name.text;
         }
+        [enterPlayer2Name removeFromSuperview];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player2_name" Value:player2LongName];
-        [enterPlayer2Name release];
         player2Name.visible = YES;
+        tapToNameRightActive = NO;
+        CCLOG(@"textFieldDidEndEditing 2 Ended");
     }
 }
 
@@ -522,9 +550,13 @@
         tapToChangeLeft.visible = NO;
         tapToChangeRight.visible = NO;
         [self schedule:@selector(updateTimer:) interval:1.0f];
-    } else if (playButtonReady && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
+    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
         [self getPlayer1Name];
-    } else if (playButtonReady && CGRectContainsPoint(player2Name.boundingBox, touchLocation)) {
+    } else if (playButtonReady && !tapToNameRightActive && !tapToNameLeftActive && CGRectContainsPoint(player2Name.boundingBox, touchLocation)) {
+        [self getPlayer2Name];
+    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(tapToChangeLeft.boundingBox, touchLocation)) {
+        [self getPlayer1Name];
+    } else if (playButtonReady && !tapToNameRightActive && !tapToNameLeftActive && CGRectContainsPoint(tapToChangeRight.boundingBox, touchLocation)) {
         [self getPlayer2Name];
     }
     
@@ -1036,6 +1068,8 @@
 	[userSelection release];
     [player1LongName release];
     [player2LongName release];
+    [enterPlayer1Name release];
+    [enterPlayer2Name release];
 	[super dealloc];
 }
 
