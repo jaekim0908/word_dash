@@ -90,6 +90,7 @@
 		8402102E147CD7CC001F5FBD /* tap_to_change_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402102A147CD7CC001F5FBD /* tap_to_change_left.png */; };
 		8402102F147CD7CC001F5FBD /* tap_to_change_right-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402102B147CD7CC001F5FBD /* tap_to_change_right-hd.png */; };
 		84021030147CD7CC001F5FBD /* tap_to_change_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 8402102C147CD7CC001F5FBD /* tap_to_change_right.png */; };
+		840AAFCA1480EE7F004767C0 /* ai-dictionary-1-8-grades.txt in Resources */ = {isa = PBXBuildFile; fileRef = 840AAFC91480EE7F004767C0 /* ai-dictionary-1-8-grades.txt */; };
 		841A9B83141871C2005C2407 /* playWithFriendsLabel2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 841A9B81141871C2005C2407 /* playWithFriendsLabel2-hd.png */; };
 		841A9B84141871C2005C2407 /* playWithFriendsLabel2.png in Resources */ = {isa = PBXBuildFile; fileRef = 841A9B82141871C2005C2407 /* playWithFriendsLabel2.png */; };
 		84231B241418799900AC89DF /* howToPlay2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84231B221418799900AC89DF /* howToPlay2-hd.png */; };
@@ -193,7 +194,6 @@
 		84D4137213E1274100656B94 /* ImageAssets-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137013E1274000656B94 /* ImageAssets-hd.png */; };
 		84D4137513E29DD900656B94 /* ImageAssets2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137313E29DD400656B94 /* ImageAssets2.plist */; };
 		84D4137613E29DD900656B94 /* ImageAssets2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D4137413E29DD700656B94 /* ImageAssets2.png */; };
-		84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */; };
 		84D993BF14188706007BF6DA /* rankings2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993BD14188706007BF6DA /* rankings2-hd.png */; };
 		84D993C014188706007BF6DA /* rankings2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993BE14188706007BF6DA /* rankings2.png */; };
 		84D993C4141897B3007BF6DA /* blueSandDollar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993C2141897B3007BF6DA /* blueSandDollar-hd.png */; };
@@ -540,6 +540,7 @@
 		8402102A147CD7CC001F5FBD /* tap_to_change_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tap_to_change_left.png; sourceTree = "<group>"; };
 		8402102B147CD7CC001F5FBD /* tap_to_change_right-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap_to_change_right-hd.png"; sourceTree = "<group>"; };
 		8402102C147CD7CC001F5FBD /* tap_to_change_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tap_to_change_right.png; sourceTree = "<group>"; };
+		840AAFC91480EE7F004767C0 /* ai-dictionary-1-8-grades.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ai-dictionary-1-8-grades.txt"; sourceTree = "<group>"; };
 		841A9B81141871C2005C2407 /* playWithFriendsLabel2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playWithFriendsLabel2-hd.png"; sourceTree = "<group>"; };
 		841A9B82141871C2005C2407 /* playWithFriendsLabel2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playWithFriendsLabel2.png; sourceTree = "<group>"; };
 		84231B221418799900AC89DF /* howToPlay2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "howToPlay2-hd.png"; sourceTree = "<group>"; };
@@ -640,7 +641,6 @@
 		84D4137013E1274000656B94 /* ImageAssets-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageAssets-hd.png"; sourceTree = "<group>"; };
 		84D4137313E29DD400656B94 /* ImageAssets2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ImageAssets2.plist; sourceTree = "<group>"; };
 		84D4137413E29DD700656B94 /* ImageAssets2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageAssets2.png; sourceTree = "<group>"; };
-		84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ai-dictionary-level-1.txt"; sourceTree = "<group>"; };
 		84D993BD14188706007BF6DA /* rankings2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rankings2-hd.png"; sourceTree = "<group>"; };
 		84D993BE14188706007BF6DA /* rankings2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rankings2.png; sourceTree = "<group>"; };
 		84D993C2141897B3007BF6DA /* blueSandDollar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueSandDollar-hd.png"; sourceTree = "<group>"; };
@@ -1169,6 +1169,7 @@
 		50F414EB1069373D002A0D5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				840AAFC91480EE7F004767C0 /* ai-dictionary-1-8-grades.txt */,
 				84021029147CD7CC001F5FBD /* tap_to_change_left-hd.png */,
 				8402102A147CD7CC001F5FBD /* tap_to_change_left.png */,
 				8402102B147CD7CC001F5FBD /* tap_to_change_right-hd.png */,
@@ -1177,7 +1178,6 @@
 				8499913914750135001E7EFA /* main_menu_btn_small.png */,
 				8499912D1474E127001E7EFA /* silver_line-hd.png */,
 				8499912E1474E127001E7EFA /* silver_line.png */,
-				84D4B742144EB4C400D12D7B /* ai-dictionary-level-1.txt */,
 				84BC05A514456E85003D1020 /* openfeint_offline_config.xml */,
 				D40101751457EE8400F43B0C /* howToPlay_3g.png */,
 				D40101761457EE8400F43B0C /* howToPlay_retina.png */,
@@ -1872,7 +1872,6 @@
 				D401017A1457EE8400F43B0C /* howToPlay_retina.png in Resources */,
 				D401017B1457EE8400F43B0C /* howToPlay_3g.plist in Resources */,
 				D401017C1457EE8400F43B0C /* howToPlay_retina.plist in Resources */,
-				84D4B743144EB4C400D12D7B /* ai-dictionary-level-1.txt in Resources */,
 				8499912F1474E127001E7EFA /* silver_line-hd.png in Resources */,
 				849991301474E127001E7EFA /* silver_line.png in Resources */,
 				8499913A14750137001E7EFA /* main_menu_btn_small-hd.png in Resources */,
@@ -1881,6 +1880,7 @@
 				8402102E147CD7CC001F5FBD /* tap_to_change_left.png in Resources */,
 				8402102F147CD7CC001F5FBD /* tap_to_change_right-hd.png in Resources */,
 				84021030147CD7CC001F5FBD /* tap_to_change_right.png in Resources */,
+				840AAFCA1480EE7F004767C0 /* ai-dictionary-1-8-grades.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

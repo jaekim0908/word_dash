@@ -98,19 +98,16 @@
         
         player1LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
         player2LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+        
         player1LongName = [Util trimName:player1LongName];
         player2LongName = [Util trimName:player2LongName];
         
         if (!player1LongName) {
             player1LongName = @"Player 1";
-        } else {
-            player1LongName = [Util formatName:player1LongName withLimit:8];
         }
         
         if (!player2LongName) {
             player2LongName = @"Player 2...";
-        } else {
-            player2LongName = [Util formatName:player2LongName withLimit:8];
         }
         
         tapToChangeLeft = [CCSprite spriteWithFile:@"tap_to_change_left.png"];
@@ -121,12 +118,12 @@
         tapToChangeRight.position = ccp(360, 295);
         [self addChild:tapToChangeRight];
         
-        player1Name = [[CCLabelTTF labelWithString:player1LongName fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        player1Name = [[CCLabelTTF labelWithString:[Util formatName:player1LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
         player1Name.color = ccc3(0, 0, 0);
         player1Name.position = ccp(50, 260);
         [self addChild:player1Name];
         
-        player2Name = [[CCLabelTTF labelWithString:player2LongName fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        player2Name = [[CCLabelTTF labelWithString:[Util formatName:player2LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
         player2Name.color = ccc3(0, 0, 0);
         player2Name.position = ccp(440, 260);
         [self addChild:player2Name];
@@ -322,7 +319,7 @@
         [enterPlayer1Name endEditing:YES];
         if (enterPlayer1Name.text && [enterPlayer1Name.text length] > 0) {
             [player1Name setString:[NSString stringWithString:[Util formatName:enterPlayer1Name.text withLimit:8]]];
-            player1LongName = enterPlayer1Name.text;
+            player1LongName = [NSString stringWithString:enterPlayer1Name.text];
         }
         [enterPlayer1Name removeFromSuperview];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:player1LongName];
@@ -334,7 +331,7 @@
         [enterPlayer2Name endEditing:YES];
         if (enterPlayer2Name.text && [enterPlayer2Name.text length] > 0) {
             [player2Name setString:[NSString stringWithString:[Util formatName:enterPlayer2Name.text withLimit:8]]];
-            player2LongName = enterPlayer2Name.text;
+            player2LongName = [NSString stringWithString:enterPlayer2Name.text];
         }
         [enterPlayer2Name removeFromSuperview];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player2_name" Value:player2LongName];
