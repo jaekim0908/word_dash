@@ -41,11 +41,11 @@ static AIDictionary* _sharedDictionary = nil;
 	if ((self = [super init])) {
 		// Dictionary Initialized
 		NSLog(@"Dictionary Singleton,, init");
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-level-1" ofType:@"txt"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
 		NSError *error;
 		// read everything from text
 		NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
-		_allWords = [[fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] retain];
+		_allWords = (NSMutableArray *) [[fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] retain];
 		_dictionary = [[NSMutableDictionary alloc] init];
 	}
 	return self;

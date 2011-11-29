@@ -90,7 +90,7 @@
             batchNode2 = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"ImageAssets2.png"]];
         }
         
-        [self addChild:batchNode];
+        [self addChild:batchNode z:5];
         [self addChild:batchNode2];
         
 		player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"DBLCDTempBlack" fontSize:28] retain];
