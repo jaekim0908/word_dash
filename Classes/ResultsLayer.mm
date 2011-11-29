@@ -129,11 +129,12 @@
         /*****************************/
 		//PLAYER 1
         /*****************************/
-        
-        
-        
         //HEADER
-		CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:@"Player 1 Score"
+        NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        NSString *p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+
+		CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ Score",p1Name]
+        //CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:@"Player 1 Score"
 										   fontName:@"MarkerFelt-Thin" 
 										   fontSize:24] retain];
 		player1Header.color = ccc3(0,0,255);

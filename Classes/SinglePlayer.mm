@@ -17,6 +17,7 @@
 #import "AIDictionary.h"
 #import "Parse/Parse.h"
 #import "CCNotifications.h"
+#import "PauseMenu.h"
 
 @implementation SinglePlayer
 
@@ -27,7 +28,8 @@
 @synthesize soundEngine;
 @synthesize initOpponentOutOfTime;
 @synthesize player1Name;
-
+@synthesize pauseState;
+@synthesize pauseMenuPlayAndPass;
 
 +(id) scene
 {
@@ -204,6 +206,10 @@
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
         
+        //ALLOCATE PAUSE MENU
+        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
+        [pauseMenuPlayAndPass addToMyScene:self];
+
         soundEngine = [SimpleAudioEngine sharedEngine];
         
         visibleLetters = [[NSMutableDictionary dictionary] retain];
@@ -485,81 +491,112 @@
 	[timerLabel runAction:[CCSpawn actions:[CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
 }
 
+-(BOOL) stopTimer
+{
+    [self unschedule:@selector(updateTimer:)];
+    
+    return TRUE;
+}
+
+-(BOOL) startTimer
+{
+    [self schedule:@selector(updateTimer:) interval:1.0f];
+    
+    return TRUE;
+}
+
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
-	if (gameOver || !enableTouch || playerTurn == 2) {
-		return TRUE;
-	}
 	
 	
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    //MCH - DISPLAY THE PAUSE MENU
+    if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
+        pauseState = TRUE;
+        [pauseMenuPlayAndPass showPauseMenu:self];
+    }
 	
-	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
-		if ([userSelection count] > 0) {
-			[self checkAnswer];
-            [self switchTo:2 countFlip:NO];
-		} else {
-            [self switchTo:2 countFlip:YES];
-		}
-	}
+    // FUNCTIONS ON THE PAUSE MENU                     
+    if (pauseState) {
+        CCLOG(@"In a pause state.");
+        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kSinglePlayerScene];        
+    }
+    else {
+    
+        if (gameOver || !enableTouch || playerTurn == 2) {
+            return TRUE;
+        }
+        
+        
+        if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
+            if ([userSelection count] > 0) {
+                [self checkAnswer];
+                [self switchTo:2 countFlip:NO];
+            } else {
+                [midDisplay setString:@"Pass"];
+                [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]]; 
+                [self switchTo:2 countFlip:YES];
+            }
+        }
 	    
-	for(int r = 0; r < rows; r++) {
-		for(int c = 0; c < cols; c++) {
-			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-			BOOL cellSelected = cell.letterSelected.visible;
-			if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
-                
-				if (cell.letterSprite.visible && cellSelected) {
-					cell.letterSelected.visible = NO;
-					[userSelection removeObject:cell];
-					[self updateAnswer];
-				} else if (cell.letterSprite.visible && !cellSelected) {
-                    if ([self allLettersOpened] && touch.tapCount > 2) {
-                        CCLOG(@"Triple-Tap detected !!");
-                        char ch = (arc4random() % 26) + 'a';
-                        Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
-                        cell.letterSprite.visible = NO;
-                        newCell.letterSprite.visible = YES;
-                        [[wordMatrix objectAtIndex:r] removeObject:cell];
-                        [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
-                    } else {
-                        cell.letterSelected.visible = YES;
-                        [userSelection addObject:cell];
+        for(int r = 0; r < rows; r++) {
+            for(int c = 0; c < cols; c++) {
+                Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+                BOOL cellSelected = cell.letterSelected.visible;
+                if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
+                    
+                    if (cell.letterSprite.visible && cellSelected) {
+                        cell.letterSelected.visible = NO;
+                        [userSelection removeObject:cell];
                         [self updateAnswer];
+                    } else if (cell.letterSprite.visible && !cellSelected) {
+                        if ([self allLettersOpened] && touch.tapCount > 2) {
+                            CCLOG(@"Triple-Tap detected !!");
+                            char ch = (arc4random() % 26) + 'a';
+                            Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
+                            cell.letterSprite.visible = NO;
+                            newCell.letterSprite.visible = YES;
+                            [[wordMatrix objectAtIndex:r] removeObject:cell];
+                            [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
+                        } else {
+                            cell.letterSelected.visible = YES;
+                            [userSelection addObject:cell];
+                            [self updateAnswer];
+                        }
+                    } else {
+                        if (playerTurn == 1 && !player1TileFipped) {
+                            cell.letterSprite.visible = YES;
+                            player1TileFipped = YES;
+                            if ([cell.value isEqualToString:@"A"] || 
+                                [cell.value isEqualToString:@"E"] || 
+                                [cell.value isEqualToString:@"I"] || 
+                                [cell.value isEqualToString:@"O"] || 
+                                [cell.value isEqualToString:@"U"]) {
+                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                            }
+                            if ([self isThisStarPoint:cell]) {
+                                cell.star.visible = YES;
+                            }
+                        } else if (playerTurn == 2 && !player2TileFipped) {
+                            cell.letterSprite.visible = YES;
+                            player2TileFipped = YES;
+                            if ([cell.value isEqualToString:@"A"] || 
+                                [cell.value isEqualToString:@"E"] || 
+                                [cell.value isEqualToString:@"I"] || 
+                                [cell.value isEqualToString:@"O"] || 
+                                [cell.value isEqualToString:@"U"]) {
+                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                            }
+                            if ([self isThisStarPoint:cell]) {
+                                cell.star.visible = YES;
+                            }
+                        }
                     }
-				} else {
-					if (playerTurn == 1 && !player1TileFipped) {
-						cell.letterSprite.visible = YES;
-						player1TileFipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
-							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
-						}
-						if ([self isThisStarPoint:cell]) {
-							cell.star.visible = YES;
-						}
-					} else if (playerTurn == 2 && !player2TileFipped) {
-						cell.letterSprite.visible = YES;
-						player2TileFipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
-							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
-						}
-						if ([self isThisStarPoint:cell]) {
-							cell.star.visible = YES;
-						}
-					}
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
     
 	return TRUE;
 }
@@ -587,8 +624,8 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"100"];
-	[player2Timer setString:@"100"];
+	[player1Timer setString:@"20"];
+	[player2Timer setString:@"20"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -893,6 +930,10 @@
     if ([userSelection count] > 0) {
         [self checkAnswer];
     }
+    else{
+        [midDisplay setString:@"Pass"];
+        [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]];
+    }
     [self switchTo:1 countFlip:NO];
     [self schedule:@selector(runAI:) interval:2.0f];
 }
@@ -1131,6 +1172,7 @@
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
+    [pauseMenuPlayAndPass release];
 	[userSelection release];
 	[super dealloc];
 }

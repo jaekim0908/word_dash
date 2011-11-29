@@ -15,6 +15,7 @@
 #import "ChallengeRequestDialog.h"
 #import "CCAlertView.h"
 #import "AIDictionary.h"
+#import "HowToPlay.h"
 
 @interface UIAlertView (extended)
 -(void) setNumberOfRows:(int) num;
@@ -198,6 +199,23 @@
         [self displaySinglePlayer];
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playAndPassSelected.visible = NO;
+        
+        //DETERMINE IF FIRST TIME PLAYING
+        NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+        
+        if(!firstTimePlayFlag)
+        {
+            CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+            
+            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+            [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+            
+        }
+        else{
+            [self displayPlayAndPass];
+        }       
+
         [self displayPlayAndPass];
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         howToPlaySelected.visible = NO;
@@ -217,7 +235,7 @@
 
 -(void) displayHowToPlay {
 	NSLog(@"display how to play");
-    [[GameManager sharedGameManager] runSceneWithId:kHowToPlayScene];
+    [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
 }
 
 -(void) displaySceneSelection {

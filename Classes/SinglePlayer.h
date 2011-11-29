@@ -13,6 +13,8 @@
 #import "SimpleAudioEngine.h"
 
 @class Cell;
+@class PauseMenu;
+
 
 // HelloWorld Layer
 @interface SinglePlayer : CCLayer <ADBannerViewDelegate, UITextFieldDelegate>
@@ -80,6 +82,10 @@
     NSString *longestAnswer;
     NSString *player1Name;
     UITextField *enterYourName;
+    
+    PauseMenu *pauseMenuPlayAndPass;
+    BOOL      pauseState;
+
 }
 
 @property int cols;
@@ -89,6 +95,8 @@
 @property BOOL isThisPlayerChallenger;
 @property BOOL initOpponentOutOfTime;
 @property (nonatomic, retain) NSString *player1Name;
+@property BOOL pauseState;
+@property (nonatomic, retain) PauseMenu *pauseMenuPlayAndPass;
 
 
 // returns a Scene that contains the HelloWorld as the only child
@@ -123,5 +131,7 @@
 - (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c;
 - (void) getPlayerName;
 - (BOOL) allLettersOpened;
+- (BOOL) stopTimer;
+- (BOOL) startTimer;
 
 @end
