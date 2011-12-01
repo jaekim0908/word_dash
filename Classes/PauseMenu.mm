@@ -52,6 +52,7 @@
 
     self.pauseButton = [CCSprite spriteWithFile:@"pause_btn.png"];
     self.pauseButton.position = ccp(438, 300);
+    //self.pauseButton.visible = NO;//DON'T SHOW THE PAUSE BUTTON UNTIL PLAY BEGINS
     [myScene addChild:self.pauseButton z:10];
     
     //MCH

@@ -13,6 +13,7 @@
 #import "SimpleAudioEngine.h"
 
 @class Cell;
+@class PauseMenu;
 
 // HelloWorld Layer
 @interface HelloWorld : CCLayer <ADBannerViewDelegate, UITextFieldDelegate>
@@ -75,6 +76,10 @@
     NSString *player2LongName;
     BOOL tapToNameRightActive;
     BOOL tapToNameLeftActive;
+    
+    PauseMenu *pauseMenuPlayAndPass;
+    BOOL      pauseState;
+    BOOL      pauseActive;
 }
 
 @property int cols;
@@ -84,6 +89,9 @@
 @property (nonatomic, retain) CCSprite *tapToChangeRight;
 @property (nonatomic, retain) NSString *player1LongName;
 @property (nonatomic, retain) NSString *player2LongName;
+@property (nonatomic, retain) PauseMenu *pauseMenuPlayAndPass;
+@property BOOL pauseState;
+@property BOOL pauseActive;
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
@@ -105,5 +113,7 @@
 - (void) fadeOutLetters;
 - (void) displayLetters;
 - (void) showPlayButton;
+- (BOOL) stopTimer;
+- (BOOL) startTimer;
 
 @end

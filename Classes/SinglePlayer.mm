@@ -18,6 +18,7 @@
 #import "Parse/Parse.h"
 #import "CCNotifications.h"
 #import "PauseMenu.h"
+#import "Constants.h"
 
 @implementation SinglePlayer
 
@@ -207,6 +208,7 @@
         [self addChild:beachImg2 z:-12];
         
         //ALLOCATE PAUSE MENU
+        pauseState = FALSE;
         pauseMenuPlayAndPass = [[PauseMenu alloc] init];
         [pauseMenuPlayAndPass addToMyScene:self];
 
@@ -1123,7 +1125,7 @@
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                       ForMultiPlayer:FALSE
+                                                       ForGameMode:kSinglePlayer
                                                    ]];        
 	} else {
 		if (playerTurn == 1) {

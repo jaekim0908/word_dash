@@ -38,13 +38,13 @@
 @synthesize woodenSign;
 @synthesize flagMultiPlayer;
 
-
-#define HDR_POS_X_P1 (44.0f/63.0f)
-#define HDR_POS_X_P2 (18.0f/63.0f)
+#define HDR_POS_X_P1 (18.0f/63.0f)
+#define HDR_POS_X_P2 (44.0f/63.0f)
 #define HDR_POS_Y (290.0f/320.0f)
 
-#define SCORE_POS_X_P1 (44.0f/63.0f)
-#define SCORE_POS_X_P2  (19.0f/63.0f)
+#define SCORE_POS_X_P1  (19.0f/63.0f)
+#define SCORE_POS_X_P2 (44.0f/63.0f)
+
 #define SCORE_POS_Y     (225.0f/320.0f)
 
 #define WORDS_POS_Y     (200.0f/320.0f)
@@ -63,7 +63,7 @@
 #define MAX_WORDS_PER_PAGE  11
 
 
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag {
++(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode{
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
     
@@ -73,14 +73,14 @@
                WithPlayerTwoScore:p2Score 
                WithPlayerOneWords:p1Words 
                WithPlayerTwoWords:p2Words
-                ForMultiPlayer:multiPlayerFlag]; 
+                      ForGameMode:gameMode]; 
 	[scene addChild:layer];  
     
 	// return the scene
 	return scene;
 }
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForMultiPlayer:(BOOL)multiPlayerFlag
+-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode
 {
     winSize = [[CCDirector sharedDirector] winSize];
     arrayPagesPlayer1 = [[NSMutableArray array] retain];
@@ -89,7 +89,7 @@
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
         
     
-        multiPlayerFlag ? self.flagMultiPlayer = TRUE : self.flagMultiPlayer = FALSE;
+        theGameMode = gameMode;
         
         //SETUP SPRITE SHEET
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -125,14 +125,19 @@
 		self.isTouchEnabled = YES;
         
         
-		
+		NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        NSString *p2Name;
+        
+        if (theGameMode == kSinglePlayer) {
+            p2Name = @"AI";
+        }
+        else{
+            p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+        }
         /*****************************/
 		//PLAYER 1
         /*****************************/
         //HEADER
-        NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
-        NSString *p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
-
 		CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ Score",p1Name]
         //CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:@"Player 1 Score"
 										   fontName:@"MarkerFelt-Thin" 
@@ -178,7 +183,7 @@
         /*****************************/
         
         //HEADER
-		CCLabelTTF *player2Header = [[CCLabelTTF labelWithString:@"Player 2 Score"
+		CCLabelTTF *player2Header = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ Score",p2Name]
 														fontName:@"MarkerFelt-Thin" 
 														fontSize:24] retain];
 		player2Header.color = ccc3(0,0,255);
@@ -227,10 +232,10 @@
 			[winText setString:@"Tie Game!"];
 		}
 		else if([p1Score intValue] > [p2Score intValue]){
-			[winText setString:@"Player 1 Wins"];
+			[winText setString:[NSString stringWithFormat:@"%@ Wins",p1Name]];
 		}
 		else {
-			[winText setString:@"Player 2 Wins"];
+			[winText setString:[NSString stringWithFormat:@"%@ Wins",p2Name]];
 		}
 
         //WINNER BANNER

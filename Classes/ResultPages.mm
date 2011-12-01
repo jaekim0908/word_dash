@@ -44,8 +44,9 @@
     NSLog(@"maxColumnsPerPlayer:%i",self.maxColumnsPerPlayer);
     
     self.winSize = windowSize;
-    self.player1Edge = (windowSize.width / 2);
-    self.player2Edge = 0;
+    self.player1Edge = 0;
+    self.player2Edge = (windowSize.width / 2);
+    
     NSLog(@"player1Edge:%f",self.player1Edge);
     
     return (self);
@@ -54,12 +55,15 @@
 - (float) calcColumnIndentFromLeftEdge:(int)colNum forPlayer:(int)playerNum withLongestWordInColumn:(int)longestWordInColumn
 {
     float colIndentFromLeftEdge;
+    
+    /****************
     float previousColsIndent;
     float currentColIndentFromColEdge;
     float playerLineMargin;
     float playerEdge;
     
     //CALCULATE LINE MARGIN FOR PLAYER IN PIXELS
+    
     playerLineMargin = ((( (MAX_LETTERS_PER_LINE / 2.0f) - (numColumnsToDisplay * MAX_LETTERS_PER_WORD) ) / 2.0f) / MAX_LETTERS_PER_LINE) * winSize.width;
     NSLog(@"playerLineMargin:%f",playerLineMargin);
     
@@ -75,15 +79,16 @@
     previousColsIndent = ( ((colNum * MAX_LETTERS_PER_WORD) / MAX_LETTERS_PER_LINE) * winSize.width);
     currentColIndentFromColEdge = (((MAX_LETTERS_PER_WORD - longestWordInColumn) / 2) / MAX_LETTERS_PER_LINE) * winSize.width;
     colIndentFromLeftEdge = playerEdge + playerLineMargin + previousColsIndent + currentColIndentFromColEdge;
-    
+    ******************/
     //HARDCODE VALUES
     if(playerNum == 1)
     {
-        colIndentFromLeftEdge = 340.0f;
+        colIndentFromLeftEdge = 145.0f;
+        
     }
     else
     {
-        colIndentFromLeftEdge = 145.0f;
+        colIndentFromLeftEdge = 340.0f;
     }
 
     return (colIndentFromLeftEdge);

@@ -16,6 +16,7 @@
 #import "Parse/Parse.h"
 #import "CCNotifications.h"
 #import "Util.h"
+#import "PauseMenu.h"
 
 @implementation HelloWorld
 
@@ -26,6 +27,10 @@
 @synthesize tapToChangeRight;
 @synthesize player1LongName;
 @synthesize player2LongName;
+@synthesize pauseState;
+@synthesize pauseActive;
+@synthesize pauseMenuPlayAndPass;
+
 
 +(id) scene
 {
@@ -115,7 +120,8 @@
         [self addChild:tapToChangeLeft];
         
         tapToChangeRight = [CCSprite spriteWithFile:@"tap_to_change_right.png"];
-        tapToChangeRight.position = ccp(360, 295);
+        //tapToChangeRight.position = ccp(360, 295);
+        tapToChangeRight.position = ccp(330, 295);
         [self addChild:tapToChangeRight];
         
         player1Name = [[CCLabelTTF labelWithString:[Util formatName:player1LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
@@ -269,6 +275,14 @@
         [enterPlayer2Name setBounds:CGRectMake(0, 0, 80, 30)];
         enterPlayer2Name.backgroundColor = [UIColor whiteColor];
         enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
+        
+        
+        //ALLOCATE PAUSE MENU
+        pauseState = FALSE;
+        pauseActive = NO;
+        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
+        [pauseMenuPlayAndPass addToMyScene:self];
+
 	}
 	return self;
 }
@@ -534,12 +548,48 @@
 	//TODO: Garbage collect timerLabel
 	[timerLabel runAction:[CCSpawn actions:[CCMoveBy actionWithDuration:1 position:ccp(0, 15)], [CCFadeOut actionWithDuration:1], nil]];
 }
+-(BOOL) stopTimer
+{
+     [self unschedule:@selector(updateTimer:)];
+    
+    return TRUE;
+}
+
+-(BOOL) startTimer
+{
+    if (!playButtonReady) {
+        [self schedule:@selector(updateTimer:) interval:1.0f];
+    }
+    
+    return TRUE;
+}
 
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
+    
+    //PLAY HAS BEGAN SO ENABLE PAUSE BUTTON
+    if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
+            pauseState = TRUE;
+            [pauseMenuPlayAndPass showPauseMenu:self];
+    }
+   
+    // FUNCTIONS ON THE PAUSE MENU                     
+    if (pauseState) {
+        CCLOG(@"In a pause state.");
+        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kHelloWorldScene];        
+    }
+    
+    //MCH - JAE PROGRAMMING STYLE QUESTION, ONE RETURN POINT OR MULTIPLE?
+    //DON'T EXECUTE GAME SCREEN FUNCTIONS FURTHER IF IN A PAUSE STATE
+	if (pauseState) {
+		return TRUE;
+	}
+
+    
+    //PLAY BUTTON PRESSED
     if (playButtonReady && CGRectContainsPoint(_playButton.boundingBox, touchLocation)) {
         [self fadeOutLetters];
         _playButton.visible = NO;
@@ -547,6 +597,7 @@
         tapToChangeLeft.visible = NO;
         tapToChangeRight.visible = NO;
         [self schedule:@selector(updateTimer:) interval:1.0f];
+        
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
         [self getPlayer1Name];
     } else if (playButtonReady && !tapToNameRightActive && !tapToNameLeftActive && CGRectContainsPoint(player2Name.boundingBox, touchLocation)) {
@@ -556,10 +607,11 @@
     } else if (playButtonReady && !tapToNameRightActive && !tapToNameLeftActive && CGRectContainsPoint(tapToChangeRight.boundingBox, touchLocation)) {
         [self getPlayer2Name];
     }
-    
-	if (!gameOver && !enableTouch) {
+    if (!gameOver && !enableTouch) {
 		return TRUE;
 	}
+
+    
 	
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
@@ -651,8 +703,10 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"100"];
-	[player2Timer setString:@"100"];
+	//[player1Timer setString:@"100"];
+	//[player2Timer setString:@"100"];
+    [player1Timer setString:@"20"];
+	[player2Timer setString:@"20"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -1030,7 +1084,7 @@
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
-                                                   ForMultiPlayer:FALSE
+                                                   ForGameMode:kPlayAndPass
                                                    ]];
 
 	} else {
