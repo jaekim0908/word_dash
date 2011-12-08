@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import "MainMenuScene.h"
 #import "MultiPlayerScene.h"
-#import "PlayAndPassScene.h"
+#import "PlayAndPass.h"
 #import "HelloWorld.h"
 #import "LoadingScene.h"
 #import "HowToPlay.h"
@@ -108,7 +108,7 @@ static GameManager* _sharedGameManager = nil;
 			break;
 		case kPlayAndPassScene:
 			CCLOG(@"Play and Pass Scene");
-			sceneToRun = [PlayAndPassScene node];
+			sceneToRun = [PlayAndPass node];
 			break;
 		case kHelloWorldScene:
 			CCLOG(@"Play and Pass Scene");

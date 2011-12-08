@@ -29,7 +29,6 @@
 @property (nonatomic, retain) CCSprite *mainMenuButton;
 @property (nonatomic, retain) CCSprite *resumeButton;
 @property (nonatomic, retain) CCSprite *howToPlayButton;
-@property (nonatomic, retain) CCSpriteBatchNode *batchNode;
 
 -(BOOL) addToMyScene:(CCLayer *) myScene;
 -(BOOL) showPauseMenu:(CCLayer *) myScene;
