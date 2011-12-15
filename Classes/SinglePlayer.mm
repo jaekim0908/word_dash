@@ -31,6 +31,9 @@
 @synthesize player1Name;
 @synthesize pauseState;
 @synthesize pauseMenuPlayAndPass;
+@synthesize thisGameBeatAIAward;
+@synthesize thisGameTotalPointsAward;
+@synthesize thisGameLongWordAward;
 
 +(id) scene
 {
@@ -626,8 +629,10 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-	[player1Timer setString:@"20"];
-	[player2Timer setString:@"20"];
+	//[player1Timer setString:@"100"];
+	//[player2Timer setString:@"100"];
+    [player1Timer setString:@"60"];
+	[player2Timer setString:@"60"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -996,7 +1001,11 @@
     BOOL match = NO;
     NSString *ans;
     CCLOG(@"AI FIND WORDS");
-    int batchSize = 10;
+    int batchSize;
+    
+    batchSize = [GameManager sharedGameManager].singlePlayerBatchSize;
+    
+    CCLOG(@"BATCH SIZE: %i",batchSize);
     
     if (progressiveScore != nil) {
         batchSize += [progressiveScore intValue];
@@ -1028,6 +1037,77 @@
             }
         }
     }
+}
+
+-(int) getLongestWordLengthInArray:(NSMutableArray *) playerWordsArray
+{
+    
+    NSString *tmpWord=nil;
+    int longestLength=0, longestWordIndex=0, currentWordLength, i=0;
+    
+    for (i=0;i < playerWordsArray.count;i++)  {
+        
+        tmpWord = [playerWordsArray objectAtIndex:i];
+        currentWordLength = [tmpWord length];
+        if(currentWordLength > longestLength){
+            longestLength = currentWordLength;
+            longestWordIndex = i;
+        }
+    }
+
+    return longestLength;
+    
+}
+
+- (void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore Player1Words:(NSMutableArray *)player1WordsArray
+{
+    NSMutableDictionary *allGameLevels = [[GameManager sharedGameManager] getGameLevelDictionary];
+    NSString *currentLevel = [NSString stringWithFormat:@"Level%i",[GameManager sharedGameManager].singlePlayerLevel];
+    NSMutableDictionary *levelInfo = [ allGameLevels objectForKey:currentLevel];
+    
+    BOOL beatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
+    BOOL totalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL longWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL updatePList = NO;
+    
+    //BEAT AI AWARD        
+    //IF THE PLAYER BEAT THE AI
+    if (p1Score > aiScore) {
+        if (!beatAIAward) {
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"beatAIAward"];
+        }
+        self.thisGameBeatAIAward = YES;
+    }
+        
+    int totalPointsForStar = [[levelInfo objectForKey:@"totalPointsForStar"] boolValue];
+    //IF THE PLAYER PAST THE TOTAL POINTS THRESHOLD
+    if (p1Score >= totalPointsForStar){
+        if(!totalPointsAward){
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"totalPointsAward"];
+        }
+        self.thisGameTotalPointsAward = YES;
+    }
+    
+    int wordLengthForStar = [[levelInfo objectForKey:@"wordLengthForStar"] boolValue];
+    int longestWordLength = [self getLongestWordLengthInArray:player1WordsArray];
+    //IF THE LONGEST WORD IS GREATER THAN THE THRESHOLD
+    if (longestWordLength >= wordLengthForStar) {
+        if(!longWordAward){
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"longWordAward"];
+        }
+        self.thisGameLongWordAward = YES;
+    }
+        
+    //UPDATE THE PLIST FILE IF ANY NEW AWARDS WERE WON THIS GAME
+    if (updatePList) {
+        [allGameLevels setObject:levelInfo forKey:currentLevel];
+        NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
+        [allGameLevels writeToFile:path atomically:YES];
+    }                  
+    
 }
 
 - (void) updateTimer:(ccTime) dt {
@@ -1119,6 +1199,11 @@
         // TODO: change this to be a background process??
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [singlePlayGameHistory saveInBackground];
+        
+        
+        //MCH - call determine awards for single player here
+        //!!! CHANGE LONGEST WORD LENGTH
+        [self determineAwardsForSinglePlayer:[[player1Score string] intValue] AIScore:[[player2Score string] intValue] Player1Words:player1Words];
         
         //MCH - display results layer
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Level1</key>
+	<dict>
+		<key>beatAIAward</key>
+		<integer>0</integer>
+		<key>totalPointsAward</key>
+		<integer>0</integer>
+		<key>longWordAward</key>
+		<integer>0</integer>
+		<key>totalPointsForStar</key>
+		<integer>500</integer>
+		<key>batchSize</key>
+		<integer>20</integer>
+		<key>wordLengthForStar</key>
+		<integer>6</integer>
+	</dict>
+</dict>
+</plist>

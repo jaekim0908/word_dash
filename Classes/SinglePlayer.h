@@ -85,6 +85,10 @@
     
     PauseMenu *pauseMenuPlayAndPass;
     BOOL      pauseState;
+    
+    BOOL thisGameBeatAIAward;
+    BOOL thisGameTotalPointsAward;
+    BOOL thisGameLongWordAward;
 
 }
 
@@ -97,6 +101,10 @@
 @property (nonatomic, retain) NSString *player1Name;
 @property BOOL pauseState;
 @property (nonatomic, retain) PauseMenu *pauseMenuPlayAndPass;
+@property BOOL thisGameBeatAIAward;
+@property BOOL thisGameTotalPointsAward;
+@property BOOL thisGameLongWordAward;
+
 
 
 // returns a Scene that contains the HelloWorld as the only child
@@ -133,5 +141,9 @@
 - (BOOL) allLettersOpened;
 - (BOOL) stopTimer;
 - (BOOL) startTimer;
+- (void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore LongestWordLength:(int)longestWordLength;
+- (int) getLongestWordLengthInArray:(NSMutableArray *) playerWordsArray;
+
+
 
 @end

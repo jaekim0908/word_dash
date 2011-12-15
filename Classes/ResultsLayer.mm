@@ -8,6 +8,7 @@
 
 #import "ResultsLayer.h"
 #import "GameManager.h"
+#import "Parse/Parse.h"
 
 @implementation ResultsLayer
 
@@ -80,6 +81,27 @@
 	return scene;
 }
 
+-(int) getLongestWordIndexInArray:(NSMutableArray *) playerWordsArray
+{
+    
+    NSString *tmpWord;
+    int longestLength=0, longestWordIndex=0, currentWordLength, i=0;
+    
+    for (i=0;i < playerWordsArray.count;i++)  {
+        
+        tmpWord = [playerWordsArray objectAtIndex:i];
+        currentWordLength = [tmpWord length];
+        if(currentWordLength > longestLength){
+            longestLength = currentWordLength;
+            longestWordIndex = i;
+        }
+    }
+    
+    return longestWordIndex;
+    
+}
+
+
 -(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode
 {
     winSize = [[CCDirector sharedDirector] winSize];
@@ -118,12 +140,47 @@
         
         currentPage=0;
         
-        
-        
 		[GameManager sharedGameManager].gameStatus = kGameFinished;
 		NSLog(@"Inside results layer.");
 		self.isTouchEnabled = YES;
         
+        //QUERY FOR LONGEST WORD
+        PFQuery *query = [PFQuery queryWithClassName:@"LongestWord"];
+        query.limit = [NSNumber numberWithInt:10];
+        [query orderByDescending:@"longestWordInGame"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %d scores.", objects.count);
+                
+                if (objects.count > 0) {
+                    PFObject *longestWordResult = [objects objectAtIndex:0];
+                    int longestWordLength = [[longestWordResult objectForKey:@"longestWordLength"] intValue];
+                    NSString *longestWordLetters = [longestWordResult objectForKey:@"longestWordLetters"];
+                    NSLog(@"LONGEST WORD LENGTH:%d, LONGEST WORD:%@", longestWordLength, longestWordLetters);
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+        
+        //DETERMINE LONGEST WORD FOR EACH PLAYER AND 
+        NSString *player1LongestWord, *player2LongestWord;
+        int p1LongestWordIndex, p2LongestWordIndex;
+        
+        
+        p1LongestWordIndex = [self getLongestWordIndexInArray:copyPlayer1Words];
+        player1LongestWord = [copyPlayer1Words objectAtIndex:p1LongestWordIndex];
+        
+        //PLAYER 1 ON RIGHT FOR NOW, DON'T WRITE AI's SCORES  -- SWITCH SOON AFTER GETTING JAE'S CODE
+        if (theGameMode != kSinglePlayer) {
+            p2LongestWordIndex = [self getLongestWordIndexInArray:copyPlayer2Words];
+            player2LongestWord = [copyPlayer2Words objectAtIndex:p2LongestWordIndex];
+        }
+        
+        CCLOG(@"PLAYER 1 LONGEST WORD:%@",player1LongestWord);
+        //CCLOG(@"PLAYER 1 LONGEST WORD:%@ , PLAYER 2 LONGEST WORD:%@",player1LongestWord, player2LongestWord);
         
 		NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
         NSString *p2Name;
@@ -134,6 +191,17 @@
         else{
             p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
         }
+        
+
+        //WRITE TO PARSE
+        PFObject *longestWordObject = [PFObject objectWithClassName:@"LongestWord"];
+        [longestWordObject setObject:p1Name forKey:@"playerName"];
+        [longestWordObject setObject:[NSNumber numberWithInt:[player1LongestWord length]] forKey:@"longestWordLength"];
+        [longestWordObject setObject:player1LongestWord forKey:@"longestWordLetters"];
+        [longestWordObject setObject:[GameManager sharedGameManager].gameUUID forKey:@"gameUUID"];
+        [longestWordObject saveInBackground];
+        
+        
         /*****************************/
 		//PLAYER 1
         /*****************************/
@@ -335,9 +403,7 @@
             
             NSString *s = [pWords objectAtIndex:j];
             //NSLog(@"Player 1 WORDS: %@",s );
-            CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:s
-														fontName:@"Marker Felt" 
-														fontSize:12] retain];//MCH - used to be 12
+            CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:s fontName:@"Marker Felt" fontSize:12] retain];//MCH - used to be 12
             wordLabel.color = ccc3(255,255,255);
             wordLabel.position = ccp((pResultPage.pColumnIndentFromLeftEdge)[i], y);
             //MCH
@@ -542,11 +608,19 @@
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
         
-        if (!self.flagMultiPlayer) {
-            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        switch (theGameMode) {
+            case kPlayAndPass:
+                [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+                break;
+            case kSinglePlayer:
+                [[GameManager sharedGameManager] runSceneWithId:kSinglePlayerScene];
+                break;
+            default:
+                break;
         }
-        else{
-            /*
+ 
+        
+             /*
             [[GameManager sharedGameManager] closeGame];
             CCLOG(@"--------------------------------------------");
             CCLOG(@"Rematch button pressed");
@@ -570,7 +644,7 @@
             [GameManager sharedGameManager].isChallenger = YES;
             [OFUser getUser:opponentId];
              */
-        }
+        
 	}
  
  

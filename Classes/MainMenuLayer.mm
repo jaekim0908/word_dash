@@ -253,7 +253,8 @@
 
 -(void) displaySinglePlayer {
     CCLOG(@"display single player");
-    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+    //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
 }
 
 

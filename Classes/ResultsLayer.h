@@ -76,6 +76,7 @@
             xPosColumn1of2At:(float) xPos1of2 
            xPosColumn2of2At:(float) xPos2of2;
 - (BOOL) clearCurrentPage:(int) playerNum;
+-(int) getLongestWordIndexInArray:(NSArray *) playerWordsArray;
 
 
 @end
