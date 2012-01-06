@@ -21,10 +21,23 @@
 	NSLog(@"LoadingScene initWithTargetScene");
 	if ((self = [super init])) {
 		_targetScene = targetScene;
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading ..." fontName:@"Verdana" fontSize:64];
+        
+        
+        CCSprite *titlePage = [CCSprite spriteWithFile:@"loadingPage2.png"];
+        //CCSprite *titlePage = [CCSprite spriteWithFile:@"whiteSandBg.png"];
+        titlePage.position = ccp(240,160);
+		[self addChild:titlePage];
+        
+        //CCSprite *loadingLiteral = [CCSprite spriteWithFile:@"loadingLiteral.png"];
+        //loadingLiteral.position = ccp(240,48);
+		//[self addChild:loadingLiteral z:5];
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading ..." fontName:@"Verdana" fontSize:48];
 		CGSize size = [[CCDirector sharedDirector] winSize];
-		label.position = CGPointMake(size.width/2, size.height/2);
-		[self addChild:label];
+        label.color = ccc3(255, 255, 0);
+		label.position = ccp(240, 160);
+        [self addChild:label z:5];
+
 		[self scheduleUpdate];
 	}
 	

@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import "MainMenuScene.h"
 #import "MultiPlayerScene.h"
-#import "PlayAndPassScene.h"
+#import "PlayAndPass.h"
 #import "HelloWorld.h"
 #import "LoadingScene.h"
 #import "HowToPlay.h"
@@ -19,6 +19,7 @@
 #import "SinglePlayLevelMenu.h"
 #import "Parse/Parse.h"
 #import "ScoreSummary.h"
+#import "ResultsLayer.h"
 
 
 @implementation GameManager
@@ -41,6 +42,13 @@ static GameManager* _sharedGameManager = nil;
 @synthesize singlePlayerBatchSize = _singlePlayerBatchSize;
 @synthesize gameLevelPListPath = _gameLevelPListPath;
 @synthesize gameLevelDictionary = _gameLevelDictionary;
+@synthesize player1Score = _player1Score;
+@synthesize player2Score = _player2Score;
+@synthesize player1Words = _player1Words;
+@synthesize player2Words = _player2Words;
+@synthesize gameMode = _gameMode;
+@synthesize aiMaxWaitTime = _aiMaxWaitTime;
+
 
 
 +(GameManager*) sharedGameManager {
@@ -130,7 +138,7 @@ static GameManager* _sharedGameManager = nil;
 			break;
 		case kPlayAndPassScene:
 			CCLOG(@"Play and Pass Scene");
-			sceneToRun = [PlayAndPassScene node];
+			sceneToRun = [PlayAndPass node];
 			break;
 		case kHelloWorldScene:
 			CCLOG(@"Play and Pass Scene");
@@ -155,12 +163,16 @@ static GameManager* _sharedGameManager = nil;
             sceneToRun = [SinglePlayLevelMenu scene];
             break;
 
-            
         case kScoreSummaryScene:
             CCLOG(@"ScoreSummary Scene");
             sceneToRun = [ScoreSummary scene];
             break;    
-            
+
+        case kWordSummaryScene:
+            CCLOG(@"WordSummary Scene");
+            sceneToRun = [ResultsLayer scene];
+            break;    
+
 		default:
 			CCLOG(@"Unknown Id, cannot switch scene");
 			break;

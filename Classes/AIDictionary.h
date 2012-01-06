@@ -20,5 +20,7 @@
 
 +(AIDictionary*) sharedDictionary;
 -(void) loadDictionary;
+-(NSMutableArray *) loadAllWords;
+
 
 @end

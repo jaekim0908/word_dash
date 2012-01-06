@@ -20,7 +20,6 @@
 @synthesize mainMenuButton;
 @synthesize resumeButton;
 @synthesize howToPlayButton;
-@synthesize batchNode;
 
 
 
@@ -31,10 +30,10 @@
     // Retina Display Support
     if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"PauseMenuAssets-hd.plist"];
-        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets-hd.png"]];
+        batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets-hd.png"]] retain];
     } else {
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"PauseMenuAssets.plist"];
-        batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets.png"]];
+        batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets.png"]] retain];
     }
 
      
@@ -136,6 +135,19 @@
         [myScene startTimer];
     }
     return pauseState;
+}
+
+-(void) dealloc {
+    self.pauseButton = nil;
+    self.pauseBackground = nil;
+    self.wavesAndBeach = nil;
+    self.rematchButton = nil;
+    self.mainMenuButton = nil;
+    self.resumeButton = nil;
+    self.howToPlayButton = nil;
+    [batchNode release];
+    batchNode = nil;
+    [super dealloc];
 }
 
 @end

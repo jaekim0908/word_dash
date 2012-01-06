@@ -248,7 +248,8 @@
 
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");
-	[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
+	//[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
 }
 
 -(void) displaySinglePlayer {
