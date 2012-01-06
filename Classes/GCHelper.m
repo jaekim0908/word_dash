@@ -7,6 +7,7 @@
 //
 
 #import "GCHelper.h"
+#import "GameManager.h"
 
 @implementation GCHelper
 @synthesize gameCenterAvailable;
@@ -69,7 +70,6 @@ static GCHelper *sharedHelper = nil;
             self.pendingInvite = acceptedInvite;
             self.pendingPlayersToInvite = playersToInvite;
             [delegate inviteReceived];
-            
         };
         
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
@@ -87,6 +87,7 @@ static GCHelper *sharedHelper = nil;
         if (error != nil) {
             NSLog(@"Error retrieving player info: %@", error.localizedDescription);
             matchStarted = NO;
+            NSLog(@"calling matchEnded");
             [delegate matchEnded];
         } else {
             
@@ -165,6 +166,7 @@ static GCHelper *sharedHelper = nil;
 // The user has cancelled matchmaking
 - (void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController {
     [presentingViewController dismissModalViewControllerAnimated:YES];
+    [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
 }
 
 // Matchmaking has failed with an error

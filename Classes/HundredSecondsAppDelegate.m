@@ -17,6 +17,7 @@
 @implementation HundredSecondsAppDelegate
 
 @synthesize window;
+@synthesize viewController;
 
 - (void) removeStartupFlicker
 {
@@ -109,7 +110,7 @@
 	
 	// Removes the startup flicker
 	[self removeStartupFlicker];
-	
+    
 	// Run the intro Scene
 	//[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];		
 	//[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];

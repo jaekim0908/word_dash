@@ -35,3 +35,91 @@ typedef enum {
 	kPlayAndPass,
 	kMultiplayer
 } GameMode;
+
+
+typedef enum {
+    kMessageTypeRandomNumber = 0,
+    kMessageTypeGameBegin,
+    kMessageTypeMove,
+    kMessageTypeBoard,
+    kMessageTypeCell,
+    kMessageTypePlayButtonPressed,
+    kMessageTypeSetStarPoint,
+    kMessageTypeOpenCell,
+    kMessageTypeSendTimer,
+    kMessageTypeCellSelected,
+    kMessageTypeCellUnSelected,
+    kMessageTypeCheckAnswer,
+    kMessageTypeSendTileFlipCount,
+    kMessageTypeResetTileFlipCount,
+    kMessageTypeSendEndTurn,
+    kMessageTypeGameOver
+} MessageType;
+
+typedef struct {
+    MessageType messageType;
+} Message;
+
+typedef struct {
+    Message message;
+    uint32_t randomNumber;
+} MessageRandomNumber;
+
+typedef struct {
+    Message message;
+} MessageGameBegin;
+
+typedef struct {
+    Message message;
+} MessageMove;
+
+typedef struct {
+    Message message;
+} MessageTimer;
+
+typedef struct {
+    Message message;
+    int row;
+    int col;
+    char ch;
+    BOOL isVisible;
+    BOOL isStarPoint;
+    BOOL endTurn;
+    BOOL countScore;
+} MessageCell;
+
+typedef struct {
+    Message message;
+    BOOL player1Won;
+} MessageGameOver;
+
+typedef struct {
+    Message message;
+} MessageCheckAnswer;
+
+typedef struct {
+    Message message;
+    int count;
+} MessageSendTileFlipCount;
+
+typedef struct {
+    Message message;
+} MessageResetTileFlipCount;
+
+typedef struct {
+    Message message;
+} MessageSendEndTurn;
+
+typedef enum {
+    kEndReasonWin,
+    kEndReasonLose,
+    kEndReasonDisconnect
+} EndReason;
+
+typedef enum {
+    kGameStateWaitingForMatch = 0,
+    kGameStateWaitingForRandomNumber,
+    kGameStateWaitingForStart,
+    kGameStateActive,
+    kGameStateDone
+} GameState;

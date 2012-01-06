@@ -19,7 +19,6 @@
     CCSprite *resumeButton;
     CCSprite *howToPlayButton; 
     CCSpriteBatchNode *batchNode;
-    
 }
 
 @property (nonatomic, retain) CCSprite *pauseButton;
@@ -32,6 +31,7 @@
 
 -(BOOL) addToMyScene:(CCLayer *) myScene;
 -(BOOL) showPauseMenu:(CCLayer *) myScene;
+-(void) hidePauseMenu:(CCLayer *) myScene;
 -(BOOL) execPauseMenuActions:(CGPoint) touchLocation forScene:(CCLayer *) myScene withId:(SceneTypes)sceneId;
 
 @end

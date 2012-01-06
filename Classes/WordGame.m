@@ -61,8 +61,8 @@
 		y_offset = 30;
 		playerTurn = 1;
 		gameOver = NO;
-		player1TileFipped = NO;
-		player2TileFipped = NO;
+		player1TileFlipped = NO;
+		player2TileFlipped = NO;
 		enableTouch = NO;
 		countNoTileFlips = 1;
 		currentStarPoints = 8;
@@ -242,7 +242,7 @@
         
         // Initialize TextFields
         enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
-        [enterPlayer1Name setDelegate:self];
+        [enterPlayer1Name setDelegate:self]; 
         [enterPlayer1Name setBorderStyle:UITextBorderStyleRoundedRect];
         enterPlayer1Name.textAlignment = UITextAlignmentCenter;
         [enterPlayer1Name setTextColor:[UIColor blackColor]];
@@ -260,15 +260,6 @@
         [enterPlayer2Name setBounds:CGRectMake(0, 0, 80, 30)];
         enterPlayer2Name.backgroundColor = [UIColor whiteColor];
         enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
-        
-        
-        //ALLOCATE PAUSE MENU
-        /*
-        pauseState = FALSE;
-        pauseActive = NO;
-        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
-        [pauseMenuPlayAndPass addToMyScene:self];
-        */
 	}
 	return self;
 }
@@ -391,32 +382,32 @@
 }
 
 - (void) setStarPoints {
-	
-	if ([starPoints count] > 0) {
-		return;
-	}
     
-	int n = 0;
-	
-	while (n < currentStarPoints) {
-		NSLog(@"setting star points");
-		int randomRow = arc4random() % rows;
-		int randomCol = arc4random() % cols;
-		Cell *cell = [[wordMatrix objectAtIndex:randomRow] objectAtIndex:randomCol];
-		
-		if (![self isThisStarPoint:cell]) {
-			[starPoints addObject:cell];
-			n++;
-		}
-	}
+    int n = 0;
+    
+    if ([starPoints count] > 0) {
+        return;
+    }
+    
+    while (n < currentStarPoints) {
+        NSLog(@"setting star points");
+        int randomRow = arc4random() % rows;
+        int randomCol = arc4random() % cols;
+        Cell *cell = [[wordMatrix objectAtIndex:randomRow] objectAtIndex:randomCol];
+        
+        if (![self isThisStarPoint:cell]) {
+            [starPoints addObject:cell];
+            n++;
+        }
+    }
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
 	
 	if (flag) {
-		if (playerTurn == 1 && !player1TileFipped) {
+		if (playerTurn == 1 && !player1TileFlipped) {
 			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFipped) {
+		} else if (playerTurn == 2 && !player2TileFlipped) {
 			countNoTileFlips++;
 		} else {
 			countNoTileFlips = 1;
@@ -433,8 +424,8 @@
 	}
 	
 	[self clearLetters];
-    player1TileFipped = NO;
-    player2TileFipped = NO;
+    player1TileFlipped = NO;
+    player2TileFlipped = NO;
     
     NSString *turnMessage;
     
@@ -734,6 +725,19 @@
     return cell;
 }
 
+- (void) removeCellAtRow:(int) r Col:(int) c {
+    Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+    cell.letterSprite.visible = NO;
+    cell.letterBackground.visible = NO;
+    cell.star.visible = NO;
+    cell.letterSelected.visible = NO;
+    [cell.letterSprite removeFromParentAndCleanup:YES];
+    [cell.letterBackground removeFromParentAndCleanup:YES];
+    [cell.letterSelected removeFromParentAndCleanup:YES];
+    [cell.star removeFromParentAndCleanup:YES];
+    [[wordMatrix objectAtIndex:r] removeObjectAtIndex:c];
+}
+
 - (void) clearAllSelectedLetters {
 	
 	[currentAnswer setString:@" "];
@@ -888,14 +892,6 @@
 		enableTouch = NO;
 		int p1score = [[player1Score string] intValue];
 		int p2score = [[player2Score string] intValue];
-		if (p1score > p2score) {
-			[midDisplay setString:@"Player 1 Wins"];
-		} else if (p1score < p2score) {
-			[midDisplay setString:@"Player 2 Wins"];
-		} else {
-			[midDisplay setString:@"Tie Game"];
-		}
-		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];
         
         CCLOG(@"***************Creating SinglePlayGameHistory object***************");
         PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
@@ -963,6 +959,21 @@
 			}
 		}
 	}	
+}
+
+- (BOOL) isVowel:(NSString *) str {
+    return ([str isEqualToString:@"A"] ||
+            [str isEqualToString:@"E"] ||
+            [str isEqualToString:@"I"] ||
+            [str isEqualToString:@"O"] ||
+            [str isEqualToString:@"U"]);
+}
+
+- (BOOL) isGameOver {
+    int p1 = [[player1Timer string] intValue];
+	int p2 = [[player2Timer string] intValue];
+    
+    return (p1 + p2 == 0);
 }
 
 // on "dealloc" you need to release all your retained objects

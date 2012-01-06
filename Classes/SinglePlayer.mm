@@ -56,7 +56,7 @@
         numOfLossesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_losses_vs_ai"];
         numOfTiesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_ties_vs_ai"];
         longestAnswer = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"longest_answer"];
-        player1LongName  = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        self.player1LongName  = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
         
         if (!aiLevel) {
             aiLevel = [NSString stringWithFormat:@"0"];
@@ -89,7 +89,7 @@
         }
         
         if (!player1LongName) {
-            player1LongName = @"Player 1";
+            self.player1LongName = @"Player 1";
         }
         
         pauseState = FALSE;
@@ -102,9 +102,9 @@
 - (void) switchTo:(int) player countFlip:(BOOL) flag {
 	
 	if (flag) {
-		if (playerTurn == 1 && !player1TileFipped) {
+		if (playerTurn == 1 && !player1TileFlipped) {
 			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFipped) {
+		} else if (playerTurn == 2 && !player2TileFlipped) {
 			countNoTileFlips++;
 		} else {
 			countNoTileFlips = 1;
@@ -121,8 +121,8 @@
 	}
     	
 	[self clearLetters];
-    player1TileFipped = NO;
-    player2TileFipped = NO;
+    player1TileFlipped = NO;
+    player2TileFlipped = NO;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
@@ -239,9 +239,9 @@
                             [self updateAnswer];
                         }
                     } else {
-                        if (playerTurn == 1 && !player1TileFipped) {
+                        if (playerTurn == 1 && !player1TileFlipped) {
                             cell.letterSprite.visible = YES;
-                            player1TileFipped = YES;
+                            player1TileFlipped = YES;
                             if ([cell.value isEqualToString:@"A"] || 
                                 [cell.value isEqualToString:@"E"] || 
                                 [cell.value isEqualToString:@"I"] || 
@@ -252,9 +252,9 @@
                             if ([self isThisStarPoint:cell]) {
                                 cell.star.visible = YES;
                             }
-                        } else if (playerTurn == 2 && !player2TileFipped) {
+                        } else if (playerTurn == 2 && !player2TileFlipped) {
                             cell.letterSprite.visible = YES;
-                            player2TileFipped = YES;
+                            player2TileFlipped = YES;
                             if ([cell.value isEqualToString:@"A"] || 
                                 [cell.value isEqualToString:@"E"] || 
                                 [cell.value isEqualToString:@"I"] || 
@@ -326,7 +326,7 @@
     if (arraySize > 0) {
         Cell *cell = [nonVisibleCells objectAtIndex:(arc4random() % arraySize)];
         cell.letterSprite.visible = YES;
-        player2TileFipped = YES;
+        player2TileFlipped = YES;
         if ([cell.value isEqualToString:@"A"] || 
             [cell.value isEqualToString:@"E"] || 
             [cell.value isEqualToString:@"I"] || 
@@ -418,7 +418,7 @@
         batchSize += [progressiveScore intValue];
     }
     
-    if (batchSize <= 0) batchSize = 5;
+    batchSize = 500;
     
     for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];

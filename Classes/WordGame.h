@@ -52,8 +52,8 @@
     CCSprite *transparentBoundingBox1;
     CCSprite *transparentBoundingBox2;
     NSMutableArray *userSelection;
-    BOOL player1TileFipped;
-    BOOL player2TileFipped;
+    BOOL player1TileFlipped;
+    BOOL player2TileFlipped;
     NSMutableDictionary *foundWords;
     NSMutableArray *player1Words;
     NSMutableArray *player2Words;
@@ -110,11 +110,14 @@
 - (void) setStarPoints;
 - (int) countStarPointandRemoveStars;
 - (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c;
+- (void) removeCellAtRow:(int) r Col:(int) c;
 - (void) fadeInLetters;
 - (void) fadeOutLetters;
 - (void) displayLetters;
 - (void) showPlayButton;
 - (void) getPlayer1Name;
 - (void) getPlayer2Name;
-
+- (void) removeCellAtRow:(int) r Col:(int) c;
+- (BOOL) isVowel:(NSString *) str;
+- (BOOL) isGameOver;
 @end
