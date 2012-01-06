@@ -555,6 +555,8 @@
 	[starPoints removeAllObjects];
     [player1Timer setString:@"60"];
 	[player2Timer setString:@"60"];
+    //[player1Timer setString:@"20"];
+	//[player2Timer setString:@"20"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -932,13 +934,24 @@
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [player2ScoreRecord saveInBackground];
         
+        
         //MCH - display results layer 
+        [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+        [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+        [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+        [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+        [[GameManager sharedGameManager] setGameMode:kPlayAndPass];
+        
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        /*********
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
                                                           ForGameMode:kPlayAndPass
                                                    ]];
+         
+         ******/
         
 	} else {
 		if (playerTurn == 1) {

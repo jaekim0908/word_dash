@@ -22,6 +22,19 @@
     BOOL _hasFriendsWithThisApp;
 	GameStatus _gameStatus;
     NSString *_gameUUID;
+    int _singlePlayerLevel;
+    int _singlePlayerBatchSize;
+    
+    NSMutableDictionary *_gameLevelDictionary;
+    NSString *_gameLevelPListPath;
+    
+    NSString *_player1Score;
+    NSString *_player2Score;
+    NSMutableArray *_player1Words;
+    NSMutableArray *_player2Words;
+    
+    GameMode _gameMode;
+    int      _aiMaxWaitTime;
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -36,6 +49,16 @@
 @property (readwrite) BOOL hasFriendsWithThisApp;
 @property (readwrite) GameStatus gameStatus;
 @property (nonatomic, retain) NSString *gameUUID;
+@property (readwrite) int singlePlayerLevel;
+@property (readwrite) int singlePlayerBatchSize;
+@property (nonatomic, retain) NSString *gameLevelPListPath;
+@property (nonatomic, retain) NSMutableDictionary *gameLevelDictionary;
+@property (nonatomic, retain) NSString *player1Score;
+@property (nonatomic, retain) NSString *player2Score;
+@property (nonatomic, retain) NSMutableArray *player1Words;
+@property (nonatomic, retain) NSMutableArray *player2Words;
+@property (readwrite) GameMode gameMode;
+@property (readwrite) int aiMaxWaitTime;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;
@@ -45,4 +68,8 @@
 //-(void) sendChallengeToUserId:(NSString *) userId;
 -(void) saveToUserDefaultsForKey:(NSString*) key Value:(NSString *) val;
 -(NSString*)retrieveFromUserDefaultsForKey:(NSString *) key;
+-(NSMutableDictionary *) getGameLevelDictionary;
+-(NSString *) getGameLevelPListPath;
+
+
 @end

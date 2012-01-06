@@ -8,6 +8,7 @@
 
 #import "ResultsLayer.h"
 #import "GameManager.h"
+#import "Parse/Parse.h"
 
 @implementation ResultsLayer
 
@@ -18,8 +19,8 @@
 @synthesize mainMenuButton;
 @synthesize definition;
 
-@synthesize copyPlayer1Words;
-@synthesize copyPlayer2Words;
+@synthesize dupPlayer1Words;
+@synthesize dupPlayer2Words;
 @synthesize p1WordLabels;
 @synthesize winSize;
 @synthesize currentPage;
@@ -63,24 +64,49 @@
 #define MAX_WORDS_PER_PAGE  11
 
 
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode{
+//+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode{
++(id) scene{
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
     
     // 'layer' is an autorelease object.
 	ResultsLayer	*layer = [ResultsLayer node];
+    /****
     [layer initWithPlayerOneScore:p1Score 
                WithPlayerTwoScore:p2Score 
                WithPlayerOneWords:p1Words 
                WithPlayerTwoWords:p2Words
                       ForGameMode:gameMode]; 
+     */
 	[scene addChild:layer];  
     
 	// return the scene
 	return scene;
 }
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode
+-(int) getLongestWordIndexInArray:(NSMutableArray *) playerWordsArray
+{
+    
+    NSString *tmpWord;
+    int longestLength=0, longestWordIndex=-1, currentWordLength, i=0;
+    
+    for (i=0;i < playerWordsArray.count;i++)  {
+        
+        tmpWord = [playerWordsArray objectAtIndex:i];
+        currentWordLength = [tmpWord length];
+        if(currentWordLength > longestLength){
+            longestLength = currentWordLength;
+            longestWordIndex = i;
+        }
+    }
+    
+    return longestWordIndex;
+    
+}
+
+
+//-(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode
+-(id) init
 {
     winSize = [[CCDirector sharedDirector] winSize];
     arrayPagesPlayer1 = [[NSMutableArray array] retain];
@@ -89,7 +115,7 @@
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
         
     
-        theGameMode = gameMode;
+        theGameMode = [[GameManager sharedGameManager] gameMode];
         
         //SETUP SPRITE SHEET
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -108,24 +134,81 @@
         whiteBackground.position = ccp(240,160);
         [self addChild:whiteBackground];
         
+        //GET THE PLAYER 1 AND PLAYER 2 SCORE FROM GAME MANAGER
+        NSString *p1Score = [[GameManager sharedGameManager] player1Score];
+        NSString *p2Score = [[GameManager sharedGameManager] player2Score];
+        
         //MAKE A COPY OF THE WORDS ARRAY FOR PAGING
-        copyPlayer1Words = [[NSMutableArray array] retain];
-        copyPlayer2Words = [[NSMutableArray array] retain];
-        [copyPlayer1Words setArray:p1Words];
-        [copyPlayer2Words setArray:p2Words];
+        NSMutableArray *p1Words = [[GameManager sharedGameManager] player1Words];
+        NSMutableArray *p2Words = [[GameManager sharedGameManager] player2Words];
+        self.dupPlayer1Words = [NSMutableArray array];
+        self.dupPlayer2Words = [NSMutableArray array];
+        [dupPlayer1Words setArray:p1Words];
+        [dupPlayer2Words setArray:p2Words];
         
         p1WordLabels = [[NSMutableArray array] retain];
         
         currentPage=0;
         
-        
-        
 		[GameManager sharedGameManager].gameStatus = kGameFinished;
 		NSLog(@"Inside results layer.");
 		self.isTouchEnabled = YES;
         
+        //QUERY FOR LONGEST WORD
+        PFQuery *query = [PFQuery queryWithClassName:@"LongestWord"];
+        query.limit = [NSNumber numberWithInt:10];
+        [query orderByDescending:@"longestWordInGame"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %d scores.", objects.count);
+                
+                if (objects.count > 0) {
+                    PFObject *longestWordResult = [objects objectAtIndex:0];
+                    int longestWordLength = [[longestWordResult objectForKey:@"longestWordLength"] intValue];
+                    NSString *longestWordLetters = [longestWordResult objectForKey:@"longestWordLetters"];
+                    NSLog(@"LONGEST WORD LENGTH:%d, LONGEST WORD:%@", longestWordLength, longestWordLetters);
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+        
+        //DETERMINE LONGEST WORD FOR EACH PLAYER AND 
+        NSString *player1LongestWord, *player2LongestWord;
+        int p1LongestWordIndex, p2LongestWordIndex;
+        
+        
+        p1LongestWordIndex = [self getLongestWordIndexInArray:dupPlayer1Words];
+        if (!dupPlayer1Words || (p1LongestWordIndex == -1)) {
+            player1LongestWord=@"";
+        }
+        else{
+            player1LongestWord = [dupPlayer1Words objectAtIndex:p1LongestWordIndex];
+        }
+        
+        
+        //PLAYER 1 ON RIGHT FOR NOW, DON'T WRITE AI's SCORES  -- SWITCH SOON AFTER GETTING JAE'S CODE
+        if (theGameMode != kSinglePlayer) {
+            p2LongestWordIndex = [self getLongestWordIndexInArray:dupPlayer2Words];
+            
+            if(!dupPlayer2Words || (p2LongestWordIndex == -1)){
+              player2LongestWord=@"";      
+            }
+            else{
+                player2LongestWord = [dupPlayer2Words objectAtIndex:p2LongestWordIndex];
+            }
+        }
+        
+        CCLOG(@"PLAYER 1 LONGEST WORD:%@",player1LongestWord);
+        //CCLOG(@"PLAYER 1 LONGEST WORD:%@ , PLAYER 2 LONGEST WORD:%@",player1LongestWord, player2LongestWord);
         
 		NSString *p1Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        if (!p1Name) {
+            p1Name=@"Player 1";
+        }
+        
         NSString *p2Name;
         
         if (theGameMode == kSinglePlayer) {
@@ -134,6 +217,17 @@
         else{
             p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
         }
+        
+
+        //WRITE TO PARSE
+        PFObject *longestWordObject = [PFObject objectWithClassName:@"LongestWord"];
+        [longestWordObject setObject:p1Name forKey:@"playerName"];
+        [longestWordObject setObject:[NSNumber numberWithInt:[player1LongestWord length]] forKey:@"longestWordLength"];
+        [longestWordObject setObject:player1LongestWord forKey:@"longestWordLetters"];
+        [longestWordObject setObject:[GameManager sharedGameManager].gameUUID forKey:@"gameUUID"];
+        [longestWordObject saveInBackground];
+        
+        
         /*****************************/
 		//PLAYER 1
         /*****************************/
@@ -308,8 +402,8 @@
 		//[[GameManager sharedGameManager] closeGame];
 		//[OFMultiplayerService startViewingGames];
 	}
-	//return self;
-    return TRUE;
+    return self;
+    
 }
 
 
@@ -335,9 +429,7 @@
             
             NSString *s = [pWords objectAtIndex:j];
             //NSLog(@"Player 1 WORDS: %@",s );
-            CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:s
-														fontName:@"Marker Felt" 
-														fontSize:12] retain];//MCH - used to be 12
+            CCLabelTTF *wordLabel = [[CCLabelTTF labelWithString:s fontName:@"Marker Felt" fontSize:12] retain];//MCH - used to be 12
             wordLabel.color = ccc3(255,255,255);
             wordLabel.position = ccp((pResultPage.pColumnIndentFromLeftEdge)[i], y);
             //MCH
@@ -434,8 +526,8 @@
 
             }
             
-            [pResultPagePlayer1 getPageLayout:copyPlayer1Words forPlayer:1 forPageNum:currentPage];
-            [self displayPlayerWords2:1 withWords:copyPlayer1Words withResultPage:pResultPagePlayer1];
+            [pResultPagePlayer1 getPageLayout:dupPlayer1Words forPlayer:1 forPageNum:currentPage];
+            [self displayPlayerWords2:1 withWords:dupPlayer1Words withResultPage:pResultPagePlayer1];
         }
         if (currentPage < player2TotalPages)
         {
@@ -450,8 +542,8 @@
                 [arrayPagesPlayer2 addObject:pResultPagePlayer2];
             }
 
-            [pResultPagePlayer2 getPageLayout:copyPlayer2Words forPlayer:2 forPageNum:currentPage];
-            [self displayPlayerWords2:2 withWords:copyPlayer2Words withResultPage:pResultPagePlayer2];
+            [pResultPagePlayer2 getPageLayout:dupPlayer2Words forPlayer:2 forPageNum:currentPage];
+            [self displayPlayerWords2:2 withWords:dupPlayer2Words withResultPage:pResultPagePlayer2];
         }
         
         //DISPLAY THE PAGE NUMBER
@@ -502,15 +594,15 @@
         {
             pResultPagePlayer1 = [arrayPagesPlayer1 objectAtIndex:currentPage];
               
-            [pResultPagePlayer1 getPageLayout:copyPlayer1Words forPlayer:1 forPageNum:currentPage];
-            [self displayPlayerWords2:1 withWords:copyPlayer1Words withResultPage:pResultPagePlayer1];
+            [pResultPagePlayer1 getPageLayout:dupPlayer1Words forPlayer:1 forPageNum:currentPage];
+            [self displayPlayerWords2:1 withWords:dupPlayer1Words withResultPage:pResultPagePlayer1];
         }
         if (currentPage < player2TotalPages)
         {
             pResultPagePlayer2 = [arrayPagesPlayer2 objectAtIndex:currentPage];
                
-            [pResultPagePlayer2 getPageLayout:copyPlayer2Words forPlayer:2 forPageNum:currentPage];
-            [self displayPlayerWords2:2 withWords:copyPlayer2Words withResultPage:pResultPagePlayer2];
+            [pResultPagePlayer2 getPageLayout:dupPlayer2Words forPlayer:2 forPageNum:currentPage];
+            [self displayPlayerWords2:2 withWords:dupPlayer2Words withResultPage:pResultPagePlayer2];
         }
         
         int totalPages = (player1TotalPages > player2TotalPages) ? player1TotalPages : player2TotalPages;
@@ -542,11 +634,19 @@
 	
 	if (CGRectContainsPoint(rematchButton.boundingBox, touchLocation)) {
         
-        if (!self.flagMultiPlayer) {
-            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        switch (theGameMode) {
+            case kPlayAndPass:
+                [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+                break;
+            case kSinglePlayer:
+                [[GameManager sharedGameManager] runSceneWithId:kSinglePlayerScene];
+                break;
+            default:
+                break;
         }
-        else{
-            /*
+ 
+        
+             /*
             [[GameManager sharedGameManager] closeGame];
             CCLOG(@"--------------------------------------------");
             CCLOG(@"Rematch button pressed");
@@ -570,7 +670,7 @@
             [GameManager sharedGameManager].isChallenger = YES;
             [OFUser getUser:opponentId];
              */
-        }
+        
 	}
  
  
@@ -580,6 +680,8 @@
 
 -(void) dealloc {
     
+    [dupPlayer1Words release];
+    [dupPlayer2Words release];
     [arrayPagesPlayer1 release];
     [arrayPagesPlayer2 release];
 	CCLOG(@"ResultLayer dealloc start");

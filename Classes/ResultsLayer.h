@@ -18,8 +18,8 @@
 	CCSprite *rematchButton;
     CCSprite *mainMenuButton;
     NSMutableDictionary *definition;
-    NSMutableArray *copyPlayer1Words;
-    NSMutableArray *copyPlayer2Words;
+    NSMutableArray *dupPlayer1Words;
+    NSMutableArray *dupPlayer2Words;
     NSMutableArray *p1WordLabels;
     NSMutableArray *arrayPagesPlayer1;
     NSMutableArray *arrayPagesPlayer2;
@@ -47,8 +47,8 @@
 @property (nonatomic, retain) CCSprite *rematchButton;
 @property (nonatomic, retain) CCSprite *mainMenuButton;
 @property (nonatomic, retain) NSMutableDictionary *definition;
-@property (nonatomic, retain) NSMutableArray *copyPlayer1Words;
-@property (nonatomic, retain) NSMutableArray *copyPlayer2Words;
+@property (nonatomic, retain) NSMutableArray *dupPlayer1Words;
+@property (nonatomic, retain) NSMutableArray *dupPlayer2Words;
 @property (nonatomic, retain) NSMutableArray *p1WordLabels;
 @property (nonatomic, retain) NSMutableArray *arrayPagesPlayer1;
 @property (nonatomic, retain) NSMutableArray *arrayPagesPlayer2;
@@ -67,15 +67,13 @@
 @property (nonatomic, assign) BOOL flagMultiPlayer;
 
 
--(BOOL) initWithPlayerOneScore:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode;
-+(id) scene:(NSString *) p1Score WithPlayerTwoScore:(NSString *) p2Score WithPlayerOneWords:(NSMutableArray *) p1Words WithPlayerTwoWords:(NSMutableArray *) p2Words ForGameMode:(GameMode)gameMode;
-- (void) displayPlayerWords:(int) playerNumber
-                  withWords:(NSMutableArray *)pWords 
-                     startAt:(int)startIndex 
-            xPosColumn1of1At:(float) xPos1of1 
-            xPosColumn1of2At:(float) xPos1of2 
-           xPosColumn2of2At:(float) xPos2of2;
+-(BOOL) init;
++(id) scene;
+- (void) displayPlayerWords2:(int) playerNumber
+                   withWords:(NSMutableArray *)pWords
+              withResultPage:(ResultPages *)pResultPage;
 - (BOOL) clearCurrentPage:(int) playerNum;
+-(int) getLongestWordIndexInArray:(NSArray *) playerWordsArray;
 
 
 @end

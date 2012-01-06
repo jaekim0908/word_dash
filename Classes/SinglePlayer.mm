@@ -22,6 +22,23 @@
 
 @implementation SinglePlayer
 
+@synthesize thisGameBeatAIAward;
+@synthesize thisGameTotalPointsAward;
+@synthesize thisGameLongWordAward;
+@synthesize awardPopupFrame;
+@synthesize awardPopupTintedBackground;
+@synthesize nextLevelBtn;
+@synthesize getResultsBtn;
+@synthesize rematchBtn;
+@synthesize mainMenuBtn;
+@synthesize thisGameBeatAIAwardSprite;
+@synthesize thisGameTotalPointsAwardSprite;
+@synthesize thisGameLongWordAwardSprite;
+@synthesize singlePlayerScore;
+@synthesize levelStatus;
+@synthesize aiMaxWaitTime;
+
+
 +(id) scene
 {
 	// 'scene' is an autorelease object.
@@ -43,7 +60,9 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {        
-        aiAllWords = [[AIDictionary sharedDictionary] allWords];
+        //MCH aiAllWords = [[AIDictionary sharedDictionary] allWords];
+        //aiAllWords = [[Dictionary sharedDictionary] allWords];
+        aiAllWords = [[AIDictionary sharedDictionary] loadAllWords];
         solveButton2.visible = NO;
         transparentBoundingBox2.visible = NO;
 		greySolveButton2.visible = NO;        
@@ -95,6 +114,75 @@
         pauseState = FALSE;
         pauseMenuPlayAndPass = [[PauseMenu alloc] init];
         [pauseMenuPlayAndPass addToMyScene:self];
+   
+        //CREATE AWARDS POPUP FOR THE END OF THE GAME
+        awardsState = FALSE;
+        awardPopupTintedBackground = [CCSprite spriteWithFile:@"pause_background.png"];
+        awardPopupTintedBackground.position = ccp(240,160);
+        awardPopupTintedBackground.visible = NO;
+        [self addChild:awardPopupTintedBackground z:45];
+
+        
+        //awardPopupFrame = [CCSprite spriteWithFile:@"awards_popup_darker-300-200.png"];
+        awardPopupFrame = [CCSprite spriteWithFile:@"awards_popup.png"];
+        awardPopupFrame.position = ccp(240,160);
+        awardPopupFrame.visible = NO;
+        [self addChild:awardPopupFrame z:50];
+        
+        levelStatus = [CCLabelTTF labelWithString:@"Level Status: "
+                                         fontName:@"Marker Felt" 
+                                         fontSize:20]; 
+        //has retain on result layer, discuss double retain with jae
+		levelStatus.color = ccc3(0,0,255);
+		levelStatus.position = ccp(160,210);
+        levelStatus.anchorPoint = ccp(0,0);
+        levelStatus.visible = NO;
+		[self addChild:levelStatus z:55];
+        
+        singlePlayerScore = [CCLabelTTF labelWithString:@"Score: "
+                                               fontName:@"Marker Felt" 
+                                               fontSize:20]; 
+		singlePlayerScore.color = ccc3(0,0,255);;
+		singlePlayerScore.position = ccp(160,180);
+        singlePlayerScore.anchorPoint = ccp(0,0);
+        singlePlayerScore.visible = NO;
+		[self addChild:singlePlayerScore z:55];
+        
+        nextLevelBtn = [CCSprite spriteWithFile:@"next_level.png"];
+        nextLevelBtn.position = ccp(143,115);
+        nextLevelBtn.visible = NO;
+        [self addChild:nextLevelBtn z:55];
+        
+        getResultsBtn = [CCSprite spriteWithFile:@"get_results.png"];
+        getResultsBtn.position = ccp(210,115);
+        getResultsBtn.visible = NO;
+        [self addChild:getResultsBtn z:55];
+        
+        rematchBtn = [CCSprite spriteWithFile:@"rematch.png"];
+        rematchBtn.position = ccp(275,114);
+        rematchBtn.visible = NO;
+        [self addChild:rematchBtn z:55];
+        
+        mainMenuBtn = [CCSprite spriteWithFile:@"main_menu_btn.png"];
+        mainMenuBtn.position = ccp(340,112);
+        mainMenuBtn.visible = NO;
+        [self addChild:mainMenuBtn z:55];
+        
+        thisGameBeatAIAwardSprite = [CCSprite spriteWithFile:@"trophy.png"];
+        thisGameBeatAIAwardSprite.position = ccp(210,160);
+        thisGameBeatAIAwardSprite.visible = NO;
+        [self addChild:thisGameBeatAIAwardSprite  z:55];
+       
+        thisGameTotalPointsAwardSprite = [CCSprite spriteWithFile:@"coins.png"];
+        thisGameTotalPointsAwardSprite.position = ccp(240,160);
+        thisGameTotalPointsAwardSprite.visible = NO;
+        [self addChild:thisGameTotalPointsAwardSprite  z:55];
+        
+        thisGameLongWordAwardSprite = [CCSprite spriteWithFile:@"dictionary.png"];
+        thisGameLongWordAwardSprite.position = ccp(270,160);
+        thisGameLongWordAwardSprite.visible = NO;
+        [self addChild:thisGameLongWordAwardSprite  z:55];
+
 	}
 	return self;
 }
@@ -169,6 +257,65 @@
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    
+    CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
+    if(awardsState){
+        
+        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation)){
+            int batchSize, currentLevel,nextLevel;
+            
+            //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
+            currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
+            
+            if (currentLevel <= 5){
+                nextLevel = currentLevel+1;
+            }
+            else{
+                //OPEN ISSUE: Determine what to do if at the top level
+                nextLevel = currentLevel;
+            }
+            
+            NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
+                                              objectForKey:[NSString stringWithFormat:@"Level%i",nextLevel]];
+            batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
+            
+            [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
+            [[GameManager sharedGameManager] setSinglePlayerLevel:nextLevel];
+            [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+
+        }
+        else if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
+            
+            //self.isTouchEnabled=NO;
+            [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+            [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+            [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+            [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+            [[GameManager sharedGameManager] setGameMode:kSinglePlayer];
+            
+            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+            
+            //NEXT: Fix Result Layer init functions and change call from play and pass -- comment out first to test single player
+            /*****
+            [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
+                                                       WithPlayerTwoScore:[player2Score string] 
+                                                       WithPlayerOneWords:player1Words 
+                                                       WithPlayerTwoWords:player2Words
+                                                              ForGameMode:kSinglePlayer
+                                                       ]];   
+             **/
+            
+        }
+        else if(CGRectContainsPoint(rematchBtn.boundingBox, touchLocation)){
+            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+        }
+        else if(CGRectContainsPoint(mainMenuBtn.boundingBox, touchLocation)){
+            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
+        }
+         
+   
+        return TRUE;
+    }
     //MCH - DISPLAY THE PAUSE MENU
     if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
         pauseState = TRUE;
@@ -178,99 +325,100 @@
     // FUNCTIONS ON THE PAUSE MENU                     
     if (pauseState) {
         CCLOG(@"In a pause state.");
-        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kSinglePlayerScene];        
+        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kSinglePlayerScene]; 
+        return TRUE;
     }
-    else {
+
         
-        //PLAY BUTTON PRESSED
-        if (playButtonReady && CGRectContainsPoint(_playButton.boundingBox, touchLocation)) {
-            [self fadeOutLetters];
-            _playButton.visible = NO;
-            playButtonReady = NO;
-            tapToChangeLeft.visible = NO;
-            tapToChangeRight.visible = NO;
-            [self schedule:@selector(updateTimer:) interval:1.0f];
-            [self schedule:@selector(runAI:) interval:2.0f];
-            
-        } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
-            [self getPlayer1Name];
-        } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(tapToChangeLeft.boundingBox, touchLocation)) {
-            [self getPlayer1Name];
-        }
+    //PLAY BUTTON PRESSED
+    if (playButtonReady && CGRectContainsPoint(_playButton.boundingBox, touchLocation)) {
+        [self fadeOutLetters];
+        _playButton.visible = NO;
+        playButtonReady = NO;
+        tapToChangeLeft.visible = NO;
+        tapToChangeRight.visible = NO;
+        [self schedule:@selector(updateTimer:) interval:1.0f];
+        [self schedule:@selector(runAI:) interval:2.0f];
+        
+    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
+        [self getPlayer1Name];
+    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(tapToChangeLeft.boundingBox, touchLocation)) {
+        [self getPlayer1Name];
+    }
+
+    if (gameOver || !enableTouch || playerTurn == 2) {
+        return TRUE;
+    }
     
-        if (gameOver || !enableTouch || playerTurn == 2) {
-            return TRUE;
+    
+    if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
+        if ([userSelection count] > 0) {
+            [self checkAnswer];
+            [self switchTo:2 countFlip:NO];
+        } else {
+            [midDisplay setString:@"Pass"];
+            [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]]; 
+            [self switchTo:2 countFlip:YES];
         }
-        
-        
-        if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
-            if ([userSelection count] > 0) {
-                [self checkAnswer];
-                [self switchTo:2 countFlip:NO];
-            } else {
-                [midDisplay setString:@"Pass"];
-                [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]]; 
-                [self switchTo:2 countFlip:YES];
-            }
-        }
-	    
-        for(int r = 0; r < rows; r++) {
-            for(int c = 0; c < cols; c++) {
-                Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-                BOOL cellSelected = cell.letterSelected.visible;
-                if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
-                    
-                    if (cell.letterSprite.visible && cellSelected) {
-                        cell.letterSelected.visible = NO;
-                        [userSelection removeObject:cell];
-                        [self updateAnswer];
-                    } else if (cell.letterSprite.visible && !cellSelected) {
-                        if ([self allLettersOpened] && touch.tapCount > 2) {
-                            CCLOG(@"Triple-Tap detected !!");
-                            char ch = (arc4random() % 26) + 'a';
-                            Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
-                            cell.letterSprite.visible = NO;
-                            newCell.letterSprite.visible = YES;
-                            [[wordMatrix objectAtIndex:r] removeObject:cell];
-                            [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
-                        } else {
-                            cell.letterSelected.visible = YES;
-                            [userSelection addObject:cell];
-                            [self updateAnswer];
-                        }
+    }
+    
+    for(int r = 0; r < rows; r++) {
+        for(int c = 0; c < cols; c++) {
+            Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            BOOL cellSelected = cell.letterSelected.visible;
+            if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
+                
+                if (cell.letterSprite.visible && cellSelected) {
+                    cell.letterSelected.visible = NO;
+                    [userSelection removeObject:cell];
+                    [self updateAnswer];
+                } else if (cell.letterSprite.visible && !cellSelected) {
+                    if ([self allLettersOpened] && touch.tapCount > 2) {
+                        CCLOG(@"Triple-Tap detected !!");
+                        char ch = (arc4random() % 26) + 'a';
+                        Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
+                        cell.letterSprite.visible = NO;
+                        newCell.letterSprite.visible = YES;
+                        [[wordMatrix objectAtIndex:r] removeObject:cell];
+                        [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
                     } else {
-                        if (playerTurn == 1 && !player1TileFlipped) {
-                            cell.letterSprite.visible = YES;
-                            player1TileFlipped = YES;
-                            if ([cell.value isEqualToString:@"A"] || 
-                                [cell.value isEqualToString:@"E"] || 
-                                [cell.value isEqualToString:@"I"] || 
-                                [cell.value isEqualToString:@"O"] || 
-                                [cell.value isEqualToString:@"U"]) {
-                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
-                            }
-                            if ([self isThisStarPoint:cell]) {
-                                cell.star.visible = YES;
-                            }
-                        } else if (playerTurn == 2 && !player2TileFlipped) {
-                            cell.letterSprite.visible = YES;
-                            player2TileFlipped = YES;
-                            if ([cell.value isEqualToString:@"A"] || 
-                                [cell.value isEqualToString:@"E"] || 
-                                [cell.value isEqualToString:@"I"] || 
-                                [cell.value isEqualToString:@"O"] || 
-                                [cell.value isEqualToString:@"U"]) {
-                                [self addScore:8 toPlayer:playerTurn anchorCell:cell];
-                            }
-                            if ([self isThisStarPoint:cell]) {
-                                cell.star.visible = YES;
-                            }
+                        cell.letterSelected.visible = YES;
+                        [userSelection addObject:cell];
+                        [self updateAnswer];
+                    }
+                } else {
+                    if (playerTurn == 1 && !player1TileFipped) {
+                        cell.letterSprite.visible = YES;
+                        player1TileFipped = YES;
+                        if ([cell.value isEqualToString:@"A"] || 
+                            [cell.value isEqualToString:@"E"] || 
+                            [cell.value isEqualToString:@"I"] || 
+                            [cell.value isEqualToString:@"O"] || 
+                            [cell.value isEqualToString:@"U"]) {
+                            [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                        }
+                        if ([self isThisStarPoint:cell]) {
+                            cell.star.visible = YES;
+                        }
+                    } else if (playerTurn == 2 && !player2TileFipped) {
+                        cell.letterSprite.visible = YES;
+                        player2TileFipped = YES;
+                        if ([cell.value isEqualToString:@"A"] || 
+                            [cell.value isEqualToString:@"E"] || 
+                            [cell.value isEqualToString:@"I"] || 
+                            [cell.value isEqualToString:@"O"] || 
+                            [cell.value isEqualToString:@"U"]) {
+                            [self addScore:8 toPlayer:playerTurn anchorCell:cell];
+                        }
+                        if ([self isThisStarPoint:cell]) {
+                            cell.star.visible = YES;
                         }
                     }
                 }
             }
         }
     }
+
     
 	return TRUE;
 }
@@ -293,10 +441,16 @@
 
  -(void) runAI:(ccTime) dt {
     CCLOG(@"*********RUN AI*********");
+    
+     
+     int maxDelay = [[GameManager sharedGameManager] aiMaxWaitTime];
+     
+     CCLOG(@"*********maxDelay: %i *********",maxDelay);
+     
     if (playerTurn == 1 || [[player2Timer string] intValue] <= 0) return;
 
     [self unschedule:@selector(runAI:)];
-    int randomInterval = arc4random() % 5 + 1;
+    int randomInterval = arc4random() % maxDelay + 1;
     id flip = [CCCallFunc actionWithTarget:self selector:@selector(aiFlip)];
     id delay = [CCDelayTime actionWithDuration:randomInterval];
     id play = [CCCallFunc actionWithTarget:self selector:@selector(aiFindWords)];
@@ -412,13 +566,13 @@
     BOOL match = NO;
     NSString *ans;
     CCLOG(@"AI FIND WORDS");
-    int batchSize = 10;
+    int batchSize;
     
-    if (progressiveScore != nil) {
-        batchSize += [progressiveScore intValue];
-    }
+    batchSize = [GameManager sharedGameManager].singlePlayerBatchSize;
     
-    batchSize = 500;
+    CCLOG(@"BATCH SIZE: %i",batchSize);
+        
+    if (batchSize <= 0) batchSize = 5;
     
     for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];
@@ -446,6 +600,110 @@
     }
 }
 
+-(int) getLongestWordLengthInArray:(NSMutableArray *) playerWordsArray
+{
+    
+    NSString *tmpWord=nil;
+    int longestLength=0, longestWordIndex=0, currentWordLength, i=0;
+    
+    for (i=0;i < playerWordsArray.count;i++)  {
+        
+        tmpWord = [playerWordsArray objectAtIndex:i];
+        currentWordLength = [tmpWord length];
+        if(currentWordLength > longestLength){
+            longestLength = currentWordLength;
+            longestWordIndex = i;
+        }
+    }
+
+    return longestLength;
+    
+}
+
+- (void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore Player1Words:(NSMutableArray *)player1WordsArray
+{
+    NSMutableDictionary *allGameLevels = [[GameManager sharedGameManager] getGameLevelDictionary];
+    NSString *currentLevel = [NSString stringWithFormat:@"Level%i",[GameManager sharedGameManager].singlePlayerLevel];
+    NSMutableDictionary *levelInfo = [ allGameLevels objectForKey:currentLevel];
+    
+    BOOL beatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
+    BOOL totalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL longWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL updatePList = NO;
+    
+    //BEAT AI AWARD        
+    //IF THE PLAYER BEAT THE AI
+    if (p1Score > aiScore) {
+        if (!beatAIAward) {
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"beatAIAward"];
+        }
+        self.thisGameBeatAIAward = YES;
+    }
+        
+    int totalPointsForStar = [[levelInfo objectForKey:@"totalPointsForStar"] intValue];
+    //IF THE PLAYER PAST THE TOTAL POINTS THRESHOLD
+    if (p1Score >= totalPointsForStar){
+        if(!totalPointsAward){
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"totalPointsAward"];
+        }
+        self.thisGameTotalPointsAward = YES;
+    }
+    
+    int wordLengthForStar = [[levelInfo objectForKey:@"wordLengthForStar"] intValue];
+    int longestWordLength = [self getLongestWordLengthInArray:player1WordsArray];
+    //IF THE LONGEST WORD IS GREATER THAN THE THRESHOLD
+    if (longestWordLength >= wordLengthForStar) {
+        if(!longWordAward){
+            updatePList = YES;
+            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"longWordAward"];
+        }
+        self.thisGameLongWordAward = YES;
+    }
+        
+    //UPDATE THE PLIST FILE IF ANY NEW AWARDS WERE WON THIS GAME
+    if (updatePList) {
+        [allGameLevels setObject:levelInfo forKey:currentLevel];
+        NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
+        [allGameLevels writeToFile:path atomically:YES];
+    }                  
+    
+}
+
+- (void) displayAwardsPopup
+{
+    NSString *achievedLevelStatus=@"Try again";
+    
+    awardsState = TRUE;
+    
+    awardPopupTintedBackground.visible = YES;
+    awardPopupFrame.visible = YES;
+    nextLevelBtn.visible = YES; 
+    getResultsBtn.visible = YES; 
+    rematchBtn.visible = YES;
+    mainMenuBtn.visible = YES;
+    levelStatus.visible = YES;
+    singlePlayerScore.visible = YES;
+    
+    if (self.thisGameBeatAIAward) {
+        thisGameBeatAIAwardSprite.visible = YES;
+        achievedLevelStatus = @"Achieved";
+    }
+    if (self.thisGameTotalPointsAward) {
+        thisGameTotalPointsAwardSprite.visible = YES;
+    }
+    if (self.thisGameLongWordAward) {
+        thisGameLongWordAwardSprite.visible = YES;
+    }
+    
+    [levelStatus setString:[NSString stringWithFormat:@"Level %i: %@",
+                            [GameManager sharedGameManager].singlePlayerLevel,achievedLevelStatus]];
+    [singlePlayerScore setString:[NSString stringWithFormat:@"Score: %@",
+                                  [player1Score string]]];
+
+    
+}
 - (void) updateTimer:(ccTime) dt {
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -536,13 +794,22 @@
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [singlePlayGameHistory saveInBackground];
         
+        
+        //MCH - call determine awards for single player here
+        [self determineAwardsForSinglePlayer:[[player1Score string] intValue] AIScore:[[player2Score string] intValue] Player1Words:player1Words];
+        
+        
+        [self displayAwardsPopup];
+        
         //MCH - display results layer
+        /*******
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
                                                    WithPlayerTwoWords:player2Words
                                                        ForGameMode:kSinglePlayer
-                                                   ]];        
+                                                   ]];   
+         ********/
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {

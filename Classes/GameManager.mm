@@ -16,8 +16,11 @@
 #import "HowToPlay.h"
 #import "SinglePlayer.h"
 #import "SinglePlayGameHistory.h"
+#import "SinglePlayLevelMenu.h"
 #import "Parse/Parse.h"
 #import "ScoreSummary.h"
+#import "ResultsLayer.h"
+
 
 @implementation GameManager
 
@@ -35,6 +38,18 @@ static GameManager* _sharedGameManager = nil;
 @synthesize gameStatus = _gameStatus;
 @synthesize hasFriendsWithThisApp = _hasFriendsWithThisApp;
 @synthesize gameUUID = _gameUUID;
+@synthesize singlePlayerLevel = _singlePlayerLevel;
+@synthesize singlePlayerBatchSize = _singlePlayerBatchSize;
+@synthesize gameLevelPListPath = _gameLevelPListPath;
+@synthesize gameLevelDictionary = _gameLevelDictionary;
+@synthesize player1Score = _player1Score;
+@synthesize player2Score = _player2Score;
+@synthesize player1Words = _player1Words;
+@synthesize player2Words = _player2Words;
+@synthesize gameMode = _gameMode;
+@synthesize aiMaxWaitTime = _aiMaxWaitTime;
+
+
 
 +(GameManager*) sharedGameManager {
 	@synchronized([GameManager class]) {
@@ -61,12 +76,7 @@ static GameManager* _sharedGameManager = nil;
 		// Game Manager Initialized
 		NSLog(@"Game Manager Singleton,, init");
 		isSoundsOn = YES;
-		NSString *filePath = [[NSBundle mainBundle] pathForResource:@"crab" ofType:@"txt"];
-		NSError *error;
-		// read everything from text
-        // MCH -- no need to open the crab file since it is being opened by the Dictionary singleton
-		//_sharedGameManager._fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
-		//_sharedGameManager.myOFDelegate = [MyOFDelegate new];
+
 		_sharedGameManager.isChallenger = NO;
 		_sharedGameManager.gameFinished = YES;
 		_sharedGameManager.gameStartedFromPushNotification = NO;
@@ -84,6 +94,26 @@ static GameManager* _sharedGameManager = nil;
             CFRelease(stringRef);
             [self saveToUserDefaultsForKey:@"gameUUID" Value: _sharedGameManager.gameUUID];
         }
+        
+        
+        //READ gameLevel.plist THAT CONTAINS THE SINGLE PLAYER AWARDS
+        //COPY THE PLIST TO THE DOCUMENTS DIRECTORY IN ORDER TO READ/WRITE TO THE FILE
+        NSError *error;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        //STORE PATH IN GAME MANAGER
+        _sharedGameManager.gameLevelPListPath = [documentsDirectory stringByAppendingPathComponent:@"gameLevel.plist"];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if (![fileManager fileExistsAtPath:_gameLevelPListPath]) {
+            NSString *bundle =[[NSBundle mainBundle] pathForResource:@"gameLevel" ofType:@"plist"];
+            [fileManager copyItemAtPath:bundle toPath:_gameLevelPListPath error:&error];
+        }
+        //READ DATA FROM THE PLIST
+        //DISCUSS WITH JAE -- WHEN DO WE CREATE PROPERTIES AND WHEN DO WE CREATE OR OWN GETTERS
+        //WHAT ABOUT USING RETAIN????????????
+        _sharedGameManager.gameLevelDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_sharedGameManager.gameLevelPListPath];
     }
 	return self;
 }
@@ -127,11 +157,21 @@ static GameManager* _sharedGameManager = nil;
             sceneToRun = [SinglePlayGameHistory scene];
             break;
             
+        case kSinglePlayLevelMenu:
+            CCLOG(@"SinglePlayLevelMenu Scene");
+            sceneToRun = [SinglePlayLevelMenu scene];
+            break;
+
         case kScoreSummaryScene:
             CCLOG(@"ScoreSummary Scene");
             sceneToRun = [ScoreSummary scene];
             break;    
-            
+
+        case kWordSummaryScene:
+            CCLOG(@"WordSummary Scene");
+            sceneToRun = [ResultsLayer scene];
+            break;    
+
 		default:
 			CCLOG(@"Unknown Id, cannot switch scene");
 			break;
@@ -183,6 +223,18 @@ static GameManager* _sharedGameManager = nil;
 		val = [standardUserDefaults objectForKey:key];
 	
 	return val;
+}
+
+-(NSMutableDictionary *) getGameLevelDictionary
+{
+    return _sharedGameManager.gameLevelDictionary;
+    
+}
+
+-(NSString *) getGameLevelPListPath
+{
+    return _sharedGameManager.gameLevelPListPath;
+    
 }
 
 @end

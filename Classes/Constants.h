@@ -19,7 +19,9 @@ typedef enum {
     kHowToPlayScene,
     kSinglePlayerScene,
     kSinglePlayHistoryScene,
+    kSinglePlayLevelMenu,
     kScoreSummaryScene,
+    kWordSummaryScene,
 	kMaxScene
 } SceneTypes;
 
@@ -29,6 +31,20 @@ typedef enum {
 	kGameStarted,
 	kGameFinished
 } GameStatus;
+
+/****
+typedef enum {
+	kLevel1 = 1,
+	kLevel2,
+	kLevel3,
+	kLevel4,
+    kLevel6,
+	kLevel7,
+	kLevel8,
+	kLevel9,
+    kLevel10
+} SinglePlayerGameLevels;
+******/
 
 typedef enum {
 	kSinglePlayer = 0,

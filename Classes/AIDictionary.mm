@@ -7,6 +7,8 @@
 //
 
 #import "AIDictionary.h"
+#import "GameManager.h"
+#import "Dictionary.h"
 
 
 @implementation AIDictionary
@@ -41,15 +43,71 @@ static AIDictionary* _sharedDictionary = nil;
 	if ((self = [super init])) {
 		// Dictionary Initialized
 		NSLog(@"Dictionary Singleton,, init");
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
+        
+        /*******
+        int currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
+        NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
+                                          objectForKey:[NSString stringWithFormat:@"Level%i",currentLevel]];
+        NSString *dictionaryFilename = [levelInfo objectForKey:@"AIDictionaryFilename"];
+
+        NSString *filePath;
+        
+        if (!dictionaryFilename) {
+            NSLog(@"WARNING: Path for dictionary file not found.");
+            filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
+        }
+        else{
+            filePath = [[NSBundle mainBundle] pathForResource:dictionaryFilename ofType:@"txt"];
+        }
+        
 		NSError *error;
 		// read everything from text
-		NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
+		NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
 		_allWords = (NSMutableArray *) [[fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] retain];
+         *********/
 		_dictionary = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
+
+-(NSMutableArray *) loadAllWords{
+    
+    if(_sharedDictionary) {
+        int currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
+        NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
+                                          objectForKey:[NSString stringWithFormat:@"Level%i",currentLevel]];
+        NSString *dictionaryFilename = [levelInfo objectForKey:@"AIDictionaryFilename"];
+        
+        NSString *filePath;
+        
+        if (!dictionaryFilename) {
+            NSLog(@"WARNING: Path for dictionary file not found.");
+            filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
+        }
+        //LOAD THE LARGE DICTIONARY FROM ALL WORDS OF DICTIONARY CLASS TO SAVE LOADING FROM FILE
+        else if([dictionaryFilename isEqualToString:@"new_dictionary"]){
+            self.allWords = [[Dictionary sharedDictionary] allWords];
+            return self.allWords;
+        }
+        else{
+            filePath = [[NSBundle mainBundle] pathForResource:dictionaryFilename ofType:@"txt"];
+        }
+        
+        NSLog(@"filePath=%@",filePath);
+    
+        NSError *error;
+        // read everything from text
+        NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+        self.allWords = (NSMutableArray *) [fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        
+        NSLog(@"NUMBER OF WORDS in allWords:%i",self.allWords.count);
+        
+        
+        
+    }
+    return self.allWords;
+    
+  }
 
 -(void) loadDictionary {
 	if(_sharedDictionary) {
