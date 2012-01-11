@@ -151,13 +151,6 @@
 		849991301474E127001E7EFA /* silver_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 8499912E1474E127001E7EFA /* silver_line.png */; };
 		8499913A14750137001E7EFA /* main_menu_btn_small-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8499913814750134001E7EFA /* main_menu_btn_small-hd.png */; };
 		8499913B14750137001E7EFA /* main_menu_btn_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 8499913914750135001E7EFA /* main_menu_btn_small.png */; };
-		84A33F3114BC230D00EFF4E7 /* temp.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3014BC230D00EFF4E7 /* temp.png */; };
-		84A33F3514BC27D600EFF4E7 /* hand2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3314BC27D500EFF4E7 /* hand2-hd.png */; };
-		84A33F3614BC27D600EFF4E7 /* hand2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3414BC27D600EFF4E7 /* hand2.png */; };
-		84A33F3914BC2BCE00EFF4E7 /* smallhand-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3714BC2BCE00EFF4E7 /* smallhand-hd.png */; };
-		84A33F3A14BC2BCE00EFF4E7 /* smallhand.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3814BC2BCE00EFF4E7 /* smallhand.png */; };
-		84A33F4114BC31B200EFF4E7 /* small-checkmark-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F3F14BC31B100EFF4E7 /* small-checkmark-hd.png */; };
-		84A33F4214BC31B200EFF4E7 /* small-checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A33F4014BC31B200EFF4E7 /* small-checkmark.png */; };
 		84AF8E32140767F000369B5D /* playwithfriends-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF8E30140767F000369B5D /* playwithfriends-hd.png */; };
 		84AF8E33140767F000369B5D /* playwithfriends.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF8E31140767F000369B5D /* playwithfriends.png */; };
 		84AF8E3614076B0A00369B5D /* redpaper-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84AF8E3414076B0A00369B5D /* redpaper-hd.png */; };
@@ -652,13 +645,6 @@
 		8499912E1474E127001E7EFA /* silver_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = silver_line.png; sourceTree = "<group>"; };
 		8499913814750134001E7EFA /* main_menu_btn_small-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_menu_btn_small-hd.png"; sourceTree = "<group>"; };
 		8499913914750135001E7EFA /* main_menu_btn_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_menu_btn_small.png; sourceTree = "<group>"; };
-		84A33F3014BC230D00EFF4E7 /* temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temp.png; sourceTree = "<group>"; };
-		84A33F3314BC27D500EFF4E7 /* hand2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hand2-hd.png"; sourceTree = "<group>"; };
-		84A33F3414BC27D600EFF4E7 /* hand2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand2.png; sourceTree = "<group>"; };
-		84A33F3714BC2BCE00EFF4E7 /* smallhand-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallhand-hd.png"; sourceTree = "<group>"; };
-		84A33F3814BC2BCE00EFF4E7 /* smallhand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallhand.png; sourceTree = "<group>"; };
-		84A33F3F14BC31B100EFF4E7 /* small-checkmark-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small-checkmark-hd.png"; sourceTree = "<group>"; };
-		84A33F4014BC31B200EFF4E7 /* small-checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "small-checkmark.png"; sourceTree = "<group>"; };
 		84AF8E30140767F000369B5D /* playwithfriends-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playwithfriends-hd.png"; sourceTree = "<group>"; };
 		84AF8E31140767F000369B5D /* playwithfriends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playwithfriends.png; sourceTree = "<group>"; };
 		84AF8E3414076B0A00369B5D /* redpaper-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redpaper-hd.png"; sourceTree = "<group>"; };
@@ -2264,8 +2250,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2290,8 +2276,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "142563C2-15DF-447B-859D-5447637C5B7D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "142563C2-15DF-447B-859D-5447637C5B7D";
+				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -2301,8 +2287,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2365,8 +2351,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -2389,8 +2375,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2413,7 +2399,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "142563C2-15DF-447B-859D-5447637C5B7D";
+				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
@@ -2440,8 +2426,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
@@ -2469,8 +2455,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
