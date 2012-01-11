@@ -188,7 +188,7 @@
         [self addChild:level3Literal z:3];
         
         level3Lock = [CCSprite spriteWithFile:@"lock.png"];
-        level3Lock.position = ccp(240+12, 250);
+        level3Lock.position = ccp(240, 250);
         level3Lock.visible=YES;
         [self addChild:level3Lock z:4];
 
