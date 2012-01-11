@@ -562,10 +562,10 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-    [player1Timer setString:@"60"];
-	[player2Timer setString:@"60"];
-    //[player1Timer setString:@"20"];
-	//[player2Timer setString:@"20"];
+    //[player1Timer setString:@"60"];
+	//[player2Timer setString:@"60"];
+    [player1Timer setString:@"20"];
+	[player2Timer setString:@"20"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];

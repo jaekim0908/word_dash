@@ -36,6 +36,7 @@
 @synthesize thisGameLongWordAwardSprite;
 @synthesize singlePlayerScore;
 @synthesize levelStatus;
+@synthesize levelDisplay;
 @synthesize aiMaxWaitTime;
 
 
@@ -124,26 +125,37 @@
 
         
         //awardPopupFrame = [CCSprite spriteWithFile:@"awards_popup_darker-300-200.png"];
-        awardPopupFrame = [CCSprite spriteWithFile:@"awards_popup.png"];
-        awardPopupFrame.position = ccp(240,160);
+        awardPopupFrame = [CCSprite spriteWithFile:@"double_pane.png"];
+        //awardPopupFrame.position = ccp(240,160);
+        awardPopupFrame.position = ccp(240,185);
         awardPopupFrame.visible = NO;
         [self addChild:awardPopupFrame z:50];
         
-        levelStatus = [CCLabelTTF labelWithString:@"Level Status: "
+        levelDisplay = [CCLabelTTF labelWithString:@"LEVEL 1"
                                          fontName:@"Marker Felt" 
-                                         fontSize:20]; 
+                                         fontSize:26]; 
         //has retain on result layer, discuss double retain with jae
-		levelStatus.color = ccc3(0,0,255);
-		levelStatus.position = ccp(160,210);
+		levelDisplay.color = ccc3(255,255,255);
+		levelDisplay.position = ccp(110,255);
+        levelDisplay.anchorPoint = ccp(0,0);
+        levelDisplay.visible = NO;
+		[self addChild:levelDisplay z:55];
+        
+        levelStatus = [CCLabelTTF labelWithString:@"LEVEL STATUS: "
+                                         fontName:@"Marker Felt" 
+                                         fontSize:26]; 
+        //has retain on result layer, discuss double retain with jae
+		levelStatus.color = ccc3(255,255,255);
+		levelStatus.position = ccp(120,210);
         levelStatus.anchorPoint = ccp(0,0);
         levelStatus.visible = NO;
 		[self addChild:levelStatus z:55];
         
-        singlePlayerScore = [CCLabelTTF labelWithString:@"Score: "
+        singlePlayerScore = [CCLabelTTF labelWithString:@"SCORE: "
                                                fontName:@"Marker Felt" 
-                                               fontSize:20]; 
-		singlePlayerScore.color = ccc3(0,0,255);;
-		singlePlayerScore.position = ccp(160,180);
+                                               fontSize:26]; 
+		singlePlayerScore.color = ccc3(255,255,255);;
+		singlePlayerScore.position = ccp(120,180);
         singlePlayerScore.anchorPoint = ccp(0,0);
         singlePlayerScore.visible = NO;
 		[self addChild:singlePlayerScore z:55];
@@ -673,7 +685,7 @@
 
 - (void) displayAwardsPopup
 {
-    NSString *achievedLevelStatus=@"Try again";
+    NSString *achievedLevelStatus=@"INCOMPLETE";
     
     awardsState = TRUE;
     
@@ -683,12 +695,13 @@
     getResultsBtn.visible = YES; 
     rematchBtn.visible = YES;
     mainMenuBtn.visible = YES;
+    levelDisplay.visible = YES;
     levelStatus.visible = YES;
     singlePlayerScore.visible = YES;
     
     if (self.thisGameBeatAIAward) {
         thisGameBeatAIAwardSprite.visible = YES;
-        achievedLevelStatus = @"Achieved";
+        achievedLevelStatus = @"COMPLETED";
     }
     if (self.thisGameTotalPointsAward) {
         thisGameTotalPointsAwardSprite.visible = YES;
@@ -697,9 +710,13 @@
         thisGameLongWordAwardSprite.visible = YES;
     }
     
-    [levelStatus setString:[NSString stringWithFormat:@"Level %i: %@",
-                            [GameManager sharedGameManager].singlePlayerLevel,achievedLevelStatus]];
-    [singlePlayerScore setString:[NSString stringWithFormat:@"Score: %@",
+
+    [levelDisplay setString:[NSString stringWithFormat:@"LEVEL %i",
+                             [GameManager sharedGameManager].singlePlayerLevel]];
+
+    [levelStatus setString:[NSString stringWithFormat:@"STATUS: %@",
+                            achievedLevelStatus]];
+    [singlePlayerScore setString:[NSString stringWithFormat:@"SCORE: %@",
                                   [player1Score string]]];
 
     

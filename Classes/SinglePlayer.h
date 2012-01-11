@@ -50,6 +50,7 @@
     
     CCLabelTTF *singlePlayerScore;
     CCLabelTTF *levelStatus;
+    CCLabelTTF *levelDisplay;
     
     int         aiMaxWaitTime;
 
@@ -69,6 +70,7 @@
 @property (nonatomic,retain) CCSprite *thisGameLongWordAwardSprite;
 @property (nonatomic,retain) CCLabelTTF *singlePlayerScore;
 @property (nonatomic,retain) CCLabelTTF *levelStatus;
+@property (nonatomic,retain) CCLabelTTF *levelDisplay;
 @property int aiMaxWaitTime;
 
 
