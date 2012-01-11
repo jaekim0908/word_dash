@@ -35,10 +35,6 @@
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"PauseMenuAssets.plist"];
         batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets.png"]] retain];
     }
-
-     
-
-    
     
     return self;
 }
@@ -107,6 +103,16 @@
     return TRUE;
 }
 
+-(void) hidePauseMenu:(CCLayer *) myScene {
+    self.pauseBackground.visible=NO;
+    self.wavesAndBeach.visible=NO;
+    self.rematchButton.visible=NO;
+    self.mainMenuButton.visible=NO;
+    self.resumeButton.visible=NO;
+    self.howToPlayButton.visible=NO;
+    [myScene startTimer];    
+}
+
 -(BOOL) execPauseMenuActions:(CGPoint) touchLocation forScene:(CCLayer *)myScene withId:(SceneTypes)sceneId
 {
     BOOL pauseState = YES;
@@ -125,28 +131,20 @@
     }
     else if(CGRectContainsPoint(self.resumeButton.boundingBox, touchLocation)){
         pauseState = NO;
-        
-        self.pauseBackground.visible=NO;
-        self.wavesAndBeach.visible=NO;
-        self.rematchButton.visible=NO;
-        self.mainMenuButton.visible=NO;
-        self.resumeButton.visible=NO;
-        self.howToPlayButton.visible=NO;
-        [myScene startTimer];
+        [self hidePauseMenu:myScene];
     }
     return pauseState;
 }
 
 -(void) dealloc {
-    self.pauseButton = nil;
-    self.pauseBackground = nil;
-    self.wavesAndBeach = nil;
-    self.rematchButton = nil;
-    self.mainMenuButton = nil;
-    self.resumeButton = nil;
-    self.howToPlayButton = nil;
+    [self.pauseButton release];
+    [self.pauseBackground release];
+    [self.wavesAndBeach release];
+    [self.rematchButton release];
+    [self.mainMenuButton release];
+    [self.resumeButton release];
+    [self.howToPlayButton release];
     [batchNode release];
-    batchNode = nil;
     [super dealloc];
 }
 

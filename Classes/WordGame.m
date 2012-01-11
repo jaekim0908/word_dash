@@ -23,14 +23,12 @@
 @synthesize rows;
 @synthesize cols;
 @synthesize playButton = _playButton;
-@synthesize tapToChangeLeft;
-@synthesize tapToChangeRight;
+@synthesize tapToChangeLeft = _tapToChangeLeft;
+@synthesize tapToChangeRight = _tapToChangeRight;
 @synthesize player1LongName;
 @synthesize player2LongName;
-//@synthesize pauseState;
-//@synthesize pauseActive;
-//@synthesize pauseMenuPlayAndPass;
-
+@synthesize leftSideBackground = _leftSideBackground;
+@synthesize rightSideBackground = _rightSideBackground;
 
 +(id) scene
 {
@@ -61,8 +59,8 @@
 		y_offset = 30;
 		playerTurn = 1;
 		gameOver = NO;
-		player1TileFipped = NO;
-		player2TileFipped = NO;
+		player1TileFlipped = NO;
+		player2TileFlipped = NO;
 		enableTouch = NO;
 		countNoTileFlips = 1;
 		currentStarPoints = 8;
@@ -215,7 +213,6 @@
 		[self addChild:midDisplay z:40];
 		
 		[self createLetterSlots:rows columns:cols firstGame:YES];
-		//[self schedule:@selector(updateTimer:) interval:1.0f];
 		
 		starPoints = [[NSMutableArray array] retain];
 		
@@ -242,7 +239,7 @@
         
         // Initialize TextFields
         enterPlayer1Name = [[UITextField alloc] initWithFrame:CGRectMake(210, 30, 80, 30)];
-        [enterPlayer1Name setDelegate:self];
+        [enterPlayer1Name setDelegate:self]; 
         [enterPlayer1Name setBorderStyle:UITextBorderStyleRoundedRect];
         enterPlayer1Name.textAlignment = UITextAlignmentCenter;
         [enterPlayer1Name setTextColor:[UIColor blackColor]];
@@ -261,16 +258,38 @@
         enterPlayer2Name.backgroundColor = [UIColor whiteColor];
         enterPlayer2Name.transform = CGAffineTransformConcat(enterPlayer2Name.transform, CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(90)));
         
+        self.leftSideBackground = [CCSprite spriteWithSpriteFrameName:@"small-checkmark.png"];
+        self.leftSideBackground.position = ccp(50, 70);
+        self.leftSideBackground.visible = NO;
+        [batchNode addChild:self.leftSideBackground z:100];
         
-        //ALLOCATE PAUSE MENU
-        /*
-        pauseState = FALSE;
-        pauseActive = NO;
-        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
-        [pauseMenuPlayAndPass addToMyScene:self];
-        */
-	}
+        self.rightSideBackground = [CCSprite spriteWithSpriteFrameName:@"small-checkmark.png"];
+        self.rightSideBackground.position = ccp(440, 70);
+        self.rightSideBackground.visible = NO;
+        [batchNode addChild:self.rightSideBackground z:100];
+    }
 	return self;
+}
+
+- (void) showLeftChecker {
+    self.leftSideBackground.visible = YES;
+    //[self.leftSideBackground runAction:[CCRepeatForever actionWithAction:[CCBlink actionWithDuration:2 blinks:1]]];
+}
+
+- (void) showRightChecker {
+    self.rightSideBackground.visible = YES;
+    //[self.rightSideBackground runAction:[CCRepeatForever actionWithAction:[CCBlink actionWithDuration:2 blinks:1]]];
+    
+}
+
+- (void) hideLeftChecker {
+    [self.leftSideBackground stopAllActions];
+    self.leftSideBackground.visible = NO;
+}
+
+- (void) hideRightChecker {
+    [self.rightSideBackground stopAllActions];
+    self.rightSideBackground.visible = NO;
 }
 
 - (void) showPlayButton {
@@ -391,32 +410,32 @@
 }
 
 - (void) setStarPoints {
-	
-	if ([starPoints count] > 0) {
-		return;
-	}
     
-	int n = 0;
-	
-	while (n < currentStarPoints) {
-		NSLog(@"setting star points");
-		int randomRow = arc4random() % rows;
-		int randomCol = arc4random() % cols;
-		Cell *cell = [[wordMatrix objectAtIndex:randomRow] objectAtIndex:randomCol];
-		
-		if (![self isThisStarPoint:cell]) {
-			[starPoints addObject:cell];
-			n++;
-		}
-	}
+    int n = 0;
+    
+    if ([starPoints count] > 0) {
+        return;
+    }
+    
+    while (n < currentStarPoints) {
+        NSLog(@"setting star points");
+        int randomRow = arc4random() % rows;
+        int randomCol = arc4random() % cols;
+        Cell *cell = [[wordMatrix objectAtIndex:randomRow] objectAtIndex:randomCol];
+        
+        if (![self isThisStarPoint:cell]) {
+            [starPoints addObject:cell];
+            n++;
+        }
+    }
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
 	
 	if (flag) {
-		if (playerTurn == 1 && !player1TileFipped) {
+		if (playerTurn == 1 && !player1TileFlipped) {
 			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFipped) {
+		} else if (playerTurn == 2 && !player2TileFlipped) {
 			countNoTileFlips++;
 		} else {
 			countNoTileFlips = 1;
@@ -433,15 +452,19 @@
 	}
 	
 	[self clearLetters];
-    player1TileFipped = NO;
-    player2TileFipped = NO;
+    player1TileFlipped = NO;
+    player2TileFlipped = NO;
     
     NSString *turnMessage;
+    
+    notify = NO;
     
     if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = YES;
+        [self hideRightChecker];
+        [self showLeftChecker];
         
         
         if (notify) {
@@ -461,6 +484,9 @@
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
+        
+        [self hideLeftChecker];
+        [self showRightChecker];
         
         if (notify) {
             if (player2LongName && [player2LongName length] > 0) {
@@ -736,6 +762,19 @@
     return cell;
 }
 
+- (void) removeCellAtRow:(int) r Col:(int) c {
+    Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+    cell.letterSprite.visible = NO;
+    cell.letterBackground.visible = NO;
+    cell.star.visible = NO;
+    cell.letterSelected.visible = NO;
+    [cell.letterSprite removeFromParentAndCleanup:YES];
+    [cell.letterBackground removeFromParentAndCleanup:YES];
+    [cell.letterSelected removeFromParentAndCleanup:YES];
+    [cell.star removeFromParentAndCleanup:YES];
+    [[wordMatrix objectAtIndex:r] removeObjectAtIndex:c];
+}
+
 - (void) clearAllSelectedLetters {
 	
 	[currentAnswer setString:@" "];
@@ -890,14 +929,6 @@
 		enableTouch = NO;
 		int p1score = [[player1Score string] intValue];
 		int p2score = [[player2Score string] intValue];
-		if (p1score > p2score) {
-			[midDisplay setString:@"Player 1 Wins"];
-		} else if (p1score < p2score) {
-			[midDisplay setString:@"Player 2 Wins"];
-		} else {
-			[midDisplay setString:@"Tie Game"];
-		}
-		[midDisplay runAction:[CCFadeIn actionWithDuration:1]];
         
         CCLOG(@"***************Creating SinglePlayGameHistory object***************");
         PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
@@ -939,15 +970,16 @@
         [player2ScoreRecord saveInBackground];
         
         
-        //MCH - display results layer 
+        //MCH - display results layer
+        
         [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
         [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
         [[GameManager sharedGameManager] setPlayer1Words:player1Words];
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kPlayAndPass];
-        
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
-        /*********
+         
+        /********
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
                                                    WithPlayerTwoScore:[player2Score string] 
                                                    WithPlayerOneWords:player1Words 
@@ -976,6 +1008,21 @@
 			}
 		}
 	}	
+}
+
+- (BOOL) isVowel:(NSString *) str {
+    return ([str isEqualToString:@"A"] ||
+            [str isEqualToString:@"E"] ||
+            [str isEqualToString:@"I"] ||
+            [str isEqualToString:@"O"] ||
+            [str isEqualToString:@"U"]);
+}
+
+- (BOOL) isGameOver {
+    int p1 = [[player1Timer string] intValue];
+	int p2 = [[player2Timer string] intValue];
+    
+    return (p1 + p2 == 0);
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -1007,18 +1054,20 @@
     [currentAnswer release];
     [midDisplay release];
     [gameCountDownLabel release];
-    [_playButton release];
-    [tapToChangeLeft release];
-    [tapToChangeRight release];
+    [self.playButton release];
+    [self.tapToChangeLeft release];
+    [self.tapToChangeRight release];
     [userSelection release];
     [player1LongName release];
     [player2LongName release];
     [enterPlayer1Name release];
     [enterPlayer2Name release];
-    //[pauseMenuPlayAndPass release];
     [batchNode release];
     [batchNode2 release];
     
+    [self.leftSideBackground release];
+    [self.rightSideBackground release];
+        
     wordMatrix = nil;
     solveButton1 = nil;
     solveButton2 = nil;
@@ -1039,15 +1088,11 @@
     currentAnswer = nil;
     midDisplay = nil;
     gameCountDownLabel = nil;
-    _playButton = nil;
-    tapToChangeLeft = nil;
-    tapToChangeRight = nil;
     userSelection = nil;
     player1LongName = nil;
     player2LongName = nil;
     enterPlayer1Name = nil;
     enterPlayer2Name = nil;
-    //pauseMenuPlayAndPass = nil;
     batchNode = nil;
     batchNode2 = nil;
     

@@ -53,6 +53,8 @@
     CCLabelTTF *levelDisplay;
     
     int         aiMaxWaitTime;
+    
+    UIActivityIndicatorView *activityIndicator;
 
 }
 
@@ -77,7 +79,10 @@
 -(BOOL) allLettersOpened;
 -(BOOL) stopTimer;
 -(BOOL) startTimer;
-- (void) displayAwardsPopup;
-- (void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore Player1Words:(NSMutableArray *)player1WordsArray;
+-(void) displayAwardsPopup;
+-(void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore Player1Words:(NSMutableArray *)player1WordsArray;
+-(void) showAIActivity;
+-(void) hideAIActivity;
+-(void) clearCurrentAnswer;
 
 @end

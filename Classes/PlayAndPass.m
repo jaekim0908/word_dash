@@ -47,8 +47,8 @@
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
      if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
-     pauseState = TRUE;
-     [pauseMenuPlayAndPass showPauseMenu:self];
+         pauseState = TRUE;
+         [pauseMenuPlayAndPass showPauseMenu:self];
      }
      
      // FUNCTIONS ON THE PAUSE MENU                     
@@ -70,6 +70,7 @@
         playButtonReady = NO;
         self.tapToChangeLeft.visible = NO;
         self.tapToChangeRight.visible = NO;
+        [self showLeftChecker];
         [self schedule:@selector(updateTimer:) interval:1.0f];
         
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
@@ -86,8 +87,6 @@
 		return TRUE;
 	}
     
-    
-	
 	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
@@ -100,7 +99,7 @@
 	if (playerTurn == 2 && CGRectContainsPoint(transparentBoundingBox2.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
-			[self switchTo:1 countFlip:NO notification:YES];
+			[self switchTo:1 countFlip:YES notification:YES];
 		} else {
 			[self switchTo:1 countFlip:YES notification:YES];
 		}
@@ -120,9 +119,9 @@
 					[userSelection addObject:cell];
 					[self updateAnswer];
 				} else {
-					if (playerTurn == 1 && !player1TileFipped) {
+					if (playerTurn == 1 && !player1TileFlipped) {
 						cell.letterSprite.visible = YES;
-						player1TileFipped = YES;
+						player1TileFlipped = YES;
 						if ([cell.value isEqualToString:@"A"] || 
 							[cell.value isEqualToString:@"E"] || 
 							[cell.value isEqualToString:@"I"] || 
@@ -133,9 +132,9 @@
 						if ([self isThisStarPoint:cell]) {
 							cell.star.visible = YES;
 						}
-					} else if (playerTurn == 2 && !player2TileFipped) {
+					} else if (playerTurn == 2 && !player2TileFlipped) {
 						cell.letterSprite.visible = YES;
-						player2TileFipped = YES;
+						player2TileFlipped = YES;
 						if ([cell.value isEqualToString:@"A"] || 
 							[cell.value isEqualToString:@"E"] || 
 							[cell.value isEqualToString:@"I"] || 

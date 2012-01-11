@@ -60,14 +60,17 @@
 {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init] )) {        
+	if( (self=[super init] )) {  
+        
+        CGSize windowSize = [[CCDirector sharedDirector] winSize];
+        
         //MCH aiAllWords = [[AIDictionary sharedDictionary] allWords];
         //aiAllWords = [[Dictionary sharedDictionary] allWords];
         aiAllWords = [[AIDictionary sharedDictionary] loadAllWords];
         solveButton2.visible = NO;
         transparentBoundingBox2.visible = NO;
 		greySolveButton2.visible = NO;        
-        tapToChangeRight.visible = NO;
+        self.tapToChangeRight.visible = NO;
         visibleLetters = [[NSMutableDictionary dictionary] retain];
         
         aiLevel = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"level"];
@@ -76,7 +79,7 @@
         numOfLossesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_losses_vs_ai"];
         numOfTiesAI = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"num_of_ties_vs_ai"];
         longestAnswer = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"longest_answer"];
-        player1LongName  = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        self.player1LongName  = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
         
         if (!aiLevel) {
             aiLevel = [NSString stringWithFormat:@"0"];
@@ -109,7 +112,7 @@
         }
         
         if (!player1LongName) {
-            player1LongName = @"Player 1";
+            self.player1LongName = @"Player 1";
         }
         
         pauseState = FALSE;
@@ -194,7 +197,11 @@
         thisGameLongWordAwardSprite.position = ccp(270,160);
         thisGameLongWordAwardSprite.visible = NO;
         [self addChild:thisGameLongWordAwardSprite  z:55];
-
+        
+        activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+		[activityIndicator setCenter:CGPointMake(windowSize.width/2, 30)]; // I do this because I'm in landscape mode
+        [activityIndicator setColor:[UIColor blackColor]];
+		[[[CCDirector sharedDirector] openGLView] addSubview:activityIndicator];
 	}
 	return self;
 }
@@ -202,9 +209,9 @@
 - (void) switchTo:(int) player countFlip:(BOOL) flag {
 	
 	if (flag) {
-		if (playerTurn == 1 && !player1TileFipped) {
+		if (playerTurn == 1 && !player1TileFlipped) {
 			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFipped) {
+		} else if (playerTurn == 2 && !player2TileFlipped) {
 			countNoTileFlips++;
 		} else {
 			countNoTileFlips = 1;
@@ -221,13 +228,16 @@
 	}
     	
 	[self clearLetters];
-    player1TileFipped = NO;
-    player2TileFipped = NO;
+    player1TileFlipped = NO;
+    player2TileFlipped = NO;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = NO;
+        [self showLeftChecker];
+        
+        /*
         NSString *turnMessage;
     
         if (player1LongName && [player1LongName length] > 0) {
@@ -241,13 +251,27 @@
                                                         image:@"watchIcon.png" 
                                                           tag:0 
                                                       animate:YES];
+        */
 	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
+        [self hideLeftChecker];
 	}
 }
 
+-(void) showAIActivity {
+    [self clearCurrentAnswer];
+    [activityIndicator startAnimating];
+}
+
+-(void) hideAIActivity {
+    [activityIndicator stopAnimating];
+}
+
+-(void) clearCurrentAnswer {
+    [currentAnswer setString:@""];
+}
 
 -(BOOL) stopTimer
 {
@@ -347,14 +371,15 @@
         [self fadeOutLetters];
         _playButton.visible = NO;
         playButtonReady = NO;
-        tapToChangeLeft.visible = NO;
-        tapToChangeRight.visible = NO;
+        self.tapToChangeLeft.visible = NO;
+        self.tapToChangeRight.visible = NO;
         [self schedule:@selector(updateTimer:) interval:1.0f];
         [self schedule:@selector(runAI:) interval:2.0f];
+        [self showLeftChecker];
         
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
         [self getPlayer1Name];
-    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(tapToChangeLeft.boundingBox, touchLocation)) {
+    } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(self.tapToChangeLeft.boundingBox, touchLocation)) {
         [self getPlayer1Name];
     }
 
@@ -368,8 +393,6 @@
             [self checkAnswer];
             [self switchTo:2 countFlip:NO];
         } else {
-            [midDisplay setString:@"Pass"];
-            [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]]; 
             [self switchTo:2 countFlip:YES];
         }
     }
@@ -399,9 +422,9 @@
                         [self updateAnswer];
                     }
                 } else {
-                    if (playerTurn == 1 && !player1TileFipped) {
+                    if (playerTurn == 1 && !player1TileFlipped) {
                         cell.letterSprite.visible = YES;
-                        player1TileFipped = YES;
+                        player1TileFlipped = YES;
                         if ([cell.value isEqualToString:@"A"] || 
                             [cell.value isEqualToString:@"E"] || 
                             [cell.value isEqualToString:@"I"] || 
@@ -412,9 +435,9 @@
                         if ([self isThisStarPoint:cell]) {
                             cell.star.visible = YES;
                         }
-                    } else if (playerTurn == 2 && !player2TileFipped) {
+                    } else if (playerTurn == 2 && !player2TileFlipped) {
                         cell.letterSprite.visible = YES;
-                        player2TileFipped = YES;
+                        player2TileFlipped = YES;
                         if ([cell.value isEqualToString:@"A"] || 
                             [cell.value isEqualToString:@"E"] || 
                             [cell.value isEqualToString:@"I"] || 
@@ -462,6 +485,7 @@
     if (playerTurn == 1 || [[player2Timer string] intValue] <= 0) return;
 
     [self unschedule:@selector(runAI:)];
+    [self showAIActivity];
     int randomInterval = arc4random() % maxDelay + 1;
     id flip = [CCCallFunc actionWithTarget:self selector:@selector(aiFlip)];
     id delay = [CCDelayTime actionWithDuration:randomInterval];
@@ -492,7 +516,7 @@
     if (arraySize > 0) {
         Cell *cell = [nonVisibleCells objectAtIndex:(arc4random() % arraySize)];
         cell.letterSprite.visible = YES;
-        player2TileFipped = YES;
+        player2TileFlipped = YES;
         if ([cell.value isEqualToString:@"A"] || 
             [cell.value isEqualToString:@"E"] || 
             [cell.value isEqualToString:@"I"] || 
@@ -507,16 +531,16 @@
 }
 
 -(void) aiMoveComplete {
-    
+        
     if (playerTurn == 1) return;
+
+    [self hideAIActivity];
+    
+    if ([[player2Timer string] intValue] <= 0) return;
     
     CCLOG(@"AI MOVE COMPLETE");
     if ([userSelection count] > 0) {
         [self checkAnswer];
-    }
-    else{
-        [midDisplay setString:@"Pass"];
-        [midDisplay runAction:[CCFadeOut actionWithDuration:1.0f]];
     }
     [self switchTo:1 countFlip:NO];
     [self schedule:@selector(runAI:) interval:2.0f];
@@ -752,17 +776,18 @@
 	if (!enableTouch) {
 		return;
 	}
-	
-	if (p1+p2 <= 0) {
-		gameOver = YES;
-	}
-	
-	if (p1 <= 0) {
+    
+    if (p1 <= 0) {
 		play1Done = YES;
 	}
 	
 	if (p2 <= 0) {
 		play2Done = YES;
+        [self hideAIActivity];
+	}
+	
+	if (p1+p2 <= 0) {
+		gameOver = YES;
 	}
 	
 	if (gameOver) {
@@ -876,6 +901,7 @@
 	// don't forget to call "super dealloc"
     [pauseMenuPlayAndPass release];
     [visibleLetters release];
+    [activityIndicator release];
 	[super dealloc];
 }
 

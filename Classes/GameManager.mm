@@ -9,7 +9,7 @@
 #import "GameManager.h"
 #import "Constants.h"
 #import "MainMenuScene.h"
-#import "MultiPlayerScene.h"
+#import "Multiplayer.h"
 #import "PlayAndPass.h"
 #import "HelloWorld.h"
 #import "LoadingScene.h"
@@ -72,7 +72,6 @@ static GameManager* _sharedGameManager = nil;
 }
 
 -(id) init {
-	self = [super init];
 	if ((self = [super init])) {
 		// Game Manager Initialized
 		NSLog(@"Game Manager Singleton,, init");
@@ -134,7 +133,7 @@ static GameManager* _sharedGameManager = nil;
 			break;
 		case kMutiPlayerScene:
 			CCLOG(@"Multi Player Scene");
-			//sceneToRun = [Multiplayer scene];
+			sceneToRun = [Multiplayer scene];
 			break;
 		case kPlayAndPassScene:
 			CCLOG(@"Play and Pass Scene");

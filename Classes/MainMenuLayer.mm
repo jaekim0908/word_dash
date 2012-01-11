@@ -25,7 +25,7 @@
 -(void) displayMainMenu;
 -(void) displaySceneSelection;
 -(void) displayPlayAndPass;
-//-(void) displayMultiPlayer;
+-(void) displayMultiPlayer;
 -(void) displayRanking;
 @end
 
@@ -223,7 +223,8 @@
         [self displayHowToPlay];
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         rankingsSelected.visible = NO;
-        [self displayRanking];
+        //[self displayRanking];
+        [self displayMultiPlayer];
     }
 }
 
@@ -256,6 +257,11 @@
     CCLOG(@"display single player");
     //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
     [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+}
+
+-(void) displayMultiPlayer {
+    CCLOG(@"display multi player with GC");
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
 }
 
 

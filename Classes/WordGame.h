@@ -52,8 +52,8 @@
     CCSprite *transparentBoundingBox1;
     CCSprite *transparentBoundingBox2;
     NSMutableArray *userSelection;
-    BOOL player1TileFipped;
-    BOOL player2TileFipped;
+    BOOL player1TileFlipped;
+    BOOL player2TileFlipped;
     NSMutableDictionary *foundWords;
     NSMutableArray *player1Words;
     NSMutableArray *player2Words;
@@ -68,19 +68,16 @@
     CCLabelTTF *gameCountDownLabel;
     CCSprite *_playButton;
     BOOL playButtonReady;
-    CCSprite *tapToChangeLeft;
-    CCSprite *tapToChangeRight;
+    CCSprite *_tapToChangeLeft;
+    CCSprite *_tapToChangeRight;
     UITextField *enterPlayer1Name;
     UITextField *enterPlayer2Name;
     NSString *player1LongName;
     NSString *player2LongName;
     BOOL tapToNameRightActive;
     BOOL tapToNameLeftActive;
-    /*
-    PauseMenu *pauseMenuPlayAndPass;
-    BOOL      pauseState;
-    BOOL      pauseActive;
-    */
+    CCSprite *_leftSideBackground;
+    CCSprite *_rightSideBackground;
 }
 
 @property int cols;
@@ -90,9 +87,9 @@
 @property (nonatomic, retain) CCSprite *tapToChangeRight;
 @property (nonatomic, retain) NSString *player1LongName;
 @property (nonatomic, retain) NSString *player2LongName;
-//@property (nonatomic, retain) PauseMenu *pauseMenuPlayAndPass;
-//@property BOOL pauseState;
-//@property BOOL pauseActive;
+@property (nonatomic, retain) CCSprite *leftSideBackground;
+@property (nonatomic, retain) CCSprite *rightSideBackground;
+
 
 // returns a Scene that contains the HelloWorld as the only child
 +(id) scene;
@@ -110,11 +107,18 @@
 - (void) setStarPoints;
 - (int) countStarPointandRemoveStars;
 - (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c;
+- (void) removeCellAtRow:(int) r Col:(int) c;
 - (void) fadeInLetters;
 - (void) fadeOutLetters;
 - (void) displayLetters;
 - (void) showPlayButton;
 - (void) getPlayer1Name;
 - (void) getPlayer2Name;
-
+- (void) removeCellAtRow:(int) r Col:(int) c;
+- (BOOL) isVowel:(NSString *) str;
+- (BOOL) isGameOver;
+- (void) showLeftChecker;
+- (void) showRightChecker;
+- (void) hideLeftChecker;
+- (void) hideRightChecker;
 @end
