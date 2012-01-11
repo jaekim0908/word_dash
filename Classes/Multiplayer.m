@@ -18,7 +18,6 @@
 #import "CCNotifications.h"
 #import "PauseMenu.h"
 #import "HundredSecondsAppDelegate.h"
-#import "GCHelper.h"
 #import "RootViewController.h"
 #import "Util.h"
 #import "HowToPlay.h"
@@ -51,8 +50,8 @@
         solveButton2.visible = NO;
         transparentBoundingBox2.visible = NO;
 		greySolveButton2.visible = NO; 
-        tapToChangeLeft.visible = NO;
-        tapToChangeRight.visible = NO;
+        self.tapToChangeLeft.visible = NO;
+        self.tapToChangeRight.visible = NO;
         pauseState = FALSE;
         pauseMenuPlayAndPass = [[PauseMenu alloc] init];
         [pauseMenuPlayAndPass addToMyScene:self];

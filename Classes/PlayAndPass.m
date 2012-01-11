@@ -47,8 +47,8 @@
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
      if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
-     pauseState = TRUE;
-     [pauseMenuPlayAndPass showPauseMenu:self];
+         pauseState = TRUE;
+         [pauseMenuPlayAndPass showPauseMenu:self];
      }
      
      // FUNCTIONS ON THE PAUSE MENU                     
@@ -70,6 +70,7 @@
         playButtonReady = NO;
         self.tapToChangeLeft.visible = NO;
         self.tapToChangeRight.visible = NO;
+        [self showLeftChecker];
         [self schedule:@selector(updateTimer:) interval:1.0f];
         
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {

@@ -35,10 +35,6 @@
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"PauseMenuAssets.plist"];
         batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"PauseMenuAssets.png"]] retain];
     }
-
-     
-
-    
     
     return self;
 }
@@ -141,15 +137,14 @@
 }
 
 -(void) dealloc {
-    [pauseButton release];
-    [pauseBackground release];
-    [wavesAndBeach release];
-    [rematchButton release];
-    [mainMenuButton release];
-    [resumeButton release];
-    [howToPlayButton release];
+    [self.pauseButton release];
+    [self.pauseBackground release];
+    [self.wavesAndBeach release];
+    [self.rematchButton release];
+    [self.mainMenuButton release];
+    [self.resumeButton release];
+    [self.howToPlayButton release];
     [batchNode release];
-    batchNode = nil;
     [super dealloc];
 }
 
