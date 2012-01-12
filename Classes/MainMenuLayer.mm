@@ -74,12 +74,16 @@
         backgroundImg.position = ccp(screenSize.width/2, screenSize.height/2);
         [self addChild:backgroundImg];
         
+        singlePlayerLabel = [CCSprite spriteWithSpriteFrameName:@"singlePlayerLabel.png"];
+        singlePlayerLabel.position = ccp(120, 240);
+        [batchNode addChild:singlePlayerLabel z:7];
+        
         playAndPassLabel = [CCSprite spriteWithSpriteFrameName:@"playAndPassLable5.png"];
-        playAndPassLabel.position = ccp(screenSize.width/4, screenSize.height/1.4);
+        playAndPassLabel.position = ccp(150, 190);
         [batchNode addChild:playAndPassLabel z:7];
         
         playAndPassSelected = [CCSprite spriteWithSpriteFrameName:@"playAndPassSelected.png"];
-        playAndPassSelected.position = ccp(screenSize.width/4, screenSize.height/1.4);
+        playAndPassSelected.position = ccp(150, 190);
         playAndPassSelected.visible = NO;
         [batchNode addChild:playAndPassSelected];
         
@@ -100,11 +104,11 @@
         playWithFriendsLabel = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsLabel5.png"];
         //position with img
         //playWithFriendsLabel.position = ccp(screenSize.width/1.5, screenSize.height/1.6);
-        playWithFriendsLabel.position = ccp(screenSize.width/2.5, screenSize.height/2);
+        playWithFriendsLabel.position = ccp(180, 140);
         [batchNode addChild:playWithFriendsLabel z:7];
         
         playWithFriendsSelected = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsSelected.png"];
-        playWithFriendsSelected.position = ccp(screenSize.width/2.5, screenSize.height/2);
+        playWithFriendsSelected.position = ccp(180, 140);
         playWithFriendsSelected.visible = NO;
         [batchNode addChild:playWithFriendsSelected];
         
@@ -124,11 +128,11 @@
         
         howToPlayImg = [CCSprite spriteWithSpriteFrameName:@"howToPlay5.png"];
         //howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/5);
-        howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/3.2);
+        howToPlayImg.position = ccp(300, 90);
         [batchNode addChild:howToPlayImg z:7];
         
         howToPlaySelected = [CCSprite spriteWithSpriteFrameName:@"howToPlaySelected.png"];
-        howToPlaySelected.position = ccp(screenSize.width/1.5, screenSize.height/3.2);
+        howToPlaySelected.position = ccp(300, 90);
         howToPlaySelected.visible = NO;
         [batchNode addChild:howToPlaySelected];
         
@@ -147,7 +151,7 @@
         [batchNode addChild:redStarFish z:3];
         
         CCSprite *brownShellFish = [CCSprite spriteWithSpriteFrameName:@"BrownShell.png"];
-        brownShellFish.position = ccp(screenSize.width/1.7, screenSize.height/1.6);
+        brownShellFish.position = ccp(screenSize.width/1.4, screenSize.height/1.6);
         [batchNode addChild:brownShellFish z:3];
         
         CCSprite *blueSandDollarImg = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
@@ -196,6 +200,8 @@
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         //[self showActionSheet];
+        [self displayMultiPlayer];
+    } else if (CGRectContainsPoint(singlePlayerLabel.boundingBox, touchLocation)) {
         [self displaySinglePlayer];
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playAndPassSelected.visible = NO;
@@ -223,8 +229,7 @@
         [self displayHowToPlay];
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         rankingsSelected.visible = NO;
-        //[self displayRanking];
-        [self displayMultiPlayer];
+        [self displayRanking];
     }
 }
 

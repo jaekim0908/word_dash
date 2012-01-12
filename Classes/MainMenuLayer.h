@@ -21,6 +21,7 @@
     CCSprite *rankingsImg;
     CCSprite *playWithFriendsLabel;
     CCSprite *playAndPassLabel;
+    CCSprite *singlePlayerLabel;
     CCSprite *rankingsSelected;
     CCSprite *playAndPassSelected;
     CCSprite *playWithFriendsSelected;

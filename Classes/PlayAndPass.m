@@ -115,18 +115,18 @@
 					[userSelection removeObject:cell];
 					[self updateAnswer];
 				} else if (cell.letterSprite.visible && !cellSelected) {
-					cell.letterSelected.visible = YES;
-					[userSelection addObject:cell];
-					[self updateAnswer];
+                    if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {
+                        [self handleTripleTapWithCell:cell AtRow:r Col:c];
+                    } else {
+                        cell.letterSelected.visible = YES;
+                        [userSelection addObject:cell];
+                        [self updateAnswer];
+                    }
 				} else {
 					if (playerTurn == 1 && !player1TileFlipped) {
 						cell.letterSprite.visible = YES;
 						player1TileFlipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
+						if ([self isVowel:cell.value]) {
 							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
 						}
 						if ([self isThisStarPoint:cell]) {
@@ -135,11 +135,7 @@
 					} else if (playerTurn == 2 && !player2TileFlipped) {
 						cell.letterSprite.visible = YES;
 						player2TileFlipped = YES;
-						if ([cell.value isEqualToString:@"A"] || 
-							[cell.value isEqualToString:@"E"] || 
-							[cell.value isEqualToString:@"I"] || 
-							[cell.value isEqualToString:@"O"] || 
-							[cell.value isEqualToString:@"U"]) {
+						if ([self isVowel:cell.value]) {
 							[self addScore:8 toPlayer:playerTurn anchorCell:cell];
 						}
 						if ([self isThisStarPoint:cell]) {

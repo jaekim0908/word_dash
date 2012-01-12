@@ -230,11 +230,12 @@
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
+    tripleTabUsed = YES;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
-        greySolveButton2.visible = NO;
+        greySolveButton2.visible = NO; 
         [self showLeftChecker];
         
         /*
@@ -275,8 +276,8 @@
 
 -(BOOL) stopTimer
 {
-    [self unschedule:@selector(updateTimer:)];
-    
+    [transparentBoundingBox2 stopAllActions];
+    [self unscheduleAllSelectors];    
     return TRUE;
 }
 
@@ -284,6 +285,11 @@
 {
     if (!playButtonReady) {
         [self schedule:@selector(updateTimer:) interval:1.0f];
+        [self schedule:@selector(runAI:) interval:2.0f];
+        if (playerTurn == 2) {
+            [self clearLetters];
+            [self clearCurrentAnswer];
+        }
     }
     
     return TRUE;
@@ -356,6 +362,7 @@
     if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
         pauseState = TRUE;
         [pauseMenuPlayAndPass showPauseMenu:self];
+        [self hideAIActivity];
     }
 	
     // FUNCTIONS ON THE PAUSE MENU                     
@@ -408,14 +415,8 @@
                     [userSelection removeObject:cell];
                     [self updateAnswer];
                 } else if (cell.letterSprite.visible && !cellSelected) {
-                    if ([self allLettersOpened] && touch.tapCount > 2) {
-                        CCLOG(@"Triple-Tap detected !!");
-                        char ch = (arc4random() % 26) + 'a';
-                        Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
-                        cell.letterSprite.visible = NO;
-                        newCell.letterSprite.visible = YES;
-                        [[wordMatrix objectAtIndex:r] removeObject:cell];
-                        [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
+                    if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {
+                        [self handleTripleTapWithCell:cell AtRow:r Col:c];
                     } else {
                         cell.letterSelected.visible = YES;
                         [userSelection addObject:cell];
@@ -425,11 +426,7 @@
                     if (playerTurn == 1 && !player1TileFlipped) {
                         cell.letterSprite.visible = YES;
                         player1TileFlipped = YES;
-                        if ([cell.value isEqualToString:@"A"] || 
-                            [cell.value isEqualToString:@"E"] || 
-                            [cell.value isEqualToString:@"I"] || 
-                            [cell.value isEqualToString:@"O"] || 
-                            [cell.value isEqualToString:@"U"]) {
+                        if ([self isVowel:cell.value]) {
                             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
                         }
                         if ([self isThisStarPoint:cell]) {
@@ -438,11 +435,7 @@
                     } else if (playerTurn == 2 && !player2TileFlipped) {
                         cell.letterSprite.visible = YES;
                         player2TileFlipped = YES;
-                        if ([cell.value isEqualToString:@"A"] || 
-                            [cell.value isEqualToString:@"E"] || 
-                            [cell.value isEqualToString:@"I"] || 
-                            [cell.value isEqualToString:@"O"] || 
-                            [cell.value isEqualToString:@"U"]) {
+                        if ([self isVowel:cell.value]) {
                             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
                         }
                         if ([self isThisStarPoint:cell]) {
@@ -461,6 +454,7 @@
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
 }
 
+/*
 - (BOOL) allLettersOpened {
     
     for(int r = 0; r < rows; r++) {
@@ -473,10 +467,11 @@
     }
     return YES;
 }
+*/
 
  -(void) runAI:(ccTime) dt {
-    CCLOG(@"*********RUN AI*********");
-    
+     
+     CCLOG(@"*********RUN AI*********");
      
      int maxDelay = [[GameManager sharedGameManager] aiMaxWaitTime];
      

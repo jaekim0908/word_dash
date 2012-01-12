@@ -78,6 +78,7 @@
     BOOL tapToNameLeftActive;
     CCSprite *_leftSideBackground;
     CCSprite *_rightSideBackground;
+    BOOL tripleTabUsed;
 }
 
 @property int cols;
@@ -121,4 +122,6 @@
 - (void) showRightChecker;
 - (void) hideLeftChecker;
 - (void) hideRightChecker;
+- (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int) r Col:(int) c;
+- (BOOL) allLettersOpened;
 @end

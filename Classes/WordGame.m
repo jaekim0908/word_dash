@@ -69,6 +69,7 @@
         playButtonReady = NO;
         tapToNameLeftActive = NO;
         tapToNameRightActive = NO;
+        tripleTabUsed = NO;
         
         self.isTouchEnabled = YES;
 		
@@ -454,6 +455,7 @@
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
+    tripleTabUsed = NO;
     
     NSString *turnMessage;
     
@@ -588,10 +590,8 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-    //[player1Timer setString:@"60"];
-	//[player2Timer setString:@"60"];
-    [player1Timer setString:@"20"];
-	[player2Timer setString:@"20"];
+    [player1Timer setString:@"60"];
+	[player2Timer setString:@"60"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -730,6 +730,17 @@
 	
     self.playButton.visible = YES;
 	[self startGame];
+}
+
+- (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int)r Col:(int)c {
+    CCLOG(@"Triple-Tap detected !!");
+    char ch = (arc4random() % 26) + 'a';
+    Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
+    cell.letterSprite.visible = NO;
+    newCell.letterSprite.visible = YES;
+    [[wordMatrix objectAtIndex:r] removeObject:cell];
+    [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
+    tripleTabUsed = YES;
 }
 
 - (Cell*) cellWithCharacter:(char) ch atRow:(int) r atCol:(int) c {
