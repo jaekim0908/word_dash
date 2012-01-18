@@ -84,5 +84,9 @@
 -(void) showAIActivity;
 -(void) hideAIActivity;
 -(void) clearCurrentAnswer;
+-(void) aiFindWords;
+-(void) aiMoveComplete;
+-(void) aiFlip;
+-(BOOL) aiCheckAnswer:(NSString *) answer;
 
 @end

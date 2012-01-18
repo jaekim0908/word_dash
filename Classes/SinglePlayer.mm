@@ -179,7 +179,7 @@
         [self addChild:rematchBtn z:55];
         
         mainMenuBtn = [CCSprite spriteWithFile:@"main_menu_btn.png"];
-        mainMenuBtn.position = ccp(340,112);
+        mainMenuBtn.position = ccp(340,112); 
         mainMenuBtn.visible = NO;
         [self addChild:mainMenuBtn z:55];
         
@@ -470,7 +470,7 @@
 */
 
  -(void) runAI:(ccTime) dt {
-     
+
      CCLOG(@"*********RUN AI*********");
      
      int maxDelay = [[GameManager sharedGameManager] aiMaxWaitTime];
@@ -489,6 +489,7 @@
     id delay2 = [CCDelayTime actionWithDuration:1];
     [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, delay2, aiDone, nil]];
 }
+
 
 -(void) aiFlip {
     
@@ -512,11 +513,7 @@
         Cell *cell = [nonVisibleCells objectAtIndex:(arc4random() % arraySize)];
         cell.letterSprite.visible = YES;
         player2TileFlipped = YES;
-        if ([cell.value isEqualToString:@"A"] || 
-            [cell.value isEqualToString:@"E"] || 
-            [cell.value isEqualToString:@"I"] || 
-            [cell.value isEqualToString:@"O"] || 
-            [cell.value isEqualToString:@"U"]) {
+        if ([self isVowel:cell.value]) {
             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
         }
         if ([self isThisStarPoint:cell]) {
@@ -603,12 +600,12 @@
     
     CCLOG(@"BATCH SIZE: %i",batchSize);
         
-    if (batchSize <= 0) batchSize = 5;
+    batchSize = 500;
     
     for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
-        CCLOG(@"AI ANSWERS = %@", ans);
+        //CCLOG(@"AI ANSWERS = %@", ans);
         match = [self aiCheckAnswer:ans];
     }
     

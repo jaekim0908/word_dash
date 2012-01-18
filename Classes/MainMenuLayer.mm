@@ -51,7 +51,6 @@
 		challengeRejectedLabel.color = ccc3(255, 255, 255);
 		challengeRejectedLabel.visible = NO;
 		[self addChild:challengeRejectedLabel z:10];
-        //[self getFriendsWithThisApp];
         
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -67,84 +66,48 @@
         titleImg.position = ccp(screenSize.width/2, screenSize.height/1.1);
         [batchNode addChild:titleImg z:5];
         
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"redpaper.png"];
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteBg.png"];
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"blueDenimBg.png"];
         CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         backgroundImg.position = ccp(screenSize.width/2, screenSize.height/2);
         [self addChild:backgroundImg];
         
-        singlePlayerLabel = [CCSprite spriteWithSpriteFrameName:@"singlePlayerLabel.png"];
-        singlePlayerLabel.position = ccp(120, 240);
-        [batchNode addChild:singlePlayerLabel z:7];
+        CCMenuItem *singlePlayerMenuItem = [CCMenuItemImage 
+                                            itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"singlePlayerLabel.png"] 
+                                            selectedSprite:[CCSprite spriteWithSpriteFrameName:@"singlePlayerLabelSelected.png"] 
+                                            target:self
+                                            selector:@selector(displaySinglePlayer)];
+        singlePlayerMenuItem.position = ccp(135, 240);
         
-        playAndPassLabel = [CCSprite spriteWithSpriteFrameName:@"playAndPassLable5.png"];
-        playAndPassLabel.position = ccp(150, 190);
-        [batchNode addChild:playAndPassLabel z:7];
+        CCMenuItem *playAndPassMenuItem = [CCMenuItemImage 
+                                            itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"playAndPassLable5.png"] 
+                                            selectedSprite:[CCSprite spriteWithSpriteFrameName:@"playAndPassSelected.png"] 
+                                            target:self
+                                            selector:@selector(displayPlayAndPass)];
+        playAndPassMenuItem.position = ccp(150, 190);
         
-        playAndPassSelected = [CCSprite spriteWithSpriteFrameName:@"playAndPassSelected.png"];
-        playAndPassSelected.position = ccp(150, 190);
-        playAndPassSelected.visible = NO;
-        [batchNode addChild:playAndPassSelected];
+        CCMenuItem *playWithFriendsMenuItem = [CCMenuItemImage 
+                                               itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"playWithFriendsLabel5.png"] 
+                                               selectedSprite:[CCSprite spriteWithSpriteFrameName:@"playWithFriendsSelected.png"] 
+                                               target:self
+                                               selector:@selector(displayMultiPlayer)];
+        playWithFriendsMenuItem.position = ccp(190, 140);
         
-        /*
-        CCSprite *playButton = [CCSprite spriteWithFile:@"playImg.png"];
-        playButton.position = ccp(screenSize.width/4, screenSize.height/1.7);
-        [self addChild:playButton z:7];
-        playButton.visible = NO;
-        */
+        CCMenuItem *howToPlayMenuItem = [CCMenuItemImage 
+                                               itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"howToPlay5.png"] 
+                                               selectedSprite:[CCSprite spriteWithSpriteFrameName:@"howToPlaySelected.png"] 
+                                               target:self
+                                               selector:@selector(displayHowToPlay)];
+        howToPlayMenuItem.position = ccp(330, 90);
         
-        /*
-        playAndPassImg = [CCSprite spriteWithFile:@"purpleSunSet.png"];
-        playAndPassImg.position = ccp(screenSize.width/4, screenSize.height/1.7);
-        [self addChild:playAndPassImg];
-        playAndPassImg.visible = NO;
-        */
+        CCMenuItem *statsMenuItem = [CCMenuItemImage 
+                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rankings5.png"] 
+                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rankingsSelected.png"] 
+                                         target:self
+                                         selector:@selector(displayRanking)];
+        statsMenuItem.position = ccp(315, 40);
         
-        playWithFriendsLabel = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsLabel5.png"];
-        //position with img
-        //playWithFriendsLabel.position = ccp(screenSize.width/1.5, screenSize.height/1.6);
-        playWithFriendsLabel.position = ccp(180, 140);
-        [batchNode addChild:playWithFriendsLabel z:7];
-        
-        playWithFriendsSelected = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsSelected.png"];
-        playWithFriendsSelected.position = ccp(180, 140);
-        playWithFriendsSelected.visible = NO;
-        [batchNode addChild:playWithFriendsSelected];
-        
-        /*
-        CCSprite *playButton2 = [CCSprite spriteWithFile:@"playImg.png"];
-        playButton2.position = ccp(screenSize.width/1.5, screenSize.height/2);
-        [self addChild:playButton2 z:7];
-        playButton2.visible = NO;
-        */
-        
-        /*
-        playWithFriendsImg = [CCSprite spriteWithFile:@"redSunSet.png"];
-        playWithFriendsImg.position = ccp(screenSize.width/1.5, screenSize.height/2);
-        [self addChild:playWithFriendsImg];
-        playWithFriendsImg.visible = NO;
-        */
-        
-        howToPlayImg = [CCSprite spriteWithSpriteFrameName:@"howToPlay5.png"];
-        //howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/5);
-        howToPlayImg.position = ccp(300, 90);
-        [batchNode addChild:howToPlayImg z:7];
-        
-        howToPlaySelected = [CCSprite spriteWithSpriteFrameName:@"howToPlaySelected.png"];
-        howToPlaySelected.position = ccp(300, 90);
-        howToPlaySelected.visible = NO;
-        [batchNode addChild:howToPlaySelected];
-        
-        rankingsImg = [CCSprite spriteWithSpriteFrameName:@"rankings5.png"];
-        //rankingsImg.position = ccp(screenSize.width/1.2, screenSize.height/10);
-        rankingsImg.position = ccp(screenSize.width/1.2, screenSize.height/8);
-        [batchNode addChild:rankingsImg z:7];
-        
-        rankingsSelected = [CCSprite spriteWithSpriteFrameName:@"rankSelected.png"];
-        rankingsSelected.position = ccp(screenSize.width/1.2, screenSize.height/8);
-        rankingsSelected.visible = NO;
-        [batchNode addChild:rankingsSelected];
+        CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, nil];
+        starMenu.position = CGPointZero;
+        [self addChild:starMenu];
         
         CCSprite *redStarFish = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
         redStarFish.position = ccp(screenSize.width/4, screenSize.height/5);
@@ -155,7 +118,7 @@
         [batchNode addChild:brownShellFish z:3];
         
         CCSprite *blueSandDollarImg = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
-        blueSandDollarImg.position =  ccp(screenSize.width/1.1, screenSize.height/1.4);
+        blueSandDollarImg.position =  ccp(400, 140);
         [batchNode addChild:blueSandDollarImg z:3];
 	}
 	
@@ -163,7 +126,7 @@
 }
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
-    
+    /*
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
@@ -171,30 +134,29 @@
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = YES;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = YES;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = YES;
     }
+    */
     
     return TRUE;
 }
 
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
+    /*
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
@@ -231,6 +193,7 @@
         rankingsSelected.visible = NO;
         [self displayRanking];
     }
+    */
 }
 
 -(void) displayMainMenu {

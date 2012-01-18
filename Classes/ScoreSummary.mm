@@ -12,7 +12,7 @@
 #import "Util.h"
 
 #define GAME_SUMMARY_COUNT_TAG 1001
-#define SUMMARY_PER_PAGE 11
+#define SUMMARY_PER_PAGE 10
 #define PAGE_INDEX_TAG 777
 #define CURRENT_HISTORY_TAG 888
 #define NUMBER_OF_COLUMNS 6
@@ -56,7 +56,7 @@
         [self addChild:silverLine z:-10];
         
         mainMenuButton = [CCSprite spriteWithFile:@"main_menu_btn_small.png"];
-        mainMenuButton.position = ccp(415, 20);
+        mainMenuButton.position = ccp(50, 20);
         [self addChild:mainMenuButton];
         mainMenuButton.visible = NO;
         
@@ -81,7 +81,7 @@
         spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         [spinner setCenter:CGPointMake(winSize.width/2, winSize.height/2)];
         [[[CCDirector sharedDirector] openGLView] addSubview:spinner];
-        [spinner startAnimating];
+        [spinner startAnimating];        
     }
     return self;
 }
@@ -351,13 +351,7 @@
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
 }
 
-- (BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    if (CGRectContainsPoint(mainMenuButton.boundingBox, touchLocation)) {
-        [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
-    }
-    
+- (BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event {    
     return TRUE;
 }
 
@@ -375,10 +369,13 @@
         CCLOG(@"Previous History button pushed");
         [self clearCurrentPage];
         [self displayPreviousPage];
+    } else if (CGRectContainsPoint(mainMenuButton.boundingBox, touchLocation)) {
+        [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
     }
 }
 
 - (void) dealloc {
+    [spinner stopAnimating];
     [paginationMatrix release];
     [keysOrderByCreatedAt release];
     [gameScoreSummary release];
