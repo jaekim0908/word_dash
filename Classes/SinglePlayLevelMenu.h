@@ -104,7 +104,6 @@
 
 
 - (void) displayStars:(NSString *) levelName
-        PrevLevelName:(NSString *) prevLevelName
            lockSprite:(CCSprite *) lockSprite
     BeatAIAwardSprite:(CCSprite *) beatAIAwardSprite
 TotalPointAwardSprite:(CCSprite *) totalPointAwardSprite

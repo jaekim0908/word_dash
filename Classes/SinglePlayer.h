@@ -40,6 +40,7 @@
     CCSprite *awardPopupFrame;
     CCSprite *awardPopupTintedBackground;
     CCSprite *nextLevelBtn;
+    CCSprite *nextLevelDisabledBtn;
     CCSprite *getResultsBtn;
     CCSprite *rematchBtn;
     CCSprite *mainMenuBtn;
@@ -64,6 +65,7 @@
 @property (nonatomic,retain) CCSprite *awardPopupFrame;
 @property (nonatomic,retain) CCSprite *awardPopupTintedBackground;
 @property (nonatomic,retain) CCSprite *nextLevelBtn;
+@property (nonatomic,retain) CCSprite *nextLevelDisabledBtn;
 @property (nonatomic,retain) CCSprite *getResultsBtn;
 @property (nonatomic,retain) CCSprite *rematchBtn;
 @property (nonatomic,retain) CCSprite *mainMenuBtn;
@@ -84,5 +86,6 @@
 -(void) showAIActivity;
 -(void) hideAIActivity;
 -(void) clearCurrentAnswer;
+- (BOOL) determineNextLevelLock:(int)currentLevel beatAIFlag:(BOOL)beatAIFlag AllGameLevelDict:(NSMutableDictionary *)allGameLevels;
 
 @end

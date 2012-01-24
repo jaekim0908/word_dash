@@ -8,6 +8,8 @@
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
 		<string>ai-dictionary-1-8-grades</string>
+		<key>levelLocked</key>
+		<integer>0</integer>
 		<key>beatAIAward</key>
 		<integer>0</integer>
 		<key>totalPointsAward</key>
@@ -27,6 +29,8 @@
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
 		<string>GRE_plus_1-8</string>
+		<key>levelLocked</key>
+		<integer>1</integer>
 		<key>beatAIAward</key>
 		<integer>0</integer>
 		<key>totalPointsAward</key>
@@ -45,7 +49,9 @@
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
-		<string>new_dictionary</string>
+		<string>6of12_plus_3esl_plus_GRE_plus_1-8</string>
+		<key>levelLocked</key>
+		<integer>1</integer>
 		<key>beatAIAward</key>
 		<integer>0</integer>
 		<key>totalPointsAward</key>
@@ -64,7 +70,9 @@
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
-		<string>new_dictionary</string>
+		<string>156K</string>
+		<key>levelLocked</key>
+		<integer>1</integer>
 		<key>beatAIAward</key>
 		<integer>0</integer>
 		<key>totalPointsAward</key>
@@ -83,7 +91,9 @@
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
-		<string>new_dictionary</string>
+		<string>upToLen10</string>
+		<key>levelLocked</key>
+		<integer>1</integer>
 		<key>beatAIAward</key>
 		<integer>0</integer>
 		<key>totalPointsAward</key>

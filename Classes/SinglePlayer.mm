@@ -168,6 +168,11 @@
         nextLevelBtn.visible = NO;
         [self addChild:nextLevelBtn z:55];
         
+        nextLevelDisabledBtn = [CCSprite spriteWithFile:@"next_level_disabled.png"];
+        nextLevelDisabledBtn.position = ccp(143,115);
+        nextLevelDisabledBtn.visible = NO;
+        [self addChild:nextLevelDisabledBtn z:55];
+        
         getResultsBtn = [CCSprite spriteWithFile:@"get_results.png"];
         getResultsBtn.position = ccp(210,115);
         getResultsBtn.visible = NO;
@@ -297,7 +302,7 @@
     CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
     if(awardsState){
         
-        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation)){
+        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation) && nextLevelBtn.visible){
             int batchSize, currentLevel,nextLevel;
             
             //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
@@ -656,54 +661,95 @@
     
 }
 
+- (BOOL) determineNextLevelLock:(int)currentLevel BeatAIFlag:(BOOL)beatAIFlag AllGameLevelDict:(NSMutableDictionary *)allGameLevels
+{
+    int nextLevel;
+    
+    if (currentLevel < 5) {
+        
+        nextLevel = currentLevel+1;
+        
+        NSString *lookupKeyNextLevel = [NSString stringWithFormat:@"Level%i",nextLevel];
+        NSMutableDictionary *nextLevelInfo = [ allGameLevels objectForKey:lookupKeyNextLevel];
+        
+        BOOL nextLevelLocked = [[nextLevelInfo objectForKey:@"levelLocked"] boolValue];
+        
+        //IF NEXT LEVEL IS UNLOCKED OR THE PLAYER JUST BEAT THE AI, ENABLE THE NEXT LEVEL BUTTON
+        if(!nextLevelLocked || beatAIFlag){
+            //ENABLE
+            nextLevelBtn.visible=YES;
+        }
+        else{
+            nextLevelDisabledBtn.visible=YES;
+        }
+            
+        //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
+        if( nextLevelLocked && beatAIFlag){
+            [nextLevelInfo setObject:[NSNumber numberWithBool:FALSE] forKey:@"levelLocked"];
+        }
+ 
+    }
+    //IF IT'S THE LAST LEVEL THEN DISABLE THE NEXT LEVEL BUTTON
+    else{
+        nextLevelDisabledBtn.visible=YES;
+    }
+    
+    return TRUE;
+    
+    
+}
 - (void) determineAwardsForSinglePlayer:(int)p1Score AIScore:(int)aiScore Player1Words:(NSMutableArray *)player1WordsArray
 {
     NSMutableDictionary *allGameLevels = [[GameManager sharedGameManager] getGameLevelDictionary];
     NSString *currentLevel = [NSString stringWithFormat:@"Level%i",[GameManager sharedGameManager].singlePlayerLevel];
     NSMutableDictionary *levelInfo = [ allGameLevels objectForKey:currentLevel];
     
-    BOOL beatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
-    BOOL totalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
-    BOOL longWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
-    BOOL updatePList = NO;
+    //BOOL beatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
+    //BOOL totalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    //BOOL longWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    
+    BOOL beatAIAward,totalPointsAward,longWordAward;
+    //BOOL updatePList = NO;
     
     //BEAT AI AWARD        
     //IF THE PLAYER BEAT THE AI
     if (p1Score > aiScore) {
-        if (!beatAIAward) {
-            updatePList = YES;
-            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"beatAIAward"];
-        }
-        self.thisGameBeatAIAward = YES;
-    }
         
-    int totalPointsForStar = [[levelInfo objectForKey:@"totalPointsForStar"] intValue];
-    //IF THE PLAYER PAST THE TOTAL POINTS THRESHOLD
-    if (p1Score >= totalPointsForStar){
-        if(!totalPointsAward){
-            updatePList = YES;
-            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"totalPointsAward"];
-        }
-        self.thisGameTotalPointsAward = YES;
+        beatAIAward = TRUE;
     }
+    else{
+        beatAIAward = FALSE;
+    }
+    //UNLOCK THE NEXT LEVEL (if currently locked)
+    [self determineNextLevelLock:[GameManager sharedGameManager].singlePlayerLevel BeatAIFlag:beatAIAward AllGameLevelDict:allGameLevels];
+
+    [levelInfo setObject:[NSNumber numberWithBool:beatAIAward] forKey:@"beatAIAward"];
+    self.thisGameBeatAIAward = beatAIAward;
+     
+    //TOTAL POINT AWARD
+    int totalPointsForStar = [[levelInfo objectForKey:@"totalPointsForStar"] intValue];
+    //IF THE PLAYER PASSED THE TOTAL POINTS THRESHOLD
+    (p1Score >= totalPointsForStar) ? totalPointsAward = TRUE : totalPointsAward = FALSE;
     
+    [levelInfo setObject:[NSNumber numberWithBool:totalPointsAward] forKey:@"totalPointsAward"];
+    self.thisGameTotalPointsAward = totalPointsAward;
+    
+    //LONG WORD AWARD
     int wordLengthForStar = [[levelInfo objectForKey:@"wordLengthForStar"] intValue];
     int longestWordLength = [self getLongestWordLengthInArray:player1WordsArray];
     //IF THE LONGEST WORD IS GREATER THAN THE THRESHOLD
-    if (longestWordLength >= wordLengthForStar) {
-        if(!longWordAward){
-            updatePList = YES;
-            [levelInfo setObject:[NSNumber numberWithBool:TRUE] forKey:@"longWordAward"];
-        }
-        self.thisGameLongWordAward = YES;
-    }
+    (longestWordLength >= wordLengthForStar) ? longWordAward = TRUE : longWordAward = FALSE;
+    
+    [levelInfo setObject:[NSNumber numberWithBool:longWordAward] forKey:@"longWordAward"];
+    self.thisGameLongWordAward = longWordAward;
+
         
     //UPDATE THE PLIST FILE IF ANY NEW AWARDS WERE WON THIS GAME
-    if (updatePList) {
-        [allGameLevels setObject:levelInfo forKey:currentLevel];
-        NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
-        [allGameLevels writeToFile:path atomically:YES];
-    }                  
+    //if (updatePList) {
+    [allGameLevels setObject:levelInfo forKey:currentLevel];
+    NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
+    [allGameLevels writeToFile:path atomically:YES];
+    //}                  
     
 }
 
@@ -715,7 +761,7 @@
     
     awardPopupTintedBackground.visible = YES;
     awardPopupFrame.visible = YES;
-    nextLevelBtn.visible = YES; 
+    //nextLevelBtn.visible = YES; 
     getResultsBtn.visible = YES; 
     rematchBtn.visible = YES;
     mainMenuBtn.visible = YES;
