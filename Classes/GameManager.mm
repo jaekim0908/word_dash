@@ -48,6 +48,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize player2Words = _player2Words;
 @synthesize gameMode = _gameMode;
 @synthesize aiMaxWaitTime = _aiMaxWaitTime;
+@synthesize runningSceneID = _runningSceneID;
 
 
 
@@ -114,6 +115,9 @@ static GameManager* _sharedGameManager = nil;
         //DISCUSS WITH JAE -- WHEN DO WE CREATE PROPERTIES AND WHEN DO WE CREATE OR OWN GETTERS
         //WHAT ABOUT USING RETAIN????????????
         _sharedGameManager.gameLevelDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:_sharedGameManager.gameLevelPListPath];
+        
+        // Authenticate Local User
+        [[GCHelper sharedInstance] authenticateLocalUser];
     }
 	return self;
 }
@@ -176,6 +180,8 @@ static GameManager* _sharedGameManager = nil;
 			CCLOG(@"Unknown Id, cannot switch scene");
 			break;
 	}
+    
+    self.runningSceneID = sceneId;
 	
 	if ([[CCDirector sharedDirector] runningScene] == nil) {
 		CCLOG(@"No running scene");
@@ -188,6 +194,7 @@ static GameManager* _sharedGameManager = nil;
 
 -(void) runLoadingSceneWithTargetId:(SceneTypes) sceneId {
 	id sceneToRun = [LoadingScene sceneWithTargetScene:sceneId];
+    self.runningSceneID = sceneId;
 	
 	if ([[CCDirector sharedDirector] runningScene] == nil) {
 		CCLOG(@"No running scene");

@@ -35,6 +35,8 @@
     
     GameMode _gameMode;
     int      _aiMaxWaitTime;
+    
+    SceneTypes _runningSceneID;
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -59,6 +61,7 @@
 @property (nonatomic, retain) NSMutableArray *player2Words;
 @property (readwrite) GameMode gameMode;
 @property (readwrite) int aiMaxWaitTime;
+@property (readwrite) SceneTypes runningSceneID;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;

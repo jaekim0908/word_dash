@@ -8,6 +8,8 @@
 
 #import "GCHelper.h"
 #import "GameManager.h"
+#import "cocos2d.h"
+#import "Multiplayer.h"
 
 @implementation GCHelper
 @synthesize gameCenterAvailable;
@@ -69,7 +71,12 @@ static GCHelper *sharedHelper = nil;
             NSLog(@"Received invite");
             self.pendingInvite = acceptedInvite;
             self.pendingPlayersToInvite = playersToInvite;
-            [delegate inviteReceived];
+            if ([[GameManager sharedGameManager] runningSceneID] == kMutiPlayerScene) {
+                CCLOG(@"GCHelper: Multiplayer scene");
+                [delegate inviteReceived];
+            } else {
+                [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
+            }
         };
         
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {

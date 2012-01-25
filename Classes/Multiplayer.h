@@ -26,7 +26,6 @@
     uint32_t ourRandom;   
     BOOL receivedRandom;    
     NSString *otherPlayerID;
-    CCLabelTTF *debugLabel;
 }
 
 -(BOOL) stopTimer;
