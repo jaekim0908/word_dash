@@ -35,7 +35,7 @@
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
-	
+    
 	// return the scene
 	return scene;
 }
@@ -58,12 +58,6 @@
         [[GCHelper sharedInstance] authenticateLocalUser];
         HundredSecondsAppDelegate *delegate = (HundredSecondsAppDelegate *) [UIApplication sharedApplication].delegate;  
         [[GCHelper sharedInstance] findMatchWithMinPlayers:2 maxPlayers:2 viewController:delegate.viewController delegate:self];
-        
-        //TODO delete this
-        debugLabel = [CCLabelTTF labelWithString:@"" fontName:@"Verdana-Bold" fontSize:28];
-        debugLabel.position = ccp(windowSize.width/2, windowSize.height/2);
-        debugLabel.color = ccc3(255, 193, 37);
-        [self addChild:debugLabel];
         
         ourRandom = arc4random();
         [self setGameState:kGameStateWaitingForMatch];
@@ -285,7 +279,8 @@
         playerTurn = 1;	
         myTurn = YES;
         greySolveButton1.visible = NO;
-        
+        [self showLeftChecker];
+        /*
         if (notify) {
             if (player1LongName && [player1LongName length] > 0) {
                 turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
@@ -299,11 +294,13 @@
                                                               tag:0 
                                                           animate:YES];
         }
+         */
 	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
         [self sendEndTurn];
         myTurn = NO;
         greySolveButton1.visible = YES;
-        
+        [self hideLeftChecker];
+        /*
         if (notify) {
             if (player2LongName && [player2LongName length] > 0) {
                 turnMessage = [NSString stringWithFormat:@"%@'s Turn", player2LongName];
@@ -317,6 +314,7 @@
                                                               tag:0 
                                                           animate:YES];
         }
+        */
 	}
 }
 
@@ -462,20 +460,7 @@
 #pragma mark multiplayer
 
 - (void)setGameState:(GameState)state {
-    
     gameState = state;
-    if (gameState == kGameStateWaitingForMatch) {
-        [debugLabel setString:@"Waiting for match"];
-    } else if (gameState == kGameStateWaitingForRandomNumber) {
-        [debugLabel setString:@"Waiting for rand #"];
-    } else if (gameState == kGameStateWaitingForStart) {
-        [debugLabel setString:@"Waiting for start"];
-    } else if (gameState == kGameStateActive) {
-        [debugLabel setString:@"Active"];
-    } else if (gameState == kGameStateDone) {
-        [debugLabel setString:@"Done"];
-    } 
-    
 }
 
 - (void)sendData:(NSData *)data {
@@ -661,7 +646,8 @@
 
 - (void)inviteReceived {
     CCLOG(@"################ Invite Received ###########################"); 
-    //[self restartTapped:nil];    
+    HundredSecondsAppDelegate *delegate = (HundredSecondsAppDelegate *) [UIApplication sharedApplication].delegate;  
+    [[GCHelper sharedInstance] findMatchWithMinPlayers:2 maxPlayers:2 viewController:delegate.viewController delegate:self];
 }
 
 - (void)matchEnded {    

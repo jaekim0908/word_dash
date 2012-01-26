@@ -10,6 +10,7 @@
 
 typedef enum {
 	kInvalidScene = 0,
+    kWordGameScene,
 	kMainMenuScene,
 	kLoadingScene,
 	kIntroScene,
