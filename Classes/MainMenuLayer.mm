@@ -51,7 +51,6 @@
 		challengeRejectedLabel.color = ccc3(255, 255, 255);
 		challengeRejectedLabel.visible = NO;
 		[self addChild:challengeRejectedLabel z:10];
-        //[self getFriendsWithThisApp];
         
         // Retina Display Support
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
@@ -67,91 +66,59 @@
         titleImg.position = ccp(screenSize.width/2, screenSize.height/1.1);
         [batchNode addChild:titleImg z:5];
         
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"redpaper.png"];
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteBg.png"];
-        //CCSprite *backgroundImg = [CCSprite spriteWithFile:@"blueDenimBg.png"];
         CCSprite *backgroundImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         backgroundImg.position = ccp(screenSize.width/2, screenSize.height/2);
         [self addChild:backgroundImg];
         
-        playAndPassLabel = [CCSprite spriteWithSpriteFrameName:@"playAndPassLable5.png"];
-        playAndPassLabel.position = ccp(screenSize.width/4, screenSize.height/1.4);
-        [batchNode addChild:playAndPassLabel z:7];
+        CCMenuItem *singlePlayerMenuItem = [CCMenuItemImage 
+                                            itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"singlePlayerLabel.png"] 
+                                            selectedSprite:[CCSprite spriteWithSpriteFrameName:@"singlePlayerLabelSelected.png"] 
+                                            target:self
+                                            selector:@selector(displaySinglePlayer)];
+        singlePlayerMenuItem.position = ccp(135, 240);
         
-        playAndPassSelected = [CCSprite spriteWithSpriteFrameName:@"playAndPassSelected.png"];
-        playAndPassSelected.position = ccp(screenSize.width/4, screenSize.height/1.4);
-        playAndPassSelected.visible = NO;
-        [batchNode addChild:playAndPassSelected];
+        CCMenuItem *playAndPassMenuItem = [CCMenuItemImage 
+                                            itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"playAndPassLable5.png"] 
+                                            selectedSprite:[CCSprite spriteWithSpriteFrameName:@"playAndPassSelected.png"] 
+                                            target:self
+                                            selector:@selector(displayPlayAndPass)];
+        playAndPassMenuItem.position = ccp(150, 190);
         
-        /*
-        CCSprite *playButton = [CCSprite spriteWithFile:@"playImg.png"];
-        playButton.position = ccp(screenSize.width/4, screenSize.height/1.7);
-        [self addChild:playButton z:7];
-        playButton.visible = NO;
-        */
+        CCMenuItem *playWithFriendsMenuItem = [CCMenuItemImage 
+                                               itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"playWithFriendsLabel5.png"] 
+                                               selectedSprite:[CCSprite spriteWithSpriteFrameName:@"playWithFriendsSelected.png"] 
+                                               target:self
+                                               selector:@selector(displayMultiPlayer)];
+        playWithFriendsMenuItem.position = ccp(190, 140);
         
-        /*
-        playAndPassImg = [CCSprite spriteWithFile:@"purpleSunSet.png"];
-        playAndPassImg.position = ccp(screenSize.width/4, screenSize.height/1.7);
-        [self addChild:playAndPassImg];
-        playAndPassImg.visible = NO;
-        */
+        CCMenuItem *howToPlayMenuItem = [CCMenuItemImage 
+                                               itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"howToPlay5.png"] 
+                                               selectedSprite:[CCSprite spriteWithSpriteFrameName:@"howToPlaySelected.png"] 
+                                               target:self
+                                               selector:@selector(displayHowToPlay)];
+        howToPlayMenuItem.position = ccp(330, 90);
         
-        playWithFriendsLabel = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsLabel5.png"];
-        //position with img
-        //playWithFriendsLabel.position = ccp(screenSize.width/1.5, screenSize.height/1.6);
-        playWithFriendsLabel.position = ccp(screenSize.width/2.5, screenSize.height/2);
-        [batchNode addChild:playWithFriendsLabel z:7];
+        CCMenuItem *statsMenuItem = [CCMenuItemImage 
+                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rankings5.png"] 
+                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rankingsSelected.png"] 
+                                         target:self
+                                         selector:@selector(displayRanking)];
+        statsMenuItem.position = ccp(315, 40);
         
-        playWithFriendsSelected = [CCSprite spriteWithSpriteFrameName:@"playWithFriendsSelected.png"];
-        playWithFriendsSelected.position = ccp(screenSize.width/2.5, screenSize.height/2);
-        playWithFriendsSelected.visible = NO;
-        [batchNode addChild:playWithFriendsSelected];
-        
-        /*
-        CCSprite *playButton2 = [CCSprite spriteWithFile:@"playImg.png"];
-        playButton2.position = ccp(screenSize.width/1.5, screenSize.height/2);
-        [self addChild:playButton2 z:7];
-        playButton2.visible = NO;
-        */
-        
-        /*
-        playWithFriendsImg = [CCSprite spriteWithFile:@"redSunSet.png"];
-        playWithFriendsImg.position = ccp(screenSize.width/1.5, screenSize.height/2);
-        [self addChild:playWithFriendsImg];
-        playWithFriendsImg.visible = NO;
-        */
-        
-        howToPlayImg = [CCSprite spriteWithSpriteFrameName:@"howToPlay5.png"];
-        //howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/5);
-        howToPlayImg.position = ccp(screenSize.width/1.5, screenSize.height/3.2);
-        [batchNode addChild:howToPlayImg z:7];
-        
-        howToPlaySelected = [CCSprite spriteWithSpriteFrameName:@"howToPlaySelected.png"];
-        howToPlaySelected.position = ccp(screenSize.width/1.5, screenSize.height/3.2);
-        howToPlaySelected.visible = NO;
-        [batchNode addChild:howToPlaySelected];
-        
-        rankingsImg = [CCSprite spriteWithSpriteFrameName:@"rankings5.png"];
-        //rankingsImg.position = ccp(screenSize.width/1.2, screenSize.height/10);
-        rankingsImg.position = ccp(screenSize.width/1.2, screenSize.height/8);
-        [batchNode addChild:rankingsImg z:7];
-        
-        rankingsSelected = [CCSprite spriteWithSpriteFrameName:@"rankSelected.png"];
-        rankingsSelected.position = ccp(screenSize.width/1.2, screenSize.height/8);
-        rankingsSelected.visible = NO;
-        [batchNode addChild:rankingsSelected];
+        CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, nil];
+        starMenu.position = CGPointZero;
+        [self addChild:starMenu];
         
         CCSprite *redStarFish = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
         redStarFish.position = ccp(screenSize.width/4, screenSize.height/5);
         [batchNode addChild:redStarFish z:3];
         
         CCSprite *brownShellFish = [CCSprite spriteWithSpriteFrameName:@"BrownShell.png"];
-        brownShellFish.position = ccp(screenSize.width/1.7, screenSize.height/1.6);
+        brownShellFish.position = ccp(screenSize.width/1.4, screenSize.height/1.6);
         [batchNode addChild:brownShellFish z:3];
         
         CCSprite *blueSandDollarImg = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
-        blueSandDollarImg.position =  ccp(screenSize.width/1.1, screenSize.height/1.4);
+        blueSandDollarImg.position =  ccp(400, 140);
         [batchNode addChild:blueSandDollarImg z:3];
 	}
 	
@@ -159,7 +126,7 @@
 }
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
-    
+    /*
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
@@ -167,35 +134,36 @@
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = YES;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = YES;
         rankingsSelected.visible = NO;
-        
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         playAndPassSelected.visible = NO;
         howToPlaySelected.visible = NO;
         rankingsSelected.visible = YES;
     }
+    */
     
     return TRUE;
 }
 
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
+    /*
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     
     if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
         playWithFriendsSelected.visible = NO;
         //[self showActionSheet];
+        [self displayMultiPlayer];
+    } else if (CGRectContainsPoint(singlePlayerLabel.boundingBox, touchLocation)) {
         [self displaySinglePlayer];
     } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
         playAndPassSelected.visible = NO;
@@ -223,9 +191,9 @@
         [self displayHowToPlay];
     } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
         rankingsSelected.visible = NO;
-        //[self displayRanking];
-        [self displayMultiPlayer];
+        [self displayRanking];
     }
+    */
 }
 
 -(void) displayMainMenu {
@@ -250,13 +218,49 @@
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");
 	//[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
-    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+    //DETERMINE IF FIRST TIME PLAYING
+    NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+    
+    if(!firstTimePlayFlag)
+    {
+        CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+        
+        //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+        [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+    }
+    else{
+        //[self displayPlayAndPass];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+    }       
+
+    //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
 }
 
 -(void) displaySinglePlayer {
     CCLOG(@"display single player");
     //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
-    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+    //DETERMINE IF FIRST TIME PLAYING
+    NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+    
+    if(!firstTimePlayFlag)
+    {
+        CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+        
+        //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+        [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+    }
+    else{
+        //[self displayPlayAndPass];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+    }       
+
+    //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
 }
 
 -(void) displayMultiPlayer {

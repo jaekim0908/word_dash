@@ -27,7 +27,6 @@
 @synthesize thisGameLongWordAward;
 @synthesize awardPopupFrame;
 @synthesize awardPopupTintedBackground;
-@synthesize nextLevelBtn;
 @synthesize getResultsBtn;
 @synthesize rematchBtn;
 @synthesize mainMenuBtn;
@@ -162,29 +161,19 @@
         singlePlayerScore.anchorPoint = ccp(0,0);
         singlePlayerScore.visible = NO;
 		[self addChild:singlePlayerScore z:55];
-        
-        nextLevelBtn = [CCSprite spriteWithFile:@"next_level.png"];
-        nextLevelBtn.position = ccp(143,115);
-        nextLevelBtn.visible = NO;
-        [self addChild:nextLevelBtn z:55];
-        
-        nextLevelDisabledBtn = [CCSprite spriteWithFile:@"next_level_disabled.png"];
-        nextLevelDisabledBtn.position = ccp(143,115);
-        nextLevelDisabledBtn.visible = NO;
-        [self addChild:nextLevelDisabledBtn z:55];
-        
+      
         getResultsBtn = [CCSprite spriteWithFile:@"get_results.png"];
-        getResultsBtn.position = ccp(210,115);
+        getResultsBtn.position = ccp(210-35,115);
         getResultsBtn.visible = NO;
         [self addChild:getResultsBtn z:55];
         
         rematchBtn = [CCSprite spriteWithFile:@"rematch.png"];
-        rematchBtn.position = ccp(275,114);
+        rematchBtn.position = ccp(275-35,114);
         rematchBtn.visible = NO;
         [self addChild:rematchBtn z:55];
         
         mainMenuBtn = [CCSprite spriteWithFile:@"main_menu_btn.png"];
-        mainMenuBtn.position = ccp(340,112);
+        mainMenuBtn.position = ccp(340-35,112); 
         mainMenuBtn.visible = NO;
         [self addChild:mainMenuBtn z:55];
         
@@ -235,11 +224,12 @@
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
+    tripleTabUsed = YES;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
-        greySolveButton2.visible = NO;
+        greySolveButton2.visible = NO; 
         [self showLeftChecker];
         
         /*
@@ -280,8 +270,8 @@
 
 -(BOOL) stopTimer
 {
-    [self unschedule:@selector(updateTimer:)];
-    
+    [transparentBoundingBox2 stopAllActions];
+    [self unscheduleAllSelectors];    
     return TRUE;
 }
 
@@ -289,6 +279,11 @@
 {
     if (!playButtonReady) {
         [self schedule:@selector(updateTimer:) interval:1.0f];
+        [self schedule:@selector(runAI:) interval:2.0f];
+        if (playerTurn == 2) {
+            [self clearLetters];
+            [self clearCurrentAnswer];
+        }
     }
     
     return TRUE;
@@ -302,30 +297,7 @@
     CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
     if(awardsState){
         
-        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation) && nextLevelBtn.visible){
-            int batchSize, currentLevel,nextLevel;
-            
-            //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
-            currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
-            
-            if (currentLevel <= 5){
-                nextLevel = currentLevel+1;
-            }
-            else{
-                //OPEN ISSUE: Determine what to do if at the top level
-                nextLevel = currentLevel;
-            }
-            
-            NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
-                                              objectForKey:[NSString stringWithFormat:@"Level%i",nextLevel]];
-            batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
-            
-            [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
-            [[GameManager sharedGameManager] setSinglePlayerLevel:nextLevel];
-            [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
-
-        }
-        else if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
+        if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
             
             //self.isTouchEnabled=NO;
             [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
@@ -361,6 +333,7 @@
     if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
         pauseState = TRUE;
         [pauseMenuPlayAndPass showPauseMenu:self];
+        [self hideAIActivity];
     }
 	
     // FUNCTIONS ON THE PAUSE MENU                     
@@ -413,14 +386,8 @@
                     [userSelection removeObject:cell];
                     [self updateAnswer];
                 } else if (cell.letterSprite.visible && !cellSelected) {
-                    if ([self allLettersOpened] && touch.tapCount > 2) {
-                        CCLOG(@"Triple-Tap detected !!");
-                        char ch = (arc4random() % 26) + 'a';
-                        Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
-                        cell.letterSprite.visible = NO;
-                        newCell.letterSprite.visible = YES;
-                        [[wordMatrix objectAtIndex:r] removeObject:cell];
-                        [[wordMatrix objectAtIndex:r] insertObject:newCell atIndex:c];
+                    if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {
+                        [self handleTripleTapWithCell:cell AtRow:r Col:c];
                     } else {
                         cell.letterSelected.visible = YES;
                         [userSelection addObject:cell];
@@ -430,11 +397,7 @@
                     if (playerTurn == 1 && !player1TileFlipped) {
                         cell.letterSprite.visible = YES;
                         player1TileFlipped = YES;
-                        if ([cell.value isEqualToString:@"A"] || 
-                            [cell.value isEqualToString:@"E"] || 
-                            [cell.value isEqualToString:@"I"] || 
-                            [cell.value isEqualToString:@"O"] || 
-                            [cell.value isEqualToString:@"U"]) {
+                        if ([self isVowel:cell.value]) {
                             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
                         }
                         if ([self isThisStarPoint:cell]) {
@@ -443,11 +406,7 @@
                     } else if (playerTurn == 2 && !player2TileFlipped) {
                         cell.letterSprite.visible = YES;
                         player2TileFlipped = YES;
-                        if ([cell.value isEqualToString:@"A"] || 
-                            [cell.value isEqualToString:@"E"] || 
-                            [cell.value isEqualToString:@"I"] || 
-                            [cell.value isEqualToString:@"O"] || 
-                            [cell.value isEqualToString:@"U"]) {
+                        if ([self isVowel:cell.value]) {
                             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
                         }
                         if ([self isThisStarPoint:cell]) {
@@ -466,6 +425,7 @@
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
 }
 
+/*
 - (BOOL) allLettersOpened {
     
     for(int r = 0; r < rows; r++) {
@@ -478,10 +438,11 @@
     }
     return YES;
 }
+*/
 
  -(void) runAI:(ccTime) dt {
-    CCLOG(@"*********RUN AI*********");
-    
+
+     CCLOG(@"*********RUN AI*********");
      
      int maxDelay = [[GameManager sharedGameManager] aiMaxWaitTime];
      
@@ -499,6 +460,7 @@
     id delay2 = [CCDelayTime actionWithDuration:1];
     [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, delay2, aiDone, nil]];
 }
+
 
 -(void) aiFlip {
     
@@ -522,11 +484,7 @@
         Cell *cell = [nonVisibleCells objectAtIndex:(arc4random() % arraySize)];
         cell.letterSprite.visible = YES;
         player2TileFlipped = YES;
-        if ([cell.value isEqualToString:@"A"] || 
-            [cell.value isEqualToString:@"E"] || 
-            [cell.value isEqualToString:@"I"] || 
-            [cell.value isEqualToString:@"O"] || 
-            [cell.value isEqualToString:@"U"]) {
+        if ([self isVowel:cell.value]) {
             [self addScore:8 toPlayer:playerTurn anchorCell:cell];
         }
         if ([self isThisStarPoint:cell]) {
@@ -613,12 +571,12 @@
     
     CCLOG(@"BATCH SIZE: %i",batchSize);
         
-    if (batchSize <= 0) batchSize = 5;
+    batchSize = 500;
     
     for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
-        CCLOG(@"AI ANSWERS = %@", ans);
+        //CCLOG(@"AI ANSWERS = %@", ans);
         match = [self aiCheckAnswer:ans];
     }
     
@@ -665,34 +623,19 @@
 {
     int nextLevel;
     
-    if (currentLevel < 5) {
-        
-        nextLevel = currentLevel+1;
-        
-        NSString *lookupKeyNextLevel = [NSString stringWithFormat:@"Level%i",nextLevel];
-        NSMutableDictionary *nextLevelInfo = [ allGameLevels objectForKey:lookupKeyNextLevel];
-        
-        BOOL nextLevelLocked = [[nextLevelInfo objectForKey:@"levelLocked"] boolValue];
-        
-        //IF NEXT LEVEL IS UNLOCKED OR THE PLAYER JUST BEAT THE AI, ENABLE THE NEXT LEVEL BUTTON
-        if(!nextLevelLocked || beatAIFlag){
-            //ENABLE
-            nextLevelBtn.visible=YES;
-        }
-        else{
-            nextLevelDisabledBtn.visible=YES;
-        }
-            
-        //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
-        if( nextLevelLocked && beatAIFlag){
-            [nextLevelInfo setObject:[NSNumber numberWithBool:FALSE] forKey:@"levelLocked"];
-        }
+    nextLevel = currentLevel+1;
+    
+    NSString *lookupKeyNextLevel = [NSString stringWithFormat:@"Level%i",nextLevel];
+    NSMutableDictionary *nextLevelInfo = [ allGameLevels objectForKey:lookupKeyNextLevel];
+    
+    BOOL nextLevelLocked = [[nextLevelInfo objectForKey:@"levelLocked"] boolValue];
+    
+         
+    //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
+    if( nextLevelLocked && beatAIFlag){
+        [nextLevelInfo setObject:[NSNumber numberWithBool:FALSE] forKey:@"levelLocked"];
+    }
  
-    }
-    //IF IT'S THE LAST LEVEL THEN DISABLE THE NEXT LEVEL BUTTON
-    else{
-        nextLevelDisabledBtn.visible=YES;
-    }
     
     return TRUE;
     
@@ -760,8 +703,7 @@
     awardsState = TRUE;
     
     awardPopupTintedBackground.visible = YES;
-    awardPopupFrame.visible = YES;
-    //nextLevelBtn.visible = YES; 
+    awardPopupFrame.visible = YES; 
     getResultsBtn.visible = YES; 
     rematchBtn.visible = YES;
     mainMenuBtn.visible = YES;
