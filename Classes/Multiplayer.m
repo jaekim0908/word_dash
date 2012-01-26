@@ -272,50 +272,18 @@
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
-    
-    NSString *turnMessage;
-    
+        
     if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         myTurn = YES;
         greySolveButton1.visible = NO;
         [self showLeftChecker];
-        /*
-        if (notify) {
-            if (player1LongName && [player1LongName length] > 0) {
-                turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
-            } else {
-                turnMessage = @"Player 1's Turn";
-            }
-            
-            [[CCNotifications sharedManager] addNotificationTitle:nil
-                                                          message:turnMessage 
-                                                            image:@"watchIcon.png" 
-                                                              tag:0 
-                                                          animate:YES];
-        }
-         */
-	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
+    } else if (player == 2 && [[player2Timer string] intValue] > 0) {
         [self sendEndTurn];
         myTurn = NO;
         greySolveButton1.visible = YES;
         [self hideLeftChecker];
-        /*
-        if (notify) {
-            if (player2LongName && [player2LongName length] > 0) {
-                turnMessage = [NSString stringWithFormat:@"%@'s Turn", player2LongName];
-            } else {
-                turnMessage = @"Player 2's Turn";
-            }
-            
-            [[CCNotifications sharedManager] addNotificationTitle:nil
-                                                          message:turnMessage 
-                                                            image:@"watchIcon.png" 
-                                                              tag:0 
-                                                          animate:YES];
-        }
-        */
-	}
+    }
 }
 
 -(BOOL) stopTimer {
@@ -421,15 +389,13 @@
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [player2ScoreRecord saveInBackground];
         
-        //MCH - display results layer
-        /*
-        [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
-                                                   WithPlayerTwoScore:[player2Score string] 
-                                                   WithPlayerOneWords:player1Words 
-                                                   WithPlayerTwoWords:player2Words
-                                                          ForGameMode:kMultiplayer
-                                                   ]];
-        */
+        [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+        [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+        [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+        [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+        [[GameManager sharedGameManager] setGameMode:kMultiplayer];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        
 	} else {
 		if (myTurn) {
 			if (!play1Done) {
@@ -625,7 +591,6 @@
     if (isPlayer1 && gameState == kGameStateWaitingForStart) {
         [self sendPlayer1Board];
         [self setGameState:kGameStateActive];
-        //[self sendGameBegin];
     }
     [self setupStringsWithOtherPlayerId:otherPlayerID];
     

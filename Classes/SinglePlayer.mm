@@ -295,7 +295,6 @@
     return TRUE;
 }
 
-
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];

@@ -862,12 +862,11 @@
                 [player2Words addObject:s];
             }
             
-			//[midDisplay setString:@"Correct"];
 			int starCount = [self countStarPointandRemoveStars];
 			int newPoint = pow(2, [s length]);
 			[self addScore:newPoint toPlayer:playerTurn anchorCell: [userSelection objectAtIndex:0]];
             [self addMoreTime:(starCount * 10) toPlayer:playerTurn];
-            if (starCount > 0) {
+            if (starCount > 0 && playerTurn == 1) {
                 [[CCNotifications sharedManager] addNotificationTitle:@"Time Extended !!" 
                                                               message:[NSString stringWithFormat:@"Congratulations, %i more seconds added.", starCount * 10] 
                                                                 image:@"watchIcon.png" 

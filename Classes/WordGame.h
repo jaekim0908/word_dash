@@ -124,4 +124,5 @@
 - (void) hideRightChecker;
 - (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int) r Col:(int) c;
 - (BOOL) allLettersOpened;
+- (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId;
 @end
