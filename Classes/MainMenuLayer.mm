@@ -218,13 +218,49 @@
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");
 	//[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
-    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+    //DETERMINE IF FIRST TIME PLAYING
+    NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+    
+    if(!firstTimePlayFlag)
+    {
+        CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+        
+        //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+        [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+    }
+    else{
+        //[self displayPlayAndPass];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+    }       
+
+    //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
 }
 
 -(void) displaySinglePlayer {
     CCLOG(@"display single player");
     //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
-    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+    //DETERMINE IF FIRST TIME PLAYING
+    NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
+    
+    if(!firstTimePlayFlag)
+    {
+        CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
+        
+        //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+        [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+    }
+    else{
+        //[self displayPlayAndPass];
+        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
+    }       
+
+    //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayLevelMenu];
 }
 
 -(void) displayMultiPlayer {

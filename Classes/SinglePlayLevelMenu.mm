@@ -285,35 +285,30 @@
         
         //DISPLAY THE STAR LEVELS BASED ON THE VALUES IN THE PLIST
         [self displayStars:@"Level1" 
-                PrevLevelName:nil
                 lockSprite:nil
                 BeatAIAwardSprite:level1BeatAIAward 
                 TotalPointAwardSprite:level1TotalPointsAward 
                 LongWordAwardSprite:level1LongWordAward];
         
         [self displayStars:@"Level2" 
-                PrevLevelName:@"Level1"
                 lockSprite:level2Lock
                 BeatAIAwardSprite:level2BeatAIAward 
                 TotalPointAwardSprite:level2TotalPointsAward 
                 LongWordAwardSprite:level2LongWordAward];
 
         [self displayStars:@"Level3"
-                PrevLevelName:@"Level2"
                 lockSprite:level3Lock
                 BeatAIAwardSprite:level3BeatAIAward 
                 TotalPointAwardSprite:level3TotalPointsAward 
                 LongWordAwardSprite:level3LongWordAward];
 
         [self displayStars:@"Level4"
-                PrevLevelName:@"Level3"
                 lockSprite:level4Lock
                 BeatAIAwardSprite:level4BeatAIAward 
                 TotalPointAwardSprite:level4TotalPointsAward 
                 LongWordAwardSprite:level4LongWordAward];
 
         [self displayStars:@"Level5"
-                PrevLevelName:@"Level4"
                 lockSprite:level5Lock
                 BeatAIAwardSprite:level5BeatAIAward 
                 TotalPointAwardSprite:level5TotalPointsAward 
@@ -324,28 +319,26 @@
 }
 
 - (void) displayStars:(NSString *) levelName
-            PrevLevelName:(NSString *) prevLevelName
             lockSprite:(CCSprite *) lockSprite
             BeatAIAwardSprite:(CCSprite *) beatAIAwardSprite
             TotalPointAwardSprite:(CCSprite *) totalPointAwardSprite
             LongWordAwardSprite:(CCSprite *) longWordAwardSprite
 {
-    NSMutableDictionary *prevLevelInfo;
+    //NSMutableDictionary *prevLevelInfo;
     
     NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:levelName];
     
-    if (prevLevelName){
-        prevLevelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:prevLevelName];
-        
-        if ([[prevLevelInfo objectForKey:@"beatAIAward"] boolValue]) {
-            lockSprite.visible = NO;
-        }
-
+    //if (prevLevelName){
+    //    prevLevelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:prevLevelName];
+    
+    if (lockSprite) {
+        [[levelInfo objectForKey:@"levelLocked"] boolValue] ? lockSprite.visible = YES : lockSprite.visible = NO;
     }
+    //}
     
     beatAIAwardSprite.visible = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
     totalPointAwardSprite.visible = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
-    longWordAwardSprite.visible = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    longWordAwardSprite.visible = [[levelInfo objectForKey:@"longWordAward"] boolValue];
 
     //beatAIAwardSprite.visible = YES;
     //totalPointAwardSprite.visible = YES;
