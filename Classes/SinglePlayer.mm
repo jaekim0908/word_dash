@@ -66,6 +66,7 @@
         //MCH aiAllWords = [[AIDictionary sharedDictionary] allWords];
         //aiAllWords = [[Dictionary sharedDictionary] allWords];
         aiAllWords = [[AIDictionary sharedDictionary] loadAllWords];
+        passButton2.visible = NO;
         solveButton2.visible = NO;
         transparentBoundingBox2.visible = NO;
 		greySolveButton2.visible = NO;        
@@ -230,7 +231,8 @@
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = NO; 
-        [self showLeftChecker];
+        //[self showLeftChecker];
+        [self turnOnPassButtonForPlayer1];
         
         /*
         NSString *turnMessage;
@@ -251,7 +253,7 @@
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
-        [self hideLeftChecker];
+        //[self hideLeftChecker];
 	}
 }
 
@@ -352,8 +354,7 @@
         self.tapToChangeRight.visible = NO;
         [self schedule:@selector(updateTimer:) interval:1.0f];
         [self schedule:@selector(runAI:) interval:2.0f];
-        [self showLeftChecker];
-        
+        //[self showLeftChecker];
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
         [self getPlayer1Name];
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(self.tapToChangeLeft.boundingBox, touchLocation)) {
@@ -370,6 +371,8 @@
             [self checkAnswer];
             [self switchTo:2 countFlip:NO];
         } else {
+            // JK - penalty
+            [self openRandomLetters:1];
             [self switchTo:2 countFlip:YES];
         }
     }
@@ -503,6 +506,9 @@
     CCLOG(@"AI MOVE COMPLETE");
     if ([userSelection count] > 0) {
         [self checkAnswer];
+    } else {
+        // JK - penalty
+        [self openRandomLetters:1];
     }
     [self switchTo:1 countFlip:NO];
     [self schedule:@selector(runAI:) interval:2.0f];

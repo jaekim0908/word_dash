@@ -47,6 +47,7 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) { 
         CGSize windowSize = [[CCDirector sharedDirector] winSize];
+        passButton2.visible = NO;
         solveButton2.visible = NO;
         transparentBoundingBox2.visible = NO;
 		greySolveButton2.visible = NO; 
@@ -209,6 +210,8 @@
             [self sendCheckAnswer];
 			[self switchTo:2 countFlip:NO notification:YES];
 		} else {
+            // JK - penalty
+            [self openRandomLetters:1];
 			[self switchTo:2 countFlip:YES notification:YES];
 		}
 	}
@@ -250,6 +253,7 @@
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
 	
+    /*
 	if (flag) {
 		if (myTurn && !player1TileFlipped) {
 			countNoTileFlips++;
@@ -268,6 +272,7 @@
 		countNoTileFlips = 1;
         [self sendResetTileFlipCount];
 	}
+    */
 	
 	[self clearLetters];
     player1TileFlipped = NO;
@@ -277,12 +282,13 @@
         playerTurn = 1;	
         myTurn = YES;
         greySolveButton1.visible = NO;
-        [self showLeftChecker];
+        //[self showLeftChecker];
+        [self turnOnPassButtonForPlayer1];
     } else if (player == 2 && [[player2Timer string] intValue] > 0) {
         [self sendEndTurn];
         myTurn = NO;
         greySolveButton1.visible = YES;
-        [self hideLeftChecker];
+        //[self hideLeftChecker];
     }
 }
 

@@ -11,11 +11,11 @@
 		<key>levelLocked</key>
 		<integer>0</integer>
 		<key>beatAIAward</key>
-		<integer>1</integer>
+		<integer>0</integer>
 		<key>totalPointsAward</key>
-		<integer>1</integer>
+		<integer>0</integer>
 		<key>longWordAward</key>
-		<integer>1</integer>
+		<integer>0</integer>
 		<key>totalPointsForStar</key>
 		<integer>500</integer>
 		<key>batchSize</key>
