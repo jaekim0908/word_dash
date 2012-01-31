@@ -254,6 +254,16 @@
 	[currentAnswer setString:s];
 }
 
+- (void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+    float THRESHOLD = 1.7;
+    if (acceleration.x > THRESHOLD || acceleration.x < -THRESHOLD || 
+        acceleration.y > THRESHOLD || acceleration.y < -THRESHOLD ||
+        acceleration.z > THRESHOLD || acceleration.z < -THRESHOLD) {
+        
+        [self clearAllSelectedLetters];
+    }
+}
+
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
