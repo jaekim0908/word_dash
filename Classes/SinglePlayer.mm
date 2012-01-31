@@ -782,6 +782,11 @@
 	if (p1+p2 <= 0) {
 		gameOver = YES;
 	}
+    
+    // End game if human players don't have time and AI is winning.
+    if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
+        gameOver = YES;
+    }
 	
 	if (gameOver) {
         
