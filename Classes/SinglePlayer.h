@@ -39,6 +39,8 @@
     
     CCSprite *awardPopupFrame;
     CCSprite *awardPopupTintedBackground;
+    CCSprite *nextLevelBtn;
+    //CCSprite *nextLevelDisabledBtn;
     CCSprite *getResultsBtn;
     CCSprite *rematchBtn;
     CCSprite *mainMenuBtn;
@@ -62,6 +64,8 @@
 @property BOOL thisGameLongWordAward;
 @property (nonatomic,retain) CCSprite *awardPopupFrame;
 @property (nonatomic,retain) CCSprite *awardPopupTintedBackground;
+@property (nonatomic,retain) CCSprite *nextLevelBtn;
+//@property (nonatomic,retain) CCSprite *nextLevelDisabledBtn;
 @property (nonatomic,retain) CCSprite *getResultsBtn;
 @property (nonatomic,retain) CCSprite *rematchBtn;
 @property (nonatomic,retain) CCSprite *mainMenuBtn;

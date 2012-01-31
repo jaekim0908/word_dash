@@ -176,16 +176,27 @@
 		
 		CCLOG(@"wordMatrix = %@", wordMatrix);
         
-        solveButton1 = [[CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"] retain];
+        passButton1 = [[CCSprite spriteWithSpriteFrameName:@"PassButton.png"] retain];
+		passButton1.position = ccp(50, 70);
+        passButton1.visible = NO;
+		[batchNode addChild:passButton1];
+        
+        solveButton1 = [[CCSprite spriteWithSpriteFrameName:@"SubmitButton.png"] retain];
 		solveButton1.position = ccp(50, 70);
+        solveButton1.visible = NO;
 		[batchNode addChild:solveButton1];
         
 		transparentBoundingBox1 = [[CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"] retain];
 		transparentBoundingBox1.position = ccp(50, 70);
 		[batchNode addChild:transparentBoundingBox1];
 		
-		solveButton2 = [[CCSprite spriteWithSpriteFrameName:@"GreenSandDollar.png"] retain];
+        passButton2 = [[CCSprite spriteWithSpriteFrameName:@"PassButton.png"] retain];
+		passButton2.position = ccp(440, 70);
+		[batchNode addChild:passButton2];
+        
+		solveButton2 = [[CCSprite spriteWithSpriteFrameName:@"SubmitButton.png"] retain];
 		solveButton2.position = ccp(440, 70);
+        solveButton2.visible = NO;
 		[batchNode addChild:solveButton2];
         
         transparentBoundingBox2 = [[CCSprite spriteWithSpriteFrameName:@"transparentBoundingBox.png"] retain];
@@ -193,12 +204,12 @@
 		[batchNode addChild:transparentBoundingBox2];
         
         greySolveButton1 = [[CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"] retain];
-		greySolveButton1.position = ccp(50, 70);
+		greySolveButton1.position = ccp(50, 74);
 		[batchNode addChild:greySolveButton1];
 		greySolveButton1.visible = NO;
         
 		greySolveButton2 = [[CCSprite spriteWithSpriteFrameName:@"WhiteSandDollar.png"] retain];
-		greySolveButton2.position = ccp(440, 70);
+		greySolveButton2.position = ccp(440, 74);
 		[batchNode addChild:greySolveButton2];
         
 		userSelection = [[NSMutableArray alloc] init];
@@ -234,7 +245,7 @@
         
         soundEngine = [SimpleAudioEngine sharedEngine];
         
-        self.playButton = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
+        self.playButton = [CCSprite spriteWithSpriteFrameName:@"GameStartButton.png"];
         self.playButton.position = ccp(windowSize.width/2, windowSize.height/2);
         [batchNode addChild:self.playButton z:30];
         
@@ -365,6 +376,17 @@
 	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
 }
 
+- (void) cleanUpSprite:(CCSprite *)sprite {
+    [sprite removeFromParentAndCleanup:YES];
+    
+}
+- (void) showRedSquareAtCell:(Cell *) cell {
+    CCSprite *redSquare = [CCSprite spriteWithSpriteFrameName:@"RedSquare.png"];
+    redSquare.position = cell.letterSprite.position;
+    [batchNode addChild:redSquare];
+    [redSquare runAction:[CCSequence actions:[CCFadeOut actionWithDuration:1], [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)], nil]];
+}
+
 - (void) openRandomLetters:(int) n {
 	int openedLetters = 0;
 	
@@ -391,6 +413,7 @@
 		cell = [[wordMatrix objectAtIndex:randomRow] objectAtIndex:randomCol];
 		if (!cell.letterSprite.visible) {
 			cell.letterSprite.visible = YES;
+            [self showRedSquareAtCell:cell];
 			openedLetters++;
 			if ([self isThisStarPoint:cell]) {
 				NSLog(@"star point set");
@@ -433,6 +456,7 @@
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
 	
+    /*
 	if (flag) {
 		if (playerTurn == 1 && !player1TileFlipped) {
 			countNoTileFlips++;
@@ -451,6 +475,7 @@
 	} else {
 		countNoTileFlips = 1;
 	}
+    */
 	
 	[self clearLetters];
     player1TileFlipped = NO;
@@ -465,8 +490,9 @@
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = YES;
-        [self hideRightChecker];
-        [self showLeftChecker];
+        //[self hideRightChecker];
+        //[self showLeftChecker];
+        [self turnOnPassButtonForPlayer1];
         
         
         if (notify) {
@@ -486,9 +512,9 @@
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
-        
-        [self hideLeftChecker];
-        [self showRightChecker];
+        [self turnOnPassButtonForPlayer2];
+        //[self hideLeftChecker];
+        //[self showRightChecker];
         
         if (notify) {
             if (player2LongName && [player2LongName length] > 0) {
@@ -640,7 +666,6 @@
 
 - (NSString*) createRandomString  {
 	int totalLength = 0;
-    int nIteration = 0;
 	NSString *randomString = [NSString string];
     int acceptedCharacterList[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     int newStringCharacterList[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -664,16 +689,6 @@
             acceptedCharacterList[i] = MAX(acceptedCharacterList[i], newStringCharacterList[i]);
             totalLength += acceptedCharacterList[i];
         }
-        /*
-         if (nIteration % 2 == 0 && [newString length] <= 5) {
-         CCLOG(@"new string = %@", newString);
-         randomString = [randomString stringByAppendingString:newString];
-         } else if (nIteration % 2 != 0 && [newString length] > 5) {
-         CCLOG(@"new string = %@", newString);
-         randomString = [randomString stringByAppendingString:newString];
-         }
-         */
-        nIteration++;
 	}
     
     for(int i = 0; i < 26; i++) {
@@ -845,6 +860,8 @@
         // MCH -- play invalid word sound
         [soundEngine playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
+        // JK - penalty
+        [self openRandomLetters:1];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
             [currentAnswer setColor:ccc3(124, 205, 124)];
@@ -857,8 +874,7 @@
             if (playerTurn == 1) {
                 [player1Words addObject:s];
             }
-            else
-            {
+            else {
                 [player2Words addObject:s];
             }
             
@@ -877,18 +893,47 @@
             [currentAnswer setColor:ccc3(238, 44, 44)];
             [soundEngine playEffect:@"dull_bell.mp3"];
 			[midDisplay setString:@"Not a word"];
+            // JK - penalty
+            [self openRandomLetters:1];
 		}
 	}
 	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
 	[userSelection removeAllObjects];
 }
 
+- (void) turnOnPassButtonForPlayer1 {
+    passButton1.visible = YES;
+    solveButton1.visible = NO;
+}
+
+- (void) turnOnPassButtonForPlayer2 {
+    passButton2.visible = YES;
+    solveButton2.visible = NO;
+}
+
+- (void) turnOnSubmitButtonForPlayer1 {
+    passButton1.visible = NO;
+    solveButton1.visible = YES;
+}
+
+- (void) turnOnSubmitButtonForPlayer2 {
+    passButton2.visible = NO;
+    solveButton2.visible = YES;
+}
+
 - (void) updateAnswer {
-	
+    
+    if ([userSelection count] > 0) {
+        [self turnOnSubmitButtonForPlayer1];
+    } else {
+        [self turnOnPassButtonForPlayer1];
+    }
+    
 	NSString *s = [NSString string];
 	for(Cell *c in userSelection) {
 		s = [s stringByAppendingString:c.value];
 	}
+    
     currentAnswer.color = ccc3(237, 145, 33);
 	[currentAnswer setString:s];
 }
@@ -1045,6 +1090,8 @@
 	// don't forget to call "super dealloc"
     
     [wordMatrix release];
+    [passButton1 release];
+    [passButton2 release];
     [solveButton1 release];
     [solveButton2 release];
     [transparentBoundingBox1 release];

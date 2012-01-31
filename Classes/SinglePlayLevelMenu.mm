@@ -104,17 +104,17 @@
         level2BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
         level2BeatAIAward.position = ccp(151, 160);
         level2BeatAIAward.visible=NO;
-        [self addChild:level2BeatAIAward z:1];
+        [self addChild:level2BeatAIAward z:2];
         
         level2TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
         level2TotalPointsAward.position = ccp(151, 100);
         level2TotalPointsAward.visible=NO;
-        [self addChild:level2TotalPointsAward z:1];
+        [self addChild:level2TotalPointsAward z:2];
         
         level2LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
         level2LongWordAward.position = ccp(151, 50);
         level2LongWordAward.visible=NO;
-        [self addChild:level2LongWordAward z:1];
+        [self addChild:level2LongWordAward z:2];
 
         
         //LEVEL THREE
@@ -127,17 +127,17 @@
         level3BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
         level3BeatAIAward.position = ccp(239, 160);
         level3BeatAIAward.visible=NO;
-        [self addChild:level3BeatAIAward z:1];
+        [self addChild:level3BeatAIAward z:2];
         
         level3TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
         level3TotalPointsAward.position = ccp(239, 100);
         level3TotalPointsAward.visible=NO;
-        [self addChild:level3TotalPointsAward z:1];
+        [self addChild:level3TotalPointsAward z:2];
         
         level3LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
         level3LongWordAward.position = ccp(239, 50);
         level3LongWordAward.visible=NO;
-        [self addChild:level3LongWordAward z:1];
+        [self addChild:level3LongWordAward z:2];
         
         //LEVEL FOUR
 
@@ -149,17 +149,17 @@
         level4BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
         level4BeatAIAward.position = ccp(325, 160);
         level4BeatAIAward.visible=NO;
-        [self addChild:level4BeatAIAward z:1];
+        [self addChild:level4BeatAIAward z:2];
         
         level4TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
         level4TotalPointsAward.position = ccp(325, 100);
         level4TotalPointsAward.visible=NO;
-        [self addChild:level4TotalPointsAward z:1];
+        [self addChild:level4TotalPointsAward z:2];
         
         level4LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
         level4LongWordAward.position = ccp(325, 50);
         level4LongWordAward.visible=NO;
-        [self addChild:level4LongWordAward z:1];
+        [self addChild:level4LongWordAward z:2];
         
         //LEVEL FIVE
         level5Button = [CCSprite spriteWithFile:@"Level_005.png"];
@@ -170,17 +170,17 @@
         level5BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
         level5BeatAIAward.position = ccp(412, 160);
         level5BeatAIAward.visible=NO;
-        [self addChild:level5BeatAIAward z:1];
+        [self addChild:level5BeatAIAward z:2];
         
         level5TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
         level5TotalPointsAward.position = ccp(412, 100);
         level5TotalPointsAward.visible=NO;
-        [self addChild:level5TotalPointsAward z:1];
+        [self addChild:level5TotalPointsAward z:2];
         
         level5LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
         level5LongWordAward.position = ccp(412, 50);
         level5LongWordAward.visible=NO;
-        [self addChild:level5LongWordAward z:1];
+        [self addChild:level5LongWordAward z:2];
         
         //Back Button
         backButton = [CCSprite spriteWithFile:@"Button_Back001.png"];
@@ -259,6 +259,7 @@
     }
     
     beatAIAwardSprite.visible = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
+    CCLOG(@"beatAIAwardSprite visible: %i", beatAIAwardSprite.visible);
     totalPointAwardSprite.visible = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
     longWordAwardSprite.visible = [[levelInfo objectForKey:@"longWordAward"] boolValue];
 

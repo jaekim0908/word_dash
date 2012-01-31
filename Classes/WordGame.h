@@ -45,6 +45,8 @@
     NSMutableArray* wordMatrix;
     CCSpriteBatchNode *batchNode;
     CCSpriteBatchNode *batchNode2;
+    CCSprite *passButton1;
+    CCSprite *passButton2;
     CCSprite *solveButton1;
     CCSprite *solveButton2;
     CCSprite *greySolveButton1;
@@ -125,4 +127,10 @@
 - (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int) r Col:(int) c;
 - (BOOL) allLettersOpened;
 - (void) addMoreTime:(int) timeInSeconds toPlayer:(int) playerId;
+- (void) turnOnPassButtonForPlayer1;
+- (void) turnOnPassButtonForPlayer2;
+- (void) turnOnSubmitButtonForPlayer1;
+- (void) turnOnSubmitButtonForPlayer2;
+- (void) cleanUpSprite:(CCSprite *) sprite;
+- (void) showRedSquareAtCell:(Cell *) cell;
 @end

@@ -70,7 +70,7 @@
         playButtonReady = NO;
         self.tapToChangeLeft.visible = NO;
         self.tapToChangeRight.visible = NO;
-        [self showLeftChecker];
+        //[self showLeftChecker];
         [self schedule:@selector(updateTimer:) interval:1.0f];
         
     } else if (playButtonReady && !tapToNameLeftActive && !tapToNameRightActive && CGRectContainsPoint(player1Name.boundingBox, touchLocation)) {
@@ -92,6 +92,8 @@
 			[self checkAnswer];
 			[self switchTo:2 countFlip:NO notification:YES];
 		} else {
+            // JK - penalty
+            [self openRandomLetters:1];
 			[self switchTo:2 countFlip:YES notification:YES];
 		}
 	}
@@ -101,6 +103,8 @@
 			[self checkAnswer];
 			[self switchTo:1 countFlip:YES notification:YES];
 		} else {
+            // JK - penalty
+            [self openRandomLetters:1];
 			[self switchTo:1 countFlip:YES notification:YES];
 		}
 	}
@@ -183,6 +187,8 @@
         // MCH -- play invalid word sound
         [soundEngine playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
+        // JK - penalty
+        [self openRandomLetters:1];
 	} else {
 		if ([s length] >= 3 && [dictionary objectForKey:s]) {
             [currentAnswer setColor:ccc3(124, 205, 124)];
@@ -215,10 +221,37 @@
             [currentAnswer setColor:ccc3(238, 44, 44)];
             [soundEngine playEffect:@"dull_bell.mp3"];
 			[midDisplay setString:@"Not a word"];
+            // JK - penalty
+            [self openRandomLetters:1];
 		}
 	}
 	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
 	[userSelection removeAllObjects];
+}
+
+- (void) updateAnswer {
+    
+    if ([userSelection count] > 0) {
+        if (playerTurn == 1) {
+            [self turnOnSubmitButtonForPlayer1];
+        } else {
+            [self turnOnSubmitButtonForPlayer2];
+        }
+    } else {
+        if (playerTurn == 1) {
+            [self turnOnPassButtonForPlayer1];
+        } else {
+            [self turnOnPassButtonForPlayer2];
+        }
+    }
+    
+	NSString *s = [NSString string];
+	for(Cell *c in userSelection) {
+		s = [s stringByAppendingString:c.value];
+	}
+    
+    currentAnswer.color = ccc3(237, 145, 33);
+	[currentAnswer setString:s];
 }
 
 // on "dealloc" you need to release all your retained objects
