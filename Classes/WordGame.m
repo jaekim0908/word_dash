@@ -51,7 +51,6 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-        
         cols = 5;
 		rows = 4;
 		width = 80;
@@ -72,6 +71,8 @@
         tripleTabUsed = NO;
         
         self.isTouchEnabled = YES;
+        self.isAccelerometerEnabled = YES;
+        [[UIAccelerometer sharedAccelerometer] setUpdateInterval:1/60];
 		
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];
         
@@ -819,6 +820,8 @@
 		c.letterSelected2.visible = NO;
 		c.redBackground.visible = NO;
 	}
+    
+    [userSelection removeAllObjects];
 }
 
 - (void) clearLetters {
@@ -1158,7 +1161,6 @@
 
 - (void) onEnter {
 	[super onEnter];
-	
     adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
     adView.delegate = self;
     adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
@@ -1193,6 +1195,18 @@
 - (BOOL) bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
 	CCLOG(@"bannerViewActionShouldBegin called");
 	return YES;
+}
+
+- (void) accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+    float THRESHOLD = 1.7;
+    if (acceleration.x > THRESHOLD || acceleration.x < -THRESHOLD || 
+        acceleration.y > THRESHOLD || acceleration.y < -THRESHOLD ||
+        acceleration.z > THRESHOLD || acceleration.z < -THRESHOLD) {
+        
+        if (playerTurn == 1) {
+            [self clearAllSelectedLetters];
+        }
+    }
 }
 
 @end
