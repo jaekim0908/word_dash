@@ -203,7 +203,7 @@ static CCNotifications *sharedManager;
 		[notification setVisible:NO];
 		tag_ = -1;
 		state_ = kCCNotificationStateHide;
-		timeShowing_ = 3.2f;
+		timeShowing_ = 0.7f;
 		typeAnimationIn_ = 0;
 		typeAnimationOut_ = 0;
 		position_ = kCCNotificationPositionTop;
