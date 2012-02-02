@@ -862,6 +862,7 @@
 	
 	if (gameOver) {
         
+        waitForYourTurn.visible = NO;
         [transparentBoundingBox2 stopAllActions];
         [self unscheduleAllSelectors];
         [self hideAIActivity];
