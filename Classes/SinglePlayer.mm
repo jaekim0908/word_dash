@@ -27,6 +27,8 @@
 @synthesize thisGameLongWordAward;
 @synthesize awardPopupFrame;
 @synthesize awardPopupTintedBackground;
+@synthesize nextLevelBtn;
+//@synthesize nextLevelDisabledBtn;
 @synthesize getResultsBtn;
 @synthesize rematchBtn;
 @synthesize mainMenuBtn;
@@ -127,7 +129,7 @@
         [self addChild:awardPopupTintedBackground z:45];
 
         
-        //awardPopupFrame = [CCSprite spriteWithFile:@"awards_popup_darker-300-200.png"];
+        //awardPopupFrame = [CCSprite spriteWithFile:@"Awards_Screen.png"];
         awardPopupFrame = [CCSprite spriteWithFile:@"double_pane.png"];
         //awardPopupFrame.position = ccp(240,160);
         awardPopupFrame.position = ccp(240,185);
@@ -163,18 +165,31 @@
         singlePlayerScore.visible = NO;
 		[self addChild:singlePlayerScore z:55];
       
+        
+        nextLevelBtn = [CCSprite spriteWithFile:@"next_level.png"];
+        nextLevelBtn.position = ccp(140,115);
+        nextLevelBtn.visible = NO;
+        [self addChild:nextLevelBtn z:55];
+        /******
+        nextLevelDisabledBtn = [CCSprite spriteWithFile:@"next_level_disabled.png"];
+        nextLevelDisabledBtn.position = ccp(143,115);
+        nextLevelDisabledBtn.visible = NO;
+        [self addChild:nextLevelDisabledBtn z:55];
+         ******/
+        
+        
         getResultsBtn = [CCSprite spriteWithFile:@"get_results.png"];
-        getResultsBtn.position = ccp(210-35,115);
+        getResultsBtn.position = ccp(210,115);
         getResultsBtn.visible = NO;
         [self addChild:getResultsBtn z:55];
         
         rematchBtn = [CCSprite spriteWithFile:@"rematch.png"];
-        rematchBtn.position = ccp(275-35,114);
+        rematchBtn.position = ccp(275,114);
         rematchBtn.visible = NO;
         [self addChild:rematchBtn z:55];
         
         mainMenuBtn = [CCSprite spriteWithFile:@"main_menu_btn.png"];
-        mainMenuBtn.position = ccp(340-35,112); 
+        mainMenuBtn.position = ccp(340,112); 
         mainMenuBtn.visible = NO;
         [self addChild:mainMenuBtn z:55];
         
@@ -298,7 +313,30 @@
     CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
     if(awardsState){
         
-        if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)) {
+        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation) && nextLevelBtn.visible){
+            int batchSize, currentLevel,nextLevel;
+            
+            //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
+            currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
+            
+            if (currentLevel <= 5){
+                nextLevel = currentLevel+1;
+            }
+            else{
+                //OPEN ISSUE: Determine what to do if at the top level
+                nextLevel = currentLevel;
+            }
+            
+            NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
+                                              objectForKey:[NSString stringWithFormat:@"Level%i",nextLevel]];
+            batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
+            
+            [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
+            [[GameManager sharedGameManager] setSinglePlayerLevel:nextLevel];
+            [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+            
+        }
+        else if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
             
             //self.isTouchEnabled=NO;
             [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
@@ -638,19 +676,43 @@
 {
     int nextLevel;
     
-    nextLevel = currentLevel+1;
-    
-    NSString *lookupKeyNextLevel = [NSString stringWithFormat:@"Level%i",nextLevel];
-    NSMutableDictionary *nextLevelInfo = [ allGameLevels objectForKey:lookupKeyNextLevel];
-    
-    BOOL nextLevelLocked = [[nextLevelInfo objectForKey:@"levelLocked"] boolValue];
-    
-         
-    //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
-    if( nextLevelLocked && beatAIFlag){
-        [nextLevelInfo setObject:[NSNumber numberWithBool:FALSE] forKey:@"levelLocked"];
+    if (currentLevel < 5) {
+        
+        nextLevel = currentLevel+1;
+        
+        NSString *lookupKeyNextLevel = [NSString stringWithFormat:@"Level%i",nextLevel];
+        NSMutableDictionary *nextLevelInfo = [ allGameLevels objectForKey:lookupKeyNextLevel];
+        
+        BOOL nextLevelLocked = [[nextLevelInfo objectForKey:@"levelLocked"] boolValue];
+        
+        //IF NEXT LEVEL IS UNLOCKED OR THE PLAYER JUST BEAT THE AI, ENABLE THE NEXT LEVEL BUTTON
+        if(!nextLevelLocked || beatAIFlag){
+            //ENABLE
+            nextLevelBtn.visible=YES;
+            getResultsBtn.position = ccp(210,115);
+            rematchBtn.position = ccp(275,114);
+            mainMenuBtn.position = ccp(340,112); 
+        }
+        else{
+            //nextLevelDisabledBtn.visible=YES;
+            getResultsBtn.position = ccp(210-35,115);
+            rematchBtn.position = ccp(275-35,114);
+            mainMenuBtn.position = ccp(340-35,112); 
+        }
+        
+        //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
+        if( nextLevelLocked && beatAIFlag){
+            [nextLevelInfo setObject:[NSNumber numberWithBool:FALSE] forKey:@"levelLocked"];
+        }
+        
     }
- 
+    //IF IT'S THE LAST LEVEL THEN DISABLE THE NEXT LEVEL BUTTON
+    else{
+        //nextLevelDisabledBtn.visible=YES;
+        getResultsBtn.position = ccp(210-35,115);
+        rematchBtn.position = ccp(275-35,114);
+        mainMenuBtn.position = ccp(340-35,112); 
+    } 
     
     return TRUE;
     
