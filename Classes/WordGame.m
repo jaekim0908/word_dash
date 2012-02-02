@@ -238,11 +238,11 @@
         CCSprite *beachImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg.position = ccp(windowSize.width/2, windowSize.height/2);
         beachImg.opacity = 0;
-        [self addChild:beachImg z:1];
+        [self addChild:beachImg z:1 tag:7777];
         
         CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
-        [self addChild:beachImg2 z:-12];
+        [self addChild:beachImg2 z:-12 tag:8888];
         
         soundEngine = [SimpleAudioEngine sharedEngine];
         
@@ -280,6 +280,12 @@
         self.rightSideBackground.position = ccp(440, 70);
         self.rightSideBackground.visible = NO;
         [batchNode addChild:self.rightSideBackground z:100];
+        
+        waitForYourTurn = [[CCSprite spriteWithFile:@"WaitStrip.png"] retain];
+        waitForYourTurn.position = ccp(245, 150);
+        waitForYourTurn.visible = NO;
+        waitForYourTurn.opacity = 150;
+        [self addChild:waitForYourTurn z:100];
     }
 	return self;
 }
@@ -1011,8 +1017,8 @@
         // Create a second record with player1 and player2 switched so we can display both records.
         PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
         [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score1"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score2"];
         
         [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
         [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
@@ -1124,6 +1130,7 @@
     [enterPlayer2Name release];
     [batchNode release];
     [batchNode2 release];
+    [waitForYourTurn release];
     
     [self.leftSideBackground release];
     [self.rightSideBackground release];
@@ -1155,6 +1162,7 @@
     enterPlayer2Name = nil;
     batchNode = nil;
     batchNode2 = nil;
+    waitForYourTurn = nil;
     
 	[super dealloc];
 }

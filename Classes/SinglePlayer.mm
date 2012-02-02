@@ -231,8 +231,8 @@
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = NO; 
-        //[self showLeftChecker];
         [self turnOnPassButtonForPlayer1];
+        waitForYourTurn.visible = NO;
         
         /*
         NSString *turnMessage;
@@ -253,7 +253,7 @@
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
-        //[self hideLeftChecker];
+        waitForYourTurn.visible = YES;
 	}
 }
 
@@ -298,7 +298,7 @@
     CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
     if(awardsState){
         
-        if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
+        if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)) {
             
             //self.isTouchEnabled=NO;
             [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
@@ -563,6 +563,10 @@
     return match;
 }
 
+-(void) aiSelectLetter:(CCSprite *) sprite {
+    sprite.visible = YES;
+}
+
 -(void) aiFindWords {
     
     if (playerTurn == 1) return;
@@ -587,6 +591,8 @@
     
     if (match) {
         CCLOG(@"FOUND ANSWER = %@", ans);
+        id delay = [CCDelayTime actionWithDuration:3];
+        NSMutableArray *actionList = [NSMutableArray array];
         for(int i = 0; i < [ans length]; i++) {
             
             NSMutableArray *cellList = [visibleLetters objectForKey:[NSString stringWithFormat:@"%c", [ans characterAtIndex:i]]];
@@ -596,7 +602,11 @@
             } else {
                 CCLOG(@"CELL FOUND. ADDING IT TO THE USER SELECTION");
                 Cell *cell = [cellList objectAtIndex:0];
-                cell.letterSelected.visible = YES;
+                //cell.letterSelected.visible = YES;
+                [actionList addObject:delay];
+                [actionList addObject:[CCCallFuncN actionWithTarget:self selector:@selector(aiSelectLetter:)]];
+                [actionList addObject:[CCCallFunc actionWithTarget:self selector:@selector(updateAnswer)]];
+                //[cell.letterSelected runAction:[CCSequence actions:delay, [CCCallFuncN actionWithTarget:self selector:@selector(aiSelectLetter:)], nil]];
                 [userSelection addObject:cell];
                 [self updateAnswer];
             }
@@ -790,7 +800,9 @@
 	
 	if (gameOver) {
         
+        [transparentBoundingBox2 stopAllActions];
         [self unscheduleAllSelectors];
+        [self hideAIActivity];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:[NSString stringWithFormat:@"%i", [aiLevel intValue]+1]];
         
 		enableTouch = NO;

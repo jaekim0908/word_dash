@@ -54,7 +54,6 @@
     int         aiMaxWaitTime;
     
     UIActivityIndicatorView *activityIndicator;
-
 }
 
 @property BOOL thisGameBeatAIAward;
@@ -87,5 +86,6 @@
 -(void) aiMoveComplete;
 -(void) aiFlip;
 -(BOOL) aiCheckAnswer:(NSString *) answer;
+-(void) aiSelectLetter:(CCSprite *) sprite;
 
 @end
