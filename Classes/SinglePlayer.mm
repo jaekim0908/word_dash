@@ -640,10 +640,10 @@
             } else {
                 CCLOG(@"CELL FOUND. ADDING IT TO THE USER SELECTION");
                 Cell *cell = [cellList objectAtIndex:0];
-                //cell.letterSelected.visible = YES;
-                [actionList addObject:delay];
-                [actionList addObject:[CCCallFuncN actionWithTarget:self selector:@selector(aiSelectLetter:)]];
-                [actionList addObject:[CCCallFunc actionWithTarget:self selector:@selector(updateAnswer)]];
+                cell.letterSelected.visible = YES;
+                //[actionList addObject:delay];
+                //[actionList addObject:[CCCallFuncN actionWithTarget:self selector:@selector(aiSelectLetter:)]];
+                //[actionList addObject:[CCCallFunc actionWithTarget:self selector:@selector(updateAnswer)]];
                 //[cell.letterSelected runAction:[CCSequence actions:delay, [CCCallFuncN actionWithTarget:self selector:@selector(aiSelectLetter:)], nil]];
                 [userSelection addObject:cell];
                 [self updateAnswer];
