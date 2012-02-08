@@ -78,6 +78,7 @@
 		6EFA52511331D56F0072F312 /* Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA52501331D56F0072F312 /* Cell.mm */; };
 		6EFA53611331EBB10072F312 /* HelloWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA535F1331EBB10072F312 /* HelloWorld.mm */; };
 		8411ABD3148766AA004B78E3 /* WordGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ABD2148766AA004B78E3 /* WordGame.m */; };
+		8411ED8014E10D6E00115464 /* TargetedAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ED7F14E10D6E00115464 /* TargetedAction.m */; };
 		84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8B14B6E3880052AA6A /* Multiplayer.m */; };
 		84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8E14B6E4820052AA6A /* GCHelper.m */; };
 		84148A9214BC046D0052AA6A /* proAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A9114BC046C0052AA6A /* proAlertView.m */; };
@@ -545,6 +546,8 @@
 		6EFA53601331EBB10072F312 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorld.h; sourceTree = "<group>"; };
 		8411ABD1148766AA004B78E3 /* WordGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGame.h; sourceTree = "<group>"; };
 		8411ABD2148766AA004B78E3 /* WordGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGame.m; sourceTree = "<group>"; };
+		8411ED7E14E10D6E00115464 /* TargetedAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetedAction.h; sourceTree = "<group>"; };
+		8411ED7F14E10D6E00115464 /* TargetedAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetedAction.m; sourceTree = "<group>"; };
 		84148A8A14B6E3880052AA6A /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
 		84148A8B14B6E3880052AA6A /* Multiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multiplayer.m; sourceTree = "<group>"; };
 		84148A8D14B6E4820052AA6A /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
@@ -1123,6 +1126,8 @@
 				84162E1E1490A1BF00A505F7 /* PlayAndPass.m */,
 				D44D59141499F7EF003C8568 /* SinglePlayLevelMenu.h */,
 				D44D59161499F802003C8568 /* SinglePlayLevelMenu.mm */,
+				8411ED7E14E10D6E00115464 /* TargetedAction.h */,
+				8411ED7F14E10D6E00115464 /* TargetedAction.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2016,6 +2021,7 @@
 				84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */,
 				84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */,
 				84148A9214BC046D0052AA6A /* proAlertView.m in Sources */,
+				8411ED8014E10D6E00115464 /* TargetedAction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

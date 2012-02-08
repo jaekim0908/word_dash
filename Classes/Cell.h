@@ -34,4 +34,7 @@
 @property (retain) CCSprite *redBackground;
 @property (retain) CCSprite *star;
 
+-(void) selectLetter;
+-(void) unSelectLetter;
+
 @end

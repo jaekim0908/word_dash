@@ -462,28 +462,7 @@
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
-	
-    /*
-	if (flag) {
-		if (playerTurn == 1 && !player1TileFlipped) {
-			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFlipped) {
-			countNoTileFlips++;
-		} else {
-			countNoTileFlips = 1;
-		}
-        
-		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
-        
-		if (countNoTileFlips % 5 == 0) {
-			countNoTileFlips = 1;
-			[self openRandomLetters:1];
-		}
-	} else {
-		countNoTileFlips = 1;
-	}
-    */
-	
+		
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
@@ -815,24 +794,24 @@
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-			cell.letterSelected2.visible = NO;
-			cell.redBackground.visible = NO;
 			cell.star.visible = NO;
 		}
 	}
 	
 	for(Cell *c in userSelection) {
 		c.letterSelected.visible = NO;
-		c.letterSelected2.visible = NO;
-		c.redBackground.visible = NO;
 	}
     
     [userSelection removeAllObjects];
 }
 
 - (void) clearLetters {
-	for(Cell *c in userSelection) {
-		c.letterSelected.visible = NO;
+    
+    for(int r = 0; r < rows ; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+			cell.letterSelected.visible = NO;
+		}
 	}
 	
 	[userSelection removeAllObjects];
