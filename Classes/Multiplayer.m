@@ -406,6 +406,11 @@
 		if (myTurn) {
 			if (!play1Done) {
 				--p1;
+                if (p1 > 10) {
+                    player1Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player1Timer.color = ccc3(255, 0, 0);
+                }
 				[player1Timer setString:[NSString stringWithFormat:@"%i", p1]];
                 [self sendTimer];
 			} else {

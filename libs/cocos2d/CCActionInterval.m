@@ -135,23 +135,6 @@
 	return prev;
 }
 
-+(CCFiniteTimeAction *) getActionSequence: (NSArray *) actions
-{
-	CCFiniteTimeAction *seq = nil;
-	for (CCFiniteTimeAction *anAction in actions)
-	{
-		if (!seq)
-		{
-			seq = anAction;
-		}
-		else
-		{
-			seq = [CCSequence actionOne:seq two:anAction];
-		}
-	}
-	return seq;
-}
-
 -(id) initOne: (CCFiniteTimeAction*) one_ two: (CCFiniteTimeAction*) two_
 {
 	NSAssert( one_!=nil, @"Sequence: argument one must be non-nil");

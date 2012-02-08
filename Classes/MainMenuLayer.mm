@@ -9,7 +9,6 @@
 #import "MainMenuLayer.h"
 #import "Constants.h"
 #import "GameManager.h"
-#import "HelloWorld.h"
 #import "Dictionary.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"

@@ -11,7 +11,6 @@
 #import "MainMenuScene.h"
 #import "Multiplayer.h"
 #import "PlayAndPass.h"
-#import "HelloWorld.h"
 #import "LoadingScene.h"
 #import "HowToPlay.h"
 #import "SinglePlayer.h"
@@ -142,10 +141,6 @@ static GameManager* _sharedGameManager = nil;
 		case kPlayAndPassScene:
 			CCLOG(@"Play and Pass Scene");
 			sceneToRun = [PlayAndPass node];
-			break;
-		case kHelloWorldScene:
-			CCLOG(@"Play and Pass Scene");
-			sceneToRun = [HelloWorld scene];
 			break;
         case kHowToPlayScene:
 			NSLog(@"How To Play Scene");

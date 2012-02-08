@@ -19,7 +19,6 @@
 #import "CCNotifications.h"
 #import "PauseMenu.h"
 #import "Constants.h"
-#import "TargetedAction.h"
 
 @implementation SinglePlayer
 
@@ -921,6 +920,11 @@
 		if (playerTurn == 1) {
 			if (!play1Done) {
 				--p1;
+                if (p1 > 10) {
+                    player1Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player1Timer.color = ccc3(255, 0, 0);
+                }
 				[player1Timer setString:[NSString stringWithFormat:@"%i", p1]];
 			} else {
 				playerTurn = 2;
@@ -929,6 +933,11 @@
 		} else {
 			if (!play2Done) {
 				--p2;
+                if (p2 > 10) {
+                    player2Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player2Timer.color = ccc3(255, 0, 0);
+                }
 				[player2Timer setString:[NSString stringWithFormat:@"%i", p2]];
 			} else {
 				playerTurn = 1;
