@@ -23,4 +23,11 @@
 @synthesize redBackground = _redBackground;
 @synthesize star = _star;
 
+-(void) selectLetter {
+    self.letterSelected.visible = YES;
+}
+-(void) unSelectLetter {
+    self.letterSelected.visible = NO;
+}
+
 @end

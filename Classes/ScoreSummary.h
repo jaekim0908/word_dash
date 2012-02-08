@@ -13,7 +13,6 @@
     CCLabelTTF *playHistory;
     CCLabelTTF *previousHistory;
     CCLabelTTF *nextHistory;
-    CCSprite *mainMenuButton;
     CCLabelTTF *noRecordFound;
     BOOL previousHistoryActive;
     BOOL nextHistoryActive;
@@ -28,5 +27,6 @@
 - (void) updatePagination;
 - (void) displaySummaryatPage:(int) pageIdx from:(int) start toEnd:(int) end;
 - (void) initPagination:(int) count;
+- (void) goBackToMainMenu;
 
 @end

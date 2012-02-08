@@ -247,58 +247,23 @@
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag {
-	
-	if (flag) {
-		if (playerTurn == 1 && !player1TileFlipped) {
-			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFlipped) {
-			countNoTileFlips++;
-		} else {
-			countNoTileFlips = 1;
-		}
-        
-		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
-        
-		if (countNoTileFlips % 5 == 0) {
-			countNoTileFlips = 1;
-			[self openRandomLetters:1];
-		}
-	} else {
-		countNoTileFlips = 1;
-	}
     	
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
-    tripleTabUsed = YES;
+    tripleTabUsed = NO;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
         greySolveButton1.visible = NO;
         greySolveButton2.visible = NO; 
-        //[self showLeftChecker];
         [self turnOnPassButtonForPlayer1];
-        
-        /*
-        NSString *turnMessage;
-    
-        if (player1LongName && [player1LongName length] > 0) {
-            turnMessage = [NSString stringWithFormat:@"%@'s Turn", player1LongName];
-        } else {
-            turnMessage = @"Your Turn";
-        }
-    
-        [[CCNotifications sharedManager] addNotificationTitle:nil
-                                                      message:turnMessage 
-                                                        image:@"watchIcon.png" 
-                                                          tag:0 
-                                                      animate:YES];
-        */
+        waitForYourTurn.visible = NO;
 	} else if (player == 2 && [[player2Timer string] intValue] > 0) {
         playerTurn = 2;
         greySolveButton1.visible = YES;
         greySolveButton2.visible = NO;
-        //[self hideLeftChecker];
+        waitForYourTurn.visible = YES;
 	}
 }
 
@@ -570,9 +535,9 @@
     id flip = [CCCallFunc actionWithTarget:self selector:@selector(aiFlip)];
     id delay = [CCDelayTime actionWithDuration:randomInterval];
     id play = [CCCallFunc actionWithTarget:self selector:@selector(aiFindWords)];
-    id aiDone = [CCCallFunc actionWithTarget:self selector:@selector(aiMoveComplete)];
-    id delay2 = [CCDelayTime actionWithDuration:1];
-    [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, delay2, aiDone, nil]];
+    //id aiDone = [CCCallFunc actionWithTarget:self selector:@selector(aiMoveComplete)];
+    //id delay2 = [CCDelayTime actionWithDuration:1];
+    [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, nil]];
 }
 
 
@@ -675,6 +640,10 @@
     return match;
 }
 
+-(void) aiSelectLetter:(CCSprite *) sprite {
+    sprite.visible = YES;
+}
+
 -(void) aiFindWords {
     
     if (playerTurn == 1) return;
@@ -690,15 +659,24 @@
         
     batchSize = 500;
     
+    id aiDone = [CCCallFunc actionWithTarget:self selector:@selector(aiMoveComplete)];
+    id delay2 = [CCDelayTime actionWithDuration:0.3];
+    
     for(int i = 0; !match && i < batchSize; i++) {
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
-        //CCLOG(@"AI ANSWERS = %@", ans);
-        match = [self aiCheckAnswer:ans];
+        if ([ans length] > 0) {
+            match = [self aiCheckAnswer:ans];
+        } else {
+            match = NO;
+        }
     }
     
     if (match) {
         CCLOG(@"FOUND ANSWER = %@", ans);
+        id delay = [CCDelayTime actionWithDuration:0.2];
+        NSMutableArray *actionList = [NSMutableArray array];
+        id actionSeq = nil;
         for(int i = 0; i < [ans length]; i++) {
             
             NSMutableArray *cellList = [visibleLetters objectForKey:[NSString stringWithFormat:@"%c", [ans characterAtIndex:i]]];
@@ -708,11 +686,28 @@
             } else {
                 CCLOG(@"CELL FOUND. ADDING IT TO THE USER SELECTION");
                 Cell *cell = [cellList objectAtIndex:0];
-                cell.letterSelected.visible = YES;
+                [cellList removeObjectAtIndex:0];
+                
+                if (!actionSeq) {
+                    actionSeq = [CCSequence actions:delay, [CCCallFuncN actionWithTarget:cell selector:@selector(selectLetter)], nil];
+                } else {
+                    actionSeq = [CCSequence actions:actionSeq, delay, [CCCallFuncN actionWithTarget:cell selector:@selector(selectLetter)], nil];
+                }
+                
                 [userSelection addObject:cell];
-                [self updateAnswer];
             }
         }
+        [transparentBoundingBox1 runAction:[CCSequence actions:actionSeq,
+                         [CCCallFunc actionWithTarget:self selector:@selector(updateAnswer)],
+                         delay2,
+                         aiDone,
+                         [CCCallFunc actionWithTarget:self selector:@selector(clearLetters)],
+                         nil]
+         ];
+    } else {
+        [transparentBoundingBox1 runAction:[CCSequence actions:delay2, 
+                         aiDone, 
+                         nil]];
     }
 }
 
@@ -921,6 +916,10 @@
 	if (p2 <= 0) {
 		play2Done = YES;
         [self hideAIActivity];
+        [transparentBoundingBox2 stopAllActions];
+        [transparentBoundingBox1 stopAllActions];
+        [self clearAllSelectedLetters];
+        
 	}
 	
 	if (p1+p2 <= 0) {
@@ -934,7 +933,12 @@
 	
 	if (gameOver) {
         
+        waitForYourTurn.visible = NO;
+        [transparentBoundingBox2 stopAllActions];
+        [transparentBoundingBox1 stopAllActions];
+        [self clearAllSelectedLetters];
         [self unscheduleAllSelectors];
+        [self hideAIActivity];
         [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"level" Value:[NSString stringWithFormat:@"%i", [aiLevel intValue]+1]];
         
 		enableTouch = NO;
@@ -998,6 +1002,11 @@
 		if (playerTurn == 1) {
 			if (!play1Done) {
 				--p1;
+                if (p1 > 10) {
+                    player1Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player1Timer.color = ccc3(255, 0, 0);
+                }
 				[player1Timer setString:[NSString stringWithFormat:@"%i", p1]];
 			} else {
 				playerTurn = 2;
@@ -1006,6 +1015,11 @@
 		} else {
 			if (!play2Done) {
 				--p2;
+                if (p2 > 10) {
+                    player2Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player2Timer.color = ccc3(255, 0, 0);
+                }
 				[player2Timer setString:[NSString stringWithFormat:@"%i", p2]];
 			} else {
 				playerTurn = 1;

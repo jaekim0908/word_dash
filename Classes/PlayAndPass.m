@@ -264,6 +264,11 @@
         acceleration.z > THRESHOLD || acceleration.z < -THRESHOLD) {
         
         [self clearAllSelectedLetters];
+        if (playerTurn == 1) {
+            [self turnOnPassButtonForPlayer1];
+        } else {
+            [self turnOnPassButtonForPlayer2];
+        }
     }
 }
 

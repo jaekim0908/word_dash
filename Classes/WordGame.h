@@ -81,6 +81,7 @@
     CCSprite *_leftSideBackground;
     CCSprite *_rightSideBackground;
     BOOL tripleTabUsed;
+    CCSprite *waitForYourTurn;
 }
 
 @property int cols;

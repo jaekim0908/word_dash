@@ -16,6 +16,7 @@
 #define PAGE_INDEX_TAG 777
 #define CURRENT_HISTORY_TAG 888
 #define NUMBER_OF_COLUMNS 6
+#define MENU_TAG 100
 
 @implementation ScoreSummary
 
@@ -55,10 +56,17 @@
         silverLine.position = ccp(winSize.width/2, 280);
         [self addChild:silverLine z:-10];
         
-        mainMenuButton = [CCSprite spriteWithFile:@"main_menu_btn_small.png"];
-        mainMenuButton.position = ccp(50, 20);
-        [self addChild:mainMenuButton];
-        mainMenuButton.visible = NO;
+        CCMenuItem *goBackToMainMenuItem = [CCMenuItemImage 
+                                            itemFromNormalSprite:[CCSprite spriteWithFile:@"main_menu_btn_small.png"] 
+                                            selectedSprite:[CCSprite spriteWithFile:@"main_menu_btn_small.png"] 
+                                            target:self
+                                            selector:@selector(goBackToMainMenu)];
+        goBackToMainMenuItem.position = ccp(50, 20);
+        
+        CCMenu *goBackToMainMenu = [CCMenu menuWithItems:goBackToMainMenuItem, nil];
+        goBackToMainMenu.position = CGPointZero;
+        [self addChild:goBackToMainMenu z:10 tag:MENU_TAG];
+        goBackToMainMenu.isTouchEnabled = NO;
         
         noRecordFound = [CCLabelTTF labelWithString:@"No Records yet. Play some more games and come back." 
                                            fontName:@"Marker Felt" 
@@ -87,6 +95,11 @@
 }
 
 - (void)findCallback:(NSArray *)results error:(NSError *)error {
+    
+    [spinner stopAnimating];
+    CCMenu *menu = (CCMenu *) [self getChildByTag:MENU_TAG];
+    menu.isTouchEnabled = YES;
+    
     if (!error) {
         // The find succeeded.
         CCLOG(@"RESULT COUNT = %i", (int) results.count);
@@ -111,12 +124,9 @@
         if (results.count > 0) {
             [self initPagination:[gameScoreSummary count]];
             [self displaySummaryatPage:0 from:0 toEnd:MIN([gameScoreSummary count], SUMMARY_PER_PAGE)];
-            mainMenuButton.visible = YES;
         } else {
             noRecordFound.visible = YES;
-            mainMenuButton.visible = YES;
         }
-        [spinner stopAnimating];
     } else {
         // Log details of the failure
         CCLOG(@"Error: %@ %@", error, [error userInfo]);
@@ -369,9 +379,11 @@
         CCLOG(@"Previous History button pushed");
         [self clearCurrentPage];
         [self displayPreviousPage];
-    } else if (CGRectContainsPoint(mainMenuButton.boundingBox, touchLocation)) {
-        [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
     }
+}
+
+- (void) goBackToMainMenu {
+    [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
 }
 
 - (void) dealloc {

@@ -76,7 +76,6 @@
 		6EEA81A7134183F800A7858E /* DialogLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA81A6134183F800A7858E /* DialogLayer.mm */; };
 		6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */; };
 		6EFA52511331D56F0072F312 /* Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA52501331D56F0072F312 /* Cell.mm */; };
-		6EFA53611331EBB10072F312 /* HelloWorld.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA535F1331EBB10072F312 /* HelloWorld.mm */; };
 		8411ABD3148766AA004B78E3 /* WordGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ABD2148766AA004B78E3 /* WordGame.m */; };
 		84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8B14B6E3880052AA6A /* Multiplayer.m */; };
 		84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8E14B6E4820052AA6A /* GCHelper.m */; };
@@ -132,6 +131,16 @@
 		84B8A6D1140F2E7900C33F88 /* RedStarfish-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8A6C7140F2E7900C33F88 /* RedStarfish-hd.png */; };
 		84B8A6D2140F2E7900C33F88 /* RedStarfish.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8A6C8140F2E7900C33F88 /* RedStarfish.png */; };
 		84BC05A614456E85003D1020 /* openfeint_offline_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 84BC05A514456E85003D1020 /* openfeint_offline_config.xml */; };
+		84C9141514D9192C00CA55BB /* waveCurtain.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9141314D9192900CA55BB /* waveCurtain.png */; };
+		84C9141614D9192C00CA55BB /* waveCurtain-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9141414D9192900CA55BB /* waveCurtain-hd.png */; };
+		84C9141914D936C300CA55BB /* boardOutLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9141714D936C200CA55BB /* boardOutLine.png */; };
+		84C9141A14D936C300CA55BB /* boardOutLine-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9141814D936C200CA55BB /* boardOutLine-hd.png */; };
+		84C9142914DA68E200CA55BB /* mangosteenLogoHorizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9142714DA68E100CA55BB /* mangosteenLogoHorizontal.png */; };
+		84C9142A14DA68E200CA55BB /* mangosteenLogoHorizontal-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9142814DA68E200CA55BB /* mangosteenLogoHorizontal-hd.png */; };
+		84C9142D14DA6C7C00CA55BB /* mangosteenLogoHorizontal2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9142B14DA6C7B00CA55BB /* mangosteenLogoHorizontal2.png */; };
+		84C9142E14DA6C7C00CA55BB /* mangosteenLogoHorizontal2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9142C14DA6C7B00CA55BB /* mangosteenLogoHorizontal2-hd.png */; };
+		84C9143114DA745A00CA55BB /* WaitStrip.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9142F14DA745800CA55BB /* WaitStrip.png */; };
+		84C9143214DA745A00CA55BB /* WaitStrip-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C9143014DA745900CA55BB /* WaitStrip-hd.png */; };
 		84CDD1DE13B2FAA20090E48A /* CCAlertView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84CDD1DD13B2FAA20090E48A /* CCAlertView.mm */; };
 		84CDD1E513B3070A0090E48A /* pn.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CDD1E413B3070A0090E48A /* pn.png */; };
 		84D4137113E1274100656B94 /* ImageAssets-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D4136F13E1274000656B94 /* ImageAssets-hd.plist */; };
@@ -553,8 +562,6 @@
 		6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ChallengeRequestDialog.mm; sourceTree = "<group>"; };
 		6EFA524F1331D56F0072F312 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		6EFA52501331D56F0072F312 /* Cell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Cell.mm; sourceTree = "<group>"; };
-		6EFA535F1331EBB10072F312 /* HelloWorld.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorld.mm; sourceTree = "<group>"; };
-		6EFA53601331EBB10072F312 /* HelloWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorld.h; sourceTree = "<group>"; };
 		8411ABD1148766AA004B78E3 /* WordGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGame.h; sourceTree = "<group>"; };
 		8411ABD2148766AA004B78E3 /* WordGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGame.m; sourceTree = "<group>"; };
 		84148A8A14B6E3880052AA6A /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
@@ -612,6 +619,16 @@
 		84BB838814973C8300BE4756 /* GKMatchmakerViewController-LandscapeOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GKMatchmakerViewController-LandscapeOnly.h"; sourceTree = "<group>"; };
 		84BB838914973C8300BE4756 /* GKMatchmakerViewController-LandscapeOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GKMatchmakerViewController-LandscapeOnly.m"; sourceTree = "<group>"; };
 		84BC05A514456E85003D1020 /* openfeint_offline_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = openfeint_offline_config.xml; sourceTree = "<group>"; };
+		84C9141314D9192900CA55BB /* waveCurtain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waveCurtain.png; sourceTree = "<group>"; };
+		84C9141414D9192900CA55BB /* waveCurtain-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waveCurtain-hd.png"; sourceTree = "<group>"; };
+		84C9141714D936C200CA55BB /* boardOutLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boardOutLine.png; sourceTree = "<group>"; };
+		84C9141814D936C200CA55BB /* boardOutLine-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boardOutLine-hd.png"; sourceTree = "<group>"; };
+		84C9142714DA68E100CA55BB /* mangosteenLogoHorizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mangosteenLogoHorizontal.png; sourceTree = "<group>"; };
+		84C9142814DA68E200CA55BB /* mangosteenLogoHorizontal-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mangosteenLogoHorizontal-hd.png"; sourceTree = "<group>"; };
+		84C9142B14DA6C7B00CA55BB /* mangosteenLogoHorizontal2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mangosteenLogoHorizontal2.png; sourceTree = "<group>"; };
+		84C9142C14DA6C7B00CA55BB /* mangosteenLogoHorizontal2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mangosteenLogoHorizontal2-hd.png"; sourceTree = "<group>"; };
+		84C9142F14DA745800CA55BB /* WaitStrip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WaitStrip.png; sourceTree = "<group>"; };
+		84C9143014DA745900CA55BB /* WaitStrip-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WaitStrip-hd.png"; sourceTree = "<group>"; };
 		84CDD1DC13B2FAA20090E48A /* CCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAlertView.h; sourceTree = "<group>"; };
 		84CDD1DD13B2FAA20090E48A /* CCAlertView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCAlertView.mm; sourceTree = "<group>"; };
 		84CDD1E413B3070A0090E48A /* pn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pn.png; sourceTree = "<group>"; };
@@ -1109,8 +1126,6 @@
 				D4BF0CB81446A9A800C6BAEF /* ResultsLayer.mm */,
 				D4C182D6147CC2E900BB3EE8 /* HowToPlay.h */,
 				D4C182D7147CC2E900BB3EE8 /* HowToPlay.mm */,
-				6EFA53601331EBB10072F312 /* HelloWorld.h */,
-				6EFA535F1331EBB10072F312 /* HelloWorld.mm */,
 				6EFA524F1331D56F0072F312 /* Cell.h */,
 				6EFA52501331D56F0072F312 /* Cell.mm */,
 				E0F80F5D120A0182005866B8 /* GameConfig.h */,
@@ -1308,6 +1323,16 @@
 				D489F5E414D27AF200CE7F59 /* Level_001.png */,
 				D489F5D714D26ACE00CE7F59 /* Level-Background_004-hd.png */,
 				D489F5D414D26AC400CE7F59 /* Level-Background_004.png */,
+				84C9142F14DA745800CA55BB /* WaitStrip.png */,
+				84C9143014DA745900CA55BB /* WaitStrip-hd.png */,
+				84C9142B14DA6C7B00CA55BB /* mangosteenLogoHorizontal2.png */,
+				84C9142C14DA6C7B00CA55BB /* mangosteenLogoHorizontal2-hd.png */,
+				84C9142714DA68E100CA55BB /* mangosteenLogoHorizontal.png */,
+				84C9142814DA68E200CA55BB /* mangosteenLogoHorizontal-hd.png */,
+				84C9141714D936C200CA55BB /* boardOutLine.png */,
+				84C9141814D936C200CA55BB /* boardOutLine-hd.png */,
+				84C9141314D9192900CA55BB /* waveCurtain.png */,
+				84C9141414D9192900CA55BB /* waveCurtain-hd.png */,
 				D40DD0E914CFE51100DDE06F /* lock-hd.png */,
 				D40DD0EA14CFE51300DDE06F /* lock.png */,
 				D40DD0E514CFE2C700DDE06F /* dictionary-hd.png */,
@@ -2024,6 +2049,18 @@
 				D4BBCE3714E260780028AA7C /* AwardsScreenAssets.plist in Resources */,
 				D4BBCE3E14E262E90028AA7C /* PauseMenuAssets-hd.png in Resources */,
 				D4BBCE3F14E262E90028AA7C /* PauseMenuAssets-hd.plist in Resources */,
+				D433BB7F14D7E81D000536F7 /* Awards_Screen-hd.png in Resources */,
+				D433BB8014D7E81D000536F7 /* Awards_Screen.png in Resources */,
+				84C9141514D9192C00CA55BB /* waveCurtain.png in Resources */,
+				84C9141614D9192C00CA55BB /* waveCurtain-hd.png in Resources */,
+				84C9141914D936C300CA55BB /* boardOutLine.png in Resources */,
+				84C9141A14D936C300CA55BB /* boardOutLine-hd.png in Resources */,
+				84C9142914DA68E200CA55BB /* mangosteenLogoHorizontal.png in Resources */,
+				84C9142A14DA68E200CA55BB /* mangosteenLogoHorizontal-hd.png in Resources */,
+				84C9142D14DA6C7C00CA55BB /* mangosteenLogoHorizontal2.png in Resources */,
+				84C9142E14DA6C7C00CA55BB /* mangosteenLogoHorizontal2-hd.png in Resources */,
+				84C9143114DA745A00CA55BB /* WaitStrip.png in Resources */,
+				84C9143214DA745A00CA55BB /* WaitStrip-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2041,7 +2078,6 @@
 				6E048009132A018700D15B1B /* MainMenuScene.mm in Sources */,
 				6E04800C132A01A900D15B1B /* MainMenuLayer.mm in Sources */,
 				6EFA52511331D56F0072F312 /* Cell.mm in Sources */,
-				6EFA53611331EBB10072F312 /* HelloWorld.mm in Sources */,
 				6ECE2D9C13330B6400C996AF /* LoadingScene.mm in Sources */,
 				6ECE2ECD1333322400C996AF /* Dictionary.mm in Sources */,
 				6EEA81A7134183F800A7858E /* DialogLayer.mm in Sources */,
@@ -2363,8 +2399,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,

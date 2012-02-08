@@ -221,7 +221,7 @@
 		player2Words = [[NSMutableArray array] retain];
 		
 		midDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
-		midDisplay.position = ccp(windowSize.width/2, windowSize.height/2);
+		midDisplay.position = ccp(windowSize.width/2, windowSize.height/1.5);
 		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		
@@ -238,11 +238,11 @@
         CCSprite *beachImg = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg.position = ccp(windowSize.width/2, windowSize.height/2);
         beachImg.opacity = 0;
-        [self addChild:beachImg z:1];
+        [self addChild:beachImg z:1 tag:7777];
         
         CCSprite *beachImg2 = [CCSprite spriteWithFile:@"whiteSandBg.png"];
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
-        [self addChild:beachImg2 z:-12];
+        [self addChild:beachImg2 z:-12 tag:8888];
         
         //soundEngine = [SimpleAudioEngine sharedEngine];
         [[GameManager sharedGameManager] setSoundEngine:[SimpleAudioEngine sharedEngine]];
@@ -281,6 +281,12 @@
         self.rightSideBackground.position = ccp(440, 70);
         self.rightSideBackground.visible = NO;
         [batchNode addChild:self.rightSideBackground z:100];
+        
+        waitForYourTurn = [[CCSprite spriteWithFile:@"WaitStrip.png"] retain];
+        waitForYourTurn.position = ccp(245, 150);
+        waitForYourTurn.visible = NO;
+        waitForYourTurn.opacity = 150;
+        [self addChild:waitForYourTurn z:100];
     }
 	return self;
 }
@@ -389,6 +395,13 @@
     [redSquare runAction:[CCSequence actions:[CCFadeOut actionWithDuration:1], [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)], nil]];
 }
 
+- (void) showBlueSquareAtCell:(Cell *) cell {
+    CCSprite *blueSquare = [CCSprite spriteWithSpriteFrameName:@"BlueSquare.png"];
+    blueSquare.position = cell.letterSprite.position;
+    [batchNode addChild:blueSquare];
+    [blueSquare runAction:[CCSequence actions:[CCFadeOut actionWithDuration:1], [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)], nil]];
+}
+
 - (void) openRandomLetters:(int) n {
 	int openedLetters = 0;
 	
@@ -457,28 +470,7 @@
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
-	
-    /*
-	if (flag) {
-		if (playerTurn == 1 && !player1TileFlipped) {
-			countNoTileFlips++;
-		} else if (playerTurn == 2 && !player2TileFlipped) {
-			countNoTileFlips++;
-		} else {
-			countNoTileFlips = 1;
-		}
-        
-		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
-        
-		if (countNoTileFlips % 5 == 0) {
-			countNoTileFlips = 1;
-			[self openRandomLetters:1];
-		}
-	} else {
-		countNoTileFlips = 1;
-	}
-    */
-	
+		
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
@@ -618,10 +610,8 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-    [player1Timer setString:@"20"];
-	[player2Timer setString:@"20"];
-    //[player1Timer setString:@"60"];
-	//[player2Timer setString:@"60"];
+    [player1Timer setString:@"60"];
+	[player2Timer setString:@"60"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -753,6 +743,7 @@
 
 - (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int)r Col:(int)c {
     CCLOG(@"Triple-Tap detected !!");
+    [self showBlueSquareAtCell:cell];
     char ch = (arc4random() % 26) + 'a';
     Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
     cell.letterSprite.visible = NO;
@@ -812,24 +803,24 @@
 	for(int r = 0; r < rows ; r++) {
 		for(int c = 0; c < cols; c++) {
 			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-			cell.letterSelected2.visible = NO;
-			cell.redBackground.visible = NO;
 			cell.star.visible = NO;
 		}
 	}
 	
 	for(Cell *c in userSelection) {
 		c.letterSelected.visible = NO;
-		c.letterSelected2.visible = NO;
-		c.redBackground.visible = NO;
 	}
     
     [userSelection removeAllObjects];
 }
 
 - (void) clearLetters {
-	for(Cell *c in userSelection) {
-		c.letterSelected.visible = NO;
+    
+    for(int r = 0; r < rows ; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+			cell.letterSelected.visible = NO;
+		}
 	}
 	
 	[userSelection removeAllObjects];
@@ -1018,8 +1009,8 @@
         // Create a second record with player1 and player2 switched so we can display both records.
         PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
         [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score1"];
+        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score2"];
         
         [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
         [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
@@ -1058,6 +1049,11 @@
 		if (playerTurn == 1) {
 			if (!play1Done) {
 				--p1;
+                if (p1 > 10) {
+                    player1Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player1Timer.color = ccc3(255, 0, 0);
+                }
 				[player1Timer setString:[NSString stringWithFormat:@"%i", p1]];
 			} else {
 				playerTurn = 2;
@@ -1066,6 +1062,11 @@
 		} else {
 			if (!play2Done) {
 				--p2;
+                if (p2 > 10) {
+                    player2Timer.color = ccc3(155, 48, 255);
+                } else {
+                    player2Timer.color = ccc3(255, 0, 0);
+                }
 				[player2Timer setString:[NSString stringWithFormat:@"%i", p2]];
 			} else {
 				playerTurn = 1;
@@ -1131,6 +1132,7 @@
     [enterPlayer2Name release];
     [batchNode release];
     [batchNode2 release];
+    [waitForYourTurn release];
     
     [self.leftSideBackground release];
     [self.rightSideBackground release];
@@ -1162,6 +1164,7 @@
     enterPlayer2Name = nil;
     batchNode = nil;
     batchNode2 = nil;
+    waitForYourTurn = nil;
     
 	[super dealloc];
 }
@@ -1212,6 +1215,7 @@
         
         if (playerTurn == 1) {
             [self clearAllSelectedLetters];
+            [self turnOnPassButtonForPlayer1];
         }
     }
 }
