@@ -17,7 +17,10 @@
     CCSprite *rematchButton;
     CCSprite *mainMenuButton;
     CCSprite *resumeButton;
-    CCSprite *howToPlayButton; 
+    CCSprite *howToPlayButton;
+    CCSprite *soundOnButton;
+    CCSprite *soundOffButton;
+    
     CCSpriteBatchNode *batchNode;
 }
 
@@ -28,6 +31,8 @@
 @property (nonatomic, retain) CCSprite *mainMenuButton;
 @property (nonatomic, retain) CCSprite *resumeButton;
 @property (nonatomic, retain) CCSprite *howToPlayButton;
+@property (nonatomic, retain) CCSprite *soundOnButton;
+@property (nonatomic, retain) CCSprite *soundOffButton;
 
 -(BOOL) addToMyScene:(CCLayer *) myScene;
 -(BOOL) showPauseMenu:(CCLayer *) myScene;

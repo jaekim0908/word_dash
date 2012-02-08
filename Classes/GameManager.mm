@@ -22,6 +22,7 @@
 #import "ResultsLayer.h"
 
 
+
 @implementation GameManager
 
 static GameManager* _sharedGameManager = nil;
@@ -49,6 +50,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize gameMode = _gameMode;
 @synthesize aiMaxWaitTime = _aiMaxWaitTime;
 @synthesize runningSceneID = _runningSceneID;
+@synthesize soundEngine = _soundEngine;
 
 
 

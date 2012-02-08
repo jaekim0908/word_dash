@@ -5,6 +5,46 @@
 	<key>frames</key>
 	<dict>
 		
+		<key>Music-Off_Button002.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {120, 101}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{120, 101}</string>
+			<key>spriteSourceSize</key>
+			<string>{120, 101}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{361, 327}, {120, 101}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
+		<key>Music-On_Button.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteColorRect</key>
+			<string>{{0, 0}, {120, 101}}</string>
+			<key>spriteOffset</key>
+			<string>{0, -0}</string>
+			<key>spriteSize</key>
+			<string>{120, 101}</string>
+			<key>spriteSourceSize</key>
+			<string>{120, 101}</string>
+			<key>spriteTrimmed</key>
+			<true/>
+			<key>textureRect</key>
+			<string>{{361, 224}, {120, 101}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		
 		<key>help_btn.png</key>
 		<dict>
 			<key>aliases</key>
@@ -40,7 +80,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{361, 325}, {120, 98}}</string>
+			<string>{{361, 531}, {120, 98}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -60,7 +100,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{361, 425}, {94, 80}}</string>
+			<string>{{361, 631}, {94, 80}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -80,7 +120,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{361, 224}, {120, 99}}</string>
+			<string>{{361, 430}, {120, 99}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>

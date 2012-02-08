@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
+#import "SimpleAudioEngine.h"
 
 @interface GameManager : NSObject {
 	BOOL isSoundsOn;
@@ -37,6 +38,9 @@
     int      _aiMaxWaitTime;
     
     SceneTypes _runningSceneID;
+    
+    SimpleAudioEngine *_soundEngine;
+    
 }
 
 @property (readwrite) BOOL isSoundsOn;
@@ -62,6 +66,7 @@
 @property (readwrite) GameMode gameMode;
 @property (readwrite) int aiMaxWaitTime;
 @property (readwrite) SceneTypes runningSceneID;
+@property (nonatomic, retain) SimpleAudioEngine *soundEngine;
 
 +(GameManager*) sharedGameManager;
 -(void) runSceneWithId:(SceneTypes) sceneId;

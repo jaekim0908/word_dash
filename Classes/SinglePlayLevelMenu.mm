@@ -73,120 +73,123 @@
         beachBackground.position = ccp(240, 160);
         [self addChild:beachBackground z:0];
 
-
-        //LEVEL ONE
-        level1Button = [CCSprite spriteWithFile:@"Level_001.png"];
-        level1Button.position = ccp(39+25, 160);
-        [self addChild:level1Button z:2];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"LevelsImageAssets.plist"];
+        levelsBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"LevelsImageAssets.png"]] retain];
+        [self addChild:levelsBatchNode z:2];
         
-        level1BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
+        //LEVEL ONE
+        level1Button = [CCSprite spriteWithSpriteFrameName:@"Level_001.png"];
+        level1Button.position = ccp(39+25, 160);
+        [levelsBatchNode addChild:level1Button z:2];
+        
+        level1BeatAIAward = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
         //level1BeatAIAward.position = ccp(10, 200);
         level1BeatAIAward.position = ccp(64, 160);
         level1BeatAIAward.visible=NO;
-        [self addChild:level1BeatAIAward z:2];
+        [levelsBatchNode addChild:level1BeatAIAward z:2];
         
-        level1TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
+        level1TotalPointsAward = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
         level1TotalPointsAward.position = ccp(64, 100);
         level1TotalPointsAward.visible=NO;
-        [self addChild:level1TotalPointsAward z:2];
+        [levelsBatchNode addChild:level1TotalPointsAward z:2];
         
-        level1LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
+        level1LongWordAward = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
         level1LongWordAward.position = ccp(64, 50);
         level1LongWordAward.visible=NO;
-        [self addChild:level1LongWordAward z:2];
+        [levelsBatchNode addChild:level1LongWordAward z:2];
 
         //LEVEL TWO
-        level2Button = [CCSprite spriteWithFile:@"Level_002.png"];
+        level2Button = [CCSprite spriteWithSpriteFrameName:@"Level_002.png"];
         //level2Button.position = ccp(140, 240);
         level2Button.position = ccp(151, 160);
-        [self addChild:level2Button z:2];
+        [levelsBatchNode addChild:level2Button z:2];
         
-        level2BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
+        level2BeatAIAward = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
         level2BeatAIAward.position = ccp(151, 160);
         level2BeatAIAward.visible=NO;
-        [self addChild:level2BeatAIAward z:2];
+        [levelsBatchNode addChild:level2BeatAIAward z:2];
         
-        level2TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
+        level2TotalPointsAward = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
         level2TotalPointsAward.position = ccp(151, 100);
         level2TotalPointsAward.visible=NO;
-        [self addChild:level2TotalPointsAward z:2];
+        [levelsBatchNode addChild:level2TotalPointsAward z:2];
         
-        level2LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
+        level2LongWordAward = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
         level2LongWordAward.position = ccp(151, 50);
         level2LongWordAward.visible=NO;
-        [self addChild:level2LongWordAward z:2];
+        [levelsBatchNode addChild:level2LongWordAward z:2];
 
         
         //LEVEL THREE
 
-        level3Button = [CCSprite spriteWithFile:@"Level_003.png"];
+        level3Button = [CCSprite spriteWithSpriteFrameName:@"Level_003.png"];
         //level3Button.position = ccp(240, 240);
         level3Button.position = ccp(239, 160);
-        [self addChild:level3Button z:2];
+        [levelsBatchNode addChild:level3Button z:2];
         
-        level3BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
+        level3BeatAIAward = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
         level3BeatAIAward.position = ccp(239, 160);
         level3BeatAIAward.visible=NO;
-        [self addChild:level3BeatAIAward z:2];
+        [levelsBatchNode addChild:level3BeatAIAward z:2];
         
-        level3TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
+        level3TotalPointsAward = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
         level3TotalPointsAward.position = ccp(239, 100);
         level3TotalPointsAward.visible=NO;
-        [self addChild:level3TotalPointsAward z:2];
+        [levelsBatchNode addChild:level3TotalPointsAward z:2];
         
-        level3LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
+        level3LongWordAward = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
         level3LongWordAward.position = ccp(239, 50);
         level3LongWordAward.visible=NO;
-        [self addChild:level3LongWordAward z:2];
+        [levelsBatchNode addChild:level3LongWordAward z:2];
         
         //LEVEL FOUR
 
-        level4Button = [CCSprite spriteWithFile:@"Level_004.png"];
+        level4Button = [CCSprite spriteWithSpriteFrameName:@"Level_004.png"];
         //level4Button.position = ccp(340, 240);
         level4Button.position = ccp(339-14, 160);
-        [self addChild:level4Button z:2];
+        [levelsBatchNode addChild:level4Button z:2];
 
-        level4BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
+        level4BeatAIAward = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
         level4BeatAIAward.position = ccp(325, 160);
         level4BeatAIAward.visible=NO;
-        [self addChild:level4BeatAIAward z:2];
+        [levelsBatchNode addChild:level4BeatAIAward z:2];
         
-        level4TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
+        level4TotalPointsAward = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
         level4TotalPointsAward.position = ccp(325, 100);
         level4TotalPointsAward.visible=NO;
-        [self addChild:level4TotalPointsAward z:2];
+        [levelsBatchNode addChild:level4TotalPointsAward z:2];
         
-        level4LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
+        level4LongWordAward = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
         level4LongWordAward.position = ccp(325, 50);
         level4LongWordAward.visible=NO;
-        [self addChild:level4LongWordAward z:2];
+        [levelsBatchNode addChild:level4LongWordAward z:2];
         
         //LEVEL FIVE
-        level5Button = [CCSprite spriteWithFile:@"Level_005.png"];
+        level5Button = [CCSprite spriteWithSpriteFrameName:@"Level_005.png"];
         //level5Button.position = ccp(440, 240);
         level5Button.position = ccp(439-27, 160);
-        [self addChild:level5Button z:2];
+        [levelsBatchNode addChild:level5Button z:2];
         
-        level5BeatAIAward = [CCSprite spriteWithFile:@"Trophy001.png"];
+        level5BeatAIAward = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
         level5BeatAIAward.position = ccp(412, 160);
         level5BeatAIAward.visible=NO;
-        [self addChild:level5BeatAIAward z:2];
+        [levelsBatchNode addChild:level5BeatAIAward z:2];
         
-        level5TotalPointsAward = [CCSprite spriteWithFile:@"Coins001.png"];
+        level5TotalPointsAward = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
         level5TotalPointsAward.position = ccp(412, 100);
         level5TotalPointsAward.visible=NO;
-        [self addChild:level5TotalPointsAward z:2];
+        [levelsBatchNode addChild:level5TotalPointsAward z:2];
         
-        level5LongWordAward = [CCSprite spriteWithFile:@"Book002.png"];
+        level5LongWordAward = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
         level5LongWordAward.position = ccp(412, 50);
         level5LongWordAward.visible=NO;
-        [self addChild:level5LongWordAward z:2];
+        [levelsBatchNode addChild:level5LongWordAward z:2];
         
         //Back Button
-        backButton = [CCSprite spriteWithFile:@"Button_Back001.png"];
+        backButton = [CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"];
         backButton.position = ccp(450, 30);
         backButton.visible = NO;
-        [self addChild:backButton z:2];
+        [levelsBatchNode addChild:backButton z:2];
         
         //DISPLAY THE STAR LEVELS BASED ON THE VALUES IN THE PLIST
         [self displayStars:@"Level1" 

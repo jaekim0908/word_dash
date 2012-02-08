@@ -53,6 +53,8 @@
     CCSprite *level5BeatAIAward;
     CCSprite *level5TotalPointsAward;
     CCSprite *level5LongWordAward;
+    
+    CCSpriteBatchNode *levelsBatchNode;
 
 }
 

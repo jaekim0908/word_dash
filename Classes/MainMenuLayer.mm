@@ -31,6 +31,9 @@
 
 @implementation MainMenuLayer
 
+@synthesize soundOnButton;
+@synthesize soundOffButton;
+
 -(id) init {
 	NSLog(@"MainMenuLayer init called");
 	if ((self = [super init])) {
@@ -105,12 +108,22 @@
                                          selector:@selector(displayRanking)];
         statsMenuItem.position = ccp(315, 40);
         
+        CCMenuItem *muteMenuItem = [CCMenuItemImage 
+                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rankings5.png"] 
+                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rankingsSelected.png"] 
+                                     target:self
+                                     selector:@selector(displayRanking)];
+        statsMenuItem.position = ccp(315, 40);
+
+        
         CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, nil];
         starMenu.position = CGPointZero;
         [self addChild:starMenu];
         
         CCSprite *redStarFish = [CCSprite spriteWithSpriteFrameName:@"RedStarfish.png"];
         redStarFish.position = ccp(screenSize.width/4, screenSize.height/5);
+        //MCH
+        //redStarFish.visible=NO;
         [batchNode addChild:redStarFish z:3];
         
         CCSprite *brownShellFish = [CCSprite spriteWithSpriteFrameName:@"BrownShell.png"];
@@ -120,6 +133,28 @@
         CCSprite *blueSandDollarImg = [CCSprite spriteWithSpriteFrameName:@"blueSandDollar.png"];
         blueSandDollarImg.position =  ccp(400, 140);
         [batchNode addChild:blueSandDollarImg z:3];
+        
+
+        self.soundOnButton = [CCSprite spriteWithFile:@"Music-On_Button-small.png"];
+        self.soundOnButton.position = ccp(30,30);
+        self.soundOnButton.visible=NO;
+        [self addChild:self.soundOnButton z:12];
+        
+        self.soundOffButton = [CCSprite spriteWithFile:@"Music-Off_Button002-small.png"];
+        self.soundOffButton.position = ccp(30,30);
+        self.soundOffButton.visible=NO;
+        [self addChild:self.soundOffButton z:12];
+        
+        NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
+        if ([currentMuteSetting isEqualToString:@"FALSE"]){
+            self.soundOnButton.visible=YES;
+        }
+        else{
+            self.soundOffButton.visible=YES;
+        }
+
+        
+        
 	}
 	
 	return self;
@@ -151,6 +186,25 @@
         rankingsSelected.visible = YES;
     }
     */
+    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
+    if (CGRectContainsPoint(self.soundOnButton.boundingBox, touchLocation)) {
+        
+        NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
+        
+        if ([currentMuteSetting isEqualToString:@"FALSE"]) {
+            [[[GameManager sharedGameManager] soundEngine] setMute:TRUE];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"TRUE"];
+            self.soundOffButton.visible=YES;
+            self.soundOnButton.visible=NO;
+        }
+        else{
+            [[[GameManager sharedGameManager] soundEngine] setMute:FALSE];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
+            self.soundOnButton.visible=YES;
+            self.soundOffButton.visible=NO;
+        }
+
+    } 
     
     return TRUE;
 }
@@ -229,6 +283,10 @@
         //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
         [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
+        
+        //SET MUTE BUTTON TO FALSE
+        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
+        
         
     }
     else{

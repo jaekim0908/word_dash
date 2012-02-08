@@ -27,7 +27,13 @@
     CCSprite *playWithFriendsSelected;
     CCSprite *howToPlaySelected;
     CCSpriteBatchNode *batchNode;
+    
+    CCSprite *soundOnButton;
+    CCSprite *soundOffButton;
 }
+
+@property (nonatomic, retain) CCSprite *soundOnButton;
+@property (nonatomic, retain) CCSprite *soundOffButton;
 
 -(void) showCancelChallengeMsg;
 -(void) enableMainMenu;

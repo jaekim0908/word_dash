@@ -185,7 +185,8 @@
 	
 	if ([foundWords objectForKey:s]) {
         // MCH -- play invalid word sound
-        [soundEngine playEffect:@"dull_bell.mp3"];
+        //[soundEngine playEffect:@"dull_bell.mp3"];
+        [[[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
         // JK - penalty
         [self openRandomLetters:1];
@@ -195,7 +196,8 @@
 			[foundWords setObject:s forKey:s];
             
             // MCH -- play success sound
-            [soundEngine playEffect:@"success.mp3"];
+            //[soundEngine playEffect:@"success.mp3"];
+            [[[GameManager sharedGameManager] soundEngine] playEffect:@"success.mp3"];
             
             //MCH -- add to each player's word's array for results scene
             if (playerTurn == 1) {
@@ -219,7 +221,8 @@
             }
 		} else {
             [currentAnswer setColor:ccc3(238, 44, 44)];
-            [soundEngine playEffect:@"dull_bell.mp3"];
+            //[soundEngine playEffect:@"dull_bell.mp3"];
+            [ [[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
 			[midDisplay setString:@"Not a word"];
             // JK - penalty
             [self openRandomLetters:1];

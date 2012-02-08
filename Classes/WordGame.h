@@ -10,7 +10,7 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 #import <iAd/iAd.h>
-#import "SimpleAudioEngine.h"
+//#import "SimpleAudioEngine.h"
 
 @class Cell;
 @class PauseMenu;
@@ -19,7 +19,7 @@
 @interface WordGame : CCLayer <ADBannerViewDelegate, UITextFieldDelegate>
 {
 	ADBannerView *adView;
-    SimpleAudioEngine *soundEngine;    
+    //SimpleAudioEngine *soundEngine;    
     
     int cols;
     int rows;

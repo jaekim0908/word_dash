@@ -28,10 +28,10 @@
 @synthesize awardPopupFrame;
 @synthesize awardPopupTintedBackground;
 @synthesize nextLevelBtn;
-//@synthesize nextLevelDisabledBtn;
 @synthesize getResultsBtn;
 @synthesize rematchBtn;
 @synthesize mainMenuBtn;
+@synthesize awardsMenu;
 @synthesize thisGameBeatAIAwardSprite;
 @synthesize thisGameTotalPointsAwardSprite;
 @synthesize thisGameLongWordAwardSprite;
@@ -121,6 +121,10 @@
         pauseMenuPlayAndPass = [[PauseMenu alloc] init];
         [pauseMenuPlayAndPass addToMyScene:self];
    
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
+        awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
+        [self addChild:awardsScreenBatchNode z:55];
+        
         //CREATE AWARDS POPUP FOR THE END OF THE GAME
         awardsState = FALSE;
         awardPopupTintedBackground = [CCSprite spriteWithFile:@"pause_background.png"];
@@ -129,84 +133,110 @@
         [self addChild:awardPopupTintedBackground z:45];
 
         
-        //awardPopupFrame = [CCSprite spriteWithFile:@"Awards_Screen.png"];
-        awardPopupFrame = [CCSprite spriteWithFile:@"double_pane.png"];
-        //awardPopupFrame.position = ccp(240,160);
-        awardPopupFrame.position = ccp(240,185);
+        awardPopupFrame = [CCSprite spriteWithSpriteFrameName:@"Results-Screen_Scroll.png"];
+        awardPopupFrame.position = ccp(240,175);
         awardPopupFrame.visible = NO;
-        [self addChild:awardPopupFrame z:50];
+        [awardsScreenBatchNode addChild:awardPopupFrame z:50];
         
         levelDisplay = [CCLabelTTF labelWithString:@"LEVEL 1"
-                                         fontName:@"Marker Felt" 
-                                         fontSize:26]; 
+                                         fontName:@"MarkerFelt-Thin" 
+                                         fontSize:22]; 
         //has retain on result layer, discuss double retain with jae
 		levelDisplay.color = ccc3(255,255,255);
-		levelDisplay.position = ccp(110,255);
+		levelDisplay.position = ccp(120+5,255-15);
         levelDisplay.anchorPoint = ccp(0,0);
         levelDisplay.visible = NO;
 		[self addChild:levelDisplay z:55];
         
         levelStatus = [CCLabelTTF labelWithString:@"LEVEL STATUS: "
-                                         fontName:@"Marker Felt" 
-                                         fontSize:26]; 
+                                         fontName:@"MarkerFelt-Thin" 
+                                         fontSize:22]; 
         //has retain on result layer, discuss double retain with jae
 		levelStatus.color = ccc3(255,255,255);
-		levelStatus.position = ccp(120,210);
+		levelStatus.position = ccp(120+5,210);
         levelStatus.anchorPoint = ccp(0,0);
         levelStatus.visible = NO;
 		[self addChild:levelStatus z:55];
         
         singlePlayerScore = [CCLabelTTF labelWithString:@"SCORE: "
-                                               fontName:@"Marker Felt" 
-                                               fontSize:26]; 
+                                               fontName:@"MarkerFelt-Thin" 
+                                               fontSize:22]; 
 		singlePlayerScore.color = ccc3(255,255,255);;
-		singlePlayerScore.position = ccp(120,180);
+		singlePlayerScore.position = ccp(120+5,185);
         singlePlayerScore.anchorPoint = ccp(0,0);
         singlePlayerScore.visible = NO;
 		[self addChild:singlePlayerScore z:55];
       
+        nextLevelBtn = [CCMenuItemImage 
+                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level.png"] 
+                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"next_level.png"] 
+                                         target:self
+                                         selector:@selector(nextLevelPressed)];
+        nextLevelBtn.visible = FALSE;
+        nextLevelBtn.position = ccp(148, 125); 
         
-        nextLevelBtn = [CCSprite spriteWithFile:@"next_level.png"];
-        nextLevelBtn.position = ccp(140,115);
-        nextLevelBtn.visible = NO;
-        [self addChild:nextLevelBtn z:55];
-        /******
-        nextLevelDisabledBtn = [CCSprite spriteWithFile:@"next_level_disabled.png"];
-        nextLevelDisabledBtn.position = ccp(143,115);
-        nextLevelDisabledBtn.visible = NO;
-        [self addChild:nextLevelDisabledBtn z:55];
-         ******/
+        //nextLevelBtn = [CCSprite spriteWithSpriteFrameName:@"next_level.png"];
+        //nextLevelBtn.position = ccp(148,125);
+        //nextLevelBtn.visible = NO;
+        //[awardsScreenBatchNode addChild:nextLevelBtn z:55];
+        
+        getResultsBtn = [CCMenuItemImage 
+                                    itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"get_results.png"] 
+                                    selectedSprite:[CCSprite spriteWithSpriteFrameName:@"get_results.png"] 
+                                    target:self
+                                    selector:@selector(getResultsPressed)];
+        getResultsBtn.position = ccp(218, 125); 
+
+        //getResultsBtn = [CCSprite spriteWithSpriteFrameName:@"get_results.png"];
+        //getResultsBtn.position = ccp(218,125);
+        //getResultsBtn.visible = NO;
+        //[awardsScreenBatchNode addChild:getResultsBtn z:55];
+        
+        rematchBtn = [CCMenuItemImage 
+                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rematch.png"] 
+                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rematch.png"] 
+                                     target:self
+                                     selector:@selector(rematchBtnPressed)];
+        rematchBtn.position = ccp(283, 124); 
+
+        //rematchBtn = [CCSprite spriteWithSpriteFrameName:@"rematch.png"];
+        //rematchBtn.position = ccp(283,124);
+        //rematchBtn.visible = NO;
+        //[awardsScreenBatchNode addChild:rematchBtn z:55];
+        
+        mainMenuBtn = [CCMenuItemImage 
+                                  itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"] 
+                                  selectedSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"] 
+                                  target:self
+                                  selector:@selector(mainMenuBtnPressed)];
+        mainMenuBtn.position = ccp(348, 124); 
         
         
-        getResultsBtn = [CCSprite spriteWithFile:@"get_results.png"];
-        getResultsBtn.position = ccp(210,115);
-        getResultsBtn.visible = NO;
-        [self addChild:getResultsBtn z:55];
+        //mainMenuBtn = [CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"];
+        //mainMenuBtn.position = ccp(348,124); 
+        //mainMenuBtn.visible = NO;
+        //[awardsScreenBatchNode addChild:mainMenuBtn z:55];
         
-        rematchBtn = [CCSprite spriteWithFile:@"rematch.png"];
-        rematchBtn.position = ccp(275,114);
-        rematchBtn.visible = NO;
-        [self addChild:rematchBtn z:55];
-        
-        mainMenuBtn = [CCSprite spriteWithFile:@"main_menu_btn.png"];
-        mainMenuBtn.position = ccp(340,112); 
-        mainMenuBtn.visible = NO;
-        [self addChild:mainMenuBtn z:55];
-        
-        thisGameBeatAIAwardSprite = [CCSprite spriteWithFile:@"trophy.png"];
-        thisGameBeatAIAwardSprite.position = ccp(210,160);
+        awardsMenu = [CCMenu menuWithItems:nextLevelBtn, getResultsBtn, rematchBtn, mainMenuBtn, nil];
+        awardsMenu.position = CGPointZero;
+        awardsMenu.isTouchEnabled = FALSE;
+        awardsMenu.visible = FALSE;
+        [self addChild:awardsMenu z:55];
+
+        thisGameBeatAIAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Trophy001-small.png"];
+        thisGameBeatAIAwardSprite.position = ccp(210,168);
         thisGameBeatAIAwardSprite.visible = NO;
-        [self addChild:thisGameBeatAIAwardSprite  z:55];
+        [awardsScreenBatchNode addChild:thisGameBeatAIAwardSprite  z:55];
        
-        thisGameTotalPointsAwardSprite = [CCSprite spriteWithFile:@"coins.png"];
-        thisGameTotalPointsAwardSprite.position = ccp(240,160);
+        thisGameTotalPointsAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Coins001-small.png"];
+        thisGameTotalPointsAwardSprite.position = ccp(240,168);
         thisGameTotalPointsAwardSprite.visible = NO;
-        [self addChild:thisGameTotalPointsAwardSprite  z:55];
+        [awardsScreenBatchNode addChild:thisGameTotalPointsAwardSprite  z:55];
         
-        thisGameLongWordAwardSprite = [CCSprite spriteWithFile:@"dictionary.png"];
-        thisGameLongWordAwardSprite.position = ccp(270,160);
+        thisGameLongWordAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Book002-small.png"];
+        thisGameLongWordAwardSprite.position = ccp(270,168);
         thisGameLongWordAwardSprite.visible = NO;
-        [self addChild:thisGameLongWordAwardSprite  z:55];
+        [awardsScreenBatchNode addChild:thisGameLongWordAwardSprite  z:55];
         
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		[activityIndicator setCenter:CGPointMake(windowSize.width/2, 30)]; // I do this because I'm in landscape mode
@@ -306,10 +336,59 @@
     return TRUE;
 }
 
+- (BOOL) nextLevelPressed
+{
+    int batchSize, currentLevel,nextLevel;
+    
+    //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
+    currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
+    
+    if (currentLevel <= 5){
+        nextLevel = currentLevel+1;
+    }
+    else{
+        //OPEN ISSUE: Determine what to do if at the top level
+        nextLevel = currentLevel;
+    }
+    
+    NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
+                                      objectForKey:[NSString stringWithFormat:@"Level%i",nextLevel]];
+    batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
+    
+    [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
+    [[GameManager sharedGameManager] setSinglePlayerLevel:nextLevel];
+    [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+    
+    return TRUE;
+    
+}
+
+- (BOOL) getResultsPressed
+{
+    [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+    [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+    [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+    [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+    [[GameManager sharedGameManager] setGameMode:kSinglePlayer];
+    
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+}
+
+- (BOOL) rematchBtnPressed
+{
+   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene]; 
+}
+
+- (BOOL) mainMenuBtnPressed
+{
+   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene]; 
+}
+
+
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
+    /**************
     CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
     if(awardsState){
         
@@ -348,15 +427,7 @@
             [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
             
             //NEXT: Fix Result Layer init functions and change call from play and pass -- comment out first to test single player
-            /*****
-            [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
-                                                       WithPlayerTwoScore:[player2Score string] 
-                                                       WithPlayerOneWords:player1Words 
-                                                       WithPlayerTwoWords:player2Words
-                                                              ForGameMode:kSinglePlayer
-                                                       ]];   
-             **/
-            
+             
         }
         else if(CGRectContainsPoint(rematchBtn.boundingBox, touchLocation)){
             [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
@@ -364,10 +435,13 @@
         else if(CGRectContainsPoint(mainMenuBtn.boundingBox, touchLocation)){
             [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
         }
-         
+       
+    
+
    
         return TRUE;
     }
+     ************/
     //MCH - DISPLAY THE PAUSE MENU
     if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
         pauseState = TRUE;
@@ -665,7 +739,8 @@
 - (BOOL) determineNextLevelLock:(int)currentLevel BeatAIFlag:(BOOL)beatAIFlag AllGameLevelDict:(NSMutableDictionary *)allGameLevels
 {
     int nextLevel;
-    
+
+
     if (currentLevel < 5) {
         
         nextLevel = currentLevel+1;
@@ -679,15 +754,14 @@
         if(!nextLevelLocked || beatAIFlag){
             //ENABLE
             nextLevelBtn.visible=YES;
-            getResultsBtn.position = ccp(210,115);
-            rematchBtn.position = ccp(275,114);
-            mainMenuBtn.position = ccp(340,112); 
+            getResultsBtn.position = ccp(218,125);
+            rematchBtn.position = ccp(283,124);
+            mainMenuBtn.position = ccp(348,124); 
         }
         else{
-            //nextLevelDisabledBtn.visible=YES;
-            getResultsBtn.position = ccp(210-35,115);
-            rematchBtn.position = ccp(275-35,114);
-            mainMenuBtn.position = ccp(340-35,112); 
+            getResultsBtn.position = ccp(210-43,125);
+            rematchBtn.position = ccp(275-43,124);
+            mainMenuBtn.position = ccp(340-43,124); 
         }
         
         //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
@@ -698,10 +772,9 @@
     }
     //IF IT'S THE LAST LEVEL THEN DISABLE THE NEXT LEVEL BUTTON
     else{
-        //nextLevelDisabledBtn.visible=YES;
-        getResultsBtn.position = ccp(210-35,115);
-        rematchBtn.position = ccp(275-35,114);
-        mainMenuBtn.position = ccp(340-35,112); 
+        getResultsBtn.position = ccp(210-43,124);
+        rematchBtn.position = ccp(275-43,124);
+        mainMenuBtn.position = ccp(340-43,124); 
     } 
     
     return TRUE;
@@ -714,58 +787,67 @@
     NSString *currentLevel = [NSString stringWithFormat:@"Level%i",[GameManager sharedGameManager].singlePlayerLevel];
     NSMutableDictionary *levelInfo = [ allGameLevels objectForKey:currentLevel];
     
-    //BOOL beatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
-    //BOOL totalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
-    //BOOL longWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL alreadyHasBeatAIAward = [[levelInfo objectForKey:@"beatAIAward"] boolValue];
+    BOOL alreadyHasTotalPointsAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
+    BOOL alreadyHasLongWordAward = [[levelInfo objectForKey:@"totalPointsAward"] boolValue];
     
-    BOOL beatAIAward,totalPointsAward,longWordAward;
-    //BOOL updatePList = NO;
+    //BOOL beatAIAward,totalPointsAward,longWordAward;
+    BOOL updatePList = NO;
     
     //BEAT AI AWARD        
     //IF THE PLAYER BEAT THE AI
     if (p1Score > aiScore) {
-        
-        beatAIAward = TRUE;
+        self.thisGameBeatAIAward = TRUE;
     }
     else{
-        beatAIAward = FALSE;
+        self.thisGameBeatAIAward = FALSE;
     }
     //UNLOCK THE NEXT LEVEL (if currently locked)
-    [self determineNextLevelLock:[GameManager sharedGameManager].singlePlayerLevel BeatAIFlag:beatAIAward AllGameLevelDict:allGameLevels];
+    [self determineNextLevelLock:[GameManager sharedGameManager].singlePlayerLevel BeatAIFlag:self.thisGameBeatAIAward AllGameLevelDict:allGameLevels];
 
-    [levelInfo setObject:[NSNumber numberWithBool:beatAIAward] forKey:@"beatAIAward"];
-    self.thisGameBeatAIAward = beatAIAward;
-     
+    if (!alreadyHasBeatAIAward) {
+        updatePList = YES;
+        [levelInfo setObject:[NSNumber numberWithBool:self.thisGameBeatAIAward] forKey:@"beatAIAward"];
+    }
+    
+         
     //TOTAL POINT AWARD
     int totalPointsForStar = [[levelInfo objectForKey:@"totalPointsForStar"] intValue];
     //IF THE PLAYER PASSED THE TOTAL POINTS THRESHOLD
-    (p1Score >= totalPointsForStar) ? totalPointsAward = TRUE : totalPointsAward = FALSE;
+    (p1Score >= totalPointsForStar) ? self.thisGameTotalPointsAward = TRUE : self.thisGameTotalPointsAward = FALSE;
     
-    [levelInfo setObject:[NSNumber numberWithBool:totalPointsAward] forKey:@"totalPointsAward"];
-    self.thisGameTotalPointsAward = totalPointsAward;
+    if (!alreadyHasTotalPointsAward) {
+        updatePList = YES;
+        [levelInfo setObject:[NSNumber numberWithBool:self.thisGameTotalPointsAward] forKey:@"totalPointsAward"];
+    }
     
     //LONG WORD AWARD
     int wordLengthForStar = [[levelInfo objectForKey:@"wordLengthForStar"] intValue];
     int longestWordLength = [self getLongestWordLengthInArray:player1WordsArray];
     //IF THE LONGEST WORD IS GREATER THAN THE THRESHOLD
-    (longestWordLength >= wordLengthForStar) ? longWordAward = TRUE : longWordAward = FALSE;
+    (longestWordLength >= wordLengthForStar) ? self.thisGameLongWordAward = TRUE : self.thisGameLongWordAward = FALSE;
     
-    [levelInfo setObject:[NSNumber numberWithBool:longWordAward] forKey:@"longWordAward"];
-    self.thisGameLongWordAward = longWordAward;
-
-        
+    if (!alreadyHasLongWordAward) {
+        updatePList = YES;
+        [levelInfo setObject:[NSNumber numberWithBool:thisGameLongWordAward] forKey:@"longWordAward"];
+    }
+    
     //UPDATE THE PLIST FILE IF ANY NEW AWARDS WERE WON THIS GAME
-    //if (updatePList) {
-    [allGameLevels setObject:levelInfo forKey:currentLevel];
-    NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
-    [allGameLevels writeToFile:path atomically:YES];
-    //}                  
+    if (updatePList) {
+        [allGameLevels setObject:levelInfo forKey:currentLevel];
+        NSString *path = [[GameManager sharedGameManager] getGameLevelPListPath];
+        [allGameLevels writeToFile:path atomically:YES];
+    }                  
     
 }
 
 - (void) displayAwardsPopup
 {
     NSString *achievedLevelStatus=@"INCOMPLETE";
+    
+    awardsMenu.isTouchEnabled=TRUE;
+    awardsMenu.visible=TRUE;
+    
     
     awardsState = TRUE;
     
@@ -788,7 +870,7 @@
     if (self.thisGameLongWordAward) {
         thisGameLongWordAwardSprite.visible = YES;
     }
-    
+        
 
     [levelDisplay setString:[NSString stringWithFormat:@"LEVEL %i",
                              [GameManager sharedGameManager].singlePlayerLevel]];

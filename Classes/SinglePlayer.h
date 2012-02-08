@@ -39,11 +39,12 @@
     
     CCSprite *awardPopupFrame;
     CCSprite *awardPopupTintedBackground;
-    CCSprite *nextLevelBtn;
-    //CCSprite *nextLevelDisabledBtn;
-    CCSprite *getResultsBtn;
-    CCSprite *rematchBtn;
-    CCSprite *mainMenuBtn;
+    CCMenuItem *nextLevelBtn;
+    CCMenuItem *getResultsBtn;
+    CCMenuItem *rematchBtn;
+    CCMenuItem *mainMenuBtn;
+    
+    CCMenu *awardsMenu;
     
     CCSprite *thisGameBeatAIAwardSprite;
     CCSprite *thisGameTotalPointsAwardSprite;
@@ -56,6 +57,8 @@
     int         aiMaxWaitTime;
     
     UIActivityIndicatorView *activityIndicator;
+    
+    CCSpriteBatchNode *awardsScreenBatchNode;
 
 }
 
@@ -64,11 +67,11 @@
 @property BOOL thisGameLongWordAward;
 @property (nonatomic,retain) CCSprite *awardPopupFrame;
 @property (nonatomic,retain) CCSprite *awardPopupTintedBackground;
-@property (nonatomic,retain) CCSprite *nextLevelBtn;
-//@property (nonatomic,retain) CCSprite *nextLevelDisabledBtn;
-@property (nonatomic,retain) CCSprite *getResultsBtn;
-@property (nonatomic,retain) CCSprite *rematchBtn;
-@property (nonatomic,retain) CCSprite *mainMenuBtn;
+@property (nonatomic,retain) CCMenuItem *nextLevelBtn;
+@property (nonatomic,retain) CCMenuItem *getResultsBtn;
+@property (nonatomic,retain) CCMenuItem *rematchBtn;
+@property (nonatomic,retain) CCMenuItem *mainMenuBtn;
+@property (nonatomic,retain) CCMenu *awardsMenu;
 @property (nonatomic,retain) CCSprite *thisGameBeatAIAwardSprite;
 @property (nonatomic,retain) CCSprite *thisGameTotalPointsAwardSprite;
 @property (nonatomic,retain) CCSprite *thisGameLongWordAwardSprite;
@@ -91,5 +94,9 @@
 -(void) aiMoveComplete;
 -(void) aiFlip;
 -(BOOL) aiCheckAnswer:(NSString *) answer;
+- (BOOL) nextLevelPressed;
+- (BOOL) getResultsPressed;
+- (BOOL) rematchBtnPressed;
+- (BOOL) mainMenuBtnPressed;
 
 @end

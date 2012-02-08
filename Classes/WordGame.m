@@ -244,7 +244,8 @@
         beachImg2.position = ccp(windowSize.width/2, windowSize.height/2);
         [self addChild:beachImg2 z:-12];
         
-        soundEngine = [SimpleAudioEngine sharedEngine];
+        //soundEngine = [SimpleAudioEngine sharedEngine];
+        [[GameManager sharedGameManager] setSoundEngine:[SimpleAudioEngine sharedEngine]];
         
         self.playButton = [CCSprite spriteWithSpriteFrameName:@"GameStartButton.png"];
         self.playButton.position = ccp(windowSize.width/2, windowSize.height/2);
@@ -617,8 +618,10 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-    [player1Timer setString:@"60"];
-	[player2Timer setString:@"60"];
+    [player1Timer setString:@"20"];
+	[player2Timer setString:@"20"];
+    //[player1Timer setString:@"60"];
+	//[player2Timer setString:@"60"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -861,7 +864,8 @@
 	
 	if ([foundWords objectForKey:s]) {
         // MCH -- play invalid word sound
-        [soundEngine playEffect:@"dull_bell.mp3"];
+        //[soundEngine playEffect:@"dull_bell.mp3"];
+        [[[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
 		[midDisplay setString:@"Already Used"];
         // JK - penalty
         [self openRandomLetters:1];
@@ -871,7 +875,8 @@
 			[foundWords setObject:s forKey:s];
             
             // MCH -- play success sound
-            [soundEngine playEffect:@"success.mp3"];
+            //[soundEngine playEffect:@"success.mp3"];
+            [ [[GameManager sharedGameManager] soundEngine] playEffect:@"success.mp3"];
             
             //MCH -- add to each player's word's array for results scene
             if (playerTurn == 1) {
@@ -894,7 +899,9 @@
             }
 		} else {
             [currentAnswer setColor:ccc3(238, 44, 44)];
-            [soundEngine playEffect:@"dull_bell.mp3"];
+            //[soundEngine playEffect:@"dull_bell.mp3"];
+            [[[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
+            
 			[midDisplay setString:@"Not a word"];
             // JK - penalty
             [self openRandomLetters:1];

@@ -9,6 +9,7 @@
 #import "PauseMenu.h"
 #import "GameManager.h"
 #import "HowToPlay.h"
+#import "SimpleAudioEngine.h"
 
 
 @implementation PauseMenu
@@ -20,6 +21,8 @@
 @synthesize mainMenuButton;
 @synthesize resumeButton;
 @synthesize howToPlayButton;
+@synthesize soundOnButton;
+@synthesize soundOffButton;
 
 
 
@@ -84,9 +87,19 @@
     self.howToPlayButton.position = ccp(70,50);
     self.howToPlayButton.visible=NO;
     [batchNode addChild:self.howToPlayButton z:10];
+    
+    self.soundOnButton = [CCSprite spriteWithSpriteFrameName:@"Music-On_Button.png"];
+    self.soundOnButton.position = ccp(110,270);
+    self.soundOnButton.visible=NO;
+    [batchNode addChild:self.soundOnButton z:12];
+    
+    self.soundOffButton = [CCSprite spriteWithSpriteFrameName:@"Music-Off_Button002.png"];
+    self.soundOffButton.position = ccp(110,270);
+    self.soundOffButton.visible=NO;
+    [batchNode addChild:self.soundOffButton z:12];
+
 
     return TRUE;
-     
 }
 
 -(BOOL) showPauseMenu:(CCLayer *) myScene
@@ -97,6 +110,15 @@
     self.mainMenuButton.visible=YES;
     self.resumeButton.visible=YES;
     self.howToPlayButton.visible=YES;
+    
+    NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
+    if ([currentMuteSetting isEqualToString:@"FALSE"]){
+        self.soundOnButton.visible=YES;
+    }
+    else{
+        self.soundOffButton.visible=YES;
+    }
+    
     
     [myScene stopTimer];
     
@@ -110,6 +132,9 @@
     self.mainMenuButton.visible=NO;
     self.resumeButton.visible=NO;
     self.howToPlayButton.visible=NO;
+    self.soundOffButton.visible=NO;
+    self.soundOnButton.visible=NO;
+    
     [myScene startTimer];    
 }
 
@@ -124,6 +149,9 @@
     else if(CGRectContainsPoint(self.rematchButton.boundingBox, touchLocation)){
         pauseState = NO;
         [[GameManager sharedGameManager] runSceneWithId:sceneId];
+        
+        
+        
     }
     else if(CGRectContainsPoint(self.howToPlayButton.boundingBox, touchLocation)){
         pauseState = YES;
@@ -133,6 +161,25 @@
         pauseState = NO;
         [self hidePauseMenu:myScene];
     }
+    else if(CGRectContainsPoint(self.soundOnButton.boundingBox, touchLocation)){
+        
+        NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
+        
+        if ([currentMuteSetting isEqualToString:@"FALSE"]) {
+            [[[GameManager sharedGameManager] soundEngine] setMute:TRUE];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"TRUE"];
+            self.soundOffButton.visible=YES;
+            self.soundOnButton.visible=NO;
+        }
+        else{
+            [[[GameManager sharedGameManager] soundEngine] setMute:FALSE];
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
+            self.soundOnButton.visible=YES;
+            self.soundOffButton.visible=NO;
+        }
+
+    }
+
     return pauseState;
 }
 
