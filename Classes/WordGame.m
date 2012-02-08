@@ -221,7 +221,7 @@
 		player2Words = [[NSMutableArray array] retain];
 		
 		midDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
-		midDisplay.position = ccp(windowSize.width/2, windowSize.height/2);
+		midDisplay.position = ccp(windowSize.width/2, windowSize.height/1.5);
 		midDisplay.color = ccc3(255, 193, 37);
 		[self addChild:midDisplay z:40];
 		
@@ -392,6 +392,13 @@
     redSquare.position = cell.letterSprite.position;
     [batchNode addChild:redSquare];
     [redSquare runAction:[CCSequence actions:[CCFadeOut actionWithDuration:1], [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)], nil]];
+}
+
+- (void) showBlueSquareAtCell:(Cell *) cell {
+    CCSprite *blueSquare = [CCSprite spriteWithSpriteFrameName:@"BlueSquare.png"];
+    blueSquare.position = cell.letterSprite.position;
+    [batchNode addChild:blueSquare];
+    [blueSquare runAction:[CCSequence actions:[CCFadeOut actionWithDuration:1], [CCCallFuncN actionWithTarget:self selector:@selector(cleanUpSprite:)], nil]];
 }
 
 - (void) openRandomLetters:(int) n {
@@ -735,6 +742,7 @@
 
 - (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int)r Col:(int)c {
     CCLOG(@"Triple-Tap detected !!");
+    [self showBlueSquareAtCell:cell];
     char ch = (arc4random() % 26) + 'a';
     Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];
     cell.letterSprite.visible = NO;

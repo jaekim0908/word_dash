@@ -221,7 +221,7 @@
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
-    tripleTabUsed = YES;
+    tripleTabUsed = NO;
 		
 	if (player == 1 && [[player1Timer string] intValue] > 0) {
         playerTurn = 1;	
