@@ -1202,6 +1202,7 @@
         
         if (playerTurn == 1) {
             [self clearAllSelectedLetters];
+            [self turnOnPassButtonForPlayer1];
         }
     }
 }
