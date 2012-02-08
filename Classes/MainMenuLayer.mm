@@ -145,7 +145,12 @@
         [self addChild:self.soundOffButton z:12];
         
         NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
-        if ([currentMuteSetting isEqualToString:@"FALSE"]){
+        
+        if (currentMuteSetting == nil){
+            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
+            self.soundOnButton.visible=YES;
+        }
+        else if ([currentMuteSetting isEqualToString:@"FALSE"]){
             self.soundOnButton.visible=YES;
         }
         else{
@@ -282,9 +287,6 @@
         //[[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
         [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
-        
-        //SET MUTE BUTTON TO FALSE
-        [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
         
         
     }
