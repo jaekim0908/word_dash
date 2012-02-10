@@ -101,19 +101,11 @@
         howToPlayMenuItem.position = ccp(330, 90);
         
         CCMenuItem *statsMenuItem = [CCMenuItemImage 
-                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rankings5.png"] 
-                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rankingsSelected.png"] 
+                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"GameHistory.png"] 
+                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"GameHistorySelected.png"] 
                                          target:self
                                          selector:@selector(displayRanking)];
         statsMenuItem.position = ccp(315, 40);
-        
-        CCMenuItem *muteMenuItem = [CCMenuItemImage 
-                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rankings5.png"] 
-                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rankingsSelected.png"] 
-                                     target:self
-                                     selector:@selector(displayRanking)];
-        statsMenuItem.position = ccp(315, 40);
-
         
         CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, nil];
         starMenu.position = CGPointZero;
@@ -165,31 +157,6 @@
 }
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
-    /*
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
-        playWithFriendsSelected.visible = YES;
-        playAndPassSelected.visible = NO;
-        howToPlaySelected.visible = NO;
-        rankingsSelected.visible = NO;
-    } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
-        playWithFriendsSelected.visible = NO;
-        playAndPassSelected.visible = YES;
-        howToPlaySelected.visible = NO;
-        rankingsSelected.visible = NO;
-    } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
-        playWithFriendsSelected.visible = NO;
-        playAndPassSelected.visible = NO;
-        howToPlaySelected.visible = YES;
-        rankingsSelected.visible = NO;
-    } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
-        playWithFriendsSelected.visible = NO;
-        playAndPassSelected.visible = NO;
-        howToPlaySelected.visible = NO;
-        rankingsSelected.visible = YES;
-    }
-    */
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     if (CGRectContainsPoint(self.soundOnButton.boundingBox, touchLocation)) {
         
@@ -214,50 +181,12 @@
 }
 
 - (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
-    /*
-    CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    
-    if (CGRectContainsPoint(playWithFriendsLabel.boundingBox, touchLocation)) {
-        playWithFriendsSelected.visible = NO;
-        //[self showActionSheet];
-        [self displayMultiPlayer];
-    } else if (CGRectContainsPoint(singlePlayerLabel.boundingBox, touchLocation)) {
-        [self displaySinglePlayer];
-    } else if (CGRectContainsPoint(playAndPassLabel.boundingBox, touchLocation)) {
-        playAndPassSelected.visible = NO;
-        
-        //DETERMINE IF FIRST TIME PLAYING
-        NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
-        
-        if(!firstTimePlayFlag)
-        {
-            CCLOG(@"firstTimePlayFlag is null, this is the first time the game has been played on this device!");
-            [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"firstTimePlaying" Value:@"FALSE"];
-            
-            [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
-            [[CCDirector sharedDirector] pushScene:[HowToPlay scene]];
-            
-        }
-        else{
-            [self displayPlayAndPass];
-        }       
-
-        [self displayPlayAndPass];
-    } else if (CGRectContainsPoint(howToPlayImg.boundingBox, touchLocation)) {
-        howToPlaySelected.visible = NO;
-        //[self displaySceneSelection];
-        [self displayHowToPlay];
-    } else if (CGRectContainsPoint(rankingsImg.boundingBox, touchLocation)) {
-        rankingsSelected.visible = NO;
-        [self displayRanking];
-    }
-    */
 }
 
 -(void) displayMainMenu {
 	NSLog(@"display main menu");
     [[Dictionary sharedDictionary] loadDictionary];
-   // [[AIDictionary sharedDictionary] loadDictionary];
+
 }
 
 -(void) displayHowToPlay {

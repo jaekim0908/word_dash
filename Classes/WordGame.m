@@ -282,24 +282,21 @@
         self.rightSideBackground.visible = NO;
         [batchNode addChild:self.rightSideBackground z:100];
         
-        waitForYourTurn = [[CCSprite spriteWithFile:@"WaitStrip.png"] retain];
+        waitForYourTurn = [[CCSprite spriteWithSpriteFrameName:@"Wait-Button002.png"] retain];
         waitForYourTurn.position = ccp(245, 150);
         waitForYourTurn.visible = NO;
-        waitForYourTurn.opacity = 150;
-        [self addChild:waitForYourTurn z:100];
+        waitForYourTurn.opacity = 200;
+        [batchNode addChild:waitForYourTurn z:100];
     }
 	return self;
 }
 
 - (void) showLeftChecker {
     self.leftSideBackground.visible = YES;
-    //[self.leftSideBackground runAction:[CCRepeatForever actionWithAction:[CCBlink actionWithDuration:2 blinks:1]]];
 }
 
 - (void) showRightChecker {
-    self.rightSideBackground.visible = YES;
-    //[self.rightSideBackground runAction:[CCRepeatForever actionWithAction:[CCBlink actionWithDuration:2 blinks:1]]];
-    
+    self.rightSideBackground.visible = YES;    
 }
 
 - (void) hideLeftChecker {
