@@ -19,6 +19,8 @@
 #import "CCNotifications.h"
 #import "PauseMenu.h"
 #import "Constants.h"
+#import "GCHelper.h"
+#import "Util.h"
 
 @implementation SinglePlayer
 
@@ -114,8 +116,12 @@
         }
         
         if (!player1LongName) {
-            self.player1LongName = @"Player 1";
+            self.player1LongName = ([[GKLocalPlayer localPlayer] alias])?[[GKLocalPlayer localPlayer] alias]:@"Player 1";
         }
+        
+        [player1Name setString:[Util formatName:self.player1LongName withLimit:8]];
+        
+        CCLOG(@"LOCAL PLAYER NAME = %@", [[GKLocalPlayer localPlayer] alias]);
         
         pauseState = FALSE;
         pauseMenu = [[PauseMenu alloc] init];
@@ -910,8 +916,6 @@
         [self hideAIActivity];
         [transparentBoundingBox2 stopAllActions];
         [transparentBoundingBox1 stopAllActions];
-        [self clearAllSelectedLetters];
-        
 	}
 	
 	if (p1+p2 <= 0) {
