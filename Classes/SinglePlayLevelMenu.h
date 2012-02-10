@@ -14,19 +14,21 @@
     CCSprite *beachBackground;
 
     
-    CCSprite *level1Button;
-    CCSprite *level2Button;
-    CCSprite *level3Button;
-    CCSprite *level4Button;
-    CCSprite *level5Button;
+    CCMenuItem *level1Button;
+    CCMenuItem *level2Button;
+    CCMenuItem *level3Button;
+    CCMenuItem *level4Button;
+    CCMenuItem *level5Button;
+    
+    CCMenu *levelsMenu;
     
     CCSprite *backButton;
     
-    BOOL level1Locked;
-    BOOL level2Locked;
-    BOOL level3Locked;
-    BOOL level4Locked;
-    BOOL level5Locked;
+    //BOOL level1Locked;
+    //BOOL level2Locked;
+    //BOOL level3Locked;
+    //BOOL level4Locked;
+    //BOOL level5Locked;
     
     CCLabelTTF *level1Literal;
     CCLabelTTF *level2Literal;
@@ -55,16 +57,19 @@
     CCSprite *level5LongWordAward;
     
     CCSpriteBatchNode *levelsBatchNode;
+    CCSpriteBatchNode *levels1BatchNode;
 
 }
 
 @property (nonatomic, retain) CCSprite *beachBackground;
 
-@property (nonatomic, retain) CCSprite *level1Button;
-@property (nonatomic, retain) CCSprite *level2Button;
-@property (nonatomic, retain) CCSprite *level3Button;
-@property (nonatomic, retain) CCSprite *level4Button;
-@property (nonatomic, retain) CCSprite *level5Button;
+@property (nonatomic, retain) CCMenuItem *level1Button;
+@property (nonatomic, retain) CCMenuItem *level2Button;
+@property (nonatomic, retain) CCMenuItem *level3Button;
+@property (nonatomic, retain) CCMenuItem *level4Button;
+@property (nonatomic, retain) CCMenuItem *level5Button;
+
+@property (nonatomic, retain) CCMenu *levelsMenu;
 
 @property (nonatomic, retain) CCSprite *backButton;
 
@@ -100,10 +105,15 @@
 
 
 - (void) displayStars:(NSString *) levelName
-           lockSprite:(CCSprite *) lockSprite
+           lockSprite:(CCMenuItem *) lockSprite
     BeatAIAwardSprite:(CCSprite *) beatAIAwardSprite
 TotalPointAwardSprite:(CCSprite *) totalPointAwardSprite
   LongWordAwardSprite:(CCSprite *) longWordAwardSprite;
+-(BOOL) level1ButtonPressed;
+-(BOOL) level2ButtonPressed;
+-(BOOL) level3ButtonPressed;
+-(BOOL) level4ButtonPressed;
+-(BOOL) level5ButtonPressed;
 
 
 @end

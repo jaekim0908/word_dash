@@ -118,8 +118,8 @@
         }
         
         pauseState = FALSE;
-        pauseMenuPlayAndPass = [[PauseMenu alloc] init];
-        [pauseMenuPlayAndPass addToMyScene:self];
+        pauseMenu = [[PauseMenu alloc] init];
+        [pauseMenu addToMyScene:self];
    
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
         awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
@@ -143,79 +143,62 @@
                                          fontSize:22]; 
         //has retain on result layer, discuss double retain with jae
 		levelDisplay.color = ccc3(255,255,255);
-		levelDisplay.position = ccp(120+5,255-15);
+		levelDisplay.position = ccp(120+5,255-18);
         levelDisplay.anchorPoint = ccp(0,0);
         levelDisplay.visible = NO;
 		[self addChild:levelDisplay z:55];
         
         levelStatus = [CCLabelTTF labelWithString:@"LEVEL STATUS: "
                                          fontName:@"MarkerFelt-Thin" 
-                                         fontSize:22]; 
+                                         fontSize:18]; 
         //has retain on result layer, discuss double retain with jae
 		levelStatus.color = ccc3(255,255,255);
-		levelStatus.position = ccp(120+5,210);
+		levelStatus.position = ccp(120+5,216);
         levelStatus.anchorPoint = ccp(0,0);
         levelStatus.visible = NO;
 		[self addChild:levelStatus z:55];
         
         singlePlayerScore = [CCLabelTTF labelWithString:@"SCORE: "
                                                fontName:@"MarkerFelt-Thin" 
-                                               fontSize:22]; 
+                                               fontSize:18]; 
 		singlePlayerScore.color = ccc3(255,255,255);;
-		singlePlayerScore.position = ccp(120+5,185);
+		//singlePlayerScore.position = ccp(120+10,191);
+        singlePlayerScore.position = ccp(120+10,216);
         singlePlayerScore.anchorPoint = ccp(0,0);
         singlePlayerScore.visible = NO;
 		[self addChild:singlePlayerScore z:55];
       
         nextLevelBtn = [CCMenuItemImage 
-                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level.png"] 
-                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"next_level.png"] 
+                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
+                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
                                          target:self
                                          selector:@selector(nextLevelPressed)];
         nextLevelBtn.visible = FALSE;
-        nextLevelBtn.position = ccp(148, 125); 
+        nextLevelBtn.position = ccp(148+3, 125); 
         
-        //nextLevelBtn = [CCSprite spriteWithSpriteFrameName:@"next_level.png"];
-        //nextLevelBtn.position = ccp(148,125);
-        //nextLevelBtn.visible = NO;
-        //[awardsScreenBatchNode addChild:nextLevelBtn z:55];
         
         getResultsBtn = [CCMenuItemImage 
-                                    itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"get_results.png"] 
-                                    selectedSprite:[CCSprite spriteWithSpriteFrameName:@"get_results.png"] 
+                                    itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
+                                    selectedSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
                                     target:self
                                     selector:@selector(getResultsPressed)];
         getResultsBtn.position = ccp(218, 125); 
-
-        //getResultsBtn = [CCSprite spriteWithSpriteFrameName:@"get_results.png"];
-        //getResultsBtn.position = ccp(218,125);
-        //getResultsBtn.visible = NO;
-        //[awardsScreenBatchNode addChild:getResultsBtn z:55];
         
         rematchBtn = [CCMenuItemImage 
-                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rematch.png"] 
-                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rematch.png"] 
+                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
+                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
                                      target:self
                                      selector:@selector(rematchBtnPressed)];
         rematchBtn.position = ccp(283, 124); 
 
-        //rematchBtn = [CCSprite spriteWithSpriteFrameName:@"rematch.png"];
-        //rematchBtn.position = ccp(283,124);
-        //rematchBtn.visible = NO;
-        //[awardsScreenBatchNode addChild:rematchBtn z:55];
         
         mainMenuBtn = [CCMenuItemImage 
-                                  itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"] 
-                                  selectedSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"] 
+                                  itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
+                                  selectedSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
                                   target:self
                                   selector:@selector(mainMenuBtnPressed)];
         mainMenuBtn.position = ccp(348, 124); 
         
-        
-        //mainMenuBtn = [CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"];
-        //mainMenuBtn.position = ccp(348,124); 
-        //mainMenuBtn.visible = NO;
-        //[awardsScreenBatchNode addChild:mainMenuBtn z:55];
         
         awardsMenu = [CCMenu menuWithItems:nextLevelBtn, getResultsBtn, rematchBtn, mainMenuBtn, nil];
         awardsMenu.position = CGPointZero;
@@ -223,18 +206,18 @@
         awardsMenu.visible = FALSE;
         [self addChild:awardsMenu z:55];
 
-        thisGameBeatAIAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Trophy001-small.png"];
-        thisGameBeatAIAwardSprite.position = ccp(210,168);
+        thisGameBeatAIAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
+        thisGameBeatAIAwardSprite.position = ccp(195,180);
         thisGameBeatAIAwardSprite.visible = NO;
         [awardsScreenBatchNode addChild:thisGameBeatAIAwardSprite  z:55];
        
-        thisGameTotalPointsAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Coins001-small.png"];
-        thisGameTotalPointsAwardSprite.position = ccp(240,168);
+        thisGameTotalPointsAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
+        thisGameTotalPointsAwardSprite.position = ccp(240,180);
         thisGameTotalPointsAwardSprite.visible = NO;
         [awardsScreenBatchNode addChild:thisGameTotalPointsAwardSprite  z:55];
         
-        thisGameLongWordAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Book002-small.png"];
-        thisGameLongWordAwardSprite.position = ccp(270,168);
+        thisGameLongWordAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
+        thisGameLongWordAwardSprite.position = ccp(285,180);
         thisGameLongWordAwardSprite.visible = NO;
         [awardsScreenBatchNode addChild:thisGameLongWordAwardSprite  z:55];
         
@@ -337,16 +320,21 @@
     [[GameManager sharedGameManager] setGameMode:kSinglePlayer];
     
     [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+    
+    return TRUE;
 }
 
 - (BOOL) rematchBtnPressed
 {
-   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene]; 
+   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
+    return TRUE;
 }
 
 - (BOOL) mainMenuBtnPressed
 {
-   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene]; 
+   [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
+    return TRUE;
+    
 }
 
 
@@ -408,16 +396,16 @@
     }
      ************/
     //MCH - DISPLAY THE PAUSE MENU
-    if(CGRectContainsPoint(pauseMenuPlayAndPass.pauseButton.boundingBox, touchLocation) && !pauseState){
+    if(CGRectContainsPoint(pauseMenu.pauseButton.boundingBox, touchLocation) && !pauseState && pauseMenu.pauseButton.visible){
         pauseState = TRUE;
-        [pauseMenuPlayAndPass showPauseMenu:self];
+        [pauseMenu showPauseMenu:self];
         [self hideAIActivity];
     }
 	
     // FUNCTIONS ON THE PAUSE MENU                     
     if (pauseState) {
         CCLOG(@"In a pause state.");
-        pauseState = [pauseMenuPlayAndPass execPauseMenuActions:touchLocation forScene:self withId:kSinglePlayerScene]; 
+        pauseState = [pauseMenu execPauseMenuActions:touchLocation forScene:self withId:kSinglePlayerScene]; 
         return TRUE;
     }
 
@@ -838,7 +826,7 @@
 
 - (void) displayAwardsPopup
 {
-    NSString *achievedLevelStatus=@"INCOMPLETE";
+    NSString *achievedLevelStatus=@"";
     
     awardsMenu.isTouchEnabled=TRUE;
     awardsMenu.visible=TRUE;
@@ -852,12 +840,17 @@
     rematchBtn.visible = YES;
     mainMenuBtn.visible = YES;
     levelDisplay.visible = YES;
-    levelStatus.visible = YES;
+    //levelStatus.visible = YES;
     singlePlayerScore.visible = YES;
+    
+    //HIDE THE PAUSE BUTTON
+    pauseMenu.pauseButton.visible=NO;
+    
+
     
     if (self.thisGameBeatAIAward) {
         thisGameBeatAIAwardSprite.visible = YES;
-        achievedLevelStatus = @"COMPLETED";
+        achievedLevelStatus = @": YOU WON!";
     }
     if (self.thisGameTotalPointsAward) {
         thisGameTotalPointsAwardSprite.visible = YES;
@@ -866,13 +859,12 @@
         thisGameLongWordAwardSprite.visible = YES;
     }
         
-
-    [levelDisplay setString:[NSString stringWithFormat:@"LEVEL %i",
-                             [GameManager sharedGameManager].singlePlayerLevel]];
+    [levelDisplay setString:[NSString stringWithFormat:@"LEVEL %i%@",
+                             [GameManager sharedGameManager].singlePlayerLevel, achievedLevelStatus]];
 
     [levelStatus setString:[NSString stringWithFormat:@"STATUS: %@",
                             achievedLevelStatus]];
-    [singlePlayerScore setString:[NSString stringWithFormat:@"SCORE: %@",
+    [singlePlayerScore setString:[NSString stringWithFormat:@"%@ POINTS",
                                   [player1Score string]]];
 
     
@@ -1055,7 +1047,7 @@
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
-    [pauseMenuPlayAndPass release];
+    [pauseMenu release];
     [visibleLetters release];
     [activityIndicator release];
 	[super dealloc];
