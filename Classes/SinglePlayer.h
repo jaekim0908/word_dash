@@ -30,7 +30,7 @@
     NSString *numOfTiesAI;
     NSString *longestAnswer;
     UITextField *enterYourName;
-    PauseMenu *pauseMenuPlayAndPass;
+    PauseMenu *pauseMenu;
     BOOL      pauseState;
     BOOL      awardsState;
     BOOL    thisGameBeatAIAward;
