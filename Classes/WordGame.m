@@ -98,7 +98,7 @@
         }
         
         if (!self.player2LongName) {
-            self.player2LongName = @"Player 2...";
+            self.player2LongName = @"Player 2";
         }
         
         self.tapToChangeLeft = [CCSprite spriteWithFile:@"tap_to_change_left.png"];
@@ -758,6 +758,8 @@
     cell.center = cell.letterSprite.position;
     cell.owner = 0;
     cell.value = [[NSString stringWithFormat:@"%c", ch] uppercaseString];
+    cell.row = r;
+    cell.col = c;
     [batchNode2 addChild:cell.letterSprite z:10];
     
     CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"Sqaure.png"];
@@ -835,6 +837,16 @@
 	}
 	
 	return startCount;
+}
+
+- (void) deselectCellsAt:(Cell *) cell {
+    int startIndex = [userSelection indexOfObject:cell];
+    int arrayLength = [userSelection count];
+    for(int i = startIndex; i < arrayLength; i++) {
+        Cell *cl = (Cell *) [userSelection objectAtIndex:i];
+        cl.letterSelected.visible = NO;
+    }
+    [userSelection removeObjectsInRange:NSMakeRange(startIndex, arrayLength - startIndex)];
 }
 
 - (void) checkAnswer {

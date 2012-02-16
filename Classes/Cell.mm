@@ -22,6 +22,8 @@
 @synthesize currentOwner = _currentOwner;
 @synthesize redBackground = _redBackground;
 @synthesize star = _star;
+@synthesize row = _row;
+@synthesize col = _col;
 
 -(void) selectLetter {
     self.letterSelected.visible = YES;
