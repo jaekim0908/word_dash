@@ -647,7 +647,19 @@
         int idx = arc4random() % [aiAllWords count];
         ans = [aiAllWords objectAtIndex:idx];
         if ([ans length] > 0) {
-            match = [self aiCheckAnswer:ans];
+            if ([[GameManager sharedGameManager] singlePlayerLevel] >= 3) {
+                if ([dictionary objectForKey:[ans stringByAppendingString:@"S"]]) {
+                    match = [self aiCheckAnswer:[ans stringByAppendingString:@"S"]];
+                }
+                
+                if (match) {
+                    ans = [ans stringByAppendingString:@"S"];
+                } else {
+                    match = [self aiCheckAnswer:ans];
+                }
+            } else {
+                match = [self aiCheckAnswer:ans];
+            }
         } else {
             match = NO;
         }
