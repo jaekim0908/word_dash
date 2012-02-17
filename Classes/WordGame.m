@@ -88,7 +88,9 @@
         [self addChild:batchNode2];
         
         self.player1LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player1_name"];
+        
         self.player2LongName = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+            
         
         self.player1LongName = [Util trimName:player1LongName];
         self.player2LongName = [Util trimName:player2LongName];
@@ -110,52 +112,72 @@
         self.tapToChangeRight.position = ccp(330, 295);
         [self addChild:self.tapToChangeRight];
         
-        player1Name = [[CCLabelTTF labelWithString:[Util formatName:self.player1LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        //PLAYER NAMES
+        //player1Name = [[CCLabelTTF labelWithString:[Util formatName:self.player1LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        player1Name = [[CCLabelTTF labelWithString:[Util formatName:self.player1LongName withLimit:8] fontName:@"GloriaHallelujah" fontSize:18] retain];
         player1Name.color = ccc3(0, 0, 0);
         player1Name.position = ccp(50, 260);
         [self addChild:player1Name];
         
-        player2Name = [[CCLabelTTF labelWithString:[Util formatName:self.player2LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        //player2Name = [[CCLabelTTF labelWithString:[Util formatName:self.player2LongName withLimit:8] fontName:@"MarkerFelt-Thin" fontSize:18] retain];
+        if([[GameManager sharedGameManager] gameMode] != kSinglePlayer){
+            player2Name = [[CCLabelTTF labelWithString:[Util formatName:self.player2LongName withLimit:8] fontName:@"GloriaHallelujah" fontSize:18] retain];
+        }
+        else{
+            player2Name = [[CCLabelTTF labelWithString:[Util formatName:@"Player 2" withLimit:8] fontName:@"GloriaHallelujah" fontSize:18] retain];
+        }
         player2Name.color = ccc3(0, 0, 0);
         player2Name.position = ccp(440, 260);
         [self addChild:player2Name];
         
-        player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        //TIME REMAINING
+        //player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        player1Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"GloriaHallelujah" fontSize:28] retain];
 		player1Timer.color = ccc3(155, 48, 255);
 		player1Timer.position = ccp(50, 190);
 		[self addChild:player1Timer];
         
-		player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+		//player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        player2Timer = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 100] fontName:@"GloriaHallelujah" fontSize:28] retain];
 		player2Timer.color = ccc3(155, 48, 255);
 		player2Timer.position = ccp(440, 190);
 		[self addChild:player2Timer];
         
-        CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
+        //TIME LABEL
+        //CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
+        CCLabelTTF *time1Label = [CCLabelTTF labelWithString:@"Time" fontName:@"GloriaHallelujah" fontSize:18];
 		time1Label.color = ccc3(0, 0, 0);
 		time1Label.position = ccp(50, 220);
 		[self addChild:time1Label];
         
-		CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
+		//CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"MarkerFelt-Thin" fontSize:18];
+        CCLabelTTF *time2Label = [CCLabelTTF labelWithString:@"Time" fontName:@"GloriaHallelujah" fontSize:18];
 		time2Label.color = ccc3(0, 0, 0);
 		time2Label.position = ccp(440, 220);
 		[self addChild:time2Label];
         
-        player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        //SCORE
+        //player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        player1Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"GloriaHallelujah" fontSize:28] retain];
 		player1Score.color = ccc3(0,0,255);
 		player1Score.position = ccp(50, 130);
 		[self addChild:player1Score];
         
-		player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+		//player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"MarkerFelt-Thin" fontSize:28] retain];
+        player2Score = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", 0] fontName:@"GloriaHallelujah" fontSize:28] retain];
 		player2Score.color = ccc3(0,0,255);
 		player2Score.position = ccp(440, 130);
 		[self addChild:player2Score];
         
-        CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
+        //SCORE LABEL
+        //CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
+        CCLabelTTF *score1Label = [CCLabelTTF labelWithString:@"Score" fontName:@"GloriaHallelujah" fontSize:18];
 		score1Label.color = ccc3(0, 0, 0);
 		score1Label.position = ccp(50, 160);
 		[self addChild:score1Label];
         
-		CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
+		//CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"MarkerFelt-Thin" fontSize:18];
+        CCLabelTTF *score2Label = [CCLabelTTF labelWithString:@"Score" fontName:@"GloriaHallelujah" fontSize:18];
 		score2Label.color = ccc3(0, 0, 0);
 		score2Label.position = ccp(440, 160);
 		[self addChild:score2Label];
@@ -877,6 +899,7 @@
             // MCH -- play success sound
             //[soundEngine playEffect:@"success.mp3"];
             [ [[GameManager sharedGameManager] soundEngine] playEffect:@"success.mp3"];
+            
             
             //MCH -- add to each player's word's array for results scene
             if (playerTurn == 1) {

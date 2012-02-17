@@ -569,9 +569,16 @@
 
 - (void)setupStringsWithOtherPlayerId:(NSString *)playerID {
     self.player1LongName = [[GKLocalPlayer localPlayer] alias];
+    //MCH - issue #16 not showing player names on result screens
+    [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:self.player1LongName];
     [player1Name setString:[Util formatName:player1LongName withLimit:8]];
+    
+    
     self.player2LongName = [[[GCHelper sharedInstance].playersDict objectForKey:playerID] alias];
+    //MCH - issue #16 not showing player names on result screens
+    [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player2_name" Value:self.player2LongName];
     [player2Name setString:[Util formatName:player2LongName withLimit:8]];
+    
 }
 
 

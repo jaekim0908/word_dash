@@ -37,6 +37,9 @@
     BOOL    thisGameTotalPointsAward;
     BOOL    thisGameLongWordAward;
     
+    BOOL    finalCountDownAlreadyPlaying;
+    ALuint  soundId;
+    
     CCSprite *awardPopupFrame;
     CCSprite *awardPopupTintedBackground;
     CCMenuItem *nextLevelBtn;
@@ -53,6 +56,7 @@
     CCLabelTTF *singlePlayerScore;
     CCLabelTTF *levelStatus;
     CCLabelTTF *levelDisplay;
+    //CCLabelTTF *lowerDisplay;
     
     int         aiMaxWaitTime;
     
@@ -78,6 +82,7 @@
 @property (nonatomic,retain) CCLabelTTF *singlePlayerScore;
 @property (nonatomic,retain) CCLabelTTF *levelStatus;
 @property (nonatomic,retain) CCLabelTTF *levelDisplay;
+//@property (nonatomic,retain) CCLabelTTF *lowerDisplay;
 @property int aiMaxWaitTime;
 
 

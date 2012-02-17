@@ -11,7 +11,7 @@
 
 @interface HowToPlay : CCLayer {
     CCSpriteBatchNode *batchNode;
-    CCLabelTTF *howToPlay3Label;
+    //CCLabelTTF *howToPlay3Label;
     CCLabelTTF *howToPlay7Label;
     CCLabelTTF *howToPlay8Label;
     CCLabelTTF *howToPlay9Label;
@@ -45,7 +45,7 @@
 }
 
 @property (nonatomic, retain) CCSpriteBatchNode *batchNode;
-@property (nonatomic, retain) CCLabelTTF *howToPlay3Label;
+//@property (nonatomic, retain) CCLabelTTF *howToPlay3Label;
 @property (nonatomic, retain) CCLabelTTF *howToPlay7Label;
 @property (nonatomic, retain) CCLabelTTF *howToPlay8Label;
 @property (nonatomic, retain) CCLabelTTF *howToPlay9Label;

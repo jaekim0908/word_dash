@@ -32,11 +32,11 @@
         //loadingLiteral.position = ccp(240,48);
 		//[self addChild:loadingLiteral z:5];
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading ..." fontName:@"Verdana" fontSize:48];
-		CGSize size = [[CCDirector sharedDirector] winSize];
-        label.color = ccc3(255, 255, 0);
-		label.position = ccp(240, 160);
-        [self addChild:label z:5];
+        //CCLabelTTF *label = [CCLabelTTF labelWithString:@"Loading ..." fontName:@"Verdana" fontSize:48];
+		//CGSize size = [[CCDirector sharedDirector] winSize];
+        //label.color = ccc3(255, 255, 0);
+		//label.position = ccp(240, 160);
+        //[self addChild:label z:5];
 
 		[self scheduleUpdate];
 	}
