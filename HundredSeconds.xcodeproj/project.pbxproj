@@ -77,6 +77,7 @@
 		6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */; };
 		6EFA52511331D56F0072F312 /* Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA52501331D56F0072F312 /* Cell.mm */; };
 		8411ABD3148766AA004B78E3 /* WordGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ABD2148766AA004B78E3 /* WordGame.m */; };
+		841427EB14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt in Resources */ = {isa = PBXBuildFile; fileRef = 841427EA14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt */; };
 		84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8B14B6E3880052AA6A /* Multiplayer.m */; };
 		84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8E14B6E4820052AA6A /* GCHelper.m */; };
 		84148A9214BC046D0052AA6A /* proAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A9114BC046C0052AA6A /* proAlertView.m */; };
@@ -537,6 +538,7 @@
 		6EFA52501331D56F0072F312 /* Cell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Cell.mm; sourceTree = "<group>"; };
 		8411ABD1148766AA004B78E3 /* WordGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGame.h; sourceTree = "<group>"; };
 		8411ABD2148766AA004B78E3 /* WordGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGame.m; sourceTree = "<group>"; };
+		841427EA14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = new_dictionary_no_acronym.txt; sourceTree = "<group>"; };
 		84148A8A14B6E3880052AA6A /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
 		84148A8B14B6E3880052AA6A /* Multiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multiplayer.m; sourceTree = "<group>"; };
 		84148A8D14B6E4820052AA6A /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
@@ -1947,6 +1949,7 @@
 				D4BECCB714E4EFCC003A13C3 /* AwardsScreenAssets.png in Resources */,
 				D4BECCB814E4EFCC003A13C3 /* AwardsScreenAssets-hd.plist in Resources */,
 				D4BECCB914E4EFCC003A13C3 /* AwardsScreenAssets.plist in Resources */,
+				841427EB14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt in Resources */,
 				D447DA3514EA6F1800D94CD1 /* clock_ticking_10secs.mp3 in Resources */,
 				D447DA3A14ECFC8600D94CD1 /* Macondo-Regular.ttf in Resources */,
 				D447DA3C14ECFC9C00D94CD1 /* IrishGrover.ttf in Resources */,
@@ -2112,8 +2115,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2149,8 +2152,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2213,8 +2216,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -2238,8 +2241,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2318,8 +2321,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ho (SJUDK44T25)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Ho (SJUDK44T25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;

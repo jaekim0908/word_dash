@@ -98,10 +98,12 @@
 -(void) aiFindWords;
 -(void) aiMoveComplete;
 -(void) aiFlip;
+-(void) aiTripleTab;
 -(BOOL) aiCheckAnswer:(NSString *) answer;
 - (BOOL) nextLevelPressed;
 - (BOOL) getResultsPressed;
 - (BOOL) rematchBtnPressed;
 - (BOOL) mainMenuBtnPressed;
+-(NSString *) getAllVisibleLetters;
 
 @end
