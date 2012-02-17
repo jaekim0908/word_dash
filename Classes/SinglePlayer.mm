@@ -440,24 +440,6 @@
 	return TRUE;
 }
 
-- (void) ccTouchEnded:(UITouch *) touch withEvent:(UIEvent *) event {
-}
-
-/*
-- (BOOL) allLettersOpened {
-    
-    for(int r = 0; r < rows; r++) {
-		for(int c = 0; c < cols; c++) {
-            Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
-            if (!cell.letterSprite.visible) {
-                return NO;
-            }
-        }
-    }
-    return YES;
-}
-*/
-
  -(void) runAI:(ccTime) dt {
 
      CCLOG(@"*********RUN AI*********");
@@ -472,11 +454,10 @@
     [self showAIActivity];
     int randomInterval = arc4random() % maxDelay + 1;
     id flip = [CCCallFunc actionWithTarget:self selector:@selector(aiFlip)];
+    id tab = [CCCallFunc actionWithTarget:self selector:@selector(aiTripleTab)];
     id delay = [CCDelayTime actionWithDuration:randomInterval];
     id play = [CCCallFunc actionWithTarget:self selector:@selector(aiFindWords)];
-    //id aiDone = [CCCallFunc actionWithTarget:self selector:@selector(aiMoveComplete)];
-    //id delay2 = [CCDelayTime actionWithDuration:1];
-    [transparentBoundingBox2 runAction:[CCSequence actions:flip, delay, play, nil]];
+    [transparentBoundingBox2 runAction:[CCSequence actions:flip, tab, delay, play, nil]];
 }
 
 
@@ -509,6 +490,22 @@
             cell.star.visible = YES;
         }
     }
+}
+
+-(void) aiTripleTab {
+    if (![self allLettersOpened]) return;
+
+    for(int r = 0; r < rows; r++) {
+		for(int c = 0; c < cols; c++) {
+			Cell *cell = [[wordMatrix objectAtIndex:r] objectAtIndex:c];
+            if (cell.letterSprite.visible) {
+                if ([cell.value isEqualToString:@"S"]) {
+                    [self handleTripleTapWithCell:cell AtRow:r Col:c];
+                    return;
+                }
+            }
+        }
+	}
 }
 
 -(void) aiMoveComplete {
