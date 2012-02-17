@@ -161,6 +161,17 @@
     [self schedule:@selector(updateTimer:) interval:1.0f];    
 }
 
+- (void) deselectCellsAt:(Cell *) cell {
+    int startIndex = [userSelection indexOfObject:cell];
+    int arrayLength = [userSelection count];
+    for(int i = startIndex; i < arrayLength; i++) {
+        Cell *cl = (Cell *) [userSelection objectAtIndex:i];
+        cl.letterSelected.visible = NO;
+        [self sendCellUnSelectedAtRow:cl.row atCol:cl.col];
+    }
+    [userSelection removeObjectsInRange:NSMakeRange(startIndex, arrayLength - startIndex)];
+}
+
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
     CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
@@ -222,10 +233,8 @@
 			BOOL cellSelected = cell.letterSelected.visible;
 			if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
 				if (cell.letterSprite.visible && cellSelected) {
-					cell.letterSelected.visible = NO;
-					[userSelection removeObject:cell];
+					[self deselectCellsAt:cell];
 					[self updateAnswer];
-                    [self sendCellUnSelectedAtRow:r atCol:c];
 				} else if (cell.letterSprite.visible && !cellSelected) {
 					cell.letterSelected.visible = YES;
 					[userSelection addObject:cell];

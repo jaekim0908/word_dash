@@ -134,4 +134,5 @@
 - (void) turnOnSubmitButtonForPlayer2;
 - (void) cleanUpSprite:(CCSprite *) sprite;
 - (void) showRedSquareAtCell:(Cell *) cell;
+- (void) deselectCellsAt:(Cell *) cell;
 @end

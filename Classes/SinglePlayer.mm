@@ -392,60 +392,6 @@
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
-    /**************
-    CCLOG(@"awardsState: %@",(awardsState) ? @"TRUE":@"FALSE");
-    if(awardsState){
-        
-        if(CGRectContainsPoint(nextLevelBtn.boundingBox, touchLocation) && nextLevelBtn.visible){
-            int batchSize, currentLevel,nextLevel;
-            
-            //NEXT -- CURRENT LEVEL - CALCULATE NEXT LEVEL
-            currentLevel = [GameManager sharedGameManager].singlePlayerLevel;
-            
-            if (currentLevel <= 5){
-                nextLevel = currentLevel+1;
-            }
-            else{
-                //OPEN ISSUE: Determine what to do if at the top level
-                nextLevel = currentLevel;
-            }
-            
-            NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] 
-                                              objectForKey:[NSString stringWithFormat:@"Level%i",nextLevel]];
-            batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
-            
-            [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
-            [[GameManager sharedGameManager] setSinglePlayerLevel:nextLevel];
-            [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
-            
-        }
-        else if(CGRectContainsPoint(getResultsBtn.boundingBox, touchLocation)){
-            
-            //self.isTouchEnabled=NO;
-            [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
-            [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
-            [[GameManager sharedGameManager] setPlayer1Words:player1Words];
-            [[GameManager sharedGameManager] setPlayer2Words:player2Words];
-            [[GameManager sharedGameManager] setGameMode:kSinglePlayer];
-            
-            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
-            
-            //NEXT: Fix Result Layer init functions and change call from play and pass -- comment out first to test single player
-             
-        }
-        else if(CGRectContainsPoint(rematchBtn.boundingBox, touchLocation)){
-            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
-        }
-        else if(CGRectContainsPoint(mainMenuBtn.boundingBox, touchLocation)){
-            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
-        }
-       
-    
-
-   
-        return TRUE;
-    }
-     ************/
     //MCH - DISPLAY THE PAUSE MENU
     if(CGRectContainsPoint(pauseMenu.pauseButton.boundingBox, touchLocation) && !pauseState && pauseMenu.pauseButton.visible){
         pauseState = TRUE;
@@ -500,8 +446,7 @@
             if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
                 
                 if (cell.letterSprite.visible && cellSelected) {
-                    cell.letterSelected.visible = NO;
-                    [userSelection removeObject:cell];
+                    [self deselectCellsAt:cell];
                     [self updateAnswer];
                 } else if (cell.letterSprite.visible && !cellSelected) {
                     if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {

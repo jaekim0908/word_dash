@@ -20,6 +20,8 @@
 	int _owner;
 	CCLabelTTF *_currentOwner;
 	CCSprite *_star;
+    int _row;
+    int _col;
 }
 
 @property (retain) CCLabelTTF *letter;
@@ -30,6 +32,8 @@
 @property (retain) NSString *value;
 @property (assign) CGPoint center;
 @property (assign) int owner;
+@property (assign) int row;
+@property (assign) int col;
 @property (retain) CCLabelTTF *currentOwner;
 @property (retain) CCSprite *redBackground;
 @property (retain) CCSprite *star;

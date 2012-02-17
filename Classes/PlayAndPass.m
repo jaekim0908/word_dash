@@ -115,9 +115,8 @@
 			BOOL cellSelected = cell.letterSelected.visible;
 			if (CGRectContainsPoint(cell.letterBackground.boundingBox, touchLocation)) {
 				if (cell.letterSprite.visible && cellSelected) {
-					cell.letterSelected.visible = NO;
-					[userSelection removeObject:cell];
-					[self updateAnswer];
+					[self deselectCellsAt:cell];
+                    [self updateAnswer];
 				} else if (cell.letterSprite.visible && !cellSelected) {
                     if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {
                         [self handleTripleTapWithCell:cell AtRow:r Col:c];
