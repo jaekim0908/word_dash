@@ -12,7 +12,7 @@
 
 @implementation HowToPlay
 
-@synthesize howToPlay3Label;
+//@synthesize howToPlay3Label;
 @synthesize howToPlay7Label;
 @synthesize howToPlay8Label;
 @synthesize howToPlay9Label;
@@ -130,11 +130,11 @@
         [batchNode addChild:finger2];
 
   
-        howToPlay3Label = [CCLabelTTF labelWithString:@"*Plural words ending in 's' are not valid" fontName:@"MarkerFelt-Thin" fontSize:20];
-		howToPlay3Label.color = ccc3(255, 255, 255);
-		howToPlay3Label.position = ccp(40, 35);
-        howToPlay3Label.anchorPoint = ccp(0,0);
-		[self addChild:howToPlay3Label];
+        //howToPlay3Label = [CCLabelTTF labelWithString:@"*Plural words ending in 's' are not valid" fontName:@"MarkerFelt-Thin" fontSize:20];
+		//howToPlay3Label.color = ccc3(255, 255, 255);
+		//howToPlay3Label.position = ccp(40, 35);
+        //howToPlay3Label.anchorPoint = ccp(0,0);
+		//[self addChild:howToPlay3Label];
 
         
         nextPageButton = [CCSprite spriteWithSpriteFrameName:@"checkmark_btn.png"];
@@ -223,7 +223,7 @@
 {
     gameScreenShotSelect.visible=NO;
     finger2.visible=NO;
-    howToPlay3Label.visible=NO;
+    //howToPlay3Label.visible=NO;
     
 }
 
@@ -232,7 +232,7 @@
     gameScreenShotSelect.visible=YES;
     finger2.visible=YES;
     finger2.position = ccp(317, 118);
-    howToPlay3Label.visible=YES;
+    //howToPlay3Label.visible=YES;
     
     iPhoneScreenShot.position = ccp(240,157);
     
