@@ -77,7 +77,6 @@
 		6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */; };
 		6EFA52511331D56F0072F312 /* Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA52501331D56F0072F312 /* Cell.mm */; };
 		8411ABD3148766AA004B78E3 /* WordGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ABD2148766AA004B78E3 /* WordGame.m */; };
-		841427EB14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt in Resources */ = {isa = PBXBuildFile; fileRef = 841427EA14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt */; };
 		84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8B14B6E3880052AA6A /* Multiplayer.m */; };
 		84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8E14B6E4820052AA6A /* GCHelper.m */; };
 		84148A9214BC046D0052AA6A /* proAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A9114BC046C0052AA6A /* proAlertView.m */; };
@@ -175,6 +174,7 @@
 		D447DA3A14ECFC8600D94CD1 /* Macondo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D447DA3914ECFC8600D94CD1 /* Macondo-Regular.ttf */; };
 		D447DA3C14ECFC9C00D94CD1 /* IrishGrover.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D447DA3B14ECFC9C00D94CD1 /* IrishGrover.ttf */; };
 		D447DA3E14ECFCB400D94CD1 /* GloriaHallelujah.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D447DA3D14ECFCB400D94CD1 /* GloriaHallelujah.ttf */; };
+		D447DA4D14EE37C100D94CD1 /* new_dictionary_no_acronym.txt in Resources */ = {isa = PBXBuildFile; fileRef = D447DA4C14EE37C100D94CD1 /* new_dictionary_no_acronym.txt */; };
 		D44D590114974589003C8568 /* one-star.png in Resources */ = {isa = PBXBuildFile; fileRef = D44D58FE14974589003C8568 /* one-star.png */; };
 		D44D590214974589003C8568 /* three-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = D44D58FF14974589003C8568 /* three-stars.png */; };
 		D44D590314974589003C8568 /* two-stars.png in Resources */ = {isa = PBXBuildFile; fileRef = D44D590014974589003C8568 /* two-stars.png */; };
@@ -538,7 +538,6 @@
 		6EFA52501331D56F0072F312 /* Cell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Cell.mm; sourceTree = "<group>"; };
 		8411ABD1148766AA004B78E3 /* WordGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGame.h; sourceTree = "<group>"; };
 		8411ABD2148766AA004B78E3 /* WordGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGame.m; sourceTree = "<group>"; };
-		841427EA14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = new_dictionary_no_acronym.txt; sourceTree = "<group>"; };
 		84148A8A14B6E3880052AA6A /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
 		84148A8B14B6E3880052AA6A /* Multiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multiplayer.m; sourceTree = "<group>"; };
 		84148A8D14B6E4820052AA6A /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
@@ -644,6 +643,7 @@
 		D447DA3914ECFC8600D94CD1 /* Macondo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Macondo-Regular.ttf"; sourceTree = "<group>"; };
 		D447DA3B14ECFC9C00D94CD1 /* IrishGrover.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IrishGrover.ttf; sourceTree = "<group>"; };
 		D447DA3D14ECFCB400D94CD1 /* GloriaHallelujah.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GloriaHallelujah.ttf; sourceTree = "<group>"; };
+		D447DA4C14EE37C100D94CD1 /* new_dictionary_no_acronym.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = new_dictionary_no_acronym.txt; path = Resources/new_dictionary_no_acronym.txt; sourceTree = "<group>"; };
 		D44D58FE14974589003C8568 /* one-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "one-star.png"; sourceTree = "<group>"; };
 		D44D58FF14974589003C8568 /* three-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "three-stars.png"; sourceTree = "<group>"; };
 		D44D590014974589003C8568 /* two-stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "two-stars.png"; sourceTree = "<group>"; };
@@ -987,6 +987,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D447DA4C14EE37C100D94CD1 /* new_dictionary_no_acronym.txt */,
 				D4D153B414B57E3200FD9D73 /* appIcon4.png */,
 				D4D153B214B57E2B00FD9D73 /* appIcon4-hd.png */,
 				D4D153B014B57AC800FD9D73 /* appIcon2.png */,
@@ -1787,6 +1788,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D447DA4D14EE37C100D94CD1 /* new_dictionary_no_acronym.txt in Resources */,
 				50F414F11069373D002A0D5E /* fps_images.png in Resources */,
 				50F414F21069373D002A0D5E /* Icon.png in Resources */,
 				E02BB504126CA50F006E46A2 /* Icon@2x.png in Resources */,
@@ -1949,7 +1951,6 @@
 				D4BECCB714E4EFCC003A13C3 /* AwardsScreenAssets.png in Resources */,
 				D4BECCB814E4EFCC003A13C3 /* AwardsScreenAssets-hd.plist in Resources */,
 				D4BECCB914E4EFCC003A13C3 /* AwardsScreenAssets.plist in Resources */,
-				841427EB14EE1F0E0090ACBE /* new_dictionary_no_acronym.txt in Resources */,
 				D447DA3514EA6F1800D94CD1 /* clock_ticking_10secs.mp3 in Resources */,
 				D447DA3A14ECFC8600D94CD1 /* Macondo-Regular.ttf in Resources */,
 				D447DA3C14ECFC9C00D94CD1 /* IrishGrover.ttf in Resources */,
@@ -2115,8 +2116,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2141,8 +2142,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -2152,8 +2153,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2176,8 +2177,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -2216,8 +2217,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -2228,8 +2229,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2241,8 +2242,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2265,8 +2266,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -2292,8 +2293,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG,
@@ -2309,8 +2310,8 @@
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2321,8 +2322,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
 				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
@@ -2333,8 +2334,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "39D26C35-D7A7-4902-90F6-A5064A561CAE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
