@@ -131,7 +131,7 @@
         pauseState = FALSE;
         pauseMenu = [[PauseMenu alloc] init];
         [pauseMenu addToMyScene:self];
-   
+//MCH   /*****************
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
         awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
         [self addChild:awardsScreenBatchNode z:55];
@@ -236,7 +236,7 @@
 		[activityIndicator setCenter:CGPointMake(windowSize.width/2, 30)]; // I do this because I'm in landscape mode
         [activityIndicator setColor:[UIColor blackColor]];
 		[[[CCDirector sharedDirector] openGLView] addSubview:activityIndicator];
-        
+//MCH *******************/        
         NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
         
         
@@ -843,7 +843,7 @@
     pauseMenu.pauseButton.visible=NO;
     
 
-    
+    //DISPLAY AWARDS
     if (self.thisGameBeatAIAward) {
         self.thisGameBeatAIAwardSprite.visible = YES;
         achievedLevelStatus = @": YOU WON!";
