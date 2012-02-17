@@ -641,6 +641,8 @@
             case kSinglePlayer:
                 [[GameManager sharedGameManager] runSceneWithId:kSinglePlayerScene];
                 break;
+            case kMultiplayer:
+                [[GameManager sharedGameManager] runSceneWithId:kMutiPlayerScene];
             default:
                 break;
         }

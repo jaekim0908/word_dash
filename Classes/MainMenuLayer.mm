@@ -141,12 +141,15 @@
         if (currentMuteSetting == nil){
             [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"currentMuteSetting" Value:@"FALSE"];
             self.soundOnButton.visible=YES;
+            [[[GameManager sharedGameManager] soundEngine] setMute:FALSE];
         }
         else if ([currentMuteSetting isEqualToString:@"FALSE"]){
             self.soundOnButton.visible=YES;
+            [[[GameManager sharedGameManager] soundEngine] setMute:FALSE];
         }
         else{
             self.soundOffButton.visible=YES;
+            [[[GameManager sharedGameManager] soundEngine] setMute:TRUE];
         }
 
         
@@ -204,6 +207,8 @@
 
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");
+    
+    [ [GameManager sharedGameManager] setGameMode:kPlayAndPass];
 	//[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kHelloWorldScene];
     //DETERMINE IF FIRST TIME PLAYING
     NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
@@ -229,6 +234,7 @@
 
 -(void) displaySinglePlayer {
     CCLOG(@"display single player");
+    [ [GameManager sharedGameManager] setGameMode:kSinglePlayer];
     //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
     //DETERMINE IF FIRST TIME PLAYING
     NSString *firstTimePlayFlag = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"firstTimePlaying"];
@@ -253,6 +259,7 @@
 
 -(void) displayMultiPlayer {
     CCLOG(@"display multi player with GC");
+    [ [GameManager sharedGameManager] setGameMode:kMultiplayer];
     [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
 }
 
