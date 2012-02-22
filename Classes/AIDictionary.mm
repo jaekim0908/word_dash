@@ -85,7 +85,8 @@ static AIDictionary* _sharedDictionary = nil;
             filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
         }
         //LOAD THE LARGE DICTIONARY FROM ALL WORDS OF DICTIONARY CLASS TO SAVE LOADING FROM FILE
-        else if([dictionaryFilename isEqualToString:@"new_dictionary"]){
+        //MCH -- LOOK INTO THIS, LOGIC SEEMS FLAWED
+        else if([dictionaryFilename isEqualToString:@"new_dictionary_no_acronym"]){
             self.allWords = [[Dictionary sharedDictionary] allWords];
             return self.allWords;
         }

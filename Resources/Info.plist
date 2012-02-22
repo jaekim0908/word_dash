@@ -4,10 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-	<string>RockSalt.ttf</string>
-	<string>GloriaHallelujah.ttf</string>
-	<string>IrishGrover.ttf</string>
-	<string>Macondo-Regular.ttf</string>
+		<string>GloriaHallelujah.ttf</string>
+		<string>Macondo-Regular.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>

@@ -209,13 +209,14 @@
             p1Name=@"Player 1";
         }
         
-        NSString *p2Name;
+        NSString *p2Name,*tmp;
         
         if (theGameMode == kSinglePlayer) {
             p2Name = @"AI";
         }
         else{
-            p2Name = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+            tmp = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"player2_name"];
+            (tmp) ? p2Name = tmp : p2Name = @"Player 2";
         }
         
 
@@ -636,7 +637,7 @@
         
         switch (theGameMode) {
             case kPlayAndPass:
-                [[GameManager sharedGameManager] runSceneWithId:kHelloWorldScene];
+                [[GameManager sharedGameManager] runSceneWithId:kPlayAndPassScene];
                 break;
             case kSinglePlayer:
                 [[GameManager sharedGameManager] runSceneWithId:kSinglePlayerScene];
