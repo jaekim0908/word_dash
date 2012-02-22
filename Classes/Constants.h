@@ -66,6 +66,7 @@ typedef enum {
     kMessageTypeSendTimer,
     kMessageTypeCellSelected,
     kMessageTypeCellUnSelected,
+    kMessageTypeTripleTab,
     kMessageTypeCheckAnswer,
     kMessageTypeSendTileFlipCount,
     kMessageTypeResetTileFlipCount,

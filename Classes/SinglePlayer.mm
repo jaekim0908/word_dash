@@ -666,7 +666,6 @@
     }
     
     if (match) {
-        CCLOG(@"FOUND ANSWER = %@", ans);
         id delay = [CCDelayTime actionWithDuration:0.2];
         NSMutableArray *actionList = [NSMutableArray array];
         id actionSeq = nil;

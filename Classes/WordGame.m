@@ -761,7 +761,6 @@
 }
 
 - (void) handleTripleTapWithCell:(Cell *) cell AtRow:(int)r Col:(int)c {
-    CCLOG(@"Triple-Tap detected !!");
     [self showBlueSquareAtCell:cell];
     char ch = (arc4random() % 26) + 'a';
     Cell *newCell = [self cellWithCharacter:ch atRow:r atCol:c];

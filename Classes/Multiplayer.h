@@ -43,7 +43,8 @@
 -(void) sendOpenCellAtRow:(int) r atCol:(int) c countScore:(BOOL) flag;
 -(void) sendTimer;
 -(void) sendCellSelectedAtRow:(int) r atCol:(int) c;
--(void) sendCellUnSelectedAtRow:(int) r atCol:(int)c; 
+-(void) sendCellUnSelectedAtRow:(int) r atCol:(int)c;
+-(void) sendTripleTabAtRow:(int) r atCol:(int) c;
 -(void) sendCheckAnswer;
 -(void) sendTileFlipCount:(int) cnt;
 -(void) sendResetTileFlipCount;
