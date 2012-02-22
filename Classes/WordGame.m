@@ -309,6 +309,89 @@
         waitForYourTurn.visible = NO;
         waitForYourTurn.opacity = 200;
         [batchNode addChild:waitForYourTurn z:100];
+        
+        //AWARDS SCREEN - USED BY SINGLE PLAYER AND PLAY AND PASS
+        //MCH   /*****************
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
+        awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
+        [self addChild:awardsScreenBatchNode z:55];
+        
+        //CREATE AWARDS POPUP FOR THE END OF THE GAME
+        awardsState = FALSE;
+        awardPopupTintedBackground = [[CCSprite spriteWithFile:@"pause_background.png"] retain];
+        awardPopupTintedBackground.position = ccp(240,160);
+        awardPopupTintedBackground.visible = NO;
+        [self addChild:awardPopupTintedBackground z:45];
+        
+        
+        awardPopupFrame = [[CCSprite spriteWithSpriteFrameName:@"Results-Screen_Scroll.png"] retain];
+        awardPopupFrame.position = ccp(240,175);
+        awardPopupFrame.visible = NO;
+        [awardsScreenBatchNode addChild:awardPopupFrame z:50];
+        
+        awardsPopupBanner = [[CCLabelTTF labelWithString:@"LEVEL 1"
+                                               fontName:@"Macondo-Regular" 
+                                               fontSize:22] retain]; 
+		awardsPopupBanner.color = ccc3(255,255,255);
+		awardsPopupBanner.position = ccp(240,200);
+        //awardsPopupBanner.anchorPoint = ccp(0,0);
+        awardsPopupBanner.visible = NO;
+		[self addChild:awardsPopupBanner z:55];
+        
+        
+        nextLevelBtn = [[CCMenuItemImage 
+                             itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
+                             selectedSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
+                             target:self
+                             selector:@selector(nextLevelPressed)] retain];
+        nextLevelBtn.visible = FALSE;
+        nextLevelBtn.position = ccp(148+3, 125); 
+        
+        
+        getResultsBtn = [[CCMenuItemImage 
+                              itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
+                              selectedSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
+                              target:self
+                              selector:@selector(getResultsPressed)] retain];
+        getResultsBtn.position = ccp(218, 125); 
+        
+        rematchBtn = [[CCMenuItemImage 
+                           itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
+                           selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
+                           target:self
+                           selector:@selector(rematchBtnPressed)] retain];
+        rematchBtn.position = ccp(283, 124); 
+        
+        
+        mainMenuBtn = [[CCMenuItemImage 
+                            itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
+                            selectedSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
+                            target:self
+                            selector:@selector(mainMenuBtnPressed)] retain];
+        mainMenuBtn.position = ccp(348, 124); 
+        
+        
+        awardsMenu = [[CCMenu menuWithItems:nextLevelBtn, getResultsBtn, rematchBtn, mainMenuBtn, nil] retain];
+        awardsMenu.position = CGPointZero;
+        awardsMenu.isTouchEnabled = FALSE;
+        awardsMenu.visible = FALSE;
+        [self addChild:awardsMenu z:55];
+        
+        thisGameBeatAIAwardSprite = [[CCSprite spriteWithSpriteFrameName:@"Trophy001.png"] retain];
+        thisGameBeatAIAwardSprite.position = ccp(195,180);
+        thisGameBeatAIAwardSprite.visible = NO;
+        [awardsScreenBatchNode addChild:thisGameBeatAIAwardSprite  z:55];
+        
+        thisGameTotalPointsAwardSprite = [[CCSprite spriteWithSpriteFrameName:@"Coins001.png"] retain];
+        thisGameTotalPointsAwardSprite.position = ccp(240,180);
+        thisGameTotalPointsAwardSprite.visible = NO;
+        [awardsScreenBatchNode addChild:thisGameTotalPointsAwardSprite  z:55];
+        
+        thisGameLongWordAwardSprite = [[CCSprite spriteWithSpriteFrameName:@"Book002.png"] retain];
+        thisGameLongWordAwardSprite.position = ccp(285,180);
+        thisGameLongWordAwardSprite.visible = NO;
+        [awardsScreenBatchNode addChild:thisGameLongWordAwardSprite  z:55];
+        //MCH *******************/      
     }
 	return self;
 }
@@ -629,8 +712,10 @@
 	currentStarPoints = 8;
 	[foundWords removeAllObjects];
 	[starPoints removeAllObjects];
-    [player1Timer setString:@"60"];
-	[player2Timer setString:@"60"];
+    //[player1Timer setString:@"60"];
+	//[player2Timer setString:@"60"];
+    [player1Timer setString:@"20"];
+	[player2Timer setString:@"5"];
 	[player1Score setString:@"0"];
 	[player2Score setString:@"0"];
 	[currentAnswer setString:@" "];
@@ -971,6 +1056,76 @@
 	[currentAnswer setString:s];
 }
 
+- (BOOL) getResultsPressed
+{
+    [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+    [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+    [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+    [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+    [[GameManager sharedGameManager] setGameMode:kPlayAndPass];
+    
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+    
+    return TRUE;
+}
+
+- (BOOL) rematchBtnPressed
+{
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kPlayAndPassScene];
+    return TRUE;
+}
+
+- (BOOL) mainMenuBtnPressed
+{
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
+    return TRUE;
+    
+}
+- (BOOL) nextLevelPressed
+{
+    return TRUE;
+}
+
+- (void) displayAwardsPopup
+{
+    
+    awardsMenu.isTouchEnabled=TRUE;
+    awardsMenu.visible=TRUE;
+    
+    
+    awardsState = TRUE;
+    
+    awardPopupTintedBackground.visible = YES;
+    awardPopupFrame.visible = YES; 
+    getResultsBtn.visible = YES; 
+    rematchBtn.visible = YES;
+    mainMenuBtn.visible = YES;
+    awardsPopupBanner.visible = YES;
+    
+    getResultsBtn.position = ccp(210-43+10,125);
+    rematchBtn.position = ccp(275-43+10,124);
+    mainMenuBtn.position = ccp(340-43+10,124); 
+    
+    if ([[player1Score string] intValue] == [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:@"TIE GAME"];
+    }
+    else if ([[player1Score string] intValue] > [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",player1LongName]];
+    }
+    else{
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",player2LongName]];
+    }
+
+    
+    
+
+     
+    //HIDE THE PAUSE BUTTON
+    //OPEN ISSUE -- pauseMenu.pauseButton.visible=NO;
+    
+    
+}
+
 - (void) updateTimer:(ccTime) dt {
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -1057,15 +1212,15 @@
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [player2ScoreRecord saveInBackground];
         
-        
+        [self displayAwardsPopup];
         //MCH - display results layer
         
-        [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
-        [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
-        [[GameManager sharedGameManager] setPlayer1Words:player1Words];
-        [[GameManager sharedGameManager] setPlayer2Words:player2Words];
-        [[GameManager sharedGameManager] setGameMode:kPlayAndPass];
-        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        //[[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+        //[[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+        //[[GameManager sharedGameManager] setPlayer1Words:player1Words];
+        //[[GameManager sharedGameManager] setPlayer2Words:player2Words];
+        //[[GameManager sharedGameManager] setGameMode:kPlayAndPass];
+        //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
          
         /********
         [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
@@ -1168,6 +1323,19 @@
     
     [self.leftSideBackground release];
     [self.rightSideBackground release];
+    
+    [awardsScreenBatchNode release];
+    [awardPopupTintedBackground release];
+    [awardPopupFrame release];
+    [nextLevelBtn release];
+    [getResultsBtn release];
+    [rematchBtn release];
+    [mainMenuBtn release];
+    [awardsMenu release];
+    [thisGameBeatAIAwardSprite release];
+    [thisGameTotalPointsAwardSprite release];
+    [thisGameLongWordAwardSprite release];
+    [awardsPopupBanner release];
         
     wordMatrix = nil;
     solveButton1 = nil;

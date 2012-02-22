@@ -82,6 +82,24 @@
     CCSprite *_rightSideBackground;
     BOOL tripleTabUsed;
     CCSprite *waitForYourTurn;
+    
+    CCSpriteBatchNode *awardsScreenBatchNode;
+    BOOL      awardsState;
+    
+    CCSprite *awardPopupFrame;
+    CCSprite *awardPopupTintedBackground;
+    CCMenuItem *nextLevelBtn;
+    CCMenuItem *getResultsBtn;
+    CCMenuItem *rematchBtn;
+    CCMenuItem *mainMenuBtn;
+    
+    CCMenu *awardsMenu;
+    
+    CCSprite *thisGameBeatAIAwardSprite;
+    CCSprite *thisGameTotalPointsAwardSprite;
+    CCSprite *thisGameLongWordAwardSprite;
+    
+    CCLabelTTF *awardsPopupBanner;
 }
 
 @property int cols;
@@ -135,4 +153,9 @@
 - (void) cleanUpSprite:(CCSprite *) sprite;
 - (void) showRedSquareAtCell:(Cell *) cell;
 - (void) deselectCellsAt:(Cell *) cell;
+- (void) displayAwardsPopup;
+- (BOOL) getResultsPressed;
+- (BOOL) rematchBtnPressed;
+- (BOOL) mainMenuBtnPressed;
+- (BOOL) nextLevelPressed;
 @end

@@ -27,18 +27,17 @@
 @synthesize thisGameBeatAIAward;
 @synthesize thisGameTotalPointsAward;
 @synthesize thisGameLongWordAward;
-@synthesize awardPopupFrame;
-@synthesize awardPopupTintedBackground;
-@synthesize nextLevelBtn;
-@synthesize getResultsBtn;
-@synthesize rematchBtn;
-@synthesize mainMenuBtn;
-@synthesize awardsMenu;
-@synthesize thisGameBeatAIAwardSprite;
-@synthesize thisGameTotalPointsAwardSprite;
-@synthesize thisGameLongWordAwardSprite;
+//@synthesize awardPopupFrame;
+//@synthesize awardPopupTintedBackground;
+//@synthesize nextLevelBtn;
+//@synthesize getResultsBtn;
+//@synthesize rematchBtn;
+//@synthesize mainMenuBtn;
+//@synthesize awardsMenu;
+//@synthesize thisGameBeatAIAwardSprite;
+//@synthesize thisGameTotalPointsAwardSprite;
+//@synthesize thisGameLongWordAwardSprite;
 @synthesize singlePlayerScore;
-@synthesize levelStatus;
 @synthesize levelDisplay;
 //@synthesize lowerDisplay;
 @synthesize aiMaxWaitTime;
@@ -131,7 +130,7 @@
         pauseState = FALSE;
         pauseMenu = [[PauseMenu alloc] init];
         [pauseMenu addToMyScene:self];
-//MCH   /*****************
+/*****************
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
         awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
         [self addChild:awardsScreenBatchNode z:55];
@@ -149,35 +148,6 @@
         self.awardPopupFrame.visible = NO;
         [awardsScreenBatchNode addChild:self.awardPopupFrame z:50];
         
-        self.levelDisplay = [CCLabelTTF labelWithString:@"LEVEL 1"
-                                         fontName:@"Macondo-Regular" 
-                                         fontSize:22]; 
-        //has retain on result layer, discuss double retain with jae
-		self.levelDisplay.color = ccc3(255,255,255);
-		self.levelDisplay.position = ccp(120+5,255-21);
-        self.levelDisplay.anchorPoint = ccp(0,0);
-        self.levelDisplay.visible = NO;
-		[self addChild:self.levelDisplay z:55];
-        
-        self.levelStatus = [CCLabelTTF labelWithString:@"LEVEL STATUS: "
-                                         fontName:@"MarkerFelt-Thin" 
-                                         fontSize:18]; 
-        //has retain on result layer, discuss double retain with jae
-		self.levelStatus.color = ccc3(255,255,255);
-		self.levelStatus.position = ccp(120+5,216);
-        self.levelStatus.anchorPoint = ccp(0,0);
-        self.levelStatus.visible = NO;
-		[self addChild:self.levelStatus z:55];
-        
-        self.singlePlayerScore = [CCLabelTTF labelWithString:@"SCORE: "
-                                               fontName:@"Macondo-Regular" 
-                                               fontSize:18]; 
-		self.singlePlayerScore.color = ccc3(255,255,255);;
-		//singlePlayerScore.position = ccp(120+10,191);
-        self.singlePlayerScore.position = ccp(120+10,216-3);
-        self.singlePlayerScore.anchorPoint = ccp(0,0);
-        self.singlePlayerScore.visible = NO;
-		[self addChild:self.singlePlayerScore z:55];
       
         self.nextLevelBtn = [CCMenuItemImage 
                                          itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
@@ -231,12 +201,35 @@
         self.thisGameLongWordAwardSprite.position = ccp(285,180);
         self.thisGameLongWordAwardSprite.visible = NO;
         [awardsScreenBatchNode addChild:self.thisGameLongWordAwardSprite  z:55];
+*******************/ 
+        
+        //DISPLAY TEXT ON AWARDS SCREEN
+        self.levelDisplay = [CCLabelTTF labelWithString:@"LEVEL 1"
+                                               fontName:@"Macondo-Regular" 
+                                               fontSize:22]; 
+        //has retain on result layer, discuss double retain with jae
+		self.levelDisplay.color = ccc3(255,255,255);
+		self.levelDisplay.position = ccp(120+5,255-21);
+        self.levelDisplay.anchorPoint = ccp(0,0);
+        self.levelDisplay.visible = NO;
+		[self addChild:self.levelDisplay z:55];
+        
+        self.singlePlayerScore = [CCLabelTTF labelWithString:@"SCORE: "
+                                                    fontName:@"Macondo-Regular" 
+                                                    fontSize:18]; 
+		self.singlePlayerScore.color = ccc3(255,255,255);;
+		//singlePlayerScore.position = ccp(120+10,191);
+        self.singlePlayerScore.position = ccp(120+10,216-3);
+        self.singlePlayerScore.anchorPoint = ccp(0,0);
+        self.singlePlayerScore.visible = NO;
+		[self addChild:self.singlePlayerScore z:55];
+//MCH - END LABELS FOR AWARD
         
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		[activityIndicator setCenter:CGPointMake(windowSize.width/2, 30)]; // I do this because I'm in landscape mode
         [activityIndicator setColor:[UIColor blackColor]];
 		[[[CCDirector sharedDirector] openGLView] addSubview:activityIndicator];
-//MCH *******************/        
+       
         NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
         
         
@@ -667,7 +660,8 @@
     
     if (match) {
         CCLOG(@"FOUND ANSWER = %@", ans);
-        id delay = [CCDelayTime actionWithDuration:0.2];
+        //id delay = [CCDelayTime actionWithDuration:0.2];
+        id delay = [CCDelayTime actionWithDuration:[[GameManager sharedGameManager] aiTileFlipRate]];
         NSMutableArray *actionList = [NSMutableArray array];
         id actionSeq = nil;
         for(int i = 0; i < [ans length]; i++) {
@@ -741,15 +735,15 @@
         //IF NEXT LEVEL IS UNLOCKED OR THE PLAYER JUST BEAT THE AI, ENABLE THE NEXT LEVEL BUTTON
         if(!nextLevelLocked || beatAIFlag){
             //ENABLE
-            self.nextLevelBtn.visible=YES;
-            self.getResultsBtn.position = ccp(218,125);
-            self.rematchBtn.position = ccp(283,124);
-            self.mainMenuBtn.position = ccp(348,124); 
+            nextLevelBtn.visible=YES;
+            getResultsBtn.position = ccp(218,125);
+            rematchBtn.position = ccp(283,124);
+            mainMenuBtn.position = ccp(348,124); 
         }
         else{
-            self.getResultsBtn.position = ccp(210-43,125);
-            self.rematchBtn.position = ccp(275-43,124);
-            self.mainMenuBtn.position = ccp(340-43,124); 
+            getResultsBtn.position = ccp(210-43,125);
+            rematchBtn.position = ccp(275-43,124);
+            mainMenuBtn.position = ccp(340-43,124); 
         }
         
         //UNLOCK THE NEXT LEVEL IF THEY JUST BEAT THE AI AND NEXT LEVEL IS CURRENTLY LOCKED
@@ -760,9 +754,9 @@
     }
     //IF IT'S THE LAST LEVEL THEN DISABLE THE NEXT LEVEL BUTTON
     else{
-        self.getResultsBtn.position = ccp(210-43,124);
-        self.rematchBtn.position = ccp(275-43,124);
-        self.mainMenuBtn.position = ccp(340-43,124); 
+        getResultsBtn.position = ccp(210-43,124);
+        rematchBtn.position = ccp(275-43,124);
+        mainMenuBtn.position = ccp(340-43,124); 
     } 
     
     return TRUE;
@@ -833,19 +827,18 @@
 {
     NSString *achievedLevelStatus=@": YOU LOST";
     
-    self.awardsMenu.isTouchEnabled=TRUE;
-    self.awardsMenu.visible=TRUE;
+    awardsMenu.isTouchEnabled=TRUE;
+    awardsMenu.visible=TRUE;
     
     
     awardsState = TRUE;
     
-    self.awardPopupTintedBackground.visible = YES;
-    self.awardPopupFrame.visible = YES; 
-    self.getResultsBtn.visible = YES; 
-    self.rematchBtn.visible = YES;
-    self.mainMenuBtn.visible = YES;
+    awardPopupTintedBackground.visible = YES;
+    awardPopupFrame.visible = YES; 
+    getResultsBtn.visible = YES; 
+    rematchBtn.visible = YES;
+    mainMenuBtn.visible = YES;
     self.levelDisplay.visible = YES;
-    //levelStatus.visible = YES;
     self.singlePlayerScore.visible = YES;
     
     //HIDE THE PAUSE BUTTON
@@ -854,21 +847,20 @@
 
     //DISPLAY AWARDS
     if (self.thisGameBeatAIAward) {
-        self.thisGameBeatAIAwardSprite.visible = YES;
+        thisGameBeatAIAwardSprite.visible = YES;
         achievedLevelStatus = @": YOU WON!";
     }
     if (self.thisGameTotalPointsAward) {
-        self.thisGameTotalPointsAwardSprite.visible = YES;
+        thisGameTotalPointsAwardSprite.visible = YES;
     }
     if (self.thisGameLongWordAward) {
-        self.thisGameLongWordAwardSprite.visible = YES;
+        thisGameLongWordAwardSprite.visible = YES;
     }
         
     [self.levelDisplay setString:[NSString stringWithFormat:@"LEVEL %i%@",
                              [GameManager sharedGameManager].singlePlayerLevel, achievedLevelStatus]];
 
-    [self.levelStatus setString:[NSString stringWithFormat:@"STATUS: %@",
-                            achievedLevelStatus]];
+
     [self.singlePlayerScore setString:[NSString stringWithFormat:@"%@ POINTS",
                                   [player1Score string]]];
 
@@ -911,8 +903,9 @@
     }
     
     
-    //STOP THE FINAL COUNTDOWN SOUND IF IT'S THE AI'S TURN
-    if (finalCountDownAlreadyPlaying && (playerTurn == 2)) {
+    //STOP THE FINAL COUNTDOWN SOUND IF IT'S THE AI'S TURN OR IF PLAYER 1 NOW HAS MORE THAN 10 SECONDS
+    //BY USING A STARRED LETTER
+    if (finalCountDownAlreadyPlaying && ((playerTurn == 2) || p1 > 10)) {
         [ [[GameManager sharedGameManager] soundEngine] stopEffect:soundId];
         finalCountDownAlreadyPlaying = NO;
     }
@@ -1082,18 +1075,17 @@
     [activityIndicator release];
     
     
-    [self.awardPopupFrame release];
-    [self.awardPopupTintedBackground release];
-    [self.nextLevelBtn release];
-    [self.getResultsBtn release];
-    [self.rematchBtn release];
-    [self.mainMenuBtn release];
-    [self.awardsMenu release];
-    [self.thisGameBeatAIAwardSprite release];
-    [self.thisGameTotalPointsAwardSprite release];
-    [self.thisGameLongWordAwardSprite release];
+    //[self.awardPopupFrame release];
+    //[self.awardPopupTintedBackground release];
+    //[self.nextLevelBtn release];
+    //[self.getResultsBtn release];
+    //[self.rematchBtn release];
+    //[self.mainMenuBtn release];
+    //[self.awardsMenu release];
+    //[self.thisGameBeatAIAwardSprite release];
+    //[self.thisGameTotalPointsAwardSprite release];
+    //[self.thisGameLongWordAwardSprite release];
     [self.singlePlayerScore release];
-    [self.levelStatus release];
     [self.levelDisplay release];
     //[self.lowerDisplay release];
      

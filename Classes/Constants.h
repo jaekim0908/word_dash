@@ -16,7 +16,6 @@ typedef enum {
 	kIntroScene,
 	kMutiPlayerScene,
 	kPlayAndPassScene,
-	kHelloWorldScene,
     kHowToPlayScene,
     kSinglePlayerScene,
     kSinglePlayHistoryScene,

@@ -4,6 +4,8 @@
 <dict>
 	<key>Level1</key>
 	<dict>
+		<key>AITileFlipRate</key>
+		<string>0.4</string>
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
@@ -25,6 +27,8 @@
 	</dict>
 	<key>Level2</key>
 	<dict>
+		<key>AITileFlipRate</key>
+		<string>0.2</string>
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
@@ -46,6 +50,8 @@
 	</dict>
 	<key>Level3</key>
 	<dict>
+		<key>AITileFlipRate</key>
+		<string>0.2</string>
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
@@ -67,6 +73,8 @@
 	</dict>
 	<key>Level4</key>
 	<dict>
+		<key>AITileFlipRate</key>
+		<string>0.2</string>
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>
@@ -88,6 +96,8 @@
 	</dict>
 	<key>Level5</key>
 	<dict>
+		<key>AITileFlipRate</key>
+		<string>0.2</string>
 		<key>AIMaxWaitTime</key>
 		<string>5</string>
 		<key>AIDictionaryFilename</key>

@@ -48,6 +48,7 @@ static GameManager* _sharedGameManager = nil;
 @synthesize player2Words = _player2Words;
 @synthesize gameMode = _gameMode;
 @synthesize aiMaxWaitTime = _aiMaxWaitTime;
+@synthesize aiTileFlipRate = _aiTileFlipRate;
 @synthesize runningSceneID = _runningSceneID;
 @synthesize soundEngine = _soundEngine;
 

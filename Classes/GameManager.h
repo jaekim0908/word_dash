@@ -36,6 +36,7 @@
     
     GameMode _gameMode;
     int      _aiMaxWaitTime;
+    float      _aiTileFlipRate;
     
     SceneTypes _runningSceneID;
     
@@ -65,6 +66,7 @@
 @property (nonatomic, retain) NSMutableArray *player2Words;
 @property (readwrite) GameMode gameMode;
 @property (readwrite) int aiMaxWaitTime;
+@property (readwrite) float aiTileFlipRate;
 @property (readwrite) SceneTypes runningSceneID;
 @property (nonatomic, retain) SimpleAudioEngine *soundEngine;
 

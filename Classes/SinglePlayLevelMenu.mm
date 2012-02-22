@@ -333,14 +333,17 @@
 -(BOOL) level1ButtonPressed
 {
     int batchSize, aiMaxWaitTime;
+    float aiTileFlipRate;
     
     CCLOG(@"Level 1 Button PRESSED.");
     
     NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:@"Level1"];
     batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
     aiMaxWaitTime = [[levelInfo objectForKey:@"AIMaxWaitTime"] intValue];
+    aiTileFlipRate = [[levelInfo objectForKey:@"AITileFlipRate"] floatValue];
     
     [[GameManager sharedGameManager] setAiMaxWaitTime:aiMaxWaitTime];
+    [[GameManager sharedGameManager] setAiTileFlipRate:aiTileFlipRate];
     [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
     [[GameManager sharedGameManager] setSinglePlayerLevel:1];
     [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
@@ -351,14 +354,18 @@
 -(BOOL) level2ButtonPressed
 {
     int batchSize, aiMaxWaitTime;
+    float aiTileFlipRate;
+    
     //if (!level2Locked) {
         CCLOG(@"Level 2 Button PRESSED.");
         
         NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:@"Level2"];
         batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
         aiMaxWaitTime = [[levelInfo objectForKey:@"AIMaxWaitTime"] intValue];
-        
+        aiTileFlipRate = [[levelInfo objectForKey:@"AITileFlipRate"] floatValue];
+    
         [[GameManager sharedGameManager] setAiMaxWaitTime:aiMaxWaitTime];
+        [[GameManager sharedGameManager] setAiTileFlipRate:aiTileFlipRate];
         [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
         [[GameManager sharedGameManager] setSinglePlayerLevel:2];
         [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
@@ -369,14 +376,17 @@
 -(BOOL) level3ButtonPressed
 {
     int batchSize, aiMaxWaitTime;
+    float aiTileFlipRate;
     //if (!level3Locked) {
         CCLOG(@"Level 3 Button PRESSED.");
         
         NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:@"Level3"];
         batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
         aiMaxWaitTime = [[levelInfo objectForKey:@"AIMaxWaitTime"] intValue];
+        aiTileFlipRate = [[levelInfo objectForKey:@"AITileFlipRate"] floatValue];
         
         [[GameManager sharedGameManager] setAiMaxWaitTime:aiMaxWaitTime];
+        [[GameManager sharedGameManager] setAiTileFlipRate:aiTileFlipRate];
         [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
         [[GameManager sharedGameManager] setSinglePlayerLevel:3];
         [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
@@ -386,14 +396,17 @@
 -(BOOL) level4ButtonPressed
 {
     int batchSize, aiMaxWaitTime;
+    float aiTileFlipRate;
     //if (!level4Locked) {
         CCLOG(@"Level 4 Button PRESSED.");
         
         NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:@"Level4"];
         batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
         aiMaxWaitTime = [[levelInfo objectForKey:@"AIMaxWaitTime"] intValue];
+        aiTileFlipRate = [[levelInfo objectForKey:@"AITileFlipRate"] floatValue];
         
         [[GameManager sharedGameManager] setAiMaxWaitTime:aiMaxWaitTime];
+        [[GameManager sharedGameManager] setAiTileFlipRate:aiTileFlipRate];
         [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
         [[GameManager sharedGameManager] setSinglePlayerLevel:4];
         [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];  
@@ -403,14 +416,17 @@
 -(BOOL) level5ButtonPressed
 {
     int batchSize, aiMaxWaitTime;
+    float aiTileFlipRate;
     //if (!level5Locked) {
         CCLOG(@"Level 5 Button PRESSED.");
         
         NSMutableDictionary *levelInfo = [ [[GameManager sharedGameManager] getGameLevelDictionary] objectForKey:@"Level5"];
         batchSize = [[levelInfo objectForKey:@"batchSize"] intValue];
         aiMaxWaitTime = [[levelInfo objectForKey:@"AIMaxWaitTime"] intValue];
+        aiTileFlipRate = [[levelInfo objectForKey:@"AITileFlipRate"] floatValue];
         
         [[GameManager sharedGameManager] setAiMaxWaitTime:aiMaxWaitTime];
+        [[GameManager sharedGameManager] setAiTileFlipRate:aiTileFlipRate];
         [[GameManager sharedGameManager] setSinglePlayerBatchSize:batchSize];
         [[GameManager sharedGameManager] setSinglePlayerLevel:5];
         [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kSinglePlayerScene];
