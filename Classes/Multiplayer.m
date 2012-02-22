@@ -199,9 +199,7 @@
     
     //MCH - JAE PROGRAMMING STYLE QUESTION, ONE RETURN POINT OR MULTIPLE?
     //DON'T EXECUTE GAME SCREEN FUNCTIONS FURTHER IF IN A PAUSE STATE
-    if (pauseState) {
-        return TRUE;
-    }
+    if (pauseState) return TRUE;
     
     if (!myTurn) return;
     
@@ -211,9 +209,7 @@
         
     }
     
-    if (!gameOver && !enableTouch) {
-		return TRUE;
-	}
+    if (!gameOver && !enableTouch) return TRUE;
     
 	if (CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
@@ -236,10 +232,15 @@
 					[self deselectCellsAt:cell];
 					[self updateAnswer];
 				} else if (cell.letterSprite.visible && !cellSelected) {
-					cell.letterSelected.visible = YES;
-					[userSelection addObject:cell];
-					[self updateAnswer];
-                    [self sendCellSelectedAtRow:r atCol:c];
+                        if ([self allLettersOpened] && touch.tapCount > 2 && !tripleTabUsed) {
+                            [self handleTripleTapWithCell:cell AtRow:r Col:c];
+                            [self sendTripleTabAtRow:r atCol:c];
+                        } else {
+                            cell.letterSelected.visible = YES;
+                            [userSelection addObject:cell];
+                            [self updateAnswer];
+                            [self sendCellSelectedAtRow:r atCol:c];
+                        }
 				} else {
 					if (!player1TileFlipped) {
 						cell.letterSprite.visible = YES;
@@ -261,28 +262,6 @@
 }
 
 - (void) switchTo:(int) player countFlip:(BOOL) flag notification:(BOOL) notify {
-	
-    /*
-	if (flag) {
-		if (myTurn && !player1TileFlipped) {
-			countNoTileFlips++;
-		}
-        
-		CCLOG(@"CountNoTileFlips = %i", countNoTileFlips);
-        
-		if (countNoTileFlips % 5 == 0) {
-			countNoTileFlips = 1;
-            [self sendResetTileFlipCount];
-			[self openRandomLetters:1];
-		} else {
-            [self sendTileFlipCount:countNoTileFlips];
-        }
-	} else {
-		countNoTileFlips = 1;
-        [self sendResetTileFlipCount];
-	}
-    */
-	
 	[self clearLetters];
     player1TileFlipped = NO;
     player2TileFlipped = NO;
@@ -499,6 +478,15 @@
     MessageTimer message;
     message.message.messageType = kMessageTypeSendTimer;
     NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageTimer)];
+    [self sendData:data];
+}
+
+-(void) sendTripleTabAtRow:(int) r atCol:(int) c {
+    MessageCell message;
+    message.message.messageType = kMessageTypeTripleTab;
+    message.row = r;
+    message.col = c;
+    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageCell)];
     [self sendData:data];
 }
 
@@ -767,6 +755,11 @@
         cell.letterSelected.visible = NO;
         [userSelection removeObject:cell];
         [self updateAnswer];
+    } else if (message->messageType == kMessageTypeTripleTab) {
+        MessageCell messageCell;
+        [data getBytes:&messageCell length:sizeof(MessageCell)];
+        Cell *cell = [[wordMatrix objectAtIndex:messageCell.row] objectAtIndex:messageCell.col];
+        [self handleTripleTapWithCell:cell AtRow:messageCell.row Col:messageCell.col];
     } else if (message->messageType == kMessageTypeCheckAnswer) {
         playerTurn = 2;
         [self checkAnswer];
