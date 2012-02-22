@@ -1086,10 +1086,20 @@
     return TRUE;
 }
 
+- (void) enableAwardsMenuTouch:(ccTime) dt
+{
+    awardsMenu.isTouchEnabled=TRUE;
+    [self unschedule:@selector(enableAwardsMenuTouch:)];
+    
+}
+
 - (void) displayAwardsPopup
 {
+    //DELAY ENABLING THE BUTTONS (AWARDS MENU) SO THAT THE PLAYER DOES NOT
+    //ACCIDENTALLY SELECT A BUTTON WHILE SELECTING THE LAST LETTERS
+    [self schedule:@selector(enableAwardsMenuTouch:) interval:1.0f];
     
-    awardsMenu.isTouchEnabled=TRUE;
+    //awardsMenu.isTouchEnabled=TRUE;
     awardsMenu.visible=TRUE;
     
     
