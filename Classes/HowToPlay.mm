@@ -146,25 +146,25 @@
         /******* Scoring *************/
         howToPlay7Label = [CCLabelTTF labelWithString:@"3 letter words:   8 pts" fontName:@"MarkerFelt-Thin" fontSize:20];
 		howToPlay7Label.color = ccc3(255, 255, 255);
-		howToPlay7Label.position = ccp(15, 65);
+		howToPlay7Label.position = ccp(205, 65);
         howToPlay7Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay7Label];
         
         howToPlay8Label = [CCLabelTTF labelWithString:@"4 letter words: 16 pts" fontName:@"MarkerFelt-Thin" fontSize:20];
 		howToPlay8Label.color = ccc3(255, 255, 255);
-		howToPlay8Label.position = ccp(15, 45);
+		howToPlay8Label.position = ccp(205, 45);
         howToPlay8Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay8Label];
         
         howToPlay9Label = [CCLabelTTF labelWithString:@"5 letter words: 32 pts" fontName:@"MarkerFelt-Thin" fontSize:20];
 		howToPlay9Label.color = ccc3(255, 255, 255);
-		howToPlay9Label.position = ccp(15, 25);
+		howToPlay9Label.position = ccp(205, 25);
         howToPlay9Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay9Label];
         
         howToPlay10Label = [CCLabelTTF labelWithString:@"and so on ..." fontName:@"MarkerFelt-Thin" fontSize:20];
 		howToPlay10Label.color = ccc3(255, 255, 255);
-		howToPlay10Label.position = ccp(102, 5);
+		howToPlay10Label.position = ccp(292, 5);
         howToPlay10Label.anchorPoint = ccp(0,0);
 		[self addChild:howToPlay10Label];
         
@@ -211,7 +211,7 @@
 {
     gameScreenShotFlip.visible=YES;
     finger.visible=YES;
-    finger.position = ccp(195, 80);    
+    finger.position = ccp(195, 80+15);    
     iPhoneScreenShot.position = ccp(240,157);
     howToPlay13Label.visible = YES;
       
@@ -231,7 +231,7 @@
 {
     gameScreenShotSelect.visible=YES;
     finger2.visible=YES;
-    finger2.position = ccp(317, 118);
+    finger2.position = ccp(317+20, 118+5);
     //howToPlay3Label.visible=YES;
     
     iPhoneScreenShot.position = ccp(240,157);
@@ -257,9 +257,9 @@
 {
     finger.visible=YES;
     gameScreenShotSubmit.visible=YES;
-    finger.position = ccp(290, 80);
+    finger.position = ccp(140, 88);
     
-    iPhoneScreenShot.position = ccp(240,175);
+    iPhoneScreenShot.position = ccp(240,175-3);
     
     
     [howToPlayLiteral setString:@"Submit Words To Score and End Turn"];

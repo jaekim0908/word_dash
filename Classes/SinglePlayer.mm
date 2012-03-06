@@ -387,6 +387,13 @@
 	CGPoint touchLocation = [self convertTouchToNodeSpace:touch];
     //MCH - DISPLAY THE PAUSE MENU
     if(CGRectContainsPoint(pauseMenu.pauseButton.boundingBox, touchLocation) && !pauseState && pauseMenu.pauseButton.visible){
+        
+        //STOP PLAYING FINAL COUNTDOWN IF GAME IS PAUSED
+        if (finalCountDownAlreadyPlaying) {
+            finalCountDownAlreadyPlaying=NO;
+            [ [[GameManager sharedGameManager] soundEngine] stopEffect:soundId];
+        }
+
         pauseState = TRUE;
         [pauseMenu showPauseMenu:self];
         [self hideAIActivity];
@@ -1079,6 +1086,11 @@
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
 	
+    //IF THE PLAYER EXITS THE GAME (e.g. rematch) STOP BY PLAYING 
+    //THE FINAL COUNTDOWN TICKING SOUND IF IT'S CURRENTLY BEING PLAYED
+    if (finalCountDownAlreadyPlaying) {
+        [ [[GameManager sharedGameManager] soundEngine] stopEffect:soundId];
+    }
 	// don't forget to call "super dealloc"
     [pauseMenu release];
     [visibleLetters release];

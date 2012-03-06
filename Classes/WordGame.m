@@ -1378,6 +1378,7 @@
 
 - (void) onEnter {
 	[super onEnter];
+    /*******
     adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
     adView.delegate = self;
     adView.requiredContentSizeIdentifiers = [NSSet setWithObjects:ADBannerContentSizeIdentifierPortrait, ADBannerContentSizeIdentifierLandscape, nil];
@@ -1386,22 +1387,25 @@
     CGSize windowSize = [[CCDirector sharedDirector] winSize];
     adView.center = CGPointMake(adView.frame.size.width/2, windowSize.height - adView.frame.size.height/2);
     adView.hidden = YES;
+     ***********/
 }
 
 - (void) onExit {
+    /*******
 	adView.delegate = nil;
 	[adView removeFromSuperview];
 	[adView release];
 	adView = nil;
+     ********/
 	[super onExit];
 }
 
 - (void) bannerViewDidLoadAd:(ADBannerView *)banner {
-	adView.hidden = NO;
+	//MCHadView.hidden = NO;
 }
 
 - (void) bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-	adView.hidden = YES;
+	//MCHadView.hidden = YES;
 }
 
 - (void) bannerViewActionDidFinish:(ADBannerView *)banner {

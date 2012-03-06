@@ -20,7 +20,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{390, 2}, {78, 66}}</string>
+			<string>{{2, 411}, {78, 66}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{194, 360}, {190, 127}}</string>
+			<string>{{2, 282}, {190, 127}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -60,27 +60,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{194, 231}, {190, 127}}</string>
-			<key>textureRotated</key>
-			<false/>
-		</dict>
-		
-		<key>game_screen_star_letters.png</key>
-		<dict>
-			<key>aliases</key>
-			<array/>
-			<key>spriteColorRect</key>
-			<string>{{0, 0}, {190, 127}}</string>
-			<key>spriteOffset</key>
-			<string>{0, -0}</string>
-			<key>spriteSize</key>
-			<string>{190, 127}</string>
-			<key>spriteSourceSize</key>
-			<string>{190, 127}</string>
-			<key>spriteTrimmed</key>
-			<true/>
-			<key>textureRect</key>
-			<string>{{2, 153}, {190, 127}}</string>
+			<string>{{292, 2}, {190, 127}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -100,7 +80,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{292, 102}, {190, 127}}</string>
+			<string>{{292, 131}, {190, 127}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -120,7 +100,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{2, 282}, {190, 127}}</string>
+			<string>{{2, 153}, {190, 127}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -140,7 +120,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{386, 231}, {84, 110}}</string>
+			<string>{{194, 253}, {84, 110}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -160,7 +140,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{292, 2}, {96, 98}}</string>
+			<string>{{194, 153}, {96, 98}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
