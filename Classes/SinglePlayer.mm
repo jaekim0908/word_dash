@@ -130,78 +130,6 @@
         pauseState = FALSE;
         pauseMenu = [[PauseMenu alloc] init];
         [pauseMenu addToMyScene:self];
-/*****************
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"AwardsScreenAssets.plist"];
-        awardsScreenBatchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"AwardsScreenAssets.png"]] retain];
-        [self addChild:awardsScreenBatchNode z:55];
-        
-        //CREATE AWARDS POPUP FOR THE END OF THE GAME
-        awardsState = FALSE;
-        self.awardPopupTintedBackground = [CCSprite spriteWithFile:@"pause_background.png"];
-        self.awardPopupTintedBackground.position = ccp(240,160);
-        self.awardPopupTintedBackground.visible = NO;
-        [self addChild:self.awardPopupTintedBackground z:45];
-
-        
-        self.awardPopupFrame = [CCSprite spriteWithSpriteFrameName:@"Results-Screen_Scroll.png"];
-        self.awardPopupFrame.position = ccp(240,175);
-        self.awardPopupFrame.visible = NO;
-        [awardsScreenBatchNode addChild:self.awardPopupFrame z:50];
-        
-      
-        self.nextLevelBtn = [CCMenuItemImage 
-                                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
-                                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
-                                         target:self
-                                         selector:@selector(nextLevelPressed)];
-        self.nextLevelBtn.visible = FALSE;
-        self.nextLevelBtn.position = ccp(148+3, 125); 
-        
-        
-        self.getResultsBtn = [CCMenuItemImage 
-                                    itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
-                                    selectedSprite:[CCSprite spriteWithSpriteFrameName:@"get_results-medium.png"] 
-                                    target:self
-                                    selector:@selector(getResultsPressed)];
-        self.getResultsBtn.position = ccp(218, 125); 
-        
-        self.rematchBtn = [CCMenuItemImage 
-                                     itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
-                                     selectedSprite:[CCSprite spriteWithSpriteFrameName:@"rematch-medium.png"] 
-                                     target:self
-                                     selector:@selector(rematchBtnPressed)];
-        self.rematchBtn.position = ccp(283, 124); 
-
-        
-        self.mainMenuBtn = [CCMenuItemImage 
-                                  itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
-                                  selectedSprite:[CCSprite spriteWithSpriteFrameName:@"main_menu_btn-medium.png"] 
-                                  target:self
-                                  selector:@selector(mainMenuBtnPressed)];
-        self.mainMenuBtn.position = ccp(348, 124); 
-        
-        
-        self.awardsMenu = [CCMenu menuWithItems:nextLevelBtn, getResultsBtn, rematchBtn, mainMenuBtn, nil];
-        self.awardsMenu.position = CGPointZero;
-        self.awardsMenu.isTouchEnabled = FALSE;
-        self.awardsMenu.visible = FALSE;
-        [self addChild:self.awardsMenu z:55];
-
-        self.thisGameBeatAIAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Trophy001.png"];
-        self.thisGameBeatAIAwardSprite.position = ccp(195,180);
-        self.thisGameBeatAIAwardSprite.visible = NO;
-        [awardsScreenBatchNode addChild:self.thisGameBeatAIAwardSprite  z:55];
-       
-        self.thisGameTotalPointsAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Coins001.png"];
-        self.thisGameTotalPointsAwardSprite.position = ccp(240,180);
-        self.thisGameTotalPointsAwardSprite.visible = NO;
-        [awardsScreenBatchNode addChild:self.thisGameTotalPointsAwardSprite  z:55];
-        
-        self.thisGameLongWordAwardSprite = [CCSprite spriteWithSpriteFrameName:@"Book002.png"];
-        self.thisGameLongWordAwardSprite.position = ccp(285,180);
-        self.thisGameLongWordAwardSprite.visible = NO;
-        [awardsScreenBatchNode addChild:self.thisGameLongWordAwardSprite  z:55];
-*******************/ 
         
         //DISPLAY TEXT ON AWARDS SCREEN
         self.levelDisplay = [CCLabelTTF labelWithString:@"LEVEL 1"
@@ -1097,19 +1025,9 @@
     [activityIndicator release];
     
     
-    //[self.awardPopupFrame release];
-    //[self.awardPopupTintedBackground release];
-    //[self.nextLevelBtn release];
-    //[self.getResultsBtn release];
-    //[self.rematchBtn release];
-    //[self.mainMenuBtn release];
-    //[self.awardsMenu release];
-    //[self.thisGameBeatAIAwardSprite release];
-    //[self.thisGameTotalPointsAwardSprite release];
-    //[self.thisGameLongWordAwardSprite release];
     [self.singlePlayerScore release];
     [self.levelDisplay release];
-    //[self.lowerDisplay release];
+
      
     
 	[super dealloc];

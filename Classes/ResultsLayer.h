@@ -17,7 +17,7 @@
 	CCLabelTTF *player2Score;
 	CCSprite *rematchButton;
     CCSprite *mainMenuButton;
-    NSMutableDictionary *definition;
+    // del NSMutableDictionary *definition;
     NSMutableArray *dupPlayer1Words;
     NSMutableArray *dupPlayer2Words;
     NSMutableArray *p1WordLabels;
@@ -29,42 +29,40 @@
     int         player2TotalPages;
     GameMode    theGameMode;
     CCLabelTTF *pageNumDisplay;
-    CCSprite   *surfBackground;
-    CCSprite   *surfBackground2;
+    //delete CCSprite   *surfBackground;
+    //delete CCSprite   *surfBackground2;
     CCSprite   *whiteBackground;
     CCSprite   *nextPageButton;
     CCSprite   *prevPageButton;
     CCSprite   *nextPageButtonDisabled;
     CCSprite   *prevPageButtonDisabled;
     CCSprite   *woodenSign;
-    
 }
 
-@property (nonatomic, retain) CCSpriteBatchNode *batchNode;
-@property (nonatomic, retain) CCLabelTTF *player1Score;
-@property (nonatomic, retain) CCLabelTTF *player2Score;
-@property (nonatomic, retain) CCLabelTTF *pageNumDisplay;
-@property (nonatomic, retain) CCSprite *rematchButton;
-@property (nonatomic, retain) CCSprite *mainMenuButton;
-@property (nonatomic, retain) NSMutableDictionary *definition;
-@property (nonatomic, retain) NSMutableArray *dupPlayer1Words;
-@property (nonatomic, retain) NSMutableArray *dupPlayer2Words;
-@property (nonatomic, retain) NSMutableArray *p1WordLabels;
-@property (nonatomic, retain) NSMutableArray *arrayPagesPlayer1;
-@property (nonatomic, retain) NSMutableArray *arrayPagesPlayer2;
-@property (nonatomic, retain) CCSprite *surfBackground;
-@property (nonatomic, retain) CCSprite *surfBackground2;
-@property (nonatomic, retain) CCSprite *whiteBackground;
-@property (nonatomic, retain) CCSprite *nextPageButton;
-@property (nonatomic, retain) CCSprite *prevPageButton;
-@property (nonatomic, retain) CCSprite *nextPageButtonDisabled;
-@property (nonatomic, retain) CCSprite *prevPageButtonDisabled;
-@property (nonatomic, retain) CCSprite *woodenSign;
+//@property (nonatomic, retain) CCSpriteBatchNode *batchNode;
+//@property (nonatomic, retain) CCLabelTTF *player1Score;
+//@property (nonatomic, retain) CCLabelTTF *player2Score;
+//@property (nonatomic, retain) CCLabelTTF *pageNumDisplay;
+//@property (nonatomic, retain) CCSprite *rematchButton;
+//@property (nonatomic, retain) CCSprite *mainMenuButton;
+//@property (nonatomic, retain) NSMutableArray *dupPlayer1Words;
+//@property (nonatomic, retain) NSMutableArray *dupPlayer2Words;
+//@property (nonatomic, retain) NSMutableArray *p1WordLabels;
+//@property (nonatomic, retain) NSMutableArray *arrayPagesPlayer1;
+//@property (nonatomic, retain) NSMutableArray *arrayPagesPlayer2;
+//@property (nonatomic, retain) CCSprite *surfBackground;
+//@property (nonatomic, retain) CCSprite *surfBackground2;
+//@property (nonatomic, retain) CCSprite *whiteBackground;
+//@property (nonatomic, retain) CCSprite *nextPageButton;
+//@property (nonatomic, retain) CCSprite *prevPageButton;
+//@property (nonatomic, retain) CCSprite *nextPageButtonDisabled;
+//@property (nonatomic, retain) CCSprite *prevPageButtonDisabled;
+//@property (nonatomic, retain) CCSprite *woodenSign;
 @property (nonatomic, assign) CGSize winSize;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int player1TotalPages;
 @property (nonatomic, assign) int player2TotalPages;
-@property (nonatomic, assign) BOOL flagMultiPlayer;
+// delete @property (nonatomic, assign) BOOL flagMultiPlayer;
 
 
 -(BOOL) init;
