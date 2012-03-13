@@ -12,32 +12,32 @@
 
 @implementation ResultsLayer
 
-@synthesize batchNode;
-@synthesize player1Score;
-@synthesize player2Score;
-@synthesize rematchButton;
-@synthesize mainMenuButton;
-@synthesize definition;
+//@synthesize batchNode;
+//@synthesize player1Score;
+//@synthesize player2Score;
+//@synthesize rematchButton;
+//@synthesize mainMenuButton;
+//del @synthesize definition;
 
-@synthesize dupPlayer1Words;
-@synthesize dupPlayer2Words;
-@synthesize p1WordLabels;
+//@synthesize dupPlayer1Words;
+//@synthesize dupPlayer2Words;
+//@synthesize p1WordLabels;
 @synthesize winSize;
 @synthesize currentPage;
-@synthesize pageNumDisplay;
-@synthesize arrayPagesPlayer1;
-@synthesize arrayPagesPlayer2;
+//@synthesize pageNumDisplay;
+//@synthesize arrayPagesPlayer1;
+//@synthesize arrayPagesPlayer2;
 @synthesize player1TotalPages;
 @synthesize player2TotalPages;
-@synthesize surfBackground;
-@synthesize surfBackground2;
-@synthesize whiteBackground;
-@synthesize nextPageButton;
-@synthesize prevPageButton;
-@synthesize nextPageButtonDisabled;
-@synthesize prevPageButtonDisabled;
-@synthesize woodenSign;
-@synthesize flagMultiPlayer;
+//del @synthesize surfBackground;
+//del @synthesize surfBackground2;
+//@synthesize whiteBackground;
+//@synthesize nextPageButton;
+//@synthesize prevPageButton;
+//@synthesize nextPageButtonDisabled;
+//@synthesize prevPageButtonDisabled;
+//@synthesize woodenSign;
+//delete @synthesize flagMultiPlayer;
 
 #define HDR_POS_X_P1 (18.0f/63.0f)
 #define HDR_POS_X_P2 (44.0f/63.0f)
@@ -119,17 +119,17 @@
         //SETUP SPRITE SHEET
         if ([[CCDirector sharedDirector] enableRetinaDisplay:YES]) {
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"result_layer_retina.plist"];
-            batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"result_layer_retina.png"]];           
+            batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"result_layer_retina.png"]] retain];           
         }
         else{
             [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"result_layer_3g.plist"];
-            batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"result_layer_3g.png"]];    
+            batchNode = [[CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"result_layer_3g.png"]] retain];    
         }
         
         [self addChild:batchNode];
         
         //SETUP BACKGROUND
-        whiteBackground = [CCSprite spriteWithFile:@"Surfboard03_kparrish.png"];
+        whiteBackground = [[CCSprite spriteWithFile:@"Surfboard03_kparrish.png"] retain];
         whiteBackground.position = ccp(240,160);
         [self addChild:whiteBackground];
         
@@ -140,8 +140,8 @@
         //MAKE A COPY OF THE WORDS ARRAY FOR PAGING
         NSMutableArray *p1Words = [[GameManager sharedGameManager] player1Words];
         NSMutableArray *p2Words = [[GameManager sharedGameManager] player2Words];
-        self.dupPlayer1Words = [NSMutableArray array];
-        self.dupPlayer2Words = [NSMutableArray array];
+        dupPlayer1Words = [[NSMutableArray array] retain];
+        dupPlayer2Words = [[NSMutableArray array] retain];
         [dupPlayer1Words setArray:p1Words];
         [dupPlayer2Words setArray:p2Words];
         
@@ -232,8 +232,9 @@
 		//PLAYER 1
         /*****************************/
         //HEADER
-		CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ Score",p1Name]
         //CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:@"Player 1 Score"
+        
+		CCLabelTTF *player1Header = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@ Score",p1Name]
 										   fontName:@"MarkerFelt-Thin" 
 										   fontSize:24] retain];
 		player1Header.color = ccc3(0,0,255);
@@ -317,7 +318,7 @@
         
         //SETUP WOODEN SIGN
         //woodenSign = [CCSprite spriteWithFile:@"blank-wooden-sign-3b.png"];
-        woodenSign = [CCSprite spriteWithSpriteFrameName:@"blank-wooden-sign.png"];
+        woodenSign = [[CCSprite spriteWithSpriteFrameName:@"blank-wooden-sign.png"] retain];
         woodenSign.position = ccp(240,50);
         [self addChild:woodenSign];
 
@@ -338,30 +339,29 @@
 													 fontSize:22] 
 								  retain];
 		midDisplay.position = ccp(240, 60);
-		//blue midDisplay.color = ccc3(0, 0, 255);
         midDisplay.color = ccc3(255, 255, 0);
 		[self addChild:midDisplay z:30];
 		
         //NEXT PAGE BUTTON
-        nextPageButton = [CCSprite spriteWithSpriteFrameName:@"next.png"];
+        nextPageButton = [[CCSprite spriteWithSpriteFrameName:@"next.png"] retain];
         nextPageButton.position = ccp(320,48);
         nextPageButton.visible = NO;
         [self addChild:nextPageButton];
         
         //PREV PAGE BUTTON
-        prevPageButton = [CCSprite spriteWithSpriteFrameName:@"prev.png"];
+        prevPageButton = [[CCSprite spriteWithSpriteFrameName:@"prev.png"] retain];
         prevPageButton.position = ccp(152,51);
         prevPageButton.visible = NO;
         [self addChild:prevPageButton];
         
         //NEXT PAGE BUTTON DISABLED
-        nextPageButtonDisabled = [CCSprite spriteWithSpriteFrameName:@"next_disabled.png"];
+        nextPageButtonDisabled = [[CCSprite spriteWithSpriteFrameName:@"next_disabled.png"] retain];
         nextPageButtonDisabled.position = ccp(320,48);
         nextPageButtonDisabled.visible = YES;
         [self addChild:nextPageButtonDisabled];
         
         //PREV PAGE BUTTON DISABLED
-        prevPageButtonDisabled = [CCSprite spriteWithSpriteFrameName:@"prev_disabled.png"];
+        prevPageButtonDisabled = [[CCSprite spriteWithSpriteFrameName:@"prev_disabled.png"] retain];
         prevPageButtonDisabled.position = ccp(152,51);
         prevPageButtonDisabled.visible = YES;
         [self addChild:prevPageButtonDisabled];
@@ -390,12 +390,12 @@
         
         
         //REMATCH BUTTON   
-		rematchButton = [CCSprite spriteWithSpriteFrameName:@"rematch.png"];
+		rematchButton = [[CCSprite spriteWithSpriteFrameName:@"rematch.png"] retain];
 		rematchButton.position = ccp(430, 40);
 		[self addChild:rematchButton];
         
         //MAIN MENU BUTTON   
-		mainMenuButton = [CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"];
+		mainMenuButton = [[CCSprite spriteWithSpriteFrameName:@"main_menu_btn.png"] retain];
 		mainMenuButton.position = ccp(50, 40);
 		[self addChild:mainMenuButton];
         
@@ -682,20 +682,28 @@
 
 -(void) dealloc {
     
+    [batchNode release];
+    [pageNumDisplay release];
     [dupPlayer1Words release];
     [dupPlayer2Words release];
     [arrayPagesPlayer1 release];
     [arrayPagesPlayer2 release];
-	CCLOG(@"ResultLayer dealloc start");
 	[player1Score release];
-	CCLOG(@"player1score released");
-	[player2Score release];
-	CCLOG(@"player2score released");
+    [player2Score release];
 	[rematchButton release];
+    [mainMenuButton release];
+    [p1WordLabels release];
+    [whiteBackground release];
+    [nextPageButton release];
+    [prevPageButton release];
+    [nextPageButtonDisabled release];
+    [prevPageButtonDisabled release];
+    [woodenSign release];
+    
 	CCLOG(@"rematchButton released");
    
 	//DEBUG WHY IT CRASHEs WHEN DEALLOC WAS CALLED
-	//[super dealloc];
+	[super dealloc];
 	CCLOG(@"ResultLayer dealloc end");
 }
 

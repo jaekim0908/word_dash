@@ -32,7 +32,6 @@
     UITextField *enterYourName;
     PauseMenu *pauseMenu;
     BOOL      pauseState;
-    //BOOL      awardsState;
     BOOL    thisGameBeatAIAward;
     BOOL    thisGameTotalPointsAward;
     BOOL    thisGameLongWordAward;
@@ -40,47 +39,21 @@
     BOOL    finalCountDownAlreadyPlaying;
     ALuint  soundId;
     
-    //CCSprite *awardPopupFrame;
-    //CCSprite *awardPopupTintedBackground;
-    //CCMenuItem *nextLevelBtn;
-    //CCMenuItem *getResultsBtn;
-    //CCMenuItem *rematchBtn;
-    //CCMenuItem *mainMenuBtn;
-    
-    //CCMenu *awardsMenu;
-    
-    //CCSprite *thisGameBeatAIAwardSprite;
-    //CCSprite *thisGameTotalPointsAwardSprite;
-    //CCSprite *thisGameLongWordAwardSprite;
-    
     CCLabelTTF *singlePlayerScore;
     CCLabelTTF *levelDisplay;
-    //CCLabelTTF *lowerDisplay;
     
     int         aiMaxWaitTime;
     
     UIActivityIndicatorView *activityIndicator;
     
-    //CCSpriteBatchNode *awardsScreenBatchNode;
 
 }
 
 @property BOOL thisGameBeatAIAward;
 @property BOOL thisGameTotalPointsAward;
 @property BOOL thisGameLongWordAward;
-//@property (nonatomic,retain) CCSprite *awardPopupFrame;
-//@property (nonatomic,retain) CCSprite *awardPopupTintedBackground;
-//@property (nonatomic,retain) CCMenuItem *nextLevelBtn;
-//@property (nonatomic,retain) CCMenuItem *getResultsBtn;
-//@property (nonatomic,retain) CCMenuItem *rematchBtn;
-//@property (nonatomic,retain) CCMenuItem *mainMenuBtn;
-//@property (nonatomic,retain) CCMenu *awardsMenu;
-//@property (nonatomic,retain) CCSprite *thisGameBeatAIAwardSprite;
-//@property (nonatomic,retain) CCSprite *thisGameTotalPointsAwardSprite;
-//@property (nonatomic,retain) CCSprite *thisGameLongWordAwardSprite;
 @property (nonatomic,retain) CCLabelTTF *singlePlayerScore;
 @property (nonatomic,retain) CCLabelTTF *levelDisplay;
-//@property (nonatomic,retain) CCLabelTTF *lowerDisplay;
 @property int aiMaxWaitTime;
 
 
