@@ -113,8 +113,7 @@
     arrayPagesPlayer2 = [[NSMutableArray array] retain];
     
 	if( (self=[super initWithColor:ccc4(0, 0, 0, 225)] )) {
-        
-    
+                
         theGameMode = [[GameManager sharedGameManager] gameMode];
         
         //SETUP SPRITE SHEET
