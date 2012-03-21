@@ -181,7 +181,7 @@
         [pauseMenuPlayAndPass showPauseMenu:self];
     }
     
-    CCLOG(@"In a pause state.");
+    //CCLOG(@"In a pause state.");
     if(pauseState && CGRectContainsPoint([pauseMenuPlayAndPass mainMenuButton].boundingBox, touchLocation)){
         pauseState = NO;
         [self matchDisconnected];
@@ -328,12 +328,14 @@
 		gameOver = YES;
 	}
 	
-	if (p1 <= 0) {
+	if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
 		play1Done = YES;
+        gameOver=YES;
 	}
 	
-	if (p2 <= 0) {
+	if (p2 <= 0 && [[player1Score string] intValue] > [[player2Score string] intValue]) {
 		play2Done = YES;
+        gameOver=YES;
 	}
 	
 	if (gameOver) {
@@ -382,13 +384,18 @@
         // TODO: change this to be a background process??
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [player2ScoreRecord saveInBackground];
+        
         [self stopTimer];
+        
         [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
         [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
         [[GameManager sharedGameManager] setPlayer1Words:player1Words];
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kMultiplayer];
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        
+        
+        
 	} else {
 		if (myTurn) {
 			if (!play1Done) {
@@ -635,14 +642,18 @@
     if (![self isGameOver]) {
         [self showGameDisconnectedAlert];
     }
+    
     [[GCHelper sharedInstance].match disconnect];
     [GCHelper sharedInstance].match = nil;
+
 }
 
 - (void) matchDisconnected  {
     CCLOG(@"Match disconnected");
     [self stopTimer];
+
     [self endScene:kEndReasonDisconnect];
+    
     [[GCHelper sharedInstance].match disconnect];
     [GCHelper sharedInstance].match = nil;
 }
@@ -814,7 +825,7 @@
     [dialog show];
     [dialog release];
 }
-
+ 
 -(void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         [[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
