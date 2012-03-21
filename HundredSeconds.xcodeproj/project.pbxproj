@@ -143,7 +143,6 @@
 		84D993C5141897B3007BF6DA /* blueSandDollar.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D993C3141897B3007BF6DA /* blueSandDollar.png */; };
 		84DA0E0313EBBABC00AA4E93 /* ImageAssets2-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DA0E0113EBBABC00AA4E93 /* ImageAssets2-hd.plist */; };
 		84DA0E0413EBBABC00AA4E93 /* ImageAssets2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DA0E0213EBBABC00AA4E93 /* ImageAssets2-hd.png */; };
-		84DA315C13A1C2CA0089EB21 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84DA315B13A1C2CA0089EB21 /* Entitlements.plist */; };
 		84DE14FC1457BD1000ABFEFB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DE14FB1457BD1000ABFEFB /* iAd.framework */; };
 		84DE27C2146BAAC500D28581 /* SinglePlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84DE27C1146BAAC500D28581 /* SinglePlayer.mm */; };
 		84DE27C7146BAC2C00D28581 /* SinglePlayGameHistory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84DE27C6146BAC2C00D28581 /* SinglePlayGameHistory.mm */; };
@@ -226,6 +225,7 @@
 		D4DEA7EC14876F19006BE5DE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D4DEA7EA14876F19006BE5DE /* Default.png */; };
 		D4DEA7ED14876F19006BE5DE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D4DEA7EB14876F19006BE5DE /* Default@2x.png */; };
 		D4E8704113694D4400E25FD1 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = D4E8704013694D4400E25FD1 /* PauseLayer.mm */; };
+		D4ED7EB41511C2E000C0B2D3 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4ED7EB31511C2E000C0B2D3 /* Entitlements.plist */; };
 		D4EF62FC149B2CC9007CBF9C /* main_menu_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF62FB149B2CC8007CBF9C /* main_menu_btn.png */; };
 		D4EF62FE149B2CFE007CBF9C /* rematch.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF62FD149B2CFE007CBF9C /* rematch.png */; };
 		DC6640050F83B3EA000B3E49 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6640040F83B3EA000B3E49 /* OpenAL.framework */; };
@@ -571,7 +571,6 @@
 		84D993C3141897B3007BF6DA /* blueSandDollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueSandDollar.png; sourceTree = "<group>"; };
 		84DA0E0113EBBABC00AA4E93 /* ImageAssets2-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ImageAssets2-hd.plist"; sourceTree = "<group>"; };
 		84DA0E0213EBBABC00AA4E93 /* ImageAssets2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageAssets2-hd.png"; sourceTree = "<group>"; };
-		84DA315B13A1C2CA0089EB21 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		84DE14FB1457BD1000ABFEFB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		84DE27C0146BAAC500D28581 /* SinglePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePlayer.h; sourceTree = "<group>"; };
 		84DE27C1146BAAC500D28581 /* SinglePlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SinglePlayer.mm; sourceTree = "<group>"; };
@@ -671,6 +670,7 @@
 		D4DEA7EB14876F19006BE5DE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D4E8703F13694D4400E25FD1 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		D4E8704013694D4400E25FD1 /* PauseLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PauseLayer.mm; sourceTree = "<group>"; };
+		D4ED7EB31511C2E000C0B2D3 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		D4EF62FB149B2CC8007CBF9C /* main_menu_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_menu_btn.png; sourceTree = "<group>"; };
 		D4EF62FD149B2CFE007CBF9C /* rematch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rematch.png; sourceTree = "<group>"; };
 		DC6640020F83B3EA000B3E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -917,6 +917,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D4ED7EB31511C2E000C0B2D3 /* Entitlements.plist */,
 				845C3FCF14EE36EA006E7E09 /* new_dictionary_no_acronym.txt */,
 				D4D153B414B57E3200FD9D73 /* appIcon4.png */,
 				D4D153B214B57E2B00FD9D73 /* appIcon4-hd.png */,
@@ -928,7 +929,6 @@
 				84DE27D4146BAE3A00D28581 /* libz.1.1.3.dylib */,
 				847C1BDF146BA8A3007EC8BF /* libz.dylib */,
 				847C1BDA146BA5DA007EC8BF /* libz.1.2.5.dylib */,
-				84DA315B13A1C2CA0089EB21 /* Entitlements.plist */,
 				504DFC6810AF1739006D82FE /* LICENSE.cocos2d */,
 				504DFC6910AF1739006D82FE /* LICENSE.cocosdenshion */,
 				506EDAA3102F461B00A389B3 /* cocos2d Sources */,
@@ -1694,7 +1694,6 @@
 				E02BB763126CC1E0006E46A2 /* iTunesArtwork in Resources */,
 				D45AF4281397323D00438B40 /* dull_bell.mp3 in Resources */,
 				D45AF42A1397324500438B40 /* success.mp3 in Resources */,
-				84DA315C13A1C2CA0089EB21 /* Entitlements.plist in Resources */,
 				84CDD1E513B3070A0090E48A /* pn.png in Resources */,
 				84EAC76513D7CBCC0085A645 /* ImageAssets.plist in Resources */,
 				84EAC76613D7CBCC0085A645 /* ImageAssets.png in Resources */,
@@ -1815,6 +1814,7 @@
 				D4758DAD14FF55D2002EE701 /* howToPlay_retina.png in Resources */,
 				D4758DAE14FF55D2002EE701 /* howToPlay_3g.plist in Resources */,
 				D4758DAF14FF55D2002EE701 /* howToPlay_retina.plist in Resources */,
+				D4ED7EB41511C2E000C0B2D3 /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1975,7 +1975,12 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_MODE = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1991,7 +1996,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2012,7 +2017,12 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_MODE = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -2026,7 +2036,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2048,13 +2058,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "cocos2d libraries";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
@@ -2062,12 +2080,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "cocos2d libraries";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2076,7 +2102,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2086,7 +2115,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -2099,7 +2128,12 @@
 		84DA315F13A1C51F0089EB21 /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALTERNATE_MODE = "";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2115,7 +2149,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2137,12 +2171,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "cocos2d libraries";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
@@ -2152,7 +2194,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2166,7 +2211,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2181,7 +2226,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2191,7 +2239,7 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";

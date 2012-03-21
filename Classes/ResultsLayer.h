@@ -65,7 +65,7 @@
 // delete @property (nonatomic, assign) BOOL flagMultiPlayer;
 
 
--(BOOL) init;
+-(id) init;
 +(id) scene;
 - (void) displayPlayerWords2:(int) playerNumber
                    withWords:(NSMutableArray *)pWords
