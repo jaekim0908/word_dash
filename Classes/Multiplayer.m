@@ -382,14 +382,13 @@
         // TODO: change this to be a background process??
         //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
         [player2ScoreRecord saveInBackground];
-        
+        [self stopTimer];
         [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
         [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
         [[GameManager sharedGameManager] setPlayer1Words:player1Words];
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kMultiplayer];
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
-        
 	} else {
 		if (myTurn) {
 			if (!play1Done) {
@@ -613,7 +612,7 @@
 
 #pragma mark GCHelperDelegate
 
-- (void)matchStarted {    
+- (void) matchStarted {    
     CCLOG(@"################ Match started ###########################");        
     if (receivedRandom) {
         [self setGameState:kGameStateWaitingForStart];
@@ -624,29 +623,28 @@
     [self tryStartGame];
 }
 
-- (void)inviteReceived {
+- (void) inviteReceived {
     CCLOG(@"################ Invite Received ###########################"); 
     HundredSecondsAppDelegate *delegate = (HundredSecondsAppDelegate *) [UIApplication sharedApplication].delegate;  
     [[GCHelper sharedInstance] findMatchWithMinPlayers:2 maxPlayers:2 viewController:delegate.viewController delegate:self];
 }
 
-- (void)matchEnded {    
+- (void) matchEnded {    
     CCLOG(@"Match ended");
-    [self stopTimer];
-    [[GCHelper sharedInstance].match disconnect];
-    [GCHelper sharedInstance].match = nil;
     [self endScene:kEndReasonDisconnect];
     if (![self isGameOver]) {
         [self showGameDisconnectedAlert];
     }
+    [[GCHelper sharedInstance].match disconnect];
+    [GCHelper sharedInstance].match = nil;
 }
 
 - (void) matchDisconnected  {
     CCLOG(@"Match disconnected");
     [self stopTimer];
+    [self endScene:kEndReasonDisconnect];
     [[GCHelper sharedInstance].match disconnect];
     [GCHelper sharedInstance].match = nil;
-    [self endScene:kEndReasonDisconnect];
 }
 
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
@@ -795,6 +793,7 @@
 - (void) endScene:(EndReason)endReason {
     
     if (gameState == kGameStateDone) return;
+    
     [self setGameState:kGameStateDone];
     
     if (isPlayer1) {
