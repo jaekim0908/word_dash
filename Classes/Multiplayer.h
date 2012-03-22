@@ -49,6 +49,7 @@
 -(void) sendTileFlipCount:(int) cnt;
 -(void) sendResetTileFlipCount;
 -(void) sendEndTurn;
+-(void) sendReadyToStartGame;
 -(void) tryStartGame;
 -(void) hideLetter:(id) sender;
 -(void) endScene:(EndReason)endReason;

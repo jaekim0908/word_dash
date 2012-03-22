@@ -327,14 +327,20 @@
 	if (p1+p2 <= 0) {
 		gameOver = YES;
 	}
-	
+    
+    if (p1 <= 0) {
+        play1Done = YES;
+    }
+    
+    if (p2 <= 0) {
+        play2Done = YES;
+    }
+    
 	if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
-		play1Done = YES;
         gameOver=YES;
 	}
 	
 	if (p2 <= 0 && [[player1Score string] intValue] > [[player2Score string] intValue]) {
-		play2Done = YES;
         gameOver=YES;
 	}
 	
@@ -393,9 +399,6 @@
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kMultiplayer];
         [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
-        
-        
-        
 	} else {
 		if (myTurn) {
 			if (!play1Done) {
@@ -561,6 +564,13 @@
     
 }
 
+- (void) sendReadyToStartGame {
+    MessageReadyToStartGame message;
+    message.message.messageType = kMessageTypeReadyToStartGame;
+    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageReadyToStartGame)];
+    [self sendData:data];
+}
+
 - (void)setupStringsWithOtherPlayerId:(NSString *)playerID {
     self.player1LongName = [[GKLocalPlayer localPlayer] alias];
     //MCH - issue #16 not showing player names on result screens
@@ -605,6 +615,10 @@
             [self sendData:data];
         }
     }
+    MessageEndOfBoard endOfBoardMessage;
+    endOfBoardMessage.message.messageType = kMessageTypeEndOfBoard;
+    NSData *data = [NSData dataWithBytes:&endOfBoardMessage length:sizeof(MessageEndOfBoard)];
+    [self sendData:data];
 }
 
 - (void)tryStartGame {
@@ -683,7 +697,7 @@
             CCLOG(@"We are player 1");
             isPlayer1 = YES;
             myTurn = YES;
-            self.playButton.visible = YES;
+            //self.playButton.visible = YES;
         } else {
             CCLOG(@"We are player 2");
             isPlayer1 = NO;
@@ -798,7 +812,13 @@
     } else if (message->messageType == kMessageTypeGameOver) {   
         CCLOG(@"[game over]");
         [self endScene:kEndReasonDisconnect];     
-    }    
+    } else if (message->messageType == kMessageTypeEndOfBoard) {
+        CCLOG(@"[end of board message received]");
+        [self sendReadyToStartGame];
+    } else if (message->messageType == kMessageTypeReadyToStartGame) {
+        CCLOG(@"[ready to start game message received]");
+        [self playButtonPressed];
+    }
 }
 
 - (void) endScene:(EndReason)endReason {
@@ -807,12 +827,13 @@
     
     [self setGameState:kGameStateDone];
     
+    /*
     if (isPlayer1) {
         if (endReason == kEndReasonDisconnect) {
             [self sendGameOver];
         }
     }
-    
+    */
 }
 
 -(void) showGameDisconnectedAlert {
