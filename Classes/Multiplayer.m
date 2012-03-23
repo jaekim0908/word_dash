@@ -294,6 +294,25 @@
     return TRUE;
 }
 
+- (BOOL) getResultsPressed
+{
+    [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+    [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+    [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+    [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+    [[GameManager sharedGameManager] setGameMode:kMultiplayer];
+    
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+    
+    return TRUE;
+}
+
+- (BOOL) rematchBtnPressed
+{
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
+    return TRUE;
+}
+
 - (void) updateTimer:(ccTime) dt {
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -343,9 +362,12 @@
 	if (p2 <= 0 && [[player1Score string] intValue] > [[player2Score string] intValue]) {
         gameOver=YES;
 	}
+    
 	
 	if (gameOver) {
+        
         [self sendGameOver];
+        
         if (isPlayer1) {
             [self matchEnded];
         }
@@ -400,7 +422,11 @@
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kMultiplayer];
         //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        
         [self displayAwardsPopup];
+        
+        
+        
 	} else {
 		if (myTurn) {
 			if (!play1Done) {
