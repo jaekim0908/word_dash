@@ -840,7 +840,7 @@
     } else if (message->messageType == kMessageTypeGameOver) {   
         CCLOG(@"[game over]");
         gameOver = YES;
-        [self endScene:kEndReasonDisconnect];     
+        [self matchEnded];     
     } else if (message->messageType == kMessageTypeEndOfBoard) {
         CCLOG(@"[end of board message received]");
         [self sendReadyToStartGame];

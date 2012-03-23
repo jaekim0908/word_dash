@@ -67,16 +67,10 @@ static GCHelper *sharedHelper = nil;
        userAuthenticated = TRUE;  
         
         [GKMatchmaker sharedMatchmaker].inviteHandler = ^(GKInvite *acceptedInvite, NSArray *playersToInvite) {
-            
             NSLog(@"Received invite");
             self.pendingInvite = acceptedInvite;
             self.pendingPlayersToInvite = playersToInvite;
-            if ([[GameManager sharedGameManager] runningSceneID] == kMutiPlayerScene) {
-                CCLOG(@"GCHelper: Multiplayer scene");
-                [delegate inviteReceived];
-            } else {
-                [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
-            }
+            [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
         };
         
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
