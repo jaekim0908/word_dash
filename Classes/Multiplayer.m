@@ -211,7 +211,7 @@
     
     if (!gameOver && !enableTouch) return TRUE;
     
-	if (CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
+	if (playerTurn == 1 && CGRectContainsPoint(transparentBoundingBox1.boundingBox, touchLocation)) {
 		if ([userSelection count] > 0) {
 			[self checkAnswer];
             [self sendCheckAnswer];
