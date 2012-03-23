@@ -56,5 +56,6 @@
 -(void) showGameDisconnectedAlert;
 -(void) alertView:(UIAlertView *)alert clickedButtonAtIndex:(NSInteger)buttonIndex;
 -(void) matchDisconnected;
+-(void) checkAnswerNoPenalty;
 
 @end
