@@ -448,7 +448,7 @@
 }
 
 -(void) aiTripleTab {
-    if (![self allLettersOpened]) return;
+    if (![self allLettersOpened] || playerTurn == 1) return;
 
     for(int r = 0; r < rows; r++) {
 		for(int c = 0; c < cols; c++) {
@@ -963,7 +963,6 @@
                 }
 				[player2Timer setString:[NSString stringWithFormat:@"%i", p2]];
 			} else {
-
 				playerTurn = 1;
 				[self switchTo:playerTurn countFlip:NO];
 			}

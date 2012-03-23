@@ -346,22 +346,20 @@
 	if (p1+p2 <= 0) {
 		gameOver = YES;
 	}
-	
-    if (p1 <= 0){
+    
+    if (p1 <= 0) {
         play1Done = YES;
     }
     
-    if(p2 <= 0){
+    if (p2 <= 0) {
         play2Done = YES;
     }
-
+    
 	if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
-		play1Done = YES;
         gameOver=YES;
 	}
 	
 	if (p2 <= 0 && [[player1Score string] intValue] > [[player2Score string] intValue]) {
-		play2Done = YES;
         gameOver=YES;
 	}
     
@@ -857,14 +855,14 @@
     if (gameState == kGameStateDone) return;
     
     [self setGameState:kGameStateDone];
-    /******
+    
+    /*
     if (isPlayer1) {
         if (endReason == kEndReasonDisconnect) {
             [self sendGameOver];
         }
     }
-     ******/
-    
+    */
 }
 
 -(void) showGameDisconnectedAlert {
