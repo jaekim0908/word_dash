@@ -813,7 +813,7 @@
         [self handleTripleTapWithCell:cell AtRow:messageCell.row Col:messageCell.col];
     } else if (message->messageType == kMessageTypeCheckAnswer) {
         playerTurn = 2;
-        [self checkAnswer];
+        [self checkAnswerNoPenalty];
         [self switchTo:1 countFlip:NO notification:YES];
     } else if (message->messageType == kMessageTypeCell) {
         CCLOG(@"Received Set Cell");
@@ -864,6 +864,66 @@
     }
     */
 }
+
+- (void) checkAnswerNoPenalty {
+	
+	[midDisplay setString:@""];
+	[midDisplay runAction:[CCFadeIn actionWithDuration:0.1f]];
+    
+	NSString *s = [NSString string];
+	for(Cell *c in userSelection) {
+		s = [s stringByAppendingString:c.value];
+		c.letterSelected.visible = NO;
+	}
+	
+	NSLog(@"user selection = %@", s);
+	
+	if ([foundWords objectForKey:s]) {
+        // MCH -- play invalid word sound
+        //[soundEngine playEffect:@"dull_bell.mp3"];
+        [[[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
+		[midDisplay setString:@"Already Used"];
+	} else {
+		if ([s length] >= 3 && [dictionary objectForKey:s]) {
+            [currentAnswer setColor:ccc3(124, 205, 124)];
+			[foundWords setObject:s forKey:s];
+            
+            // MCH -- play success sound
+            //[soundEngine playEffect:@"success.mp3"];
+            [ [[GameManager sharedGameManager] soundEngine] playEffect:@"success.mp3"];
+            
+            
+            //MCH -- add to each player's word's array for results scene
+            if (playerTurn == 1) {
+                [player1Words addObject:s];
+            }
+            else {
+                [player2Words addObject:s];
+            }
+            
+			int starCount = [self countStarPointandRemoveStars];
+			int newPoint = pow(2, [s length]);
+			[self addScore:newPoint toPlayer:playerTurn anchorCell: [userSelection objectAtIndex:0]];
+            [self addMoreTime:(starCount * 10) toPlayer:playerTurn];
+            if (starCount > 0 && playerTurn == 1) {
+                [[CCNotifications sharedManager] addNotificationTitle:@"Time Extended !!" 
+                                                              message:[NSString stringWithFormat:@"Congratulations, %i more seconds added.", starCount * 10] 
+                                                                image:@"watchIcon.png" 
+                                                                  tag:0 
+                                                              animate:YES];
+            }
+		} else {
+            [currentAnswer setColor:ccc3(238, 44, 44)];
+            //[soundEngine playEffect:@"dull_bell.mp3"];
+            [[[GameManager sharedGameManager] soundEngine] playEffect:@"dull_bell.mp3"];
+            
+			[midDisplay setString:@"Not a word"];
+		}
+	}
+	[midDisplay runAction:[CCFadeOut actionWithDuration:1]];
+	[userSelection removeAllObjects];
+}
+
 
 -(void) showGameDisconnectedAlert {
     UIAlertView *dialog = [[UIAlertView alloc] init];

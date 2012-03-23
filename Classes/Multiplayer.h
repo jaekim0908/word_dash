@@ -58,6 +58,7 @@
 -(void) matchDisconnected;
 - (BOOL) getResultsPressed;
 - (BOOL) rematchBtnPressed;
+-(void) checkAnswerNoPenalty;
 
 
 @end
