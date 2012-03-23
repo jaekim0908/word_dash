@@ -272,10 +272,12 @@
         greySolveButton1.visible = NO;
         //[self showLeftChecker];
         [self turnOnPassButtonForPlayer1];
+        waitForYourTurn.visible = NO;
     } else if (player == 2 && [[player2Timer string] intValue] > 0) {
         [self sendEndTurn];
         myTurn = NO;
         greySolveButton1.visible = YES;
+        waitForYourTurn.visible = YES;
         //[self hideLeftChecker];
     }
 }
@@ -366,6 +368,7 @@
 	
 	if (gameOver) {
         
+        waitForYourTurn.visible = NO;
         [self sendGameOver];
         
         if (isPlayer1) {
