@@ -70,7 +70,9 @@ typedef enum {
     kMessageTypeSendTileFlipCount,
     kMessageTypeResetTileFlipCount,
     kMessageTypeSendEndTurn,
-    kMessageTypeGameOver
+    kMessageTypeGameOver,
+    kMessageTypeEndOfBoard,
+    kMessageTypeReadyToStartGame
 } MessageType;
 
 typedef struct {
@@ -126,6 +128,14 @@ typedef struct {
 typedef struct {
     Message message;
 } MessageSendEndTurn;
+
+typedef struct {
+    Message message;
+} MessageEndOfBoard;
+
+typedef struct {
+    Message message;
+} MessageReadyToStartGame;
 
 typedef enum {
     kEndReasonWin,

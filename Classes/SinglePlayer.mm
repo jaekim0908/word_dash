@@ -27,19 +27,8 @@
 @synthesize thisGameBeatAIAward;
 @synthesize thisGameTotalPointsAward;
 @synthesize thisGameLongWordAward;
-//@synthesize awardPopupFrame;
-//@synthesize awardPopupTintedBackground;
-//@synthesize nextLevelBtn;
-//@synthesize getResultsBtn;
-//@synthesize rematchBtn;
-//@synthesize mainMenuBtn;
-//@synthesize awardsMenu;
-//@synthesize thisGameBeatAIAwardSprite;
-//@synthesize thisGameTotalPointsAwardSprite;
-//@synthesize thisGameLongWordAwardSprite;
 @synthesize singlePlayerScore;
 @synthesize levelDisplay;
-//@synthesize lowerDisplay;
 @synthesize aiMaxWaitTime;
 
 
@@ -174,14 +163,7 @@
         
             [[[GameManager sharedGameManager] soundEngine] setMute:TRUE];
         }
-        
-        /******
-        self.lowerDisplay = [[CCLabelTTF labelWithString:[NSString stringWithFormat:@"", 10] fontName:@"MarkerFelt-Thin" fontSize:48] retain];
-		self.lowerDisplay.position = ccp(windowSize.width/2, windowSize.height/2);
-        self.lowerDisplay.color = ccc3(0, 255, 0);
-		[self addChild:lowerDisplay z:40];
-         *********/
-
+ 
 
 	}
 	return self;

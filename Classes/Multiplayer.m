@@ -294,6 +294,25 @@
     return TRUE;
 }
 
+- (BOOL) getResultsPressed
+{
+    [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
+    [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
+    [[GameManager sharedGameManager] setPlayer1Words:player1Words];
+    [[GameManager sharedGameManager] setPlayer2Words:player2Words];
+    [[GameManager sharedGameManager] setGameMode:kMultiplayer];
+    
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+    
+    return TRUE;
+}
+
+- (BOOL) rematchBtnPressed
+{
+    [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
+    return TRUE;
+}
+
 - (void) updateTimer:(ccTime) dt {
 	int p1 = [[player1Timer string] intValue];
 	int p2 = [[player2Timer string] intValue];
@@ -328,6 +347,14 @@
 		gameOver = YES;
 	}
 	
+    if (p1 <= 0){
+        play1Done = YES;
+    }
+    
+    if(p2 <= 0){
+        play2Done = YES;
+    }
+
 	if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
 		play1Done = YES;
         gameOver=YES;
@@ -337,8 +364,12 @@
 		play2Done = YES;
         gameOver=YES;
 	}
+    
 	
 	if (gameOver) {
+        
+        [self sendGameOver];
+        
         if (isPlayer1) {
             [self matchEnded];
         }
@@ -392,7 +423,9 @@
         [[GameManager sharedGameManager] setPlayer1Words:player1Words];
         [[GameManager sharedGameManager] setPlayer2Words:player2Words];
         [[GameManager sharedGameManager] setGameMode:kMultiplayer];
-        [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        
+        [self displayAwardsPopup];
         
         
         
@@ -561,6 +594,13 @@
     
 }
 
+- (void) sendReadyToStartGame {
+    MessageReadyToStartGame message;
+    message.message.messageType = kMessageTypeReadyToStartGame;
+    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageReadyToStartGame)];
+    [self sendData:data];
+}
+
 - (void)setupStringsWithOtherPlayerId:(NSString *)playerID {
     self.player1LongName = [[GKLocalPlayer localPlayer] alias];
     //MCH - issue #16 not showing player names on result screens
@@ -605,6 +645,10 @@
             [self sendData:data];
         }
     }
+    MessageEndOfBoard endOfBoardMessage;
+    endOfBoardMessage.message.messageType = kMessageTypeEndOfBoard;
+    NSData *data = [NSData dataWithBytes:&endOfBoardMessage length:sizeof(MessageEndOfBoard)];
+    [self sendData:data];
 }
 
 - (void)tryStartGame {
@@ -619,7 +663,7 @@
 
 #pragma mark GCHelperDelegate
 
-- (void)matchStarted {    
+- (void) matchStarted {    
     CCLOG(@"################ Match started ###########################");        
     if (receivedRandom) {
         [self setGameState:kGameStateWaitingForStart];
@@ -630,15 +674,14 @@
     [self tryStartGame];
 }
 
-- (void)inviteReceived {
+- (void) inviteReceived {
     CCLOG(@"################ Invite Received ###########################"); 
     HundredSecondsAppDelegate *delegate = (HundredSecondsAppDelegate *) [UIApplication sharedApplication].delegate;  
     [[GCHelper sharedInstance] findMatchWithMinPlayers:2 maxPlayers:2 viewController:delegate.viewController delegate:self];
 }
 
-- (void)matchEnded {    
+- (void) matchEnded {    
     CCLOG(@"Match ended");
-    //[self stopTimer];
     [self endScene:kEndReasonDisconnect];
     if (![self isGameOver]) {
         [self showGameDisconnectedAlert];
@@ -684,7 +727,7 @@
             CCLOG(@"We are player 1");
             isPlayer1 = YES;
             myTurn = YES;
-            self.playButton.visible = YES;
+            //self.playButton.visible = YES;
         } else {
             CCLOG(@"We are player 2");
             isPlayer1 = NO;
@@ -798,21 +841,29 @@
         [self switchTo:1 countFlip:NO notification:YES];
     } else if (message->messageType == kMessageTypeGameOver) {   
         CCLOG(@"[game over]");
-        //[self stopTimer];
+        gameOver = YES;
         [self endScene:kEndReasonDisconnect];     
-    }    
+    } else if (message->messageType == kMessageTypeEndOfBoard) {
+        CCLOG(@"[end of board message received]");
+        [self sendReadyToStartGame];
+    } else if (message->messageType == kMessageTypeReadyToStartGame) {
+        CCLOG(@"[ready to start game message received]");
+        [self playButtonPressed];
+    }
 }
 
 - (void) endScene:(EndReason)endReason {
     
     if (gameState == kGameStateDone) return;
-    [self setGameState:kGameStateDone];
     
+    [self setGameState:kGameStateDone];
+    /******
     if (isPlayer1) {
         if (endReason == kEndReasonDisconnect) {
             [self sendGameOver];
         }
     }
+     ******/
     
 }
 

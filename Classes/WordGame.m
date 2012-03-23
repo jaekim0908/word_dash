@@ -1279,10 +1279,11 @@
 }
 
 - (BOOL) isGameOver {
-    int p1 = [[player1Timer string] intValue];
-	int p2 = [[player2Timer string] intValue];
+    //int p1 = [[player1Timer string] intValue];
+	//int p2 = [[player2Timer string] intValue];
     
-    return (p1 + p2 == 0);
+    //return (p1 + p2 == 0);
+    return gameOver;
 }
 
 // on "dealloc" you need to release all your retained objects
