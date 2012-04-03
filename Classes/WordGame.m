@@ -1177,68 +1177,8 @@
 	
 	if (gameOver) {
 		enableTouch = NO;
-		int p1score = [[player1Score string] intValue];
-		int p2score = [[player2Score string] intValue];
-        
-        CCLOG(@"***************Creating SinglePlayGameHistory object***************");
-        PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
-        [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
-        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
-        
-        [singlePlayGameHistory setObject:player1LongName forKey:@"player1Name"];
-        [singlePlayGameHistory setObject:player2LongName forKey:@"player2Name"];
-        if (p1score > p2score) {
-            [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
-        } else if (p1score < p2score) {
-            [singlePlayGameHistory setObject:@"Lost" forKey:@"gameResult"];
-        } else {
-            [singlePlayGameHistory setObject:@"Tie" forKey:@"gameResult"];
-        }
-        // TODO: change this to be a background process??
-        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
-        [singlePlayGameHistory saveInBackground];
-        
-        CCLOG(@"***************Creating SinglePlayGameHistory 2 object***************");
-        // Create a second record with player1 and player2 switched so we can display both records.
-        PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
-        [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score1"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score2"];
-        
-        [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
-        [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
-        if (p1score < p2score) {
-            [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
-        } else if (p1score > p2score) {
-            [player2ScoreRecord setObject:@"Lost" forKey:@"gameResult"];
-        } else {
-            [player2ScoreRecord setObject:@"Tie" forKey:@"gameResult"];
-        }
-        // TODO: change this to be a background process??
-        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
-        [player2ScoreRecord saveInBackground];
-        
+
         [self displayAwardsPopup];
-        //MCH - display results layer
-        
-        //[[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
-        //[[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
-        //[[GameManager sharedGameManager] setPlayer1Words:player1Words];
-        //[[GameManager sharedGameManager] setPlayer2Words:player2Words];
-        //[[GameManager sharedGameManager] setGameMode:kPlayAndPass];
-        //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
-         
-        /********
-        [[CCDirector sharedDirector] replaceScene:[ResultsLayer scene:[player1Score string]
-                                                   WithPlayerTwoScore:[player2Score string] 
-                                                   WithPlayerOneWords:player1Words 
-                                                   WithPlayerTwoWords:player2Words
-                                                          ForGameMode:kPlayAndPass
-                                                   ]];
-         
-         ******/
-        
 	} else {
 		if (playerTurn == 1) {
 			if (!play1Done) {
@@ -1280,6 +1220,113 @@
 
 - (BOOL) isGameOver {
     return gameOver;
+}
+
+- (void)saveGameResult {
+    int p1score = [[player1Score string] intValue];
+    int p2score = [[player2Score string] intValue];
+    int playerWon = 0;
+    PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
+    [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
+    [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
+    [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+    
+    [singlePlayGameHistory setObject:player1LongName forKey:@"player1Name"];
+    [singlePlayGameHistory setObject:player2LongName forKey:@"player2Name"];
+    [singlePlayGameHistory setObject:@"Multiplayer" forKey:@"gameType"];
+    if (p1score > p2score) {
+        [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
+        playerWon = 1;
+    } else if (p1score < p2score) {
+        [singlePlayGameHistory setObject:@"Lost" forKey:@"gameResult"];
+        playerWon = 2;
+    } else {
+        [singlePlayGameHistory setObject:@"Tie" forKey:@"gameResult"];
+    }
+    [singlePlayGameHistory saveInBackground];
+    
+    NSArray *sortedPlayerNames = [[NSArray arrayWithObjects:player1LongName, player2LongName, nil] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    if ([sortedPlayerNames count] >= 2) {
+        NSString *hashKey = [NSString stringWithFormat:@"%@|%@", [sortedPlayerNames objectAtIndex:0], [sortedPlayerNames objectAtIndex:1]];
+        CCLOG(@"HashKey to query = %@", hashKey);
+        PFQuery *query = [PFQuery queryWithClassName:@"GameHistorySummary"];
+        //query.cachePolicy = kPFCachePolicyNetworkElseCache;
+        [query whereKey:@"hashKey" equalTo:hashKey];
+        [query whereKey:@"gameType" equalTo:@"Multiplayer"];
+        [query orderByDescending:@"createdAt"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+            if (!error) {
+                //success
+                PFObject *gameResultSummary = nil;
+                CCLOG(@"Successfully retrieved %d results.", results.count);
+                if (results.count > 0) {
+                    gameResultSummary = [results objectAtIndex:0];
+                    CCLOG(@"Object ID = %@", [gameResultSummary objectId]);
+                    NSArray *currentHashKey = [[[results objectAtIndex:0] objectForKey:@"hashKey"] componentsSeparatedByString:@"|"];
+                    int winNum = [[[results objectAtIndex:0] objectForKey:@"win"] intValue];
+                    int loseNum = [[[results objectAtIndex:0] objectForKey:@"lose"] intValue];
+                    int tieNum = [[[results objectAtIndex:0] objectForKey:@"tie"] intValue];
+                    if (playerWon == 1) {
+                        if ([[currentHashKey objectAtIndex:0] isEqualToString:player1LongName]) {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:winNum + 1] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:loseNum] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:tieNum] forKey:@"tie"];
+                        } else {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:winNum] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:loseNum + 1] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:tieNum] forKey:@"tie"];
+                        }
+                    } else if (playerWon == 2) {
+                        if ([[currentHashKey objectAtIndex:0] isEqualToString:player1LongName]) {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:winNum] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:loseNum + 1] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:tieNum] forKey:@"tie"];
+                        } else {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:winNum + 1] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:loseNum] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:tieNum] forKey:@"tie"];
+                        }
+                    } else {
+                        [gameResultSummary setObject:[NSNumber numberWithInt:winNum] forKey:@"win"];
+                        [gameResultSummary setObject:[NSNumber numberWithInt:loseNum] forKey:@"lose"];
+                        [gameResultSummary setObject:[NSNumber numberWithInt:tieNum + 1] forKey:@"tie"];
+                    }
+                } else {
+                    gameResultSummary = [[[PFObject alloc] initWithClassName:@"GameHistorySummary"] autorelease];
+                    [gameResultSummary setObject:hashKey forKey:@"hashKey"];
+                    [gameResultSummary setObject:@"Multiplayer" forKey:@"gameType"];
+                    if (playerWon == 1) {
+                        if ([[sortedPlayerNames objectAtIndex:0] isEqualToString:player1LongName]) {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:1] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"tie"];
+                        } else {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:1] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"tie"];
+                        }
+                    } else if (playerWon == 2) {
+                        if ([[sortedPlayerNames objectAtIndex:0] isEqualToString:player1LongName]) {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:1] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"tie"];
+                        } else {
+                            [gameResultSummary setObject:[NSNumber numberWithInt:1] forKey:@"win"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"lose"];
+                            [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"tie"];
+                        }
+                    } else {
+                        [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"win"];
+                        [gameResultSummary setObject:[NSNumber numberWithInt:0] forKey:@"lose"];
+                        [gameResultSummary setObject:[NSNumber numberWithInt:1] forKey:@"tie"];
+                    }
+                }
+                [gameResultSummary saveInBackground];
+            } else {
+                CCLOG(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+    }
 }
 
 // on "dealloc" you need to release all your retained objects

@@ -902,6 +902,7 @@
         [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
+        [singlePlayGameHistory setObject:@"Singleplayer" forKey:@"gameType"];
         if (self.player1LongName && [self.player1LongName length] > 0) {
             [singlePlayGameHistory setObject:self.player1LongName forKey:@"player1Name"];
         } else {

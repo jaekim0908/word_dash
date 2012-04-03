@@ -374,57 +374,12 @@
         if (isPlayer1) {
             [self matchEnded];
         }
-		enableTouch = NO;
-		int p1score = [[player1Score string] intValue];
-		int p2score = [[player2Score string] intValue];
-        
-        CCLOG(@"***************Creating SinglePlayGameHistory object***************");
-        PFObject *singlePlayGameHistory = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
-        [singlePlayGameHistory setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
-        [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
-        
-        [singlePlayGameHistory setObject:player1LongName forKey:@"player1Name"];
-        [singlePlayGameHistory setObject:player2LongName forKey:@"player2Name"];
-        if (p1score > p2score) {
-            [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
-        } else if (p1score < p2score) {
-            [singlePlayGameHistory setObject:@"Lost" forKey:@"gameResult"];
-        } else {
-            [singlePlayGameHistory setObject:@"Tie" forKey:@"gameResult"];
-        }
-        // TODO: change this to be a background process??
-        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
-        [singlePlayGameHistory saveInBackground];
-        
-        CCLOG(@"***************Creating SinglePlayGameHistory 2 object***************");
-        // Create a second record with player1 and player2 switched so we can display both records.
-        PFObject *player2ScoreRecord = [[[PFObject alloc] initWithClassName:@"SinglePlayGameHistory"] autorelease];
-        [player2ScoreRecord setObject:[[GameManager sharedGameManager] gameUUID] forKey:@"gameUUID"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
-        [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
-        
-        [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
-        [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
-        if (p1score < p2score) {
-            [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
-        } else if (p1score > p2score) {
-            [player2ScoreRecord setObject:@"Lost" forKey:@"gameResult"];
-        } else {
-            [player2ScoreRecord setObject:@"Tie" forKey:@"gameResult"];
-        }
-        // TODO: change this to be a background process??
-        //[singlePlayGameHistory saveInBackgroundWithTarget:self selector:@selector(saveCallback:error:)];
-        [player2ScoreRecord saveInBackground];
-        
+		enableTouch = NO;        
         [self stopTimer];
         
-        [[GameManager sharedGameManager] setPlayer1Score:[player1Score string]];
-        [[GameManager sharedGameManager] setPlayer2Score:[player2Score string]];
-        [[GameManager sharedGameManager] setPlayer1Words:player1Words];
-        [[GameManager sharedGameManager] setPlayer2Words:player2Words];
-        [[GameManager sharedGameManager] setGameMode:kMultiplayer];
-        //[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kWordSummaryScene];
+        if (isPlayer1) {
+            [self saveGameResult];
+        }
         
         [self displayAwardsPopup];
         

@@ -77,6 +77,7 @@
 		6EF1465B134D760C007152E0 /* ChallengeRequestDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1465A134D760C007152E0 /* ChallengeRequestDialog.mm */; };
 		6EFA52511331D56F0072F312 /* Cell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6EFA52501331D56F0072F312 /* Cell.mm */; };
 		8411ABD3148766AA004B78E3 /* WordGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411ABD2148766AA004B78E3 /* WordGame.m */; };
+		8412E9CE15258F4600C384F8 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8412E9CD15258F4600C384F8 /* Parse.framework */; };
 		84148A8C14B6E3880052AA6A /* Multiplayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8B14B6E3880052AA6A /* Multiplayer.m */; };
 		84148A8F14B6E4830052AA6A /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A8E14B6E4820052AA6A /* GCHelper.m */; };
 		84148A9214BC046D0052AA6A /* proAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84148A9114BC046C0052AA6A /* proAlertView.m */; };
@@ -119,7 +120,6 @@
 		84999125146CB6D9001E7EFA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCBF1B60F6022AE0040855A /* CoreGraphics.framework */; };
 		84999126146CB6E5001E7EFA /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DE27D4146BAE3A00D28581 /* libz.1.1.3.dylib */; };
 		84999127146CB6EF001E7EFA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDEA234132F2EA30053EE0A /* Security.framework */; };
-		84999129146CB71A001E7EFA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84999128146CB71A001E7EFA /* Parse.framework */; };
 		8499912C14726823001E7EFA /* ScoreSummary.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8499912B14726823001E7EFA /* ScoreSummary.mm */; };
 		8499912F1474E127001E7EFA /* silver_line-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 8499912D1474E127001E7EFA /* silver_line-hd.png */; };
 		849991301474E127001E7EFA /* silver_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 8499912E1474E127001E7EFA /* silver_line.png */; };
@@ -503,6 +503,7 @@
 		6EFA52501331D56F0072F312 /* Cell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Cell.mm; sourceTree = "<group>"; };
 		8411ABD1148766AA004B78E3 /* WordGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGame.h; sourceTree = "<group>"; };
 		8411ABD2148766AA004B78E3 /* WordGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGame.m; sourceTree = "<group>"; };
+		8412E9CD15258F4600C384F8 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Desktop/Parse.framework; sourceTree = "<group>"; };
 		84148A8A14B6E3880052AA6A /* Multiplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multiplayer.h; sourceTree = "<group>"; };
 		84148A8B14B6E3880052AA6A /* Multiplayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multiplayer.m; sourceTree = "<group>"; };
 		84148A8D14B6E4820052AA6A /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
@@ -862,6 +863,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8412E9CE15258F4600C384F8 /* Parse.framework in Frameworks */,
 				84999127146CB6EF001E7EFA /* Security.framework in Frameworks */,
 				84999126146CB6E5001E7EFA /* libz.1.1.3.dylib in Frameworks */,
 				84999125146CB6D9001E7EFA /* CoreGraphics.framework in Frameworks */,
@@ -885,7 +887,6 @@
 				6EDEA28C132F33670053EE0A /* MapKit.framework in Frameworks */,
 				6EDEA2F3132F347A0053EE0A /* GameKit.framework in Frameworks */,
 				6EDEA2FF132F34B90053EE0A /* AddressBookUI.framework in Frameworks */,
-				84999129146CB71A001E7EFA /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +918,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				8412E9CD15258F4600C384F8 /* Parse.framework */,
 				D4ED7EB31511C2E000C0B2D3 /* Entitlements.plist */,
 				845C3FCF14EE36EA006E7E09 /* new_dictionary_no_acronym.txt */,
 				D4D153B414B57E3200FD9D73 /* appIcon4.png */,
@@ -1988,6 +1990,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Desktop\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2030,6 +2033,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Desktop\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HundredSeconds_Prefix.pch;
@@ -2145,6 +2149,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Desktop\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = HundredSeconds_Prefix.pch;
