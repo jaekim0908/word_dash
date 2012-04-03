@@ -160,4 +160,5 @@
 - (BOOL) rematchBtnPressed;
 - (BOOL) mainMenuBtnPressed;
 - (BOOL) nextLevelPressed;
+- (void) saveGameResult;
 @end

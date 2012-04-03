@@ -208,6 +208,10 @@
     
     CCLOG(@"Trying to bring up facebook page.");
     
+    //[[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
+    NSString *twitterURL = @"http://twitter.com/mangosteenSD";
+    NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 -(void) displayPlayAndPass {
