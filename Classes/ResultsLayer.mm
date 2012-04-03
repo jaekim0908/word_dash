@@ -155,7 +155,7 @@
         
         //QUERY FOR LONGEST WORD
         PFQuery *query = [PFQuery queryWithClassName:@"LongestWord"];
-        query.limit = [NSNumber numberWithInt:10];
+        query.limit = [[NSNumber numberWithInt:10] intValue];
         [query orderByDescending:@"longestWordInGame"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {

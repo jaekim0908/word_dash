@@ -22,6 +22,7 @@
 
 -(BOOL) stopTimer;
 -(BOOL) startTimer;
+- (void) displayAwardsPopup;
 
 @end
 

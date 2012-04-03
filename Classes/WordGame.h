@@ -100,6 +100,8 @@
     CCSprite *thisGameLongWordAwardSprite;
     
     CCLabelTTF *awardsPopupBanner;
+    CCLabelTTF *awardsPopupBanner2;
+    CCLabelTTF *awardsPopupBanner3;
 }
 
 @property int cols;

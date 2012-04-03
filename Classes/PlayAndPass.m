@@ -153,6 +153,77 @@
 	return TRUE;
 }
 
+- (void) displayAwardsPopup
+{
+    //DELAY ENABLING THE BUTTONS (AWARDS MENU) SO THAT THE PLAYER DOES NOT
+    //ACCIDENTALLY SELECT A BUTTON WHILE SELECTING THE LAST LETTERS
+    [self schedule:@selector(enableAwardsMenuTouch:) interval:1.0f];
+    
+    //awardsMenu.isTouchEnabled=TRUE;
+    awardsMenu.visible=TRUE;
+    
+    
+    awardsState = TRUE;
+    
+    awardPopupTintedBackground.visible = YES;
+    awardPopupFrame.visible = YES; 
+    getResultsBtn.visible = YES; 
+    rematchBtn.visible = YES;
+    mainMenuBtn.visible = YES;
+    awardsPopupBanner.visible = YES;
+    
+    getResultsBtn.position = ccp(210-43+10,125);
+    rematchBtn.position = ccp(275-43+10,124);
+    mainMenuBtn.position = ccp(340-43+10,124); 
+ 
+/******* BEGIN ********
+    NSArray *playersNameArray = [NSArray arrayWithObjects:player1LongName, player2LongName, nil];
+    
+    NSArray *sortedPlayersArray = [playersNameArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    NSString *firstOrderedPlayer = [sortedPlayersArray objectAtIndex:0];
+    NSString *secondOrderedPlayer = [sortedPlayersArray objectAtIndex:1];
+    
+    CCLOG(@"First: %@ Second %@", firstOrderedPlayer,secondOrderedPlayer);
+    
+    CCLOG(@"%@",[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]);
+    PFQuery *query = [PFQuery queryWithClassName:@"GameHistorySummary"];
+    [query whereKey:@"hashKey" equalTo:[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]];
+    [query whereKey:@"gameType" equalTo:@"Multiplayer"];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *gameResultsSummary, NSError *error) {
+        if (!gameResultsSummary) {
+            // failed.
+            CCLOG(@"Failed to getFirstObject.");
+            
+        } else {
+            // find succeeded
+            NSLog(@"Find succeeded");
+            awardsPopupBanner2.visible = YES;
+            awardsPopupBanner3.visible = YES;
+            [awardsPopupBanner2 setString:[NSString stringWithFormat:@"%@ vs %@:", 
+                                           player1LongName,
+                                           player2LongName]];
+            [awardsPopupBanner3 setString:[NSString stringWithFormat:@"%i-%i-%i (Win-Lose-Tie)", 
+                                           [[gameResultsSummary objectForKey:@"win"] intValue],
+                                          [[gameResultsSummary objectForKey:@"lose"] intValue],
+                                          [[gameResultsSummary objectForKey:@"tie"] intValue]]];
+        }
+    }];
+******* END ********/
+    
+    if ([[player1Score string] intValue] == [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:@"TIE GAME"];
+    }
+    else if ([[player1Score string] intValue] > [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",player1LongName]];
+    }
+    else{
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",player2LongName]];
+    }
+     //HIDE THE PAUSE BUTTON
+    //OPEN ISSUE -- pauseMenu.pauseButton.visible=NO;
+}
+
 -(BOOL) stopTimer
 {
     [self unschedule:@selector(updateTimer:)];

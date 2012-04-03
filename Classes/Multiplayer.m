@@ -66,6 +66,9 @@
         self.playButton.visible = NO;
         [player1Name setString:@""];
         [player2Name setString:@""];
+        
+
+        
 	}
 	return self;
 }
@@ -152,6 +155,10 @@
 }
 
 - (void) playButtonPressed {
+    
+    //GET THE PLAYER WIN-LOSE-TIE HISTORY TO ADDRESS RACE CONDITION ISSUE IF RETRIEVE IT JUST IN TIME (SAVE CURRENT VS RETRIEVE W-L-T)
+    [self getPlayersWinLoseTieHistory];
+    
     if (isPlayer1) {
         [self sendGameBegin];
     }
@@ -272,10 +279,12 @@
         greySolveButton1.visible = NO;
         //[self showLeftChecker];
         [self turnOnPassButtonForPlayer1];
+        waitForYourTurn.visible = NO;
     } else if (player == 2 && [[player2Timer string] intValue] > 0) {
         [self sendEndTurn];
         myTurn = NO;
         greySolveButton1.visible = YES;
+        waitForYourTurn.visible = YES;
         //[self hideLeftChecker];
     }
 }
@@ -311,6 +320,108 @@
 {
     [[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMutiPlayerScene];
     return TRUE;
+}
+
+- (BOOL) getPlayersWinLoseTieHistory
+{
+    
+    NSArray *playersNameArray = [NSArray arrayWithObjects:self.player1LongName, self.player2LongName, nil];
+
+    NSArray *sortedPlayersArray = [playersNameArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+
+    NSString *firstOrderedPlayer = [sortedPlayersArray objectAtIndex:0];
+    NSString *secondOrderedPlayer = [sortedPlayersArray objectAtIndex:1];
+
+    CCLOG(@"First: %@ Second %@", firstOrderedPlayer,secondOrderedPlayer);
+
+    CCLOG(@"%@",[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]);
+    PFQuery *query = [PFQuery queryWithClassName:@"GameHistorySummary"];
+    [query whereKey:@"hashKey" equalTo:[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]];
+    [query whereKey:@"gameType" equalTo:@"Multiplayer"];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *gameResultsSummary, NSError *error) {
+        if (!gameResultsSummary) {
+            // failed.
+            CCLOG(@"Failed to getFirstObject.");
+            //IF THERE IS NO RECORD SET WIN, LOSS, TIE to zero
+            currentPlayerVersusPlayerWins = 0;
+            currentPlayerVersusPlayerLosses = 0;
+            currentPlayerVersusPlayerTies = 0;
+        } 
+        else {
+            // find succeeded
+            NSLog(@"Find succeeded");
+            
+            if(![self.player1LongName compare:firstOrderedPlayer]){
+                currentPlayerVersusPlayerWins = [[gameResultsSummary objectForKey:@"win"] intValue];
+                currentPlayerVersusPlayerLosses = [[gameResultsSummary objectForKey:@"lose"] intValue];
+                currentPlayerVersusPlayerTies = [[gameResultsSummary objectForKey:@"tie"] intValue];
+            }
+            else {
+                currentPlayerVersusPlayerWins = [[gameResultsSummary objectForKey:@"lose"] intValue];
+                currentPlayerVersusPlayerLosses = [[gameResultsSummary objectForKey:@"win"] intValue];
+                currentPlayerVersusPlayerTies = [[gameResultsSummary objectForKey:@"tie"] intValue];
+            }
+        }
+    }];
+
+    return TRUE;
+    
+}
+    
+    
+
+- (void) displayAwardsPopup
+{
+    //DELAY ENABLING THE BUTTONS (AWARDS MENU) SO THAT THE PLAYER DOES NOT
+    //ACCIDENTALLY SELECT A BUTTON WHILE SELECTING THE LAST LETTERS
+    [self schedule:@selector(enableAwardsMenuTouch:) interval:1.0f];
+    
+    //awardsMenu.isTouchEnabled=TRUE;
+    awardsMenu.visible=TRUE;
+    
+    
+    awardsState = TRUE;
+    
+    awardPopupTintedBackground.visible = YES;
+    awardPopupFrame.visible = YES; 
+    getResultsBtn.visible = YES; 
+    rematchBtn.visible = YES;
+    mainMenuBtn.visible = YES;
+    awardsPopupBanner.visible = YES;
+    
+    getResultsBtn.position = ccp(210-43+10,125);
+    rematchBtn.position = ccp(275-43+10,124);
+    mainMenuBtn.position = ccp(340-43+10,124); 
+        
+    if ([[player1Score string] intValue] == [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:@"TIE GAME"];
+        currentPlayerVersusPlayerTies++;
+    }
+    else if ([[player1Score string] intValue] > [[player2Score string] intValue]) {
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",self.player1LongName]];
+        currentPlayerVersusPlayerWins++;
+    }
+    else{
+        [awardsPopupBanner setString:[NSString stringWithFormat:@"WINNER: %@",self.player2LongName]];
+        currentPlayerVersusPlayerLosses++;
+    }
+    
+    awardsPopupBanner2.visible = YES;
+    awardsPopupBanner3.visible = YES;
+        
+    [awardsPopupBanner2 setString:[NSString stringWithFormat:@"%@ vs %@:", 
+                                   self.player1LongName,
+                                   self.player2LongName]];
+    [awardsPopupBanner3 setString:[NSString stringWithFormat:@"%i-%i-%i (Win-Lose-Tie)", 
+                                   currentPlayerVersusPlayerWins,
+                                   currentPlayerVersusPlayerLosses,
+                                   currentPlayerVersusPlayerTies]];
+
+    
+    //HIDE THE PAUSE BUTTON
+    //OPEN ISSUE -- pauseMenu.pauseButton.visible=NO;
+    
+    
 }
 
 - (void) updateTimer:(ccTime) dt {
@@ -366,6 +477,7 @@
 	
 	if (gameOver) {
         
+        waitForYourTurn.visible = NO;
         [self sendGameOver];
         
         if (isPlayer1) {
@@ -381,8 +493,8 @@
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
         [singlePlayGameHistory setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
         
-        [singlePlayGameHistory setObject:player1LongName forKey:@"player1Name"];
-        [singlePlayGameHistory setObject:player2LongName forKey:@"player2Name"];
+        [singlePlayGameHistory setObject:self.player1LongName forKey:@"player1Name"];
+        [singlePlayGameHistory setObject:self.player2LongName forKey:@"player2Name"];
         if (p1score > p2score) {
             [singlePlayGameHistory setObject:@"Win" forKey:@"gameResult"];
         } else if (p1score < p2score) {
@@ -401,8 +513,8 @@
         [player2ScoreRecord setObject:[NSNumber numberWithInt:p1score] forKey:@"score1"];
         [player2ScoreRecord setObject:[NSNumber numberWithInt:p2score] forKey:@"score2"];
         
-        [player2ScoreRecord setObject:player2LongName forKey:@"player1Name"];
-        [player2ScoreRecord setObject:player1LongName forKey:@"player2Name"];
+        [player2ScoreRecord setObject:self.player2LongName forKey:@"player1Name"];
+        [player2ScoreRecord setObject:self.player1LongName forKey:@"player2Name"];
         if (p1score < p2score) {
             [player2ScoreRecord setObject:@"Win" forKey:@"gameResult"];
         } else if (p1score > p2score) {
@@ -603,13 +715,13 @@
     self.player1LongName = [[GKLocalPlayer localPlayer] alias];
     //MCH - issue #16 not showing player names on result screens
     [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player1_name" Value:self.player1LongName];
-    [player1Name setString:[Util formatName:player1LongName withLimit:8]];
+    [player1Name setString:[Util formatName:self.player1LongName withLimit:8]];
     
     
     self.player2LongName = [[[GCHelper sharedInstance].playersDict objectForKey:playerID] alias];
     //MCH - issue #16 not showing player names on result screens
     [[GameManager sharedGameManager] saveToUserDefaultsForKey:@"player2_name" Value:self.player2LongName];
-    [player2Name setString:[Util formatName:player2LongName withLimit:8]];
+    [player2Name setString:[Util formatName:self.player2LongName withLimit:8]];
     
 }
 
@@ -662,7 +774,10 @@
 #pragma mark GCHelperDelegate
 
 - (void) matchStarted {    
-    CCLOG(@"################ Match started ###########################");        
+    CCLOG(@"################ Match started ###########################");   
+    
+
+    
     if (receivedRandom) {
         [self setGameState:kGameStateWaitingForStart];
     } else {
@@ -739,7 +854,9 @@
             [self tryStartGame];        
         }
         
-    } else if (message->messageType == kMessageTypeGameBegin) {        
+    } else if (message->messageType == kMessageTypeGameBegin) {
+
+        
         [self playButtonPressed];
         [self setGameState:kGameStateActive];
         //[self setupStringsWithOtherPlayerId:playerID];
@@ -840,7 +957,8 @@
     } else if (message->messageType == kMessageTypeGameOver) {   
         CCLOG(@"[game over]");
         gameOver = YES;
-        [self endScene:kEndReasonDisconnect];     
+        //[self endScene:kEndReasonDisconnect];    
+        [self matchEnded];
     } else if (message->messageType == kMessageTypeEndOfBoard) {
         CCLOG(@"[end of board message received]");
         [self sendReadyToStartGame];
@@ -929,7 +1047,7 @@
     UIAlertView *dialog = [[UIAlertView alloc] init];
     [dialog setDelegate:self];
     [dialog setTitle:@"Player Disconnected"];
-    [dialog setMessage:[NSString stringWithFormat:@"%@ has been disconnected. Do you want to start over?", player2LongName]];
+    [dialog setMessage:[NSString stringWithFormat:@"%@ has been disconnected. Do you want to start over?", self.player2LongName]];
     [dialog addButtonWithTitle:@"Yes"];
     [dialog addButtonWithTitle:@"No"];
     [dialog show];

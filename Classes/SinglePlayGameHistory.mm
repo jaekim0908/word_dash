@@ -51,7 +51,7 @@
         [query countObjectsInBackgroundWithTarget:self
                                          selector:@selector(countCallback:error:)];
         
-        query.limit = [NSNumber numberWithInt:HISTORY_PER_PAGE];
+        query.limit = [[NSNumber numberWithInt:HISTORY_PER_PAGE] intValue];
         [query orderByDescending:@"createdAt"];
         [query findObjectsInBackgroundWithTarget:self
                                         selector:@selector(findCallback:error:)];     
@@ -176,8 +176,8 @@
         [query whereKey:@"gameUUID" equalTo:[[GameManager sharedGameManager] gameUUID]];
         [query countObjectsInBackgroundWithTarget:self
                                          selector:@selector(countCallback:error:)];
-        query.limit = [self getLimitCount];
-        query.skip = [self getSkipCount];
+        query.limit = [[self getLimitCount] intValue];
+        query.skip = [[self getSkipCount] intValue];
         [query orderByDescending:@"createdAt"];
         [query findObjectsInBackgroundWithTarget:self
                                         selector:@selector(findCallback:error:)];

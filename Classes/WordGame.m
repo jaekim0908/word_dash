@@ -333,11 +333,26 @@
                                                fontName:@"Macondo-Regular" 
                                                fontSize:22] retain]; 
 		awardsPopupBanner.color = ccc3(255,255,255);
-		awardsPopupBanner.position = ccp(240,200);
+		awardsPopupBanner.position = ccp(240,230);
         //awardsPopupBanner.anchorPoint = ccp(0,0);
         awardsPopupBanner.visible = NO;
 		[self addChild:awardsPopupBanner z:55];
         
+        awardsPopupBanner2 = [[CCLabelTTF labelWithString:@"Monthly Tally"
+                                                fontName:@"Macondo-Regular" 
+                                                fontSize:22] retain]; 
+		awardsPopupBanner2.color = ccc3(255,255,255);
+		awardsPopupBanner2.position = ccp(240,200);
+        awardsPopupBanner2.visible = NO;
+		[self addChild:awardsPopupBanner2 z:55];
+        
+        awardsPopupBanner3 = [[CCLabelTTF labelWithString:@"Win-Lose-Tie"
+                                                 fontName:@"Macondo-Regular" 
+                                                 fontSize:22] retain]; 
+		awardsPopupBanner3.color = ccc3(255,255,255);
+		awardsPopupBanner3.position = ccp(240,170);
+        awardsPopupBanner3.visible = NO;
+		[self addChild:awardsPopupBanner3 z:55];
         
         nextLevelBtn = [[CCMenuItemImage 
                              itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"next_level-medium.png"] 
@@ -1112,6 +1127,7 @@
     getResultsBtn.position = ccp(210-43+10,125);
     rematchBtn.position = ccp(275-43+10,124);
     mainMenuBtn.position = ccp(340-43+10,124); 
+        
     
     if ([[player1Score string] intValue] == [[player2Score string] intValue]) {
         [awardsPopupBanner setString:@"TIE GAME"];
@@ -1173,6 +1189,14 @@
 	
 	if (p2 <= 0) {
 		play2Done = YES;
+	}
+    
+    if (p1 <= 0 && [[player2Score string] intValue] > [[player1Score string] intValue]) {
+        gameOver=YES;
+	}
+	
+	if (p2 <= 0 && [[player1Score string] intValue] > [[player2Score string] intValue]) {
+        gameOver=YES;
 	}
 	
 	if (gameOver) {
@@ -1317,8 +1341,8 @@
     [self.tapToChangeLeft release];
     [self.tapToChangeRight release];
     [userSelection release];
-    [player1LongName release];
-    [player2LongName release];
+    [self.player1LongName release];
+    [self.player2LongName release];
     [enterPlayer1Name release];
     [enterPlayer2Name release];
     [batchNode release];
@@ -1340,6 +1364,8 @@
     [thisGameTotalPointsAwardSprite release];
     [thisGameLongWordAwardSprite release];
     [awardsPopupBanner release];
+    [awardsPopupBanner2 release];
+    [awardsPopupBanner3 release];
         
     wordMatrix = nil;
     solveButton1 = nil;

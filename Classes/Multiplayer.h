@@ -26,6 +26,10 @@
     uint32_t ourRandom;   
     BOOL receivedRandom;    
     NSString *otherPlayerID;
+    
+    int currentPlayerVersusPlayerWins;
+    int currentPlayerVersusPlayerLosses;
+    int currentPlayerVersusPlayerTies;
 }
 
 -(BOOL) stopTimer;
@@ -59,6 +63,7 @@
 - (BOOL) getResultsPressed;
 - (BOOL) rematchBtnPressed;
 -(void) checkAnswerNoPenalty;
-
+- (void) displayAwardsPopup;
+- (BOOL) getPlayersWinLoseTieHistory;
 
 @end
