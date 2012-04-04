@@ -221,6 +221,13 @@
     NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/MangosteenStudios"];
     [[UIApplication sharedApplication] openURL:url];
     
+<<<<<<< HEAD
+    /*
+    NSString *twitterURL = @"http://twitter.com/mangosteenSD";
+    NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
+    [[UIApplication sharedApplication] openURL:url];
+    */
+=======
     CCLOG(@"Trying to bring up facebook page.");
     
     [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
@@ -234,6 +241,7 @@
     [[UIApplication sharedApplication] openURL:url];
     
     CCLOG(@"Trying to bring up twitter page.");
+>>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
 }
 
 -(void) facebookLink{

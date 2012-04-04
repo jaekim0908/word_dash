@@ -156,18 +156,29 @@
 
 - (void) playButtonPressed {
     
+<<<<<<< HEAD
+=======
 
     
+>>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
     if (isPlayer1) {
         [self sendGameBegin];
     }
     [self fadeOutLetters];
     self.playButton.visible = NO;
     playButtonReady = NO;
+<<<<<<< HEAD
+    [self schedule:@selector(updateTimer:) interval:1.0f];
+    
+    //GET THE PLAYER WIN-LOSE-TIE HISTORY TO ADDRESS RACE CONDITION ISSUE IF RETRIEVE IT JUST IN TIME (SAVE CURRENT VS RETRIEVE W-L-T)
+    [self getPlayersWinLoseTieHistory];
+
+=======
     [self schedule:@selector(updateTimer:) interval:1.0f];   
     
     //GET THE PLAYER WIN-LOSE-TIE HISTORY TO ADDRESS RACE CONDITION ISSUE IF RETRIEVE IT JUST IN TIME (SAVE CURRENT VS RETRIEVE W-L-T)
     [self getPlayersWinLoseTieHistory];
+>>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
 }
 
 - (void) deselectCellsAt:(Cell *) cell {

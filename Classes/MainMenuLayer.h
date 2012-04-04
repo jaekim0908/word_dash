@@ -30,6 +30,7 @@
     
     CCSprite *soundOnButton;
     CCSprite *soundOffButton;
+    
 }
 
 @property (nonatomic, retain) CCSprite *soundOnButton;
@@ -40,4 +41,6 @@
 -(void) disableMainMenu;
 -(void) displayHowToPlay;
 -(void) displaySinglePlayer;
+-(void) twitterLink;
+-(void) facebookLink;
 @end
