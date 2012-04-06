@@ -217,14 +217,7 @@
 }
 
 -(void) displayRanking {
-    //MCH[[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-    NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/MangosteenStudios"];
-    [[UIApplication sharedApplication] openURL:url];
-    
-    CCLOG(@"Trying to bring up facebook page.");
-    
     [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-
 }
 
 -(void) twitterLink{
