@@ -12,7 +12,6 @@
 #import "Dictionary.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
-#import "CCAlertView.h"
 #import "AIDictionary.h"
 #import "HowToPlay.h"
 
