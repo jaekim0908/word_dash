@@ -12,7 +12,10 @@
 #import "Dictionary.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
-#import "CCAlertView.h"
+<<<<<<< HEAD
+//#import "CCAlertView.h"
+=======
+>>>>>>> bf8b6476942ffcfa0f9ef94e9c37e8e034423009
 #import "AIDictionary.h"
 #import "HowToPlay.h"
 
@@ -107,7 +110,22 @@
                                          selector:@selector(displayRanking)];
         statsMenuItem.position = ccp(315, 40);
         
-        CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, nil];
+        CCMenuItem *twitterMenuItem = [CCMenuItemImage
+                                        itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"Twitter.png"] 
+                                        selectedSprite:[CCSprite spriteWithSpriteFrameName:@"Twitter.png"] 
+                                        target:self
+                                        selector:@selector(twitterLink)];
+        twitterMenuItem.position = ccp(440,290);
+
+        CCMenuItem *facebookMenuItem = [CCMenuItemImage
+                                       itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"Facebook.png"] 
+                                       selectedSprite:[CCSprite spriteWithSpriteFrameName:@"Facebook.png"] 
+                                       target:self
+                                       selector:@selector(facebookLink)];
+        facebookMenuItem.position = ccp(440, 235);
+
+        
+        CCMenu *starMenu = [CCMenu menuWithItems:singlePlayerMenuItem, playAndPassMenuItem, playWithFriendsMenuItem, howToPlayMenuItem, statsMenuItem, twitterMenuItem, facebookMenuItem, nil];
         starMenu.position = CGPointZero;
         [self addChild:starMenu];
         
@@ -203,19 +221,29 @@
 
 -(void) displayRanking {
 <<<<<<< HEAD
-    //MCH[[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
+    
+=======
+>>>>>>> bf8b6476942ffcfa0f9ef94e9c37e8e034423009
+    [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
+}
+
+-(void) twitterLink{
+    
+    NSString *twitterURL = @"http://twitter.com/mangosteenSD";
+    NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
+    [[UIApplication sharedApplication] openURL:url];
+    
+    /* for twitter */
+}
+
+-(void) facebookLink{
+    
     NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/MangosteenStudios"];
     [[UIApplication sharedApplication] openURL:url];
     
     CCLOG(@"Trying to bring up facebook page.");
-    
-=======
-    //[[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-    NSString *twitterURL = @"http://twitter.com/mangosteenSD";
-    NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
-    [[UIApplication sharedApplication] openURL:url];
->>>>>>> origin/wordanista_v1
 }
+
 
 -(void) displayPlayAndPass {
 	NSLog(@"display play and pass");

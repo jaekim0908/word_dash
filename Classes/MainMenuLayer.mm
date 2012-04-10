@@ -12,7 +12,6 @@
 #import "Dictionary.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
-//#import "CCAlertView.h"
 #import "AIDictionary.h"
 #import "HowToPlay.h"
 
@@ -217,9 +216,7 @@
 }
 
 -(void) displayRanking {
-    
     [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-
 }
 
 -(void) twitterLink{
@@ -228,7 +225,7 @@
     NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
     [[UIApplication sharedApplication] openURL:url];
     
-    /* for twitter */
+    CCLOG(@"Trying to bring up twitter page.");
 }
 
 -(void) facebookLink{

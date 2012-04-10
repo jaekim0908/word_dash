@@ -7,7 +7,6 @@
 //
 
 #import "cocos2d.h"
-
 #import "HundredSecondsAppDelegate.h"
 #import "GameConfig.h"
 #import "RootViewController.h"
@@ -194,8 +193,6 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	//[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];		
-	//[[GameManager sharedGameManager] runSceneWithId:kMainMenuScene];
 	[[GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
 	[Dictionary sharedDictionary];	
 	CCLOG(@"Application Delegate didFinishLaunchingWithOptions End");
