@@ -830,7 +830,8 @@
         [data getBytes:&messageCell length:sizeof(MessageCell)];
         CCLOG(@"[open cell] (row,col) = (%i,%i)", messageCell.row, messageCell.col);
         Cell *cell = [[wordMatrix objectAtIndex:messageCell.row] objectAtIndex:messageCell.col];
-        if (!cell.letterSprite.visible) {
+        //if (!cell.letterSprite.visible) {
+            CCLOG(@"[open cell2] (row,col) = (%i,%i)", messageCell.row, messageCell.col);
 			cell.letterSprite.visible = YES;
 			if ([self isThisStarPoint:cell]) {
 				cell.star.visible = YES;
@@ -839,7 +840,7 @@
             if (messageCell.countScore && [self isVowel:cell.value]) {
                 [self addScore:8 toPlayer:2 anchorCell:cell];
             }
-		}
+		//}
 
     } else if (message->messageType == kMessageTypeSendTimer) {
         CCLOG(@"Received Send Timer");

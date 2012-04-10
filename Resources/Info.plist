@@ -11,11 +11,11 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>appIconGrid13-3g.png</string>
+	<string>app-icon_0034.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>appIconGrid13.png</string>
-		<string>appIconGrid13-3g.png</string>
+		<string>app-icon_0034-hd.png</string>
+		<string>app-icon_0034.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -23,8 +23,8 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>appIconGrid13.png</string>
-				<string>appIconGrid13-3g.png</string>
+				<string>app-icon_0034-hd.png</string>
+				<string>app-icon_0034.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>
