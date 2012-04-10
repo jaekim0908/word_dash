@@ -80,9 +80,12 @@ static AIDictionary* _sharedDictionary = nil;
         
         NSString *filePath;
         
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
         if (!dictionaryFilename) {
             NSLog(@"WARNING: Path for dictionary file not found.");
-            filePath = [[NSBundle mainBundle] pathForResource:@"ai-dictionary-1-8-grades" ofType:@"txt"];
+            filePath = [documentsDirectory stringByAppendingPathComponent:@"ai-dictionary-1-8-grades.txt"];
         }
         //LOAD THE LARGE DICTIONARY FROM ALL WORDS OF DICTIONARY CLASS TO SAVE LOADING FROM FILE
         //MCH -- LOOK INTO THIS, LOGIC SEEMS FLAWED
@@ -91,7 +94,7 @@ static AIDictionary* _sharedDictionary = nil;
             return self.allWords;
         }
         else{
-            filePath = [[NSBundle mainBundle] pathForResource:dictionaryFilename ofType:@"txt"];
+            filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", dictionaryFilename]];
         }
         
         NSLog(@"filePath=%@",filePath);

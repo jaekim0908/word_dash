@@ -7,6 +7,7 @@
 //
 
 #import "Dictionary.h"
+#import "ZipArchive.h"
 
 
 @implementation Dictionary
@@ -43,14 +44,25 @@ static Dictionary* _sharedDictionary = nil;
         
         _dictionaryLoaded = NO;
 		// Dictionary Initialized
-		NSLog(@"Dictionary Singleton,, init");
         // JHK - 10/04/11 trying a new dictionary file (plurals removed and potty mouth filtered).
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"new_dictionary_no_acronym" ofType:@"txt"];
-		NSError *error;
-		// read everything from text
-		NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
-		_allWords = (NSMutableArray *) [[fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] retain];
-		_dictionary = [[NSMutableDictionary alloc] init];
+		//NSLog(@"Dictionary Singleton,, init");
+        ZipArchive* za = [[[ZipArchive alloc] init] autorelease];
+        NSString *zippedFilePath = [[NSBundle mainBundle] pathForResource:@"dictionary_files" ofType:@"zip"];
+        
+        if ([za UnzipOpenFile:zippedFilePath]) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            [za UnzipFileTo:documentsDirectory overWrite:YES];
+            NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"new_dictionary_no_acronym.txt"];
+            NSError *error;
+            // read everything from text
+            NSString *fileContents = [[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error] retain];
+            if (!fileContents) {
+                NSLog(@">>>>>>>>>>File Error = %@", error);
+            }        
+            _allWords = (NSMutableArray *) [[fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] retain];
+            _dictionary = [[NSMutableDictionary alloc] init];
+        }
 	}
 	return self;
 }
