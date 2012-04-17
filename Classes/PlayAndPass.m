@@ -176,40 +176,6 @@
     rematchBtn.position = ccp(275-43+10,124);
     mainMenuBtn.position = ccp(340-43+10,124); 
  
-/******* BEGIN ********
-    NSArray *playersNameArray = [NSArray arrayWithObjects:player1LongName, player2LongName, nil];
-    
-    NSArray *sortedPlayersArray = [playersNameArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    NSString *firstOrderedPlayer = [sortedPlayersArray objectAtIndex:0];
-    NSString *secondOrderedPlayer = [sortedPlayersArray objectAtIndex:1];
-    
-    CCLOG(@"First: %@ Second %@", firstOrderedPlayer,secondOrderedPlayer);
-    
-    CCLOG(@"%@",[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]);
-    PFQuery *query = [PFQuery queryWithClassName:@"GameHistorySummary"];
-    [query whereKey:@"hashKey" equalTo:[NSString stringWithFormat:@"%@|%@",firstOrderedPlayer,secondOrderedPlayer]];
-    [query whereKey:@"gameType" equalTo:@"Multiplayer"];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *gameResultsSummary, NSError *error) {
-        if (!gameResultsSummary) {
-            // failed.
-            CCLOG(@"Failed to getFirstObject.");
-            
-        } else {
-            // find succeeded
-            NSLog(@"Find succeeded");
-            awardsPopupBanner2.visible = YES;
-            awardsPopupBanner3.visible = YES;
-            [awardsPopupBanner2 setString:[NSString stringWithFormat:@"%@ vs %@:", 
-                                           player1LongName,
-                                           player2LongName]];
-            [awardsPopupBanner3 setString:[NSString stringWithFormat:@"%i-%i-%i (Win-Lose-Tie)", 
-                                           [[gameResultsSummary objectForKey:@"win"] intValue],
-                                          [[gameResultsSummary objectForKey:@"lose"] intValue],
-                                          [[gameResultsSummary objectForKey:@"tie"] intValue]]];
-        }
-    }];
-******* END ********/
     
     if ([[player1Score string] intValue] == [[player2Score string] intValue]) {
         [awardsPopupBanner setString:@"TIE GAME"];

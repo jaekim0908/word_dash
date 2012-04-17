@@ -12,7 +12,10 @@
 #import "Dictionary.h"
 #import "DialogLayer.h"
 #import "ChallengeRequestDialog.h"
-#import "CCAlertView.h"
+<<<<<<< HEAD
+//#import "CCAlertView.h"
+=======
+>>>>>>> bf8b6476942ffcfa0f9ef94e9c37e8e034423009
 #import "AIDictionary.h"
 #import "HowToPlay.h"
 
@@ -217,21 +220,11 @@
 }
 
 -(void) displayRanking {
-    //MCH[[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-    NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/MangosteenStudios"];
-    [[UIApplication sharedApplication] openURL:url];
-    
 <<<<<<< HEAD
-    /*
-    NSString *twitterURL = @"http://twitter.com/mangosteenSD";
-    NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
-    [[UIApplication sharedApplication] openURL:url];
-    */
-=======
-    CCLOG(@"Trying to bring up facebook page.");
     
+=======
+>>>>>>> bf8b6476942ffcfa0f9ef94e9c37e8e034423009
     [[GameManager sharedGameManager] runSceneWithId:kScoreSummaryScene];
-
 }
 
 -(void) twitterLink{
@@ -240,8 +233,7 @@
     NSURL *url = [[[NSURL alloc] initWithString:twitterURL] autorelease];
     [[UIApplication sharedApplication] openURL:url];
     
-    CCLOG(@"Trying to bring up twitter page.");
->>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
+    /* for twitter */
 }
 
 -(void) facebookLink{

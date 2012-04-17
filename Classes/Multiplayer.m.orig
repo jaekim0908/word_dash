@@ -156,29 +156,18 @@
 
 - (void) playButtonPressed {
     
-<<<<<<< HEAD
-=======
 
     
->>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
     if (isPlayer1) {
         [self sendGameBegin];
     }
     [self fadeOutLetters];
     self.playButton.visible = NO;
     playButtonReady = NO;
-<<<<<<< HEAD
-    [self schedule:@selector(updateTimer:) interval:1.0f];
-    
-    //GET THE PLAYER WIN-LOSE-TIE HISTORY TO ADDRESS RACE CONDITION ISSUE IF RETRIEVE IT JUST IN TIME (SAVE CURRENT VS RETRIEVE W-L-T)
-    [self getPlayersWinLoseTieHistory];
-
-=======
     [self schedule:@selector(updateTimer:) interval:1.0f];   
     
     //GET THE PLAYER WIN-LOSE-TIE HISTORY TO ADDRESS RACE CONDITION ISSUE IF RETRIEVE IT JUST IN TIME (SAVE CURRENT VS RETRIEVE W-L-T)
     [self getPlayersWinLoseTieHistory];
->>>>>>> 1e8afbed70a6cc091d36f49821a8fcc15c42e0d6
 }
 
 - (void) deselectCellsAt:(Cell *) cell {
@@ -841,7 +830,9 @@
         [data getBytes:&messageCell length:sizeof(MessageCell)];
         CCLOG(@"[open cell] (row,col) = (%i,%i)", messageCell.row, messageCell.col);
         Cell *cell = [[wordMatrix objectAtIndex:messageCell.row] objectAtIndex:messageCell.col];
-        if (!cell.letterSprite.visible) {
+<<<<<<< HEAD
+        //if (!cell.letterSprite.visible) {
+            CCLOG(@"[open cell2] (row,col) = (%i,%i)", messageCell.row, messageCell.col);
 			cell.letterSprite.visible = YES;
 			if ([self isThisStarPoint:cell]) {
 				cell.star.visible = YES;
@@ -850,8 +841,18 @@
             if (messageCell.countScore && [self isVowel:cell.value]) {
                 [self addScore:8 toPlayer:2 anchorCell:cell];
             }
-		}
+		//}
 
+=======
+        cell.letterSprite.visible = YES;
+        if ([self isThisStarPoint:cell]) {
+            cell.star.visible = YES;
+        }
+        
+        if (messageCell.countScore && [self isVowel:cell.value]) {
+            [self addScore:8 toPlayer:2 anchorCell:cell];
+        }
+>>>>>>> bf8b6476942ffcfa0f9ef94e9c37e8e034423009
     } else if (message->messageType == kMessageTypeSendTimer) {
         CCLOG(@"Received Send Timer");
         [player2Timer setString:[NSString stringWithFormat:@"%i", [[player2Timer string] intValue]-1]];
