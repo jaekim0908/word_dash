@@ -1930,8 +1930,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -1977,8 +1977,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -2078,8 +2078,8 @@
 				);
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jae Kim (T7B598PTR5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jae Kim (T7B598PTR5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2105,8 +2105,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = wordanista;
-				PROVISIONING_PROFILE = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3290094A-A5AE-4BC6-95B6-1C9D9CA1E4C1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 			};

@@ -14,11 +14,7 @@
 #import "ChallengeRequestDialog.h"
 #import "AIDictionary.h"
 #import "HowToPlay.h"
-
-@interface UIAlertView (extended)
--(void) setNumberOfRows:(int) num;
-@end
-
+ 
 @interface MainMenuLayer()
 -(void) displayMainMenu;
 -(void) displaySceneSelection;
@@ -349,7 +345,6 @@
                                                        delegate:self 
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"Tell a friend about it", @"Play with a friend", nil];
-    [alertView setNumberOfRows:3];
     [alertView show];
     [alertView release];
 }
