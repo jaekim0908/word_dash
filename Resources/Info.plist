@@ -10,8 +10,6 @@
 	<array/>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>app-icon_0034.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>app-icon_0034-hd.png</string>

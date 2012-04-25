@@ -92,6 +92,7 @@ TotalPointAwardSprite:(CCSprite *) totalPointAwardSprite
 -(BOOL) level3ButtonPressed;
 -(BOOL) level4ButtonPressed;
 -(BOOL) level5ButtonPressed;
+-(BOOL) backButtonPressed;
 
 
 @end

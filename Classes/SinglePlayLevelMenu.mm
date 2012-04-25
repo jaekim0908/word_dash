@@ -144,7 +144,22 @@
         //level5Button.position = ccp(439-27, 160);
         //[levelsBatchNode addChild:level5Button z:2];
 
-        levelsMenu = [[CCMenu menuWithItems:level1Button, level2Button, level3Button, level4Button, level5Button, nil] retain];
+        
+        //Back Button
+        //backButton = [[CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"] retain];
+        //backButton.position = ccp(450, 30);
+        //backButton.visible = NO;
+        //[levelsBatchNode addChild:backButton z:3];
+        
+        backButton = [[CCMenuItemImage
+                         itemFromNormalSprite:[CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"] 
+                         selectedSprite:[CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"]
+                         disabledSprite:[CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"]
+                         target:self
+                         selector:@selector(backButtonPressed)] retain];
+        backButton.position = ccp(455, 30); 
+        
+        levelsMenu = [[CCMenu menuWithItems:level1Button, level2Button, level3Button, level4Button, level5Button, backButton,nil] retain];
         levelsMenu.position = CGPointZero;
         [self addChild:levelsMenu z:2];
         
@@ -238,12 +253,7 @@
         level5LongWordAward.position = ccp(412, 50);
         level5LongWordAward.visible=NO;
         [levelsBatchNode addChild:level5LongWordAward z:3];
-        
-        //Back Button
-        backButton = [[CCSprite spriteWithSpriteFrameName:@"Button_Back001.png"] retain];
-        backButton.position = ccp(450, 30);
-        backButton.visible = NO;
-        [levelsBatchNode addChild:backButton z:3];
+
         
         //DISPLAY THE STAR LEVELS BASED ON THE VALUES IN THE PLIST
         [self displayStars:@"Level1" 
@@ -433,6 +443,17 @@
     //}
     return TRUE;
 }
+
+-(BOOL) backButtonPressed
+{
+    
+    CCLOG(@"back Button PRESSED.");
+    
+    [ [GameManager sharedGameManager] runLoadingSceneWithTargetId:kMainMenuScene];
+    
+    return TRUE;
+}
+
 
 - (BOOL) ccTouchBegan:(UITouch *) touch withEvent:(UIEvent *) event {
     
