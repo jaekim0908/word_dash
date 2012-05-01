@@ -56,6 +56,7 @@
         
         CGSize windowSize = [[CCDirector sharedDirector] winSize];
         
+        CCLOG(@"SYSTEM VERSION FOR THIS DEVICE: %@",[[UIDevice currentDevice] systemVersion]);
         //MCH aiAllWords = [[AIDictionary sharedDictionary] allWords];
         //aiAllWords = [[Dictionary sharedDictionary] allWords];
         aiAllWords = [[AIDictionary sharedDictionary] loadAllWords];
@@ -142,9 +143,17 @@
 		[self addChild:self.singlePlayerScore z:55];
 //MCH - END LABELS FOR AWARD
         
+        // check if the device is running iOS 5.0 or later
+        NSString *reqSysVer = @"5.0";
+        NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+        BOOL osVersionSupported = ([currSysVer compare:reqSysVer 
+                                               options:NSNumericSearch] != NSOrderedAscending);
+        
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		[activityIndicator setCenter:CGPointMake(windowSize.width/2, 30)]; // I do this because I'm in landscape mode
-        [activityIndicator setColor:[UIColor blackColor]];
+        if (osVersionSupported) {
+            [activityIndicator setColor:[UIColor blackColor]];
+        }
 		[[[CCDirector sharedDirector] openGLView] addSubview:activityIndicator];
        
         NSString *currentMuteSetting = [[GameManager sharedGameManager] retrieveFromUserDefaultsForKey:@"currentMuteSetting"];
